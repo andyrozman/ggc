@@ -225,7 +225,7 @@ public class GGCDbNutri extends HibernateDb
     public <T extends HibernateObject> List<T> getHibernateObjectListByParameter(String parameterName,
             Long parameterValue, Order orderBy, Class<T> clazz, Integer sessionId)
     {
-        LOG.info("get %s %s", clazz.getSimpleName(), getParameterDebugString(parameterName, parameterValue));
+        LOG.info("get {} - {}", clazz.getSimpleName(), getParameterDebugString(parameterName, parameterValue));
 
         List<T> outList = new ArrayList<T>();
 
@@ -251,7 +251,7 @@ public class GGCDbNutri extends HibernateDb
         }
         catch (Exception ex)
         {
-            LOG.error("get %s (%s=%s) problem. Exception: ", clazz.getSimpleName(),
+            LOG.error("get {} - {} problem. Exception: {}", clazz.getSimpleName(),
                 getParameterDebugString(parameterName, parameterValue), ex.getMessage(), ex);
         }
 
@@ -424,7 +424,7 @@ public class GGCDbNutri extends HibernateDb
      */
     public List<FoodDescription> getUSDAFoodDescriptionsByParent(long parentId)
     {
-        List<FoodDescriptionH> fgList = getHibernateObjectListByParameter("parentId", parentId, Order.asc("name"),
+        List<FoodDescriptionH> fgList = getHibernateObjectListByParameter("groupId", parentId, Order.asc("name"),
             FoodDescriptionH.class, 2);
 
         return getDAOGroupList(fgList, FoodDescription.class);

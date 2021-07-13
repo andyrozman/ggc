@@ -40,7 +40,7 @@ import ggc.plugin.data.DeviceValuesTableModel;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class CGMSValuesTableModel extends DeviceValuesTableModel
+public class CGMSValuesTableModel extends DeviceValuesTableModel implements CGMSDataCapable
 {
 
     private static final long serialVersionUID = 2881771615052748327L;
@@ -125,41 +125,43 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
                 this.current_main.addSubEntry(se);
             }
         }
+        else if (mve instanceof CGMSValuesExtendedEntry)
+        {
+            addEntryAndProcess(mve);
+            // processDeviceValueEntry(mve);
+            // this.dl_data.add(mve);
+            //
+            // if (this.shouldBeDisplayedOld(mve.getStatusType()))
+            // {
+            // this.displayed_dl_data.add(mve);
+            // Collections.sort(displayed_dl_data);
+            //
+            // this.fireTableDataChanged();
+            // }
+        }
         else
         {
             LOG.warn("Unsupported database type: " + mve);
         }
-        // else
-        // {
-        // // it's not used for now
-        // CGMSValuesExtendedEntry ext = (CGMSValuesExtendedEntry) mve;
-        // addEntryAndProcess(ext);
-        // }
 
     }
 
 
     private void addEntryAndProcess(DeviceValuesEntryInterface mve)
     {
-        LOG.warn("Unsupported method !!");
+        processDeviceValueEntry(mve);
+        this.dl_data.add(mve);
+
+        if (this.shouldBeDisplayed(mve.getStatusType()))
+        {
+            this.displayed_dl_data.add(mve);
+            Collections.sort(displayed_dl_data);
+
+            this.fireTableDataChanged();
+        }
+
     }
 
-
-    // private void addEntryAndProcess(DeviceValuesEntryInterface mve)
-    // {
-    //
-    // processDeviceValueEntry(mve);
-    // this.dl_data.add(mve);
-    //
-    // if (this.shouldBeDisplayed(mve.getStatus()))
-    // {
-    // this.displayed_dl_data.add(mve);
-    // Collections.sort(displayed_dl_data);
-    // }
-    //
-    // this.fireTableDataChanged();
-    //
-    // }
 
     private void addEntryAndProcess(String key, CGMSValuesEntry mve)
     {
@@ -168,38 +170,41 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
             CGMSValuesEntry mveOld = dataTable.get(key);
 
             mveOld.addSubEntries(mve.getSubEntryList());
-            processDeviceValueEntry(mveOld);
-
-            if (!this.shouldBeDisplayed(mve.getStatusType()))
-            {
-                if (this.displayed_dl_data.contains(mveOld))
-                {
-                    this.displayed_dl_data.clear();
-
-                    for (DeviceValuesEntryInterface entryInt : dl_data)
-                    {
-                        this.displayed_dl_data.add(entryInt);
-                    }
-
-                    Collections.sort(displayed_dl_data);
-
-                    this.fireTableDataChanged();
-                }
-            }
+            // processDeviceValueEntry(mveOld);
+            //
+            // if (!this.shouldBeDisplayedOld(mve.getStatusType()))
+            // {
+            // if (this.displayed_dl_data.contains(mveOld))
+            // {
+            // this.displayed_dl_data.clear();
+            //
+            // for (DeviceValuesEntryInterface entryInt : dl_data)
+            // {
+            // this.displayed_dl_data.add(entryInt);
+            // }
+            //
+            // Collections.sort(displayed_dl_data);
+            //
+            // this.fireTableDataChanged();
+            // }
+            // }
         }
         else
         {
-            processDeviceValueEntry(mve);
-            this.dl_data.add(mve);
+            addEntryAndProcess(mve);
             dataTable.put(key, mve);
 
-            if (this.shouldBeDisplayed(mve.getStatusType()))
-            {
-                this.displayed_dl_data.add(mve);
-                Collections.sort(displayed_dl_data);
-
-                this.fireTableDataChanged();
-            }
+            // processDeviceValueEntry(mve);
+            // this.dl_data.add(mve);
+            // dataTable.put(key, mve);
+            //
+            // if (this.shouldBeDisplayedOld(mve.getStatusType()))
+            // {
+            // this.displayed_dl_data.add(mve);
+            // Collections.sort(displayed_dl_data);
+            //
+            // this.fireTableDataChanged();
+            // }
         }
 
     }

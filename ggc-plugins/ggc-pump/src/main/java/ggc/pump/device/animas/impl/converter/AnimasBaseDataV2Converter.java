@@ -315,7 +315,7 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
         ebs.i2C = packet.getReceivedDataBit(7);
         ebs.carbs = AnimasUtils.createIntValueThroughMoreBits(packet.getReceivedDataBit(8),
             packet.getReceivedDataBit(9));
-        ebs.bg = ((int) Math.round(
+        ebs.bgOriginal = ((int) Math.round(
             AnimasUtils.createIntValueThroughMoreBits(packet.getReceivedDataBit(12), packet.getReceivedDataBit(13))
                     * 0.1D * BGmult));
         ebs.isf = AnimasUtils.createIntValueThroughMoreBits(packet.getReceivedDataBit(10),

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>net.sf.ggc</groupId>
+  <artifactId>ggc-nutri-tool</artifactId>
+  <versioning>
+    <versions>
+      <version>1.3.5-SNAPSHOT</version>
+      <version>1.3.6-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20151003161547</lastUpdated>
+  </versioning>
+</metadata>

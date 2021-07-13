@@ -13,6 +13,7 @@ import javax.swing.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.atech.data.user_data_dir.UserDataDirectory;
 import com.atech.db.hibernate.hdb_object.UserH;
 import com.atech.graphics.components.DialogSizePersistInterface;
 import com.atech.graphics.dialogs.guilist.GUIListDialog;
@@ -80,8 +81,8 @@ import ggc.gui.pen.DailyStatsDialog;
  *          Andy {andy@atech-software.com}  
  */
 
-public class MainFrame extends JFrame
-        implements EventObserverInterface, ActionListener, DialogSizePersistInterface, UserManagementCapableInterface
+public class MainFrame extends JFrame implements EventObserverInterface, ActionListener, DialogSizePersistInterface,
+        UserManagementCapableInterface
 {
 
     private static final long serialVersionUID = -8971779470148201332L;
@@ -128,6 +129,8 @@ public class MainFrame extends JFrame
 
     private GGCToolbarType current_toolbar = GGCToolbarType.None;
     private String nextVersion = "0.9";
+
+    UserDataDirectory userDataDirectory = UserDataDirectory.getInstance();
 
     /**
      * Static definitions (Look and Feel)
@@ -525,10 +528,10 @@ public class MainFrame extends JFrame
 
         // plugins
         GGCPluginType[] keys = { GGCPluginType.NutritionToolPlugin, //
-                                 GGCPluginType.MeterToolPlugin, //
-                                 GGCPluginType.PumpToolPlugin, //
-                                 GGCPluginType.CGMSToolPlugin, //
-                                 GGCPluginType.ConnectToolPlugin };
+                                GGCPluginType.MeterToolPlugin, //
+                                GGCPluginType.PumpToolPlugin, //
+                                GGCPluginType.CGMSToolPlugin, //
+                                GGCPluginType.ConnectToolPlugin };
 
         for (GGCPluginType key : keys)
         {
@@ -580,9 +583,9 @@ public class MainFrame extends JFrame
         JMenu parentMenu = this.menus.get("MENU_PRINT");
 
         GGCPluginType[] keys = { GGCPluginType.NutritionToolPlugin, //
-                                 GGCPluginType.MeterToolPlugin, //
-                                 GGCPluginType.PumpToolPlugin, //
-                                 GGCPluginType.CGMSToolPlugin, };
+                                GGCPluginType.MeterToolPlugin, //
+                                GGCPluginType.PumpToolPlugin, //
+                                GGCPluginType.CGMSToolPlugin, };
 
         // this.menus.get("MENU_PRINT").add(mi);
 
@@ -1289,11 +1292,11 @@ public class MainFrame extends JFrame
         this.informationPanel.invalidatePanelsConstants();
     }
 
+
     /*
      * private JButton addToolBarButtonWithName(String cmd) { return
      * addToolBarButton(this.actions.get(cmd)); }
      */
-
 
     // class GGCAction extends AbstractAction
     // {

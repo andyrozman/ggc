@@ -60,17 +60,15 @@ import com.atech.utils.data.CodeEnumWithTranslation;
 public enum CGMSBaseDataType implements CodeEnumWithTranslation
 {
 
-    None(0, "NONE"), //
-    SensorReading(1, "CGMS_READING"), //
-    SensorCalibration(2, "CALIBRATION_READINGS"), //
-    Alarm(3, "CGMS_DATA_ALARM"), //
-    Event(4, "CGMS_DATA_EVENT"), //
-    Error(5, "CGMS_DATA_ERROR"), //
-    SensorReadingTrend(6, "CGMS_READING_TREND"), //
-    TransmiterEvent(7, "CGMS_TRANSMITER_EVENT")
-
-    ;
-
+    None(0, "NONE", null), //
+    SensorReading(1, "CGMS_READING", CGMSViewerFilter.SensorReadings), //
+    SensorCalibration(2, "CALIBRATION_READINGS", CGMSViewerFilter.SensorCalibrations), //
+    Alarm(3, "CGMS_DATA_ALARM", CGMSViewerFilter.Alarms), //
+    Event(4, "CGMS_DATA_EVENT", CGMSViewerFilter.Events), //
+    Error(5, "CGMS_DATA_ERROR", CGMSViewerFilter.Errors), //
+    SensorReadingTrend(6, "CGMS_READING_TREND", CGMSViewerFilter.SensorTrends), //
+    TransmiterEvent(7, "CGMS_TRANSMITER_EVENT", CGMSViewerFilter.TransmiterEvent), //
+    ManualReading(8, "CGMS_EXT_MANUAL_READING", CGMSViewerFilter.SensorReadings), //
     ;
 
     static Hashtable<String, CGMSBaseDataType> translationMapping = new Hashtable<String, CGMSBaseDataType>();
@@ -84,6 +82,8 @@ public enum CGMSBaseDataType implements CodeEnumWithTranslation
             codeMapping.put(pbt.code, pbt);
         }
     }
+
+    private CGMSViewerFilter filterItem;
 
 
     public static void translateKeywords(I18nControlAbstract ic)
@@ -103,12 +103,14 @@ public enum CGMSBaseDataType implements CodeEnumWithTranslation
     int code;
     String i18nKey;
     String translation;
+    CGMSViewerFilter filter;
 
 
-    CGMSBaseDataType(int code, String i18nKey)
+    CGMSBaseDataType(int code, String i18nKey, CGMSViewerFilter filter)
     {
         this.code = code;
         this.i18nKey = i18nKey;
+        this.filter = filter;
     }
 
 
@@ -174,4 +176,8 @@ public enum CGMSBaseDataType implements CodeEnumWithTranslation
         }
     }
 
+    public CGMSViewerFilter getFilterItem()
+    {
+        return filter;
+    }
 }

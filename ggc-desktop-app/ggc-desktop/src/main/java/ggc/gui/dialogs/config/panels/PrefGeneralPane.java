@@ -9,6 +9,7 @@ import java.io.File;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
+import com.atech.data.user_data_dir.UserDataDirectory;
 import com.atech.utils.ATSwingUtils;
 
 import ggc.core.db.tool.DbToolApplicationGGC;
@@ -50,6 +51,7 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel
     private JTextField tf_lf;
     private JButton b_browse;
     DbToolApplicationGGC m_dbc = dataAccess.getDbConfig();
+    UserDataDirectory userDataDirectory = UserDataDirectory.getInstance();
 
 
     /**
@@ -161,7 +163,7 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel
 
             public void actionPerformed(ActionEvent e)
             {
-                File f = new File("./../data/skinlf_themes");
+                File f = new File(userDataDirectory.getParsedUserDataPath("%USER_DATA_DIR%/skinlf_themes"));
 
                 // System.out.println(f);
                 // System.out.println(f.getAbsolutePath());
@@ -277,8 +279,9 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel
                 String ttText = b.getToolTipText();
                 // x String buttonText = b.getText();
 
-                if (ttText != null && (ttText.equals("Create New Folder") || ttText.equals("Desktop")
-                        || ttText.equals("Up One Level")))
+                if (ttText != null
+                        && (ttText.equals("Create New Folder") || ttText.equals("Desktop") || ttText
+                                .equals("Up One Level")))
                 {
                     b.setEnabled(false);
                 }

@@ -1,0 +1,36 @@
+
+Nightscout
+==========
+
+* Viewer: - read default browser 70%
+          - JavaBrowser (req 8) - need to implement simple JavaFx browser
+
+- Config: - site
+          - browser type
+          - browser path
+          - implement config GUI for connect plugin
+
+- Importer: + determine first month
+            - measurment: - download
+                          - save
+            - treatments: - download
+                          - save
+            - profiles: - download
+                        - save
+            - status: - download
+                      - save
+
+- Show status: - download
+               - store
+               - compare
+
+- tmp DL data: - implement interface to store some temporary data (separate file in tools/ directory)
+               - NightScoutStatus
+               - NightScoutDownloadStats
+
+- History viewer: - measurments
+                 - treatments (bolus)
+                 - treatments (basal)
+                 - treatments (TBR)
+
+- Reports: Pump (Profile changes ???)

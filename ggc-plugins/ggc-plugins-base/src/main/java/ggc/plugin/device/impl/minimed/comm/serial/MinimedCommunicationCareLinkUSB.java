@@ -20,7 +20,7 @@ import ggc.plugin.device.impl.minimed.data.dto.CareLinkUSBResponseDto;
 import ggc.plugin.device.impl.minimed.enums.MinimedCommandType;
 import ggc.plugin.device.impl.minimed.enums.MinimedResponseStatus;
 import ggc.plugin.device.impl.minimed.handler.MinimedDataHandler;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.plugin.util.LogEntryType;
 
@@ -76,10 +76,10 @@ public class MinimedCommunicationCareLinkUSB extends MinimedSerialCommunicationA
 
     public void preInitInterface()
     {
-        serialBCD = MinimedUtil.getConnectionParameters().serialNumberBCD;
+        serialBCD = MedtronicUtil.getConnectionParameters().serialNumberBCD;
         this.lowLevelDebug = false;
-        MinimedUtil.setLowLevelDebug(this.lowLevelDebug);
-        MinimedUtil.setIoDelay(IO_DELAY_MS);
+        MedtronicUtil.setLowLevelDebug(this.lowLevelDebug);
+        MedtronicUtil.setIoDelay(IO_DELAY_MS);
     }
 
 
@@ -123,7 +123,7 @@ public class MinimedCommunicationCareLinkUSB extends MinimedSerialCommunicationA
                 else
                 {
                     LOG.warn("Error on initialize. Retrying. Ex.: " + ex, ex);
-                    MinimedUtil.sleepMs(INIT_DELAY_MS);
+                    MedtronicUtil.sleepMs(INIT_DELAY_MS);
                 }
             }
         }
@@ -160,7 +160,7 @@ public class MinimedCommunicationCareLinkUSB extends MinimedSerialCommunicationA
 
             commandPacket.commandParameters = new byte[] { (byte) rec };
 
-            MinimedUtil.getOutputWriter().writeLog(LogEntryType.DEBUG,
+            MedtronicUtil.getOutputWriter().writeLog(LogEntryType.DEBUG,
                 "Downloading Data (" + minimedCommandType.name() + ") - Page " + rec);
 
             executeCommandWithRetry(commandPacket);
@@ -171,7 +171,7 @@ public class MinimedCommunicationCareLinkUSB extends MinimedSerialCommunicationA
             if (writeHistoryDataToFile)
                 writeToFile(commandPacket, dataPage);
 
-            MinimedUtil.getHistoryDecoderProcessor().processPage(dataPage, MinimedUtil.getOutputWriter());
+            MedtronicUtil.getHistoryDecoderProcessor().processPage(dataPage, MedtronicUtil.getOutputWriter());
 
             LOG.debug("Read {} page(s) out of {}.", rec, commandPacket.commandType.maxRecords);
 
@@ -425,7 +425,7 @@ public class MinimedCommunicationCareLinkUSB extends MinimedSerialCommunicationA
                         LOG.debug("Retrying command: {} of 3", i);
                 }
 
-                MinimedUtil.sleepPhysicalCommunication();
+                MedtronicUtil.sleepPhysicalCommunication();
 
                 if (lowLevelDebug)
                     LOG.info("Write packet: {}", bitUtils.getHex(packet));
@@ -435,7 +435,7 @@ public class MinimedCommunicationCareLinkUSB extends MinimedSerialCommunicationA
                 if (lowLevelDebug)
                     LOG.info("Max response size set to: {}", size);
 
-                MinimedUtil.sleepPhysicalCommunication();
+                MedtronicUtil.sleepPhysicalCommunication();
 
                 byte[] rawResponse = readWithSize(size);
 
@@ -539,7 +539,7 @@ public class MinimedCommunicationCareLinkUSB extends MinimedSerialCommunicationA
 
         responseDto.data = bitUtils.getByteSubArray(responseDto.rawData, 13, resultLength);
 
-        byte expectedCrc = (byte) MinimedUtil.getBitUtils().computeCRC8(responseDto.data);
+        byte expectedCrc = (byte) MedtronicUtil.getBitUtils().computeCRC8(responseDto.data);
 
         if (crc != expectedCrc)
         {
@@ -583,7 +583,7 @@ public class MinimedCommunicationCareLinkUSB extends MinimedSerialCommunicationA
 
         responseDto.data = bitUtils.getByteSubArray(responseDto.rawData, 13, resultLength);
 
-        byte expectedCrc = (byte) MinimedUtil.getBitUtils().computeCRC8(responseDto.data);
+        byte expectedCrc = (byte) MedtronicUtil.getBitUtils().computeCRC8(responseDto.data);
 
         LOG.debug("CRC: expected={}, calculated={}", expectedCrc, crc);
 
@@ -865,14 +865,14 @@ public class MinimedCommunicationCareLinkUSB extends MinimedSerialCommunicationA
 
         public byte[] preparePacket(int size)
         {
-            byte[] packetData = MinimedUtil.getBitUtils().concat(packet,
+            byte[] packetData = MedtronicUtil.getBitUtils().concat(packet,
                 ByteBuffer.allocate(2).putShort((short) size).array());
 
-            byte[] crc = { (byte) MinimedUtil.getBitUtils().computeCRC8(packetData) };
+            byte[] crc = { (byte) MedtronicUtil.getBitUtils().computeCRC8(packetData) };
 
-            LOG.debug("CRC: {}", (byte) MinimedUtil.getBitUtils().computeCRC8(packetData));
+            LOG.debug("CRC: {}", (byte) MedtronicUtil.getBitUtils().computeCRC8(packetData));
 
-            return MinimedUtil.getBitUtils().concat(packetData, crc);
+            return MedtronicUtil.getBitUtils().concat(packetData, crc);
         }
 
     }

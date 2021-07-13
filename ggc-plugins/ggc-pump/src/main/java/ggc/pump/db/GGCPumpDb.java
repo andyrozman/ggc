@@ -6,7 +6,10 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
-import org.hibernate.criterion.*;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Expression;
+import org.hibernate.criterion.Property;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -857,36 +860,43 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         // long dt_from = ATechDate.getATDateTimeFromGC(gc,
         // ATechDate.FORMAT_DATE_ONLY) * 10000;
 
-        Criteria criteria = this.getSession().createCriteria(PumpDataH.class);
-        criteria.add(Restrictions.eq("person_id", (int) dataAccess.getCurrentUserId()));
-        criteria.add(Restrictions.like("extended", "%" + dataAccess.getSourceDevice() + "%"));
-        // criteria.add(Restrictions.ge("dt_info", dt_from));
-        criteria.setProjection(Projections.rowCount());
-        in = (Integer) criteria.list().get(0);
-        sum_all = in.intValue();
+        // Criteria criteria = this.getSession().createCriteria(PumpDataH.class);
 
-        LOG.debug("  Pump Data : " + in.intValue());
+        // addPersonAndSourceDevice(criteria);
 
-        criteria = this.getSession().createCriteria(PumpDataExtendedH.class);
-        criteria.add(Restrictions.eq("person_id", (int) dataAccess.getCurrentUserId()));
-        criteria.add(Restrictions.like("extended", "%" + dataAccess.getSourceDevice() + "%"));
-        // criteria.add(Restrictions.ge("dt_info", dt_from));
-        // criteria.add(Restrictions.gt("id", minLogID));
-        criteria.setProjection(Projections.rowCount());
-        in = (Integer) criteria.list().get(0);
-        sum_all += in.intValue();
+        // criteria.add(Restrictions.eq("person_id", (int) dataAccess.getCurrentUserId()));
+        // criteria.add(Restrictions.like("extended", "%" + dataAccess.getSourceDevice() + "%"));
+        // criteria.setProjection(Projections.rowCount());
+        // in = (Integer) criteria.list().get(0);
 
-        LOG.debug("  Pump Extended Data : " + in.intValue());
+        in = getAllElementsCount(PumpDataH.class, null);
+        sum_all = in;
 
-        criteria = this.getSession().createCriteria(PumpProfileH.class);
-        criteria.add(Restrictions.eq("person_id", (int) dataAccess.getCurrentUserId()));
-        criteria.add(Restrictions.like("extended", "%" + dataAccess.getSourceDevice() + "%"));
-        // criteria.add(Restrictions.ge("active_from", dt_from));
-        criteria.setProjection(Projections.rowCount());
-        in = (Integer) criteria.list().get(0);
-        sum_all += in.intValue();
+        LOG.debug("  Pump Data : " + in);
 
-        LOG.debug("  Pump Profiles : " + in.intValue());
+        // criteria = this.getSession().createCriteria(PumpDataExtendedH.class);
+        // addPersonAndSourceDevice(criteria);
+        // //criteria.add(Restrictions.eq("person_id", (int) dataAccess.getCurrentUserId()));
+        // //criteria.add(Restrictions.like("extended", "%" + dataAccess.getSourceDevice() + "%"));
+        // criteria.setProjection(Projections.rowCount());
+        // in = (Integer) criteria.list().get(0);
+
+        in = getAllElementsCount(PumpDataExtendedH.class, null);
+        sum_all += in;
+
+        LOG.debug("  Pump Extended Data : " + in);
+
+        // criteria = this.getSession().createCriteria(PumpProfileH.class);
+        // addPersonAndSourceDevice(criteria);
+        //// criteria.add(Restrictions.eq("person_id", (int) dataAccess.getCurrentUserId()));
+        //// criteria.add(Restrictions.like("extended", "%" + dataAccess.getSourceDevice() + "%"));
+        // criteria.setProjection(Projections.rowCount());
+        // in = (Integer) criteria.list().get(0);
+
+        in = getAllElementsCount(PumpProfileH.class, null);
+        sum_all += in;
+
+        LOG.debug("  Pump Profiles : " + in);
 
         return sum_all;
     }
@@ -900,6 +910,8 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
      */
     public Hashtable<String, DeviceValuesEntryInterface> getPumpValues(PumpDataReader pdr)
     {
+
+        // FIXME
         String sql = "";
 
         Hashtable<String, DeviceValuesEntryInterface> dt = new Hashtable<String, DeviceValuesEntryInterface>();
@@ -911,8 +923,8 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
             sql = "SELECT dv  " //
                     + "from ggc.core.db.hibernate.pump.PumpDataH as dv " //
                     + "WHERE dv.extended like '%" + dataAccess.getSourceDevice() + "%' " //
-                    + "and dv.person_id=" + dataAccess.getCurrentUserId() //
-                    + " ORDER BY dv.dt_info ";
+                    + "and dv.personId=" + dataAccess.getCurrentUserId() //
+                    + " ORDER BY dv.dtInfo ";
 
             Query q = this.db.getSession().createQuery(sql);
 
@@ -940,8 +952,8 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
             sql = "SELECT dv from " //
                     + "ggc.core.db.hibernate.pump.PumpDataExtendedH as dv " + "WHERE dv.extended like '%"
-                    + dataAccess.getSourceDevice() + "%' " + "and dv.person_id=" + dataAccess.getCurrentUserId()
-                    + " ORDER BY dv.dt_info ";
+                    + dataAccess.getSourceDevice() + "%' " + "and dv.personId=" + dataAccess.getCurrentUserId()
+                    + " ORDER BY dv.dtInfo ";
 
             q = this.db.getSession().createQuery(sql);
 
@@ -966,10 +978,11 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
             // + dt_from + " and dv.person_id=" + dataAccess.getCurrentUserId()
             // + " ORDER BY dv.active_from ";
 
-            sql = "SELECT dv " //
-                    + "from ggc.core.db.hibernate.pump.PumpProfileH as dv " + "WHERE dv.extended like '%"
-                    + dataAccess.getSourceDevice() + "%' " + " and dv.person_id=" + dataAccess.getCurrentUserId()
-                    + " ORDER BY dv.active_from ";
+            sql = "SELECT dv " + //
+                    " from ggc.core.db.hibernate.pump.PumpProfileH as dv " + //
+                    " WHERE dv.extended like '%" + dataAccess.getSourceDevice() + "%' " + //
+                    " and dv.personId=" + dataAccess.getCurrentUserId() + //
+                    " ORDER BY dv.activeFrom ";
 
             q = this.db.getSession().createQuery(sql);
 

@@ -1,0 +1,8 @@
+#NOTE: This is an internal implementation file, its format can be changed without prior notice.
+#Thu Mar 07 17:28:34 CET 2013
+commons-collections-2.1.1.jar>=
+commons-collections-2.1.1-sources.jar>nexus-infonova=
+commons-collections-2.1.1.jar>nexus-infonova=
+commons-collections-2.1.1.pom>nexus-infonova=
+commons-collections-2.1.1-sources.jar>=
+commons-collections-2.1.1.pom>central=

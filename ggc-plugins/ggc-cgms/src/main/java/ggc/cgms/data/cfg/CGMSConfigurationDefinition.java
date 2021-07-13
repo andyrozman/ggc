@@ -2,12 +2,7 @@ package ggc.cgms.data.cfg;
 
 import ggc.cgms.device.DummyCGMS;
 import ggc.cgms.manager.CGMSManager;
-import ggc.plugin.cfg.DeviceConfigurationDefinition;
-
-import java.util.List;
-import java.util.Vector;
-
-import com.atech.graphics.dialogs.selector.SelectableInterface;
+import ggc.plugin.cfg.DeviceConfigurationDefinitionAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -35,43 +30,22 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class CGMSConfigurationDefinition implements DeviceConfigurationDefinition
+public class CGMSConfigurationDefinition extends DeviceConfigurationDefinitionAbstract
 {
 
-    /**
-     * Keyword used through configuration and configuration file describing device (for meter plugin, this
-     * would be word METER).
-     *  
-     * @return keyword representing device
-     */
-    public String getDevicePrefix()
+    public CGMSConfigurationDefinition()
     {
-        return "CGMS";
-    }
-
-    /**
-     * Only certain devices support manual time fix for application (meters do, other's don't).
-     * 
-     * @return true if time fix is supported, false otherwise
-     */
-    public boolean doesDeviceSupportTimeFix()
-    {
-        return false;
-    }
-
-    /**
-     * Get path to Configuration file as string
-     * 
-     * @return path to configuration file
-     */
-    public String getDevicesConfigurationFile()
-    {
-        return "../data/tools/CGMSConfiguration.properties";
+        super(false, // timeFix
+                CGMSManager.getInstance(), // deviceManager
+                "CGMS", // DevicePrefix
+                "CGMSConfiguration.properties", // ConfigurationFilename
+                "CGMSTool_" // Help Prefix
+        );
     }
 
     /**
      * Returns Dummy object (needed for some actions)
-     * 
+     *
      * @return
      */
     public Object getDummyObject()
@@ -79,35 +53,11 @@ public class CGMSConfigurationDefinition implements DeviceConfigurationDefinitio
         return new DummyCGMS();
     }
 
-    /**
-     * Returns list of all supported devices for plugin. Needed for device selection
-     * 
-     * @return
-     */
-    public List<SelectableInterface> getSupportedDevices()
+    @Override
+    public void initDeviceManager()
     {
-        return CGMSManager.getInstance().getSupportedDevicesForSelector();
+        this.deviceManager = CGMSManager.getInstance();
     }
 
-    /**
-     * Returns prefix for help context
-     * 
-     * @return help context prefix
-     */
-    public String getHelpPrefix()
-    {
-        return "CGMSTool_";
-    }
 
-    public Object getSpecificDeviceInstance(String company, String deviceName)
-    {
-        Object device = CGMSManager.getInstance().getDeviceV2(company, deviceName);
-
-        if (device==null)
-        {
-            device = CGMSManager.getInstance().getDeviceV1(company, deviceName);
-        }
-
-        return device;
-    }
 }

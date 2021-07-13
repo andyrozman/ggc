@@ -104,7 +104,7 @@ public class PumpPlugInServer extends DevicePlugInServer
     @Override
     public String getName()
     {
-        return ic.getMessage("PUMP_PLUGIN");
+        return i18nControl.getMessage("PUMP_PLUGIN");
     }
 
 
@@ -134,7 +134,7 @@ public class PumpPlugInServer extends DevicePlugInServer
     @Override
     public void initPlugIn()
     {
-        ic = dataAccess.getI18nControlInstance();
+        i18nControl = dataAccess.getI18nControlInstance();
 
         if (dataAccessPump == null)
         {
@@ -255,31 +255,31 @@ public class PumpPlugInServer extends DevicePlugInServer
     {
         DataAccessPump dataAccessPump = DataAccessPump.getInstance();
 
-        JMenu menu_pump = ATSwingUtils.createMenu("MN_PUMPS", null, ic_local);
+        JMenu menu_pump = ATSwingUtils.createMenu("MN_PUMPS", null, i18nControlLocal);
 
         JMenuItem menu = ATSwingUtils.createMenuItem(menu_pump, "MN_PUMPS_READ_DATA", "MN_PUMPS_READ_DATA_DESC",
-            "plugin_read_data", this, null, ic_local, dataAccessPump, parent);
+            "plugin_read_data", this, null, i18nControlLocal, dataAccessPump, parent);
 
         menus[0] = menu;
         menus[0].setEnabled(
             DownloadSupportType.isOptionSet(dataAccessPump.getDownloadStatus(), DownloadSupportType.DownloadData));
 
         menu = ATSwingUtils.createMenuItem(menu_pump, "MN_PUMPS_READ_CONFIG", "MN_PUMPS_READ_CONFIG_DESC",
-            "plugin_read_config", this, null, ic_local, dataAccessPump, parent);
+            "plugin_read_config", this, null, i18nControlLocal, dataAccessPump, parent);
 
         menus[1] = menu;
         menus[1].setEnabled(
             DownloadSupportType.isOptionSet(dataAccessPump.getDownloadStatus(), DownloadSupportType.DownloadConfig));
 
         menu = ATSwingUtils.createMenuItem(menu_pump, "MN_PUMPS_READ_FILE", "MN_PUMPS_READ_FILE_DESC",
-            "plugin_read_data_file", this, null, ic_local, dataAccessPump, parent);
+            "plugin_read_data_file", this, null, i18nControlLocal, dataAccessPump, parent);
 
         menus[2] = menu;
         menus[2].setEnabled(
             DownloadSupportType.isOptionSet(dataAccessPump.getDownloadStatus(), DownloadSupportType.DownloadDataFile));
 
         menu = ATSwingUtils.createMenuItem(menu_pump, "MN_PUMPS_READ_CONFIG_FILE", "MN_PUMPS_READ_CONFIG_FILE_DESC",
-            "plugin_read_config_file", this, null, ic_local, dataAccessPump, parent);
+            "plugin_read_config_file", this, null, i18nControlLocal, dataAccessPump, parent);
 
         menus[3] = menu;
         menus[3].setEnabled(DownloadSupportType.isOptionSet(dataAccessPump.getDownloadStatus(),
@@ -291,42 +291,42 @@ public class PumpPlugInServer extends DevicePlugInServer
         // "calendar.png");
         // ATSwingUtils.createMenuItem(menu_pump, "MN_PUMPS_MANUAL_ENTRY",
         // "MN_PUMPS_MANUAL_ENTRY_DESC",
-        // "pumps_manual_entry", this, null, ic_local, dataAccessPump, parent);
+        // "pumps_manual_entry", this, null, i18nControlLocal, dataAccessPump, parent);
 
         ATSwingUtils.createMenuItem(menu_pump, "MN_PUMP_DAILY", "MN_PUMP_DAILY_DESC", "pumps_manual_entry", this,
-            "calendar.png", ic_local, dataAccessPump, parent);
+            "calendar.png", i18nControlLocal, dataAccessPump, parent);
 
         ATSwingUtils.createMenuItem(menu_pump, "MN_PUMPS_ADDITIONAL_DATA", "MN_PUMPS_ADDITIONAL_DATA_DESC",
-            "pumps_additional_data", this, null, ic_local, dataAccessPump, parent);
+            "pumps_additional_data", this, null, i18nControlLocal, dataAccessPump, parent);
 
         ATSwingUtils.createMenuItem(menu_pump, "MN_PUMP_PROFILES", "MN_PUMP_PROFILES_DESC", "pumps_profile", this, null,
-            ic_local, DataAccessPump.getInstance(), parent);
+            i18nControlLocal, DataAccessPump.getInstance(), parent);
 
         menu_pump.addSeparator();
 
         ATSwingUtils.createMenuItem(menu_pump, "MN_PUMPS_LIST", "MN_PUMPS_LIST_DESC", "plugin_list", this, null,
-            ic_local, DataAccessPump.getInstance(), parent);
+            i18nControlLocal, DataAccessPump.getInstance(), parent);
 
         menu_pump.addSeparator();
 
         // TODO
         if (this.dataAccessPump.isDeveloperMode())
         {
-            JMenu m = ATSwingUtils.createMenu("MN_PUMPS_GRAPHS", "MN_PUMPS_GRAPHS_DESC", menu_pump, ic_local);
+            JMenu m = ATSwingUtils.createMenu("MN_PUMPS_GRAPHS", "MN_PUMPS_GRAPHS_DESC", menu_pump, i18nControlLocal);
 
             ATSwingUtils.createMenuItem(m, "MN_PUMPS_GRAPH_CUSTOM", "MN_PUMPS_GRAPH_CUSTOM_DESC", "pumps_graph1_custom",
-                this, null, ic_local, dataAccessPump, parent);
+                this, null, i18nControlLocal, dataAccessPump, parent);
 
             menu_pump.addSeparator();
         }
 
         ATSwingUtils.createMenuItem(menu_pump, "MN_PUMPS_CONFIG", "MN_PUMPS_CONFIG_DESC", "plugin_config", this, null,
-            ic_local, dataAccessPump, parent);
+            i18nControlLocal, dataAccessPump, parent);
 
         menu_pump.addSeparator();
 
         ATSwingUtils.createMenuItem(menu_pump, "MN_PUMPS_ABOUT", "MN_PUMPS_ABOUT_DESC", "plugin_about", this, null,
-            ic_local, dataAccessPump, parent);
+            i18nControlLocal, dataAccessPump, parent);
 
         refreshMenusAfterConfig();
 

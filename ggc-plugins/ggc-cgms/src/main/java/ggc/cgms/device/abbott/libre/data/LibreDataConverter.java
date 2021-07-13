@@ -3,36 +3,55 @@ package ggc.cgms.device.abbott.libre.data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.ATechDateType;
 
 import ggc.cgms.data.defs.CGMSConfigurationGroup;
+import ggc.cgms.data.writer.CGMSValuesWriter;
+import ggc.cgms.data.writer.CGMSValuesWriter2;
 import ggc.cgms.device.abbott.libre.enums.LibreTextCommand;
+import ggc.cgms.device.abbott.libre.enums.ResultValueType;
+import ggc.cgms.util.DataAccessCGMS;
 import ggc.plugin.data.DeviceValueConfigEntry;
+import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.impl.abbott.hid.AbbottHidDataConverter;
+import ggc.plugin.device.impl.abbott.hid.AbbottHidRecordDto;
+import ggc.plugin.device.impl.abbott.hid.AbbottHidTextCommand;
 import ggc.plugin.output.OutputWriter;
 
 /**
  * Created by andy on 08/09/17.
  */
-public class LibreDataConverter
+public class LibreDataConverter implements AbbottHidDataConverter
 {
 
     private static final Logger LOG = LoggerFactory.getLogger(LibreDataConverter.class);
 
     OutputWriter outputWriter;
-    LibreRecordDto process = new LibreRecordDto();
+    AbbottHidRecordDto process = new AbbottHidRecordDto();
+    CGMSValuesWriter cgmsValuesWriter;
+    CGMSValuesWriter2 cgmsValuesWriter2;
+    DataAccessCGMS dataAccess = DataAccessCGMS.getInstance();
+    I18nControlAbstract i18nControl = dataAccess.getI18nControlInstance();
+
+    DeviceIdentification deviceIdentification;
+    boolean isIdentificationWriten;
 
 
     public LibreDataConverter(OutputWriter outputWriter)
     {
         this.outputWriter = outputWriter;
+        this.cgmsValuesWriter = CGMSValuesWriter.getInstance(outputWriter);
+        this.cgmsValuesWriter2 = CGMSValuesWriter2.getInstance(outputWriter);
+
+        this.deviceIdentification = this.outputWriter.getDeviceIdentification();
     }
 
-
-    // public E <? extends LibreRecordDto> convert(LibreHidReportDto hidResponse, Class<E> clazz)
-    // {
-    // return null;
-    // }
+    public void convertData(AbbottHidTextCommand textCommand, String value)
+    {
+        convertData((LibreTextCommand)textCommand, value);
+    }
 
     public void convertData(LibreTextCommand textCommand, String value)
     {
@@ -40,10 +59,12 @@ public class LibreDataConverter
         {
             case SerialNumber:
                 convertDirectEntry("CFG_BASE_SERIAL_NUMBER", value, CGMSConfigurationGroup.General);
+                this.deviceIdentification.deviceSerialNumber = value;
                 break;
 
             case SoftwareVersion:
                 convertDirectEntry("CFG_BASE_FIRMWARE_VERSION", value, CGMSConfigurationGroup.General);
+                this.deviceIdentification.deviceHardwareVersion = value;
                 break;
 
             case Date:
@@ -52,13 +73,6 @@ public class LibreDataConverter
 
             case Time: // not used
                 break;
-
-            case History:
-                convertHistory(value);
-                break;
-            //
-            // case GlucoseUnits:
-            // break;
 
             case NtSound:
                 convertNtSound(value);
@@ -72,29 +86,10 @@ public class LibreDataConverter
                 convertDirectEntry("CFG_BASE_COMPUTER_TIME", value, CGMSConfigurationGroup.General);
                 break;
 
-            // case PatientName:
-            // case PatientId:
-            // case DatabaseRecordNumber:
-
-            // case GlucoseUnits:
-            // case NtSound:
-            // //break;
-            // case BtSound:
-            // //break;
-            // case Language:
-            // break;
-            // case AllLanguages:
-            // break;
-            case Test:
+            case History:
+                convertHistory(value);
                 break;
-            // case GlucoseUnits:
-            // break;
-            // case FoodUnits:
-            // break;
-            // case ClockType:
-            // break;
-            // case BgTargets:
-            // break;
+
             case OtherHistory:
                 convertOtherHistory(value);
                 break;
@@ -138,7 +133,10 @@ public class LibreDataConverter
     {
         TimeChangeDto dto = new TimeChangeDto(values);
 
-        System.out.println(dto.toString());
+        // FIXME removed
+        //System.out.println(dto.toString());
+
+        cgmsValuesWriter.writeObject("Event_DateTimeChanged", dto.dateTimeOld, dto.dateTimeNew.getDateTimeString());
     }
 
 
@@ -146,7 +144,43 @@ public class LibreDataConverter
     {
         ManualMeasurementDto dto = new ManualMeasurementDto(values);
 
-        System.out.println(dto.toString());
+        if (dto.readingType == ResultValueType.Scan || dto.readingType == ResultValueType.Glucose)
+        {
+            Float f = dto.value;
+            cgmsValuesWriter.writeObject("ManualReading", dto.getDateTime(), f.intValue());
+        }
+        else
+        {
+            cgmsValuesWriter2.writeObject("AdditionalData_Ketones", dto.getDateTime(), dto.value);
+        }
+
+        if (dto.foodFlag == 1)
+        {
+            cgmsValuesWriter2.writeObject("AdditionalData_Carbs", dto.getDateTime(), dto.foodCarbohydratesGrams);
+        }
+
+        if (dto.sportsFlag == 1)
+        {
+            cgmsValuesWriter2.writeObject("AdditionalData_Exercise_Undefined", dto.getDateTime(), (String)null);
+        }
+
+        if (dto.medicationFlag == 1)
+        {
+            cgmsValuesWriter2.writeObject("AdditionalData_Health_Medication", dto.getDateTime(), (String)null);
+        }
+
+        if (dto.rapidActingInsulinFlag == 1)
+        {
+            String value = dataAccess.getFormatedValue(dto.valueRapidActingInsulin, 2);
+            cgmsValuesWriter2.writeObject("AdditionalData_InsulinShortActing", dto.dateTime2, value);
+        }
+
+        if (dto.longActingInsulinFlag == 1)
+        {
+            String value = dataAccess.getFormatedValue(dto.valueLongActingInsulin, 2);
+            cgmsValuesWriter2.writeObject("AdditionalData_InsulinLongActing", dto.getDateTime(), value);
+        }
+
     }
 
 
@@ -154,8 +188,8 @@ public class LibreDataConverter
     {
         String[] values = value.split(",");
 
-        convertDirectEntry("CFG_SOUND_TYPE_VOLUME",
-            values[1].equals("1") ? "CFG_SOUND_VOLUME_HIGH" : "CFG_SOUND_VOLUME_LOW", CGMSConfigurationGroup.Sound);
+        convertDirectEntry("CFG_SOUND_TYPE_VOLUME", values[1].equals("1") ? "CFG_SOUND_VOLUME_HIGH"
+                : "CFG_SOUND_VOLUME_LOW", CGMSConfigurationGroup.Sound);
 
         convertDirectEntry("CFG_SOUND_TYPE_TOUCH_TONE", values[0].equals("1") ? "CCFG_OPTION_ON" : "CCFG_OPTION_OFF",
             CGMSConfigurationGroup.Sound);
@@ -166,11 +200,11 @@ public class LibreDataConverter
     {
         String[] values = value.split(",");
 
-        convertDirectEntry("CFG_SOUND_TYPE_NOTIFICATION_TONE",
-            values[0].equals("1") ? "CCFG_OPTION_ON" : "CCFG_OPTION_OFF", CGMSConfigurationGroup.Sound);
+        convertDirectEntry("CFG_SOUND_TYPE_NOTIFICATION_TONE", values[0].equals("1") ? "CCFG_OPTION_ON"
+                : "CCFG_OPTION_OFF", CGMSConfigurationGroup.Sound);
 
-        convertDirectEntry("CFG_SOUND_TYPE_NOTIFICATION_VIBRATE",
-            values[1].equals("1") ? "CCFG_OPTION_ON" : "CCFG_OPTION_OFF", CGMSConfigurationGroup.Sound);
+        convertDirectEntry("CFG_SOUND_TYPE_NOTIFICATION_VIBRATE", values[1].equals("1") ? "CCFG_OPTION_ON"
+                : "CCFG_OPTION_OFF", CGMSConfigurationGroup.Sound);
     }
 
 
@@ -178,9 +212,7 @@ public class LibreDataConverter
     {
         AutoMeasurementDto dto = new AutoMeasurementDto(value);
 
-        System.out.println(dto.toString());
-
-        // LOG.warn("NOT IMPLEMENTED HISTORY line={}", value);
+        cgmsValuesWriter.writeObject("SensorReading", dto.getDateTime(), dto.value);
     }
 
 
@@ -192,21 +224,20 @@ public class LibreDataConverter
 
     private void convertDateTime(String value)
     {
-        // DateTime.strptime("#{date} #{readTextResponse}", '%m,%d,%y %H,%M')
         String dateParts[] = value.split(",");
 
         ATechDate aTechDate = ATechDate.getATechDateFromParts(getInt(dateParts[1]), getInt(dateParts[0]),
             getInt(dateParts[2]), getInt(dateParts[3]), getInt(dateParts[4]), 0, ATechDateType.DateAndTimeSec);
 
-        outputWriter.writeConfigurationData(
-            createConfigEntry("CFG_BASE_DEVICE_TIME", aTechDate.toString(), CGMSConfigurationGroup.General));
+        outputWriter.writeConfigurationData(createConfigEntry("CFG_BASE_DEVICE_TIME", aTechDate.toString(),
+            CGMSConfigurationGroup.General));
 
     }
 
 
     private DeviceValueConfigEntry createConfigEntry(String key, String value, CGMSConfigurationGroup group)
     {
-        return new DeviceValueConfigEntry(key, value, group);
+        return new DeviceValueConfigEntry(i18nControl.getMessage(key), i18nControl.getMessage(value), group);
     }
 
 
@@ -214,5 +245,10 @@ public class LibreDataConverter
     {
         return Integer.parseInt(datePart);
     }
+
+
+
+
+
 
 }

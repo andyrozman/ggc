@@ -202,18 +202,20 @@ public class CGMSGraphViewDaily extends AbstractGraphViewAndProcessor implements
                 continue;
             }
 
-            if (entry.value < 20)
+            int value = Integer.parseInt(entry.value);
+
+            if (value < 20)
                 continue;
 
             long time = getDatetimeInMs(entry.time); // .getDatetimeInMs();
 
             if (entry.getTypeObject() == CGMSBaseDataType.SensorReading)
             {
-                bgReadingsSeries.add(time, CGMSUtil.getBGInCorrectFormat(entry.value));
+                bgReadingsSeries.add(time, CGMSUtil.getBGInCorrectFormat(value));
             }
             else
             {
-                bgCalibrationSeries.add(time, CGMSUtil.getBGInCorrectFormat(entry.value));
+                bgCalibrationSeries.add(time, CGMSUtil.getBGInCorrectFormat(value));
             }
         }
 

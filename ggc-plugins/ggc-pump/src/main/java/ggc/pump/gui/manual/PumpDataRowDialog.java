@@ -207,7 +207,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, HelpCa
 
 
     /**
-     *  Populates JList component
+     *  Populates CheckBoxList component
      * @param input
      */
     public void populateJListExtended(ArrayList<?> input)
@@ -351,11 +351,11 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, HelpCa
         lbl_add.setBounds(30, sy, 200, 25);
 
         // FIXME
-        // this.scr_list.setBounds(30, sy + 25, 290, 150);
+        this.scr_list.setBounds(30, sy + 25, 290, 150);
 
-        // this.bt_item_1.setBounds(340, sy + 25, 30, 30);
-        // this.bt_item_2.setBounds(340, sy + 65, 30, 30);
-        // this.bt_item_3.setBounds(340, sy + 105, 30, 30);
+        this.bt_item_1.setBounds(340, sy + 25, 30, 30);
+        this.bt_item_2.setBounds(340, sy + 65, 30, 30);
+        this.bt_item_3.setBounds(340, sy + 105, 30, 30);
 
         this.bt_ok.setBounds(30, sy + 205, 110, 25);
         this.bt_cancel.setBounds(145, sy + 205, 110, 25);

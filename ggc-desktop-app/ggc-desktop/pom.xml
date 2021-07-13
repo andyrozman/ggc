@@ -38,25 +38,24 @@
             <artifactId>ggc-plugins-base</artifactId>
         </dependency>
 
-
         <dependency>
             <groupId>net.sf.ggc</groupId>
-            <artifactId>ggc-meter-tool</artifactId>
+            <artifactId>ggc-plugins-meter</artifactId>
         </dependency>
 
         <dependency>
             <groupId>net.sf.ggc</groupId>
-            <artifactId>ggc-pump-tool</artifactId>
+            <artifactId>ggc-plugins-pump</artifactId>
         </dependency>
 
         <dependency>
             <groupId>net.sf.ggc</groupId>
-            <artifactId>ggc-cgms-tool</artifactId>
+            <artifactId>ggc-plugins-cgms</artifactId>
         </dependency>
 
         <dependency>
             <groupId>net.sf.ggc</groupId>
-            <artifactId>ggc-nutrition-tool</artifactId>
+            <artifactId>ggc-plugins-nutrition</artifactId>
         </dependency>
 
 
@@ -66,13 +65,18 @@
         </dependency>
 
 
-
-
         <!-- GGC Temporary Dependecies (testing only) -->
         <!--
         <dependency>
             <groupId>net.sf.ggc</groupId>
             <artifactId>ggc-device-menarini</artifactId>
+        </dependency>
+        -->
+
+        <!--
+        <dependency>
+            <groupId>net.sf.ggc</groupId>
+            <artifactId>ggc-sw-diasend</artifactId>
         </dependency>
         -->
 
@@ -128,6 +132,16 @@
         <dependency>
             <groupId>javax.jmdns</groupId>
             <artifactId>jmdns</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>apache-log4j-extras</artifactId>
         </dependency>
 
     </dependencies>

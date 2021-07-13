@@ -1,10 +1,6 @@
 package ggc.pump.data.cfg;
 
-import java.util.List;
-
-import com.atech.graphics.dialogs.selector.SelectableInterface;
-
-import ggc.plugin.cfg.DeviceConfigurationDefinition;
+import ggc.plugin.cfg.DeviceConfigurationDefinitionAbstract;
 import ggc.pump.device.DummyPump;
 import ggc.pump.manager.PumpManager;
 
@@ -28,52 +24,29 @@ import ggc.pump.manager.PumpManager;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:  PumpConfigurationDefinition
+ *  Description: Configuration Defeinition for Pump
  * 
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class PumpConfigurationDefinition implements DeviceConfigurationDefinition
+public class PumpConfigurationDefinition extends DeviceConfigurationDefinitionAbstract
 {
 
-    /**
-     * Keyword used through configuration and configuration file describing device (for pump plugin, this
-     * would be word PUMP).
-     *  
-     * @return keyword representing device
-     */
-    public String getDevicePrefix()
+    public PumpConfigurationDefinition()
     {
-        return "PUMP";
-    }
-
-
-    /**
-     * Only certain devices support manual time fix for application (meters do, other's don't).
-     * 
-     * @return true if time fix is supported, false otherwise
-     */
-    public boolean doesDeviceSupportTimeFix()
-    {
-        return false;
-    }
-
-
-    /**
-     * Get path to Configuration file as string
-     * 
-     * @return path to configuration file
-     */
-    public String getDevicesConfigurationFile()
-    {
-        return "../data/tools/PumpConfiguration.properties";
+        super(false, // timeFix
+                PumpManager.getInstance(), // deviceManager
+                "PUMP", // DevicePrefix
+                "PumpConfiguration.properties", // ConfigurationFilename
+                "PumpTool_" // Help Prefix
+        );
     }
 
 
     /**
      * Returns Dummy object (needed for some actions)
-     * 
+     *
      * @return
      */
     public Object getDummyObject()
@@ -81,39 +54,10 @@ public class PumpConfigurationDefinition implements DeviceConfigurationDefinitio
         return new DummyPump();
     }
 
-
-    /**
-     * Returns list of all supported devices for plugin. Needed for device selection
-     * 
-     * @return
-     */
-    public List<SelectableInterface> getSupportedDevices()
+    @Override
+    public void initDeviceManager()
     {
-        return PumpManager.getInstance().getSupportedDevicesForSelector(); // .getSupportedDevices();
-    }
-
-
-    /**
-     * Returns prefix for help context
-     * 
-     * @return help context prefix
-     */
-    public String getHelpPrefix()
-    {
-        return "PumpTool_";
-    }
-
-
-    public Object getSpecificDeviceInstance(String company, String deviceName)
-    {
-        Object device = PumpManager.getInstance().getDeviceV2(company, deviceName);
-
-        if (device == null)
-        {
-            device = PumpManager.getInstance().getDeviceV1(company, deviceName);
-        }
-
-        return device;
+        this.deviceManager = PumpManager.getInstance();
     }
 
 }

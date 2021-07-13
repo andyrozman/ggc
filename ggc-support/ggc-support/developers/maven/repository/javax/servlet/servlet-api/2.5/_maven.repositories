@@ -1,0 +1,8 @@
+#NOTE: This is an internal implementation file, its format can be changed without prior notice.
+#Sun Sep 14 17:06:25 CEST 2014
+servlet-api-2.5-sources.jar>=
+servlet-api-2.5.jar>=
+servlet-api-2.5.jar>nexus-infonova=
+servlet-api-2.5.pom>nexus-infonova=
+servlet-api-2.5-sources.jar>nexus-infonova=
+servlet-api-2.5.pom>central=

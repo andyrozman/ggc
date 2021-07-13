@@ -283,7 +283,7 @@ public class WorkingTimeDialog extends StandardDialogForObject implements Action
     //
     // this.deleteAddItem(pc);
     //
-    // populateJListExtended(this.timeEntries);
+    // populateData(this.timeEntries);
     // }
     // else
     // return;

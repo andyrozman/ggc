@@ -22,7 +22,11 @@ public enum PumpConfigurationGroup implements DeviceConfigurationGroup
     Bolus(5, "GROUP_BOLUS"), //
     Sound(6, "GROUP_SOUND"), //
 
-    Other(20, "GROUP_OTHER"),; //
+    Other(20, "GROUP_OTHER"), //
+
+    UnknownGroup(21, "GROUP_UNKNOWN"), //
+
+    ; //
 
     static Map<String, CodeEnumWithTranslation> translationMapping = new HashMap<String, CodeEnumWithTranslation>();
     static Map<Integer, PumpConfigurationGroup> codeMapping = new HashMap<Integer, PumpConfigurationGroup>();

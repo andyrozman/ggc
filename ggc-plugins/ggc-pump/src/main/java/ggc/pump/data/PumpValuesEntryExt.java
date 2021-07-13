@@ -95,7 +95,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH
     public PumpValuesEntryExt(String src)
     {
         this.source = (src == null) ? da.getSourceDevice() : src;
-        this.setPersonId(da.getCurrentUserIdAsInt());
+        this.setPersonId(da.getCurrentUserId());
     }
 
 

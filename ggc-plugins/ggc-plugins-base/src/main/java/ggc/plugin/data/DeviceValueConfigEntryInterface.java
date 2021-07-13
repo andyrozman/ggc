@@ -1,15 +1,10 @@
 package ggc.plugin.data;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 
-import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.graphics.components.MultiLineTooltip;
-import com.atech.utils.data.ATechDate;
 
-import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.plugin.output.OutputWriterConfigData;
-import ggc.plugin.output.OutputWriterData;
 
 /**
  * Application: GGC - GNU Gluco Control
@@ -31,8 +26,8 @@ import ggc.plugin.output.OutputWriterData;
  * values.
  * Author: Andy {andy@atech-software.com}
  */
-public interface DeviceValueConfigEntryInterface extends OutputWriterConfigData, Comparator<DeviceValueConfigEntryInterface>,
-        Comparable<DeviceValueConfigEntryInterface>, MultiLineTooltip
+public interface DeviceValueConfigEntryInterface extends OutputWriterConfigData,
+        Comparator<DeviceValueConfigEntryInterface>, Comparable<DeviceValueConfigEntryInterface>, MultiLineTooltip
 {
 
     /**
@@ -59,6 +54,7 @@ public interface DeviceValueConfigEntryInterface extends OutputWriterConfigData,
      */
     int compare(DeviceValueConfigEntryInterface d1, DeviceValueConfigEntryInterface d2);
 
+
     /**
      * Comparator method, for sorting objects
      *
@@ -74,12 +70,14 @@ public interface DeviceValueConfigEntryInterface extends OutputWriterConfigData,
      */
     boolean hasMultiLineToolTip();
 
+
     /**
      * Set MultiLine Tooltip Type
      *
      * @param _multiline_tooltip_type
      */
     void setMultiLineTooltipType(int _multiline_tooltip_type);
+
 
     /**
      * Get MultiLine Tooltip Type
@@ -90,5 +88,11 @@ public interface DeviceValueConfigEntryInterface extends OutputWriterConfigData,
 
 
     Integer getIndex();
+
+
+    int getColumnCount();
+
+
+    String getColumnName(int index);
 
 }

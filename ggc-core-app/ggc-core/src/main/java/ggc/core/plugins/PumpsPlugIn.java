@@ -5,6 +5,7 @@ import java.awt.*;
 import javax.swing.*;
 
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.plugin.PluginActionType;
 
 import ggc.core.data.defs.RefreshInfoType;
 import ggc.core.data.defs.ReturnActionType;
@@ -53,7 +54,8 @@ public class PumpsPlugIn extends GGCPluginClient
     }
 
 
-    public void executeReturnAction(ReturnActionType actionType)
+    @Override
+    public void executeReturnAction(PluginActionType actionType)
     {
         if (actionType == ReturnActionType.ReadData)
         {

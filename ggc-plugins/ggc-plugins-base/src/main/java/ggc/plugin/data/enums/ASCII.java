@@ -40,6 +40,8 @@ public enum ASCII
     RS(0x1E, 30), //
     US(0x1F, 31), //
     SPC(0x20, 32), //
+
+    CHAR_X(0x58, 88), //
     ;
 
     // public static final char STX = '\002';

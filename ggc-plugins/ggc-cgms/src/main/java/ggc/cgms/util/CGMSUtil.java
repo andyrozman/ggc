@@ -10,6 +10,7 @@ import ggc.core.data.defs.GlucoseUnitType;
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCI18nControl;
 import ggc.plugin.data.DeviceValuesEntry;
+import ggc.plugin.output.OutputWriter;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -47,6 +48,8 @@ public class CGMSUtil
     private static GGCI18nControl i18nControl;
 
     private static GlucoseUnitType BGUnit;
+
+    private static OutputWriter outputWriter;
 
 
     public static void setDataAccess(DataAccessCGMS dataAccess_)
@@ -102,4 +105,11 @@ public class CGMSUtil
             return dataAccess.getBGValueFromDefault(GlucoseUnitType.mmol_L, value);
     }
 
+    public static OutputWriter getOutputWriter() {
+        return outputWriter;
+    }
+
+    public static void setOutputWriter(OutputWriter outputWriter) {
+        CGMSUtil.outputWriter = outputWriter;
+    }
 }

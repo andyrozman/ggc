@@ -15,7 +15,7 @@ import ggc.plugin.device.impl.minimed.data.MinimedDataPage;
 import ggc.plugin.device.impl.minimed.enums.MinimedCommandType;
 import ggc.plugin.device.impl.minimed.enums.MinimedDeviceType;
 import ggc.plugin.device.impl.minimed.enums.MinimedTargetType;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.pump.device.minimed.data.decoder.MinimedPumpHistoryDecoder;
 import ggc.pump.test.AbstractPumpTest;
@@ -45,8 +45,8 @@ public class DecoderLoadData extends AbstractPumpTest
         this.initDb = false;
         prepareContext();
 
-        MinimedUtil.setOutputWriter(new ConsoleOutputWriter());
-        MinimedUtil.setDeviceType(MinimedDeviceType.Minimed_512_712);
+        MedtronicUtil.setOutputWriter(new ConsoleOutputWriter());
+        MedtronicUtil.setDeviceType(MinimedDeviceType.Minimed_512_712);
 
         isPumpMode = isPump;
 
@@ -261,7 +261,7 @@ public class DecoderLoadData extends AbstractPumpTest
         int page = 6;
         String path = "/home/andy/Dropbox/GGC/others/dcl/cgms/578398/";
         readFile(path + "ReadGlucoseHistory-page-" + page + ".data");
-        MinimedUtil.setDeviceType(MinimedDeviceType.Minimed_523_723);
+        MedtronicUtil.setDeviceType(MinimedDeviceType.Minimed_523_723);
     }
 
 
@@ -270,7 +270,7 @@ public class DecoderLoadData extends AbstractPumpTest
         // 523
         String path = "/home/andy/Dropbox/GGC/others/dcl/pump/342725/logs/";
         readFile(path + "ReadHistoryData-page-" + page + ".data");
-        MinimedUtil.setDeviceType(MinimedDeviceType.Minimed_523_723);
+        MedtronicUtil.setDeviceType(MinimedDeviceType.Minimed_523_723);
     }
 
 
@@ -327,7 +327,7 @@ public class DecoderLoadData extends AbstractPumpTest
             dataClear.add(b); // bitUtils.convertUnsignedByteToInt(b));
         }
 
-        MinimedUtil.setDeviceType(MinimedDeviceType.Minimed_512_712);
+        MedtronicUtil.setDeviceType(MinimedDeviceType.Minimed_512_712);
 
         // return result;
     }

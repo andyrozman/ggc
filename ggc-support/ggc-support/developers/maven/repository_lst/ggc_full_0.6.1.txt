@@ -1,0 +1,420 @@
+[INFO] Scanning for projects...
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for net.sf.ggc:ggc-help:jar:0.2-SNAPSHOT
+[WARNING] 'version' contains an expression but should be a constant. @ net.sf.ggc:ggc-help:${ggc-help.version}, /home/andy/workspaces/andy-iplayground4/ggc/ggc-help/pom.xml, line 15, column 11
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for net.sf.ggc:ggc-core:jar:0.6.0-SNAPSHOT
+[WARNING] 'version' contains an expression but should be a constant. @ net.sf.ggc:ggc-core:${ggc-core.version}, /home/andy/workspaces/andy-iplayground4/ggc/ggc-core/pom.xml, line 15, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for net.sf.ggc:ggc-plugin-base:jar:0.7.2-SNAPSHOT
+[WARNING] 'version' contains an expression but should be a constant. @ net.sf.ggc:ggc-plugin-base:${ggc-plugin-base.version}, /home/andy/workspaces/andy-iplayground4/ggc/ggc-plugin_base/pom.xml, line 14, column 14
+[WARNING] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: net.sf.ggc:ggc-core:jar -> duplicate declaration of version (?) @ net.sf.ggc:ggc-plugin-base:${ggc-plugin-base.version}, /home/andy/workspaces/andy-iplayground4/ggc/ggc-plugin_base/pom.xml, line 54, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for net.sf.ggc:ggc-nutri-tool:jar:1.3.5-SNAPSHOT
+[WARNING] 'version' contains an expression but should be a constant. @ net.sf.ggc:ggc-nutri-tool:${ggc-nutri-tool.version}, /home/andy/workspaces/andy-iplayground4/ggc/ggc-nutri/pom.xml, line 14, column 11
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for net.sf.ggc:ggc-meter-tool:jar:2.2.0-SNAPSHOT
+[WARNING] 'version' contains an expression but should be a constant. @ net.sf.ggc:ggc-meter-tool:${ggc-meter-tool.version}, /home/andy/workspaces/andy-iplayground4/ggc/ggc-meter/pom.xml, line 16, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for net.sf.ggc:ggc-pump-tool:jar:1.5.1-SNAPSHOT
+[WARNING] 'version' contains an expression but should be a constant. @ net.sf.ggc:ggc-pump-tool:${ggc-pump-tool.version}, /home/andy/workspaces/andy-iplayground4/ggc/ggc-pump/pom.xml, line 14, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for net.sf.ggc:ggc-cgms-tool:jar:1.3.2-SNAPSHOT
+[WARNING] 'version' contains an expression but should be a constant. @ net.sf.ggc:ggc-cgms-tool:${ggc-cgms-tool.version}, /home/andy/workspaces/andy-iplayground4/ggc/ggc-cgm/pom.xml, line 14, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for net.sf.ggc:ggc-desktop:jar:0.6.0-SNAPSHOT
+[WARNING] 'version' contains an expression but should be a constant. @ net.sf.ggc:ggc-desktop:${ggc-desktop.version}, /home/andy/workspaces/andy-iplayground4/ggc/ggc-desktop/pom.xml, line 15, column 14
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] GGC Parent POM
+[INFO] GGC Help Project
+[INFO] GGC Core Project
+[INFO] GGC Plugin Base Project
+[INFO] GGC Nutrition Tool Project
+[INFO] GGC Meter Tool Project
+[INFO] GGC Pump Tool Project
+[INFO] GGC CGMS Tool Project
+[INFO] GGC Desktop Project
+[INFO] ggc-root
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building GGC Parent POM 1.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.1:tree (default-cli) @ ggc-parent ---
+[INFO] net.sf.ggc:ggc-parent:pom:1.0-SNAPSHOT
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building GGC Help Project 0.2-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[WARNING] The POM for org.icepdf:icepdf-core:jar:5.0.7 is missing, no dependency information available
+[WARNING] The POM for org.icepdf:icepdf-viewer:jar:5.0.7 is missing, no dependency information available
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.1:tree (default-cli) @ ggc-help ---
+[WARNING] Missing POM for org.icepdf:icepdf-core:jar:5.0.7
+[WARNING] Missing POM for org.icepdf:icepdf-viewer:jar:5.0.7
+[INFO] net.sf.ggc:ggc-help:jar:0.2-SNAPSHOT
+[INFO] +- com.atech-software:atech-tools:jar:0.7.13-SNAPSHOT:compile
+[INFO] |  +- org.hibernate:hibernate:jar:3.1.3:compile
+[INFO] |  |  +- ehcache:ehcache:jar:1.1:compile
+[INFO] |  |  +- cglib:cglib:jar:2.1_3:compile
+[INFO] |  |  +- asm:asm:jar:1.5.3:compile
+[INFO] |  |  +- asm:asm-attrs:jar:1.5.3:compile
+[INFO] |  |  +- dom4j:dom4j:jar:1.6.1:compile
+[INFO] |  |  \- antlr:antlr:jar:2.7.6rc1:compile
+[INFO] |  +- javax.transaction:jta:jar:1.0.1B:compile
+[INFO] |  +- junit:junit:jar:4.12:test (scope managed from compile)
+[INFO] |  |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] |  +- com.itextpdf:itextpdf:jar:5.1.2:compile
+[INFO] |  +- commons-lang:commons-lang:jar:2.6:compile
+[INFO] |  +- net.sf.squirrel-sql.thirdparty-non-maven:skinlf:jar:6.7:compile
+[INFO] |  +- log4j:log4j:jar:1.2.16:compile
+[INFO] |  +- jfree:jfreechart:jar:1.0.13:compile
+[INFO] |  |  \- jfree:jcommon:jar:1.0.16:compile
+[INFO] |  +- org.icepdf:icepdf-core:jar:5.0.7:compile
+[INFO] |  +- org.icepdf:icepdf-viewer:jar:5.0.7:compile
+[INFO] |  +- joda-time:joda-time:jar:2.8.2:compile
+[INFO] |  +- org.slf4j:slf4j-api:jar:1.7.12:compile
+[INFO] |  +- org.slf4j:log4j-over-slf4j:jar:1.7.12:compile
+[INFO] |  \- org.slf4j:slf4j-log4j12:jar:1.7.12:compile
+[INFO] \- javax.help:javahelp:jar:2.0.05:compile
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building GGC Core Project 0.6.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[WARNING] The POM for net.sf.ggc.pygmy-httpd:pygmy-core:jar:0.2 is missing, no dependency information available
+[WARNING] The POM for net.sf.ggc.pygmy-httpd:pygmy-handlers:jar:0.2 is missing, no dependency information available
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.1:tree (default-cli) @ ggc-core ---
+[WARNING] Missing POM for net.sf.ggc.pygmy-httpd:pygmy-core:jar:0.2
+[WARNING] Missing POM for net.sf.ggc.pygmy-httpd:pygmy-handlers:jar:0.2
+[INFO] net.sf.ggc:ggc-core:jar:0.6.0-SNAPSHOT
+[INFO] +- com.atech-software:atech-tools:jar:0.7.13-SNAPSHOT:compile
+[INFO] |  +- javax.transaction:jta:jar:1.0.1B:compile
+[INFO] |  +- junit:junit:jar:4.12:test (scope managed from compile)
+[INFO] |  |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] |  +- net.sf.squirrel-sql.thirdparty-non-maven:skinlf:jar:6.7:compile
+[INFO] |  +- org.icepdf:icepdf-core:jar:5.0.7:compile
+[INFO] |  +- org.icepdf:icepdf-viewer:jar:5.0.7:compile
+[INFO] |  +- joda-time:joda-time:jar:2.8.2:compile
+[INFO] |  \- org.slf4j:log4j-over-slf4j:jar:1.7.12:compile
+[INFO] +- org.hibernate:hibernate:jar:3.1.3:compile
+[INFO] |  +- ehcache:ehcache:jar:1.1:compile
+[INFO] |  +- cglib:cglib:jar:2.1_3:compile
+[INFO] |  +- asm:asm:jar:1.5.3:compile
+[INFO] |  +- asm:asm-attrs:jar:1.5.3:compile
+[INFO] |  +- dom4j:dom4j:jar:1.6.1:compile
+[INFO] |  \- antlr:antlr:jar:2.7.6rc1:compile
+[INFO] +- net.sf.ggc.pygmy-httpd:pygmy-core:jar:0.2:compile
+[INFO] +- net.sf.ggc.pygmy-httpd:pygmy-handlers:jar:0.2:compile
+[INFO] +- com.itextpdf:itextpdf:jar:5.1.2:compile
+[INFO] +- commons-lang:commons-lang:jar:2.6:compile
+[INFO] +- javax.help:javahelp:jar:2.0.05:compile
+[INFO] +- log4j:log4j:jar:1.2.16:compile
+[INFO] +- jfree:jfreechart:jar:1.0.13:compile
+[INFO] |  \- jfree:jcommon:jar:1.0.16:compile
+[INFO] +- com.h2database:h2:jar:1.0.69:runtime
+[INFO] +- org.slf4j:slf4j-api:jar:1.7.12:compile
+[INFO] +- org.slf4j:slf4j-log4j12:jar:1.7.12:compile
+[INFO] \- org.slf4j:jcl-over-slf4j:jar:1.7.12:compile
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building GGC Plugin Base Project 0.7.2-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.1:tree (default-cli) @ ggc-plugin-base ---
+[INFO] net.sf.ggc:ggc-plugin-base:jar:0.7.2-SNAPSHOT
+[INFO] +- net.sf.ggc:ggc-core:jar:0.6.0-SNAPSHOT:compile
+[INFO] |  +- org.hibernate:hibernate:jar:3.1.3:compile
+[INFO] |  |  +- ehcache:ehcache:jar:1.1:compile
+[INFO] |  |  +- cglib:cglib:jar:2.1_3:compile
+[INFO] |  |  +- asm:asm:jar:1.5.3:compile
+[INFO] |  |  +- asm:asm-attrs:jar:1.5.3:compile
+[INFO] |  |  +- dom4j:dom4j:jar:1.6.1:compile
+[INFO] |  |  \- antlr:antlr:jar:2.7.6rc1:compile
+[INFO] |  +- net.sf.ggc.pygmy-httpd:pygmy-core:jar:0.2:compile
+[INFO] |  +- net.sf.ggc.pygmy-httpd:pygmy-handlers:jar:0.2:compile
+[INFO] |  +- com.itextpdf:itextpdf:jar:5.1.2:compile
+[INFO] |  +- javax.help:javahelp:jar:2.0.05:compile
+[INFO] |  +- log4j:log4j:jar:1.2.16:compile
+[INFO] |  +- jfree:jfreechart:jar:1.0.13:compile
+[INFO] |  |  \- jfree:jcommon:jar:1.0.16:compile
+[INFO] |  +- com.h2database:h2:jar:1.0.69:runtime
+[INFO] |  +- org.slf4j:slf4j-api:jar:1.7.12:compile
+[INFO] |  +- org.slf4j:slf4j-log4j12:jar:1.7.12:compile
+[INFO] |  \- org.slf4j:jcl-over-slf4j:jar:1.7.12:compile
+[INFO] +- com.atech-software:atech-tools:jar:0.7.13-SNAPSHOT:compile
+[INFO] |  +- javax.transaction:jta:jar:1.0.1B:compile
+[INFO] |  +- junit:junit:jar:4.12:test (scope managed from compile)
+[INFO] |  |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] |  +- net.sf.squirrel-sql.thirdparty-non-maven:skinlf:jar:6.7:compile
+[INFO] |  +- org.icepdf:icepdf-core:jar:5.0.7:compile
+[INFO] |  +- org.icepdf:icepdf-viewer:jar:5.0.7:compile
+[INFO] |  +- joda-time:joda-time:jar:2.8.2:compile
+[INFO] |  \- org.slf4j:log4j-over-slf4j:jar:1.7.12:compile
+[INFO] +- com.ibm.old.comapi:ibm-compapi:jar:1.3:compile
+[INFO] +- jaxen:jaxen:jar:1.1.6:compile
+[INFO] +- commons-lang:commons-lang:jar:2.6:compile
+[INFO] +- com.neuronrobotics:nrjavaserial-j15:jar:3.9.3.1:compile
+[INFO] |  \- commons-net:commons-net:jar:3.3:compile
+[INFO] +- net.java.dev.jna:jna-j15:jar:4.1.0:compile
+[INFO] \- org.hid4java:hid4java-j15:jar:0.3.1:compile
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building GGC Nutrition Tool Project 1.3.5-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.1:tree (default-cli) @ ggc-nutri-tool ---
+[INFO] net.sf.ggc:ggc-nutri-tool:jar:1.3.5-SNAPSHOT
+[INFO] +- net.sf.ggc:ggc-core:jar:0.6.0-SNAPSHOT:compile
+[INFO] |  +- org.hibernate:hibernate:jar:3.1.3:compile
+[INFO] |  |  +- ehcache:ehcache:jar:1.1:compile
+[INFO] |  |  +- cglib:cglib:jar:2.1_3:compile
+[INFO] |  |  +- asm:asm:jar:1.5.3:compile
+[INFO] |  |  +- asm:asm-attrs:jar:1.5.3:compile
+[INFO] |  |  +- dom4j:dom4j:jar:1.6.1:compile
+[INFO] |  |  \- antlr:antlr:jar:2.7.6rc1:compile
+[INFO] |  +- net.sf.ggc.pygmy-httpd:pygmy-core:jar:0.2:compile
+[INFO] |  +- net.sf.ggc.pygmy-httpd:pygmy-handlers:jar:0.2:compile
+[INFO] |  +- com.itextpdf:itextpdf:jar:5.1.2:compile
+[INFO] |  +- commons-lang:commons-lang:jar:2.6:compile
+[INFO] |  +- javax.help:javahelp:jar:2.0.05:compile
+[INFO] |  +- log4j:log4j:jar:1.2.16:compile
+[INFO] |  +- jfree:jfreechart:jar:1.0.13:compile
+[INFO] |  |  \- jfree:jcommon:jar:1.0.16:compile
+[INFO] |  +- com.h2database:h2:jar:1.0.69:runtime
+[INFO] |  +- org.slf4j:slf4j-api:jar:1.7.12:compile
+[INFO] |  +- org.slf4j:slf4j-log4j12:jar:1.7.12:compile
+[INFO] |  \- org.slf4j:jcl-over-slf4j:jar:1.7.12:compile
+[INFO] +- net.sf.ggc:ggc-plugin-base:jar:0.7.2-SNAPSHOT:compile
+[INFO] |  +- com.ibm.old.comapi:ibm-compapi:jar:1.3:compile
+[INFO] |  +- jaxen:jaxen:jar:1.1.6:compile
+[INFO] |  +- com.neuronrobotics:nrjavaserial-j15:jar:3.9.3.1:compile
+[INFO] |  |  \- commons-net:commons-net:jar:3.3:compile
+[INFO] |  +- net.java.dev.jna:jna-j15:jar:4.1.0:compile
+[INFO] |  \- org.hid4java:hid4java-j15:jar:0.3.1:compile
+[INFO] \- com.atech-software:atech-tools:jar:0.7.13-SNAPSHOT:compile
+[INFO]    +- javax.transaction:jta:jar:1.0.1B:compile
+[INFO]    +- junit:junit:jar:4.12:test (scope managed from compile)
+[INFO]    |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO]    +- net.sf.squirrel-sql.thirdparty-non-maven:skinlf:jar:6.7:compile
+[INFO]    +- org.icepdf:icepdf-core:jar:5.0.7:compile
+[INFO]    +- org.icepdf:icepdf-viewer:jar:5.0.7:compile
+[INFO]    +- joda-time:joda-time:jar:2.8.2:compile
+[INFO]    \- org.slf4j:log4j-over-slf4j:jar:1.7.12:compile
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building GGC Meter Tool Project 2.2.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.1:tree (default-cli) @ ggc-meter-tool ---
+[INFO] net.sf.ggc:ggc-meter-tool:jar:2.2.0-SNAPSHOT
+[INFO] +- com.atech-software:atech-tools:jar:0.7.13-SNAPSHOT:compile
+[INFO] |  +- org.hibernate:hibernate:jar:3.1.3:compile
+[INFO] |  |  +- ehcache:ehcache:jar:1.1:compile
+[INFO] |  |  +- cglib:cglib:jar:2.1_3:compile
+[INFO] |  |  +- asm:asm:jar:1.5.3:compile
+[INFO] |  |  +- asm:asm-attrs:jar:1.5.3:compile
+[INFO] |  |  +- dom4j:dom4j:jar:1.6.1:compile
+[INFO] |  |  \- antlr:antlr:jar:2.7.6rc1:compile
+[INFO] |  +- javax.transaction:jta:jar:1.0.1B:compile
+[INFO] |  +- junit:junit:jar:4.12:test (scope managed from compile)
+[INFO] |  |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] |  +- com.itextpdf:itextpdf:jar:5.1.2:compile
+[INFO] |  +- commons-lang:commons-lang:jar:2.6:compile
+[INFO] |  +- javax.help:javahelp:jar:2.0.05:compile
+[INFO] |  +- net.sf.squirrel-sql.thirdparty-non-maven:skinlf:jar:6.7:compile
+[INFO] |  +- log4j:log4j:jar:1.2.16:compile
+[INFO] |  +- jfree:jfreechart:jar:1.0.13:compile
+[INFO] |  |  \- jfree:jcommon:jar:1.0.16:compile
+[INFO] |  +- org.icepdf:icepdf-core:jar:5.0.7:compile
+[INFO] |  +- org.icepdf:icepdf-viewer:jar:5.0.7:compile
+[INFO] |  +- joda-time:joda-time:jar:2.8.2:compile
+[INFO] |  +- org.slf4j:slf4j-api:jar:1.7.12:compile
+[INFO] |  +- org.slf4j:log4j-over-slf4j:jar:1.7.12:compile
+[INFO] |  \- org.slf4j:slf4j-log4j12:jar:1.7.12:compile
+[INFO] +- net.sf.ggc:ggc-core:jar:0.6.0-SNAPSHOT:compile
+[INFO] |  +- net.sf.ggc.pygmy-httpd:pygmy-core:jar:0.2:compile
+[INFO] |  +- net.sf.ggc.pygmy-httpd:pygmy-handlers:jar:0.2:compile
+[INFO] |  +- com.h2database:h2:jar:1.0.69:runtime
+[INFO] |  \- org.slf4j:jcl-over-slf4j:jar:1.7.12:compile
+[INFO] \- net.sf.ggc:ggc-plugin-base:jar:0.7.2-SNAPSHOT:compile
+[INFO]    +- com.ibm.old.comapi:ibm-compapi:jar:1.3:compile
+[INFO]    +- jaxen:jaxen:jar:1.1.6:compile
+[INFO]    +- com.neuronrobotics:nrjavaserial-j15:jar:3.9.3.1:compile
+[INFO]    |  \- commons-net:commons-net:jar:3.3:compile
+[INFO]    +- net.java.dev.jna:jna-j15:jar:4.1.0:compile
+[INFO]    \- org.hid4java:hid4java-j15:jar:0.3.1:compile
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building GGC Pump Tool Project 1.5.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.1:tree (default-cli) @ ggc-pump-tool ---
+[INFO] net.sf.ggc:ggc-pump-tool:jar:1.5.1-SNAPSHOT
+[INFO] +- net.sf.ggc:ggc-core:jar:0.6.0-SNAPSHOT:compile
+[INFO] |  +- org.hibernate:hibernate:jar:3.1.3:compile
+[INFO] |  |  +- ehcache:ehcache:jar:1.1:compile
+[INFO] |  |  +- cglib:cglib:jar:2.1_3:compile
+[INFO] |  |  +- asm:asm:jar:1.5.3:compile
+[INFO] |  |  +- asm:asm-attrs:jar:1.5.3:compile
+[INFO] |  |  +- dom4j:dom4j:jar:1.6.1:compile
+[INFO] |  |  \- antlr:antlr:jar:2.7.6rc1:compile
+[INFO] |  +- net.sf.ggc.pygmy-httpd:pygmy-core:jar:0.2:compile
+[INFO] |  +- net.sf.ggc.pygmy-httpd:pygmy-handlers:jar:0.2:compile
+[INFO] |  +- com.itextpdf:itextpdf:jar:5.1.2:compile
+[INFO] |  +- javax.help:javahelp:jar:2.0.05:compile
+[INFO] |  +- log4j:log4j:jar:1.2.16:compile
+[INFO] |  +- jfree:jfreechart:jar:1.0.13:compile
+[INFO] |  |  \- jfree:jcommon:jar:1.0.16:compile
+[INFO] |  +- com.h2database:h2:jar:1.0.69:runtime
+[INFO] |  +- org.slf4j:slf4j-api:jar:1.7.12:compile
+[INFO] |  +- org.slf4j:slf4j-log4j12:jar:1.7.12:compile
+[INFO] |  \- org.slf4j:jcl-over-slf4j:jar:1.7.12:compile
+[INFO] +- net.sf.ggc:ggc-plugin-base:jar:0.7.2-SNAPSHOT:compile
+[INFO] |  +- com.neuronrobotics:nrjavaserial-j15:jar:3.9.3.1:compile
+[INFO] |  |  \- commons-net:commons-net:jar:3.3:compile
+[INFO] |  +- net.java.dev.jna:jna-j15:jar:4.1.0:compile
+[INFO] |  \- org.hid4java:hid4java-j15:jar:0.3.1:compile
+[INFO] +- com.atech-software:atech-tools:jar:0.7.13-SNAPSHOT:compile
+[INFO] |  +- javax.transaction:jta:jar:1.0.1B:compile
+[INFO] |  +- junit:junit:jar:4.12:test (scope managed from compile)
+[INFO] |  |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] |  +- net.sf.squirrel-sql.thirdparty-non-maven:skinlf:jar:6.7:compile
+[INFO] |  +- org.icepdf:icepdf-core:jar:5.0.7:compile
+[INFO] |  +- org.icepdf:icepdf-viewer:jar:5.0.7:compile
+[INFO] |  +- joda-time:joda-time:jar:2.8.2:compile
+[INFO] |  \- org.slf4j:log4j-over-slf4j:jar:1.7.12:compile
+[INFO] +- com.ibm.old.comapi:ibm-compapi:jar:1.3:compile
+[INFO] +- jaxen:jaxen:jar:1.1.6:compile
+[INFO] +- postgresql:postgresql:jar:8.4-702.jdbc3:compile
+[INFO] +- commons-lang:commons-lang:jar:2.6:compile
+[INFO] \- commons-collections:commons-collections:jar:3.2.1:compile
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building GGC CGMS Tool Project 1.3.2-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.1:tree (default-cli) @ ggc-cgms-tool ---
+[INFO] net.sf.ggc:ggc-cgms-tool:jar:1.3.2-SNAPSHOT
+[INFO] +- net.sf.ggc:ggc-core:jar:0.6.0-SNAPSHOT:compile
+[INFO] |  +- org.hibernate:hibernate:jar:3.1.3:compile
+[INFO] |  |  +- ehcache:ehcache:jar:1.1:compile
+[INFO] |  |  +- cglib:cglib:jar:2.1_3:compile
+[INFO] |  |  +- asm:asm:jar:1.5.3:compile
+[INFO] |  |  +- asm:asm-attrs:jar:1.5.3:compile
+[INFO] |  |  +- dom4j:dom4j:jar:1.6.1:compile
+[INFO] |  |  \- antlr:antlr:jar:2.7.6rc1:compile
+[INFO] |  +- net.sf.ggc.pygmy-httpd:pygmy-core:jar:0.2:compile
+[INFO] |  +- net.sf.ggc.pygmy-httpd:pygmy-handlers:jar:0.2:compile
+[INFO] |  +- com.itextpdf:itextpdf:jar:5.1.2:compile
+[INFO] |  +- commons-lang:commons-lang:jar:2.6:compile
+[INFO] |  +- javax.help:javahelp:jar:2.0.05:compile
+[INFO] |  +- log4j:log4j:jar:1.2.16:compile
+[INFO] |  +- jfree:jfreechart:jar:1.0.13:compile
+[INFO] |  |  \- jfree:jcommon:jar:1.0.16:compile
+[INFO] |  +- com.h2database:h2:jar:1.0.69:runtime
+[INFO] |  +- org.slf4j:slf4j-api:jar:1.7.12:compile
+[INFO] |  +- org.slf4j:slf4j-log4j12:jar:1.7.12:compile
+[INFO] |  \- org.slf4j:jcl-over-slf4j:jar:1.7.12:compile
+[INFO] +- net.sf.ggc:ggc-plugin-base:jar:0.7.2-SNAPSHOT:compile
+[INFO] |  +- com.ibm.old.comapi:ibm-compapi:jar:1.3:compile
+[INFO] |  +- jaxen:jaxen:jar:1.1.6:compile
+[INFO] |  +- com.neuronrobotics:nrjavaserial-j15:jar:3.9.3.1:compile
+[INFO] |  |  \- commons-net:commons-net:jar:3.3:compile
+[INFO] |  +- net.java.dev.jna:jna-j15:jar:4.1.0:compile
+[INFO] |  \- org.hid4java:hid4java-j15:jar:0.3.1:compile
+[INFO] +- com.atech-software:atech-tools:jar:0.7.13-SNAPSHOT:compile
+[INFO] |  +- javax.transaction:jta:jar:1.0.1B:compile
+[INFO] |  +- junit:junit:jar:4.12:test (scope managed from compile)
+[INFO] |  |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] |  +- net.sf.squirrel-sql.thirdparty-non-maven:skinlf:jar:6.7:compile
+[INFO] |  +- org.icepdf:icepdf-core:jar:5.0.7:compile
+[INFO] |  +- org.icepdf:icepdf-viewer:jar:5.0.7:compile
+[INFO] |  +- joda-time:joda-time:jar:2.8.2:compile
+[INFO] |  \- org.slf4j:log4j-over-slf4j:jar:1.7.12:compile
+[INFO] \- org.jdom:jdom:jar:1.1:compile
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building GGC Desktop Project 0.6.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.1:tree (default-cli) @ ggc-desktop ---
+[INFO] net.sf.ggc:ggc-desktop:jar:0.6.0-SNAPSHOT
+[INFO] +- com.atech-software:atech-tools:jar:0.7.13-SNAPSHOT:compile
+[INFO] |  +- org.hibernate:hibernate:jar:3.1.3:compile
+[INFO] |  |  +- ehcache:ehcache:jar:1.1:compile
+[INFO] |  |  +- cglib:cglib:jar:2.1_3:compile
+[INFO] |  |  +- asm:asm:jar:1.5.3:compile
+[INFO] |  |  +- asm:asm-attrs:jar:1.5.3:compile
+[INFO] |  |  +- dom4j:dom4j:jar:1.6.1:compile
+[INFO] |  |  \- antlr:antlr:jar:2.7.6rc1:compile
+[INFO] |  +- javax.transaction:jta:jar:1.0.1B:compile
+[INFO] |  +- junit:junit:jar:4.12:test (scope managed from compile)
+[INFO] |  |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] |  +- com.itextpdf:itextpdf:jar:5.1.2:compile
+[INFO] |  +- log4j:log4j:jar:1.2.16:compile
+[INFO] |  +- org.icepdf:icepdf-core:jar:5.0.7:compile
+[INFO] |  +- org.icepdf:icepdf-viewer:jar:5.0.7:compile
+[INFO] |  +- joda-time:joda-time:jar:2.8.2:compile
+[INFO] |  +- org.slf4j:slf4j-api:jar:1.7.12:compile
+[INFO] |  +- org.slf4j:log4j-over-slf4j:jar:1.7.12:compile
+[INFO] |  \- org.slf4j:slf4j-log4j12:jar:1.7.12:compile
+[INFO] +- net.sf.ggc:ggc-help:jar:0.2-SNAPSHOT:compile
+[INFO] +- net.sf.ggc:ggc-core:jar:0.6.0-SNAPSHOT:compile
+[INFO] |  +- net.sf.ggc.pygmy-httpd:pygmy-core:jar:0.2:compile
+[INFO] |  +- net.sf.ggc.pygmy-httpd:pygmy-handlers:jar:0.2:compile
+[INFO] |  +- com.h2database:h2:jar:1.0.69:runtime
+[INFO] |  \- org.slf4j:jcl-over-slf4j:jar:1.7.12:compile
+[INFO] +- net.sf.ggc:ggc-plugin-base:jar:0.7.2-SNAPSHOT:compile
+[INFO] |  +- com.ibm.old.comapi:ibm-compapi:jar:1.3:compile
+[INFO] |  +- jaxen:jaxen:jar:1.1.6:compile
+[INFO] |  +- com.neuronrobotics:nrjavaserial-j15:jar:3.9.3.1:compile
+[INFO] |  |  \- commons-net:commons-net:jar:3.3:compile
+[INFO] |  +- net.java.dev.jna:jna-j15:jar:4.1.0:compile
+[INFO] |  \- org.hid4java:hid4java-j15:jar:0.3.1:compile
+[INFO] +- net.sf.ggc:ggc-meter-tool:jar:2.2.0-SNAPSHOT:compile
+[INFO] +- net.sf.ggc:ggc-pump-tool:jar:1.5.1-SNAPSHOT:compile
+[INFO] |  \- commons-collections:commons-collections:jar:3.2.1:compile
+[INFO] +- net.sf.ggc:ggc-cgms-tool:jar:1.3.2-SNAPSHOT:compile
+[INFO] |  \- org.jdom:jdom:jar:1.1:compile
+[INFO] +- net.sf.ggc:ggc-nutri-tool:jar:1.3.5-SNAPSHOT:compile
+[INFO] +- javax.help:javahelp:jar:2.0.05:compile
+[INFO] +- net.sf.squirrel-sql.thirdparty-non-maven:skinlf:jar:6.7:compile
+[INFO] +- jfree:jfreechart:jar:1.0.13:compile
+[INFO] |  \- jfree:jcommon:jar:1.0.16:compile
+[INFO] +- commons-lang:commons-lang:jar:2.6:compile
+[INFO] \- postgresql:postgresql:jar:8.4-702.jdbc3:compile
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building ggc-root 1.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.1:tree (default-cli) @ ggc-root ---
+[INFO] net.sf.ggc:ggc-root:pom:1.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO] 
+[INFO] GGC Parent POM .................................... SUCCESS [0.571s]
+[INFO] GGC Help Project .................................. SUCCESS [0.181s]
+[INFO] GGC Core Project .................................. SUCCESS [0.083s]
+[INFO] GGC Plugin Base Project ........................... SUCCESS [0.091s]
+[INFO] GGC Nutrition Tool Project ........................ SUCCESS [0.050s]
+[INFO] GGC Meter Tool Project ............................ SUCCESS [0.039s]
+[INFO] GGC Pump Tool Project ............................. SUCCESS [0.053s]
+[INFO] GGC CGMS Tool Project ............................. SUCCESS [0.039s]
+[INFO] GGC Desktop Project ............................... SUCCESS [0.082s]
+[INFO] ggc-root .......................................... SUCCESS [0.003s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 1.620s
+[INFO] Finished at: Thu Oct 01 11:00:01 CEST 2015
+[INFO] Final Memory: 12M/299M
+[INFO] ------------------------------------------------------------------------

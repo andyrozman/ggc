@@ -324,7 +324,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
 
             String line = this.readLine();
             System.out.println("Serial number: " + line);
-            di.device_serial_number = line;
+            di.deviceSerialNumber = line;
             this.outputWriter.setDeviceIdentification(di);
             this.outputWriter.writeDeviceIdentification();
         }

@@ -1,5 +1,6 @@
 package ggc.plugin.data.enums;
 
+import ggc.core.plugins.GGCPluginType;
 import ggc.plugin.device.DownloadSupportType;
 
 /**
@@ -30,39 +31,65 @@ import ggc.plugin.device.DownloadSupportType;
 
 public enum DeviceHandlerType
 {
-    NullHandler(DownloadSupportType.NotSupportedByGGC), //
-    NoHandler(DownloadSupportType.NotSupportedByGGC), //
-    NoSupportInDevice(DownloadSupportType.NotSupportedByDevice), //
+    NullHandler(null, DownloadSupportType.NotSupportedByGGC, null, false), //
+    NoHandler(null, DownloadSupportType.NotSupportedByGGC, null, false), //
+    NoSupportInDevice(null, DownloadSupportType.NotSupportedByDevice, null, false), //
 
     // Meters
-    AscensiaUsbHandler(DownloadSupportType.DownloadData), //
-    ArkrayMeterHandler(DownloadSupportType.DownloadData), //
-    MenariniMeterHandler(DownloadSupportType.DownloadData), //
-    AccuChekMeterHandler(DownloadSupportType.DownloadData), //
+    AscensiaUsbHandler(GGCPluginType.MeterToolPlugin, DownloadSupportType.DownloadData, //
+            "ggc.meter.device.ascensia.AscensiaUsbMeterHandler", true), //
+    ArkrayMeterHandler(GGCPluginType.MeterToolPlugin, DownloadSupportType.DownloadData, //
+            "ggc.meter.device.arkray.ArkrayMeterHandler", true), //
+    MenariniMeterHandler(GGCPluginType.MeterToolPlugin, DownloadSupportType.DownloadData, //
+            "ggc.meter.device.menarini.MenariniMeterHandler", true), //
+    AccuChekMeterHandler(GGCPluginType.MeterToolPlugin, DownloadSupportType.DownloadData, //
+            "ggc.meter.device.accuchek.AccuChekMeterHandler", true), //
+    AbbottMeterHandler(GGCPluginType.MeterToolPlugin, DownloadSupportType.Download_Data_Config, //
+            "ggc.meter.device.abbott.AbbottNeoMeterHandler", true), //
 
     // Pumps
-    AnimasV2PumpHandler(DownloadSupportType.Download_Data_Config), //
-    MinimedPumpHandler(DownloadSupportType.Download_Data_Config), //
-    InsuletOmnipodHandler(DownloadSupportType.Download_File_Data_Config), //
-    AccuChekPumpHandler(DownloadSupportType.Download_Data_DataFile), //
-    DanaPumpHandler(DownloadSupportType.Download_Data_Config), //
-    DanaPumpHandlerV2(DownloadSupportType.Download_Data_Config), //
+    AccuChekPumpHandler(GGCPluginType.PumpToolPlugin, DownloadSupportType.Download_Data_DataFile, //
+            "ggc.pump.device.accuchek.AccuChekPumpHandler", true), //
+    DanaPumpHandler(GGCPluginType.PumpToolPlugin, DownloadSupportType.Download_Data_Config, //
+            "ggc.pump.device.accuchek.AccuChekPumpHandler", true), //
+    DanaPumpHandlerV2(GGCPluginType.PumpToolPlugin, DownloadSupportType.Download_Data_Config, //
+            "ggc.pump.device.dana.DanaPumpHandlerV2", true), //
+    AnimasV2PumpHandler(GGCPluginType.PumpToolPlugin, DownloadSupportType.Download_Data_Config, //
+            "ggc.pump.device.animas.AnimasIR1200Handler", true), //
+    InsuletOmnipodHandler(GGCPluginType.PumpToolPlugin, DownloadSupportType.Download_File_Data_Config,
+            "ggc.pump.device.insulet.InsuletHandler", true), //
+    MinimedPumpHandler(GGCPluginType.PumpToolPlugin, DownloadSupportType.Download_Data_Config, //
+            "ggc.pump.device.minimed.MinimedPumpDeviceHandler", false), //
 
     // CGMSes
-    AnimasV2CGMSHandler(DownloadSupportType.Download_Data_Config), //
-    DexcomHandler(DownloadSupportType.Download_Data_Config), //
-    Dexcom7Handler(DownloadSupportType.DownloadDataFile), // only for old files
-    MinimedCGMSHandler(DownloadSupportType.Download_Data_Config), //
-    AbbottLibreHandler(DownloadSupportType.Download_Data_Config), //
+    Dexcom7Handler(GGCPluginType.CGMSToolPlugin, DownloadSupportType.DownloadDataFile, //
+            "", false), // only for old files
+    DexcomHandler(GGCPluginType.CGMSToolPlugin, DownloadSupportType.Download_Data_Config, //
+            "ggc.cgms.device.dexcom.DexcomHandler", true), //
+    AnimasV2CGMSHandler(GGCPluginType.CGMSToolPlugin, DownloadSupportType.Download_Data_Config, //
+            "ggc.cgms.device.animas.AnimasCGMSHandler", true), //
+    AbbottLibreHandler(GGCPluginType.CGMSToolPlugin, DownloadSupportType.Download_Data_Config, //
+            "ggc.cgms.device.abbott.libre.LibreCGMSHandler", true), //
+    MinimedCGMSHandler(GGCPluginType.CGMSToolPlugin, DownloadSupportType.Download_Data_Config, //
+            "ggc.cgms.device.minimed.MinimedCGMSDeviceHandler", false), //
+
+    // Connect
+    DiaSendHandler(GGCPluginType.ConnectToolPlugin, DownloadSupportType.Download_File_Data_Config, //
+            "ggc.connect.software.local.diasend.DiasendHandler", true), //
 
     ;
 
     DownloadSupportType downloadSupportType;
+    private String className;
+    private GGCPluginType pluginType;
+    private boolean dynamicallyLoad;
 
-
-    DeviceHandlerType(DownloadSupportType downloadSupportType)
+    DeviceHandlerType(GGCPluginType pluginType, DownloadSupportType downloadSupportType, String className, boolean dynamicallyLoad)
     {
+        this.pluginType = pluginType;
         this.downloadSupportType = downloadSupportType;
+        this.className = className;
+        this.dynamicallyLoad = dynamicallyLoad;
     }
 
 
@@ -71,4 +98,15 @@ public enum DeviceHandlerType
         return downloadSupportType;
     }
 
+    public GGCPluginType getPluginType() {
+        return pluginType;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public boolean isDynamicallyLoad() {
+        return dynamicallyLoad;
+    }
 }

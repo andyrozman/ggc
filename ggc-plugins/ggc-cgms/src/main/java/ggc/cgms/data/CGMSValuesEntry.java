@@ -103,7 +103,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     public void setDate(long dt)
     {
         this.date = dt;
-        this.date_obj = new ATechDate(ATechDate.FORMAT_DATE_ONLY, dt);
+        this.date_obj = new ATechDate(ATechDateType.DateOnly, dt);
         this.datetime = dt;
     }
 
@@ -166,7 +166,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
         for (CGMSValuesSubEntry entry : this.list)
         {
-            graphList.add(new GraphTimeDataDto(this.datetime, entry.time, (double) entry.value));
+            graphList.add(new GraphTimeDataDto(this.datetime, entry.time, Double.parseDouble(entry.value)));
         }
 
         return graphList;
@@ -295,7 +295,8 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     @Override
     public String toString()
     {
-        return "CGMSValuesEntry [date/time=" + this.datetime + ",readings=" + this.list.size() + "type=" + type + "]";
+        return "CGMSValuesEntry [date/time=" + this.datetime + ",readings=" + this.list.size() + //
+                ",type=" + type + ",checked=" + this.checked + "]";
     }
 
 

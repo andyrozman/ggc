@@ -1,0 +1,6 @@
+#NOTE: This is an internal implementation file, its format can be changed without prior notice.
+#Thu May 07 00:32:59 CEST 2015
+icepdf-core-5.0.7.jar>=
+icepdf-core-5.0.7.jar>ice-maven-release=
+icepdf-core-5.0.7.pom>ice-maven-release=
+icepdf-core-5.0.7-sources.jar>ice-maven-release=

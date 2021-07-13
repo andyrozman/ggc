@@ -283,7 +283,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         // + sw_dd.substring(idx));
         cmdAcknowledge();
 
-        di.device_hardware_version = sw_dd.substring(0, idx) + ", " + sw_dd.substring(idx);
+        di.deviceHardwareVersion = sw_dd.substring(0, idx) + ", " + sw_dd.substring(idx);
 
         // read serial number
         this.outputWriter.setSubStatus(i18nControlAbstract.getMessage("READING_SERIAL_NR"));
@@ -305,7 +305,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
 
         // System.out.println("S/N: " + sn);
 
-        di.device_serial_number = sn;
+        di.deviceSerialNumber = sn;
 
         this.cmdAcknowledge();
 
@@ -537,7 +537,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
 
         System.out.println("proc_read: " + proc_read + ", proc_total: " + proc_total);
 
-        this.outputWriter.setSpecialProgress((int) proc_total); // .setSubStatus(sub_status)
+        this.outputWriter.setSpecialProgress((int) proc_total); // .setSubStatus(subStatus)
 
     }
 

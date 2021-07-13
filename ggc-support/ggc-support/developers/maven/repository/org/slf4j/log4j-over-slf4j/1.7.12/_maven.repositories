@@ -1,0 +1,10 @@
+#NOTE: This is an internal implementation file, its format can be changed without prior notice.
+#Sat Sep 12 19:34:18 CEST 2015
+log4j-over-slf4j-1.7.12.pom>sonatype=
+log4j-over-slf4j-1.7.12-sources.jar>=
+log4j-over-slf4j-1.7.12.jar>nexus-infonova=
+log4j-over-slf4j-1.7.12.pom>nexus-infonova=
+log4j-over-slf4j-1.7.12-sources.jar>nexus-infonova=
+log4j-over-slf4j-1.7.12-javadoc.jar>=
+log4j-over-slf4j-1.7.12-javadoc.jar>nexus-infonova=
+log4j-over-slf4j-1.7.12.jar>=

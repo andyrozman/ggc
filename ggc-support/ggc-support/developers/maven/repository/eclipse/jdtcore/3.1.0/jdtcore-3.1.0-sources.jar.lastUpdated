@@ -1,0 +1,14 @@
+#NOTE: This is an internal implementation file, its format can be changed without prior notice.
+#Thu May 07 00:32:17 CEST 2015
+http\://www.atech-software.com\:8081/nexus/content/groups/public/.error=
+http\://www.atech-software.com\:8081/nexus/content/groups/public/.lastUpdated=1430951535394
+http\://grzmvn01.infonova.at\:8082/nexus/content/groups/public/.lastUpdated=1409037520537
+http\://repo.maven.apache.org/maven2/.lastUpdated=1430951537284
+http\://www.mvnrepository.com/.lastUpdated=1430951536827
+http\://oss.sonatype.org/content/groups/public/.lastUpdated=1430951536427
+http\://anonsvn.icesoft.org/repo/maven2/releases/.lastUpdated=1430951537235
+http\://oss.sonatype.org/content/groups/public/.error=
+http\://grzmvn01.infonova.at\:8082/nexus/content/groups/public/.error=
+http\://repo.maven.apache.org/maven2/.error=
+http\://www.mvnrepository.com/.error=
+http\://anonsvn.icesoft.org/repo/maven2/releases/.error=

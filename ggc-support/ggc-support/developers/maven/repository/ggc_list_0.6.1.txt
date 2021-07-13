@@ -1,0 +1,85 @@
+antlr:antlr:jar:2.7.6rc1:compile
+asm:asm:jar:1.5.3:compile
+asm:asm-attrs:jar:1.5.3:compile
+batik:batik-awt-util:1.6:compile
+batik:batik-dom:1.6:compile
+batik:batik-svg-dom:1.6:compile
+batik:batik-svggen:1.6:compile
+batik:batik-util:1.6:compile
+batik:batik-xml:1.6:compile
+bouncycastle:bcmail-jdk14:jar:138:compile
+bouncycastle:bcprov-jdk14:jar:138:compile
+cglib:cglib:jar:2.1_3:compile
+com.atech-software:atech-tools:jar:0.7.13-SNAPSHOT:compile
+com.h2database:h2:jar:1.0.69:runtime
+com.ibm.old.comapi:ibm-compapi:jar:1.3:compile
+com.itextpdf:itextpdf:jar:5.1.2:compile
+com.lowagie:itext:jar:2.1.7:compile  -- net.sf.jasperreports
+com.neuronrobotics:nrjavaserial-j15:jar:3.9.3.1:compile
+com.sun.media:jai-codec:1.1.3
+com.sun.media:jai_imageio:1.1
+commons-beanutils:commons-beanutils:jar:1.8.0:compile
+commons-collections:commons-collections:jar:3.2.1:compile
+commons-collections:commons-collections:jar:2.1.1:compile  -- hibernate 3.1.3
+commons-digester:commons-digester:jar:1.7:compile
+commons-lang:commons-lang:jar:2.6:compile
+commons-logging:commons-logging:jar:1.0.4:compile   -- hibernate 3.1.3 
+commons-net:commons-net:jar:3.3:compile
+cglib:cglib:jar:2.1_3:compile
+dom4j:dom4j:jar:1.6.1:compile
+eclipse:jdtcore:jar:3.1.0:compile
+ehcache:ehcache:jar:1.1:compile
+javax.help:javahelp:jar:2.0.05:compile
+javax.servlet:servlet-api:jar:2.5:provided
+javax.transaction:jta:jar:1.0.1B:compile
+jaxen:jaxen:jar:1.1.6:compile
+jfree:jfreechart:jar:1.0.13:compile
+jfree:jcommon:jar:1.0.16:compile
+jfree:jcommon:jar:1.0.15:compile   -- net.sf.jasperreports
+joda-time:joda-time:jar:2.8.2:compile
+junit:junit:jar:4.12:test (scope managed from compile)
+log4j:log4j:jar:1.2.16:compile
+net.java.dev.jna:jna-j15:jar:4.1.0:compile
+net.sf.ggc.pygmy-httpd:pygmy-core:jar:0.2:compile
+net.sf.ggc.pygmy-httpd:pygmy-handlers:jar:0.2:compile
+net.sf.jasperreports:jasperreports:jar:3.7.1:compile
+net.sf.squirrel-sql.thirdparty-non-maven:skinlf:jar:6.7:compile
+org.bouncycastle:bctsp-jdk14:jar:1.38:compile
+org.bouncycastle:bcprov-jdk14:jar:1.38:compile
+org.bouncycastle:bcmail-jdk14:jar:1.38:compile
+org.hamcrest:hamcrest-core:jar:1.3:test
+org.hibernate:hibernate:jar:3.1.3:compile
+org.hid4java:hid4java-j15:jar:0.3.1:compile
+org.icepdf:icepdf-core:jar:5.0.7:compile
+org.icepdf:icepdf-viewer:jar:5.0.7:compile
+org.jdom:jdom:jar:1.1:compile
+org.slf4j:slf4j-api:jar:1.7.12:compile
+org.slf4j:log4j-over-slf4j:jar:1.7.12:compile
+org.slf4j:slf4j-log4j12:jar:1.7.12:compile
+postgresql:postgresql:jar:8.4-702.jdbc3:compile
+xml-apis:xml-apis:jar:1.3.02:compile
+
+
+
+
+       
+
+
+[INFO] net.sf.ggc:ggc-help:jar:0.2-SNAPSHOT
+[INFO] net.sf.ggc:ggc-core:jar:0.6.0-SNAPSHOT
+[INFO] net.sf.ggc:ggc-desktop:jar:0.6.0-SNAPSHOT
+[INFO] +- net.sf.ggc:ggc-plugin-base:jar:0.7.2-SNAPSHOT:compile
+[INFO] +- net.sf.ggc:ggc-meter-tool:jar:2.2.0-SNAPSHOT:compile
+[INFO] +- net.sf.ggc:ggc-pump-tool:jar:1.5.1-SNAPSHOT:compile
+[INFO] +- net.sf.ggc:ggc-cgms-tool:jar:1.3.2-SNAPSHOT:compile
+[INFO] +- net.sf.ggc:ggc-nutri-tool:jar:1.3.5-SNAPSHOT:compile
+
+
+
+[WARNING] Missing POM for org.icepdf:icepdf-core:jar:5.0.7
+[WARNING] Missing POM for org.icepdf:icepdf-viewer:jar:5.0.7
+[WARNING] The POM for net.sf.ggc.pygmy-httpd:pygmy-core:jar:0.2 is missing, no dependency information available
+[WARNING] The POM for net.sf.ggc.pygmy-httpd:pygmy-handlers:jar:0.2 is missing, no dependency information available
+		
+
+

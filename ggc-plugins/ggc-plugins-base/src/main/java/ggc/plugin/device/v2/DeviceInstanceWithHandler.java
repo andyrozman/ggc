@@ -14,6 +14,7 @@ import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.data.enums.DeviceCompanyDefinition;
 import ggc.plugin.data.enums.DevicePortParameterType;
 import ggc.plugin.data.enums.DeviceProgressStatus;
+import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.mgr.DeviceHandlerManager;
@@ -211,7 +212,14 @@ public class DeviceInstanceWithHandler implements DeviceInterfaceV2
         }
         catch (PlugInBaseException e)
         {
-            throw e;
+            if (e.getExceptionType() != PlugInExceptionType.LostCommunicationWithDevice)
+            {
+                throw e;
+            }
+            else
+            {
+                LOG.debug("Communication with device lost.");
+            }
         }
         finally
         {

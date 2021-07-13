@@ -54,9 +54,15 @@ public abstract class AbstractDeviceReader implements ProgressReportInterface
 
         if (init)
         {
-            customInitAndChecks();
-            configureProgressReporter();
+            doInit();
         }
+    }
+
+
+    public void doInit() throws PlugInBaseException
+    {
+        customInitAndChecks();
+        configureProgressReporter();
     }
 
 

@@ -1,29 +1,19 @@
 package ggc.plugin.gui;
 
-import com.atech.utils.ATSwingUtils;
-import ggc.plugin.data.DeviceDataHandler;
-import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.border.LineBorder;
 
 import com.atech.graphics.components.StatusReporterInterface;
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.ATSwingUtils;
+
+import ggc.plugin.data.DeviceDataHandler;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -66,6 +56,7 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
     DeviceDataHandler m_ddh;
     boolean reading_finsihed = false;
 
+
     /**
      * Constructor 
      * 
@@ -85,6 +76,7 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
         dialogPreInit(!ddh.isOutputWriterSet());
     }
 
+
     private void dialogPreInit(boolean start)
     {
         setTitle(String.format(m_ic.getMessage("EXPORT_DEVICE_DATA"), m_ic.getMessage("DEVICE_NAME_BIG")));
@@ -102,6 +94,7 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
         this.setVisible(true);
     }
 
+
     private void setStart()
     {
         this.started = true;
@@ -118,10 +111,11 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
         /*
          * if ((!this.isVisible()) && (reading_finsihed))
          * {
-         * this.bt_close.setEnabled(true);
+         * this.btnClose.setEnabled(true);
          * }
          */
     }
+
 
     protected void init()
     {
@@ -181,7 +175,7 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
 
         bt_start = new JButton(m_ic.getMessage("START"));
         bt_start.setBounds(50, 250, 100, 25);
-        // bt_break.setEnabled(this.m_mim.isStatusOK());
+        // btnBreak.setEnabled(this.m_mim.isStatusOK());
         bt_start.setActionCommand("start");
         bt_start.addActionListener(this);
         panel.add(bt_start);
@@ -198,6 +192,7 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
 
         m_da.enableHelp(this);
     }
+
 
     /**
      * Invoked when an action occurs.
@@ -226,6 +221,7 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
     boolean started = false;
     boolean action = false;
 
+
     /**
      * Was action succesful
      * @return
@@ -234,6 +230,7 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
     {
         return this.action;
     }
+
 
     /**
      * setStatus
@@ -257,6 +254,7 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
         }
     }
 
+
     /**
      * Set reading finsihed
      */
@@ -264,6 +262,7 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
     {
         setCloseEnabled(true);
     }
+
 
     /**
      * Set Close Enabled
@@ -274,6 +273,7 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
     {
         bt_close.setEnabled(cls);
     }
+
 
     // ****************************************************************
     // ****** HelpCapable Implementation *****
@@ -289,6 +289,7 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
         return this.getRootPane();
     }
 
+
     /** 
      * getHelpButton - get Help button
      * 
@@ -298,6 +299,7 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
     {
         return this.help_button;
     }
+
 
     /** 
      * getHelpId - get id for Help

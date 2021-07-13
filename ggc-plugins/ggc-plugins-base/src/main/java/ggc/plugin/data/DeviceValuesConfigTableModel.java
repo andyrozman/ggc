@@ -1,14 +1,14 @@
 package ggc.plugin.data;
 
-import ggc.plugin.util.DataAccessPlugInBase;
-
 import java.util.ArrayList;
 import java.util.Collections;
 
 import javax.swing.table.AbstractTableModel;
 
-import com.atech.graphics.components.MultiLineTooltip;
-import com.atech.graphics.components.MultiLineTooltipModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -36,28 +36,45 @@ import com.atech.graphics.components.MultiLineTooltipModel;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class DeviceValuesConfigTableModel extends AbstractTableModel //implements MultiLineTooltipModel
+public class DeviceValuesConfigTableModel extends AbstractTableModel // implements
+                                                                     // MultiLineTooltipModel
 {
 
     private static final long serialVersionUID = -896566044265728328L;
-    protected DeviceDataHandler m_ddh = null;
+
+    private static final Logger LOG = LoggerFactory.getLogger(DeviceValuesConfigTableModel.class);
+    // protected DeviceDataHandler deviceDataHandler = null;
     protected DataAccessPlugInBase m_da;
-    //protected String device_source;
+    // protected String deviceSource;
     protected ArrayList<DeviceValueConfigEntryInterface> data = null;
+    DeviceValueConfigEntryInterface deviceValueConfigEntry;
+
 
     /**
      * Constructor
      * 
      * @param da
      */
-    public DeviceValuesConfigTableModel(DataAccessPlugInBase da) //, String source)
+    public <E extends DeviceValueConfigEntryInterface> DeviceValuesConfigTableModel(DataAccessPlugInBase da,
+            Class<E> clazz) // , String source)
     {
         // this.deviceDataHandler = ddh;
         this.m_da = da;
-        //this.device_source = source;
+        // this.deviceSource = source;
+
+        try
+        {
+            deviceValueConfigEntry = clazz.newInstance();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Can't instantiate. {}", e.getMessage());
+        }
+
         this.data = new ArrayList<DeviceValueConfigEntryInterface>();
         fireTableChanged(null);
     }
+
 
     /**
      * Clear Data
@@ -68,6 +85,7 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel //implement
         fireTableChanged(null);
     }
 
+
     /**
      * Get Column Count
      * 
@@ -75,8 +93,9 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel //implement
      */
     public int getColumnCount()
     {
-        return 2;
+        return deviceValueConfigEntry.getColumnCount();
     }
+
 
     /**
      * Is Boolean
@@ -89,6 +108,7 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel //implement
         return false;
     }
 
+
     /**
      * Is Editable Column
      * 
@@ -100,6 +120,7 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel //implement
         return false;
     }
 
+
     /** 
      * Set Value At
      */
@@ -107,6 +128,7 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel //implement
     public void setValueAt(Object aValue, int row, int column)
     {
     }
+
 
     /**
      * Get Column Width
@@ -117,8 +139,10 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel //implement
      */
     public int getColumnWidth(int column, int width)
     {
-        return (int) (50.0f * width);
+        float columnWidth = 100.0f / (deviceValueConfigEntry.getColumnCount() * 1.0f);
+        return (int) (columnWidth * width);
     }
+
 
     /**
      * Get Row Count
@@ -130,6 +154,7 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel //implement
         return this.data.size();
     }
 
+
     /**
      * Get Value At
      * @see javax.swing.table.TableModel#getValueAt(int, int)
@@ -138,6 +163,13 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel //implement
     {
         return this.data.get(row).getColumnValue(column);
     }
+
+
+    public int getIndex(int row)
+    {
+        return this.data.get(row).getIndex();
+    }
+
 
     /**
      * Add Entry
@@ -151,6 +183,7 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel //implement
         this.fireTableDataChanged();
     }
 
+
     /**
      * Get Column Name
      * 
@@ -159,11 +192,10 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel //implement
     @Override
     public String getColumnName(int column)
     {
-        if (column == 0)
-            return m_da.getI18nControlInstance().getMessage("SETTING_GROUP");
-        else
-            return m_da.getI18nControlInstance().getMessage("VALUE");
+        return m_da.getI18nControlInstance().getMessage(deviceValueConfigEntry.getColumnName(column));
+
     }
+
 
     /**
      * Get Column Class
@@ -179,6 +211,7 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel //implement
         else
             return null;
     }
+
 
     /**
      * Is Cell Editable
@@ -198,14 +231,16 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel //implement
      * @param column 
      * @return 
      */
-//    public String getToolTipValue(int row, int column)
-//    {
-//        DeviceValueConfigEntryInterface o = data.get(row);
-//
-//        if (o.hasMultiLineToolTip())
-//            return ((MultiLineTooltip) o).getMultiLineToolTip(column);
-//        else
-//            return (String) o.getColumnValue(column);
-//    }
+    // public String getToolTipValue(int row, int column)
+    // {
+    // DeviceValueConfigEntryInterface o = data.get(row);
+    //
+    // if (o.hasMultiLineToolTip())
+    // return ((MultiLineTooltip) o).getMultiLineToolTip(column);
+    // else
+    // return (String) o.getColumnValue(column);
+    // }
+
+    // DeviceValuesConfigTableModel
 
 }

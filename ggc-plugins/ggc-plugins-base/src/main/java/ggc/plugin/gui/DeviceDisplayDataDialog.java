@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.*;
 
@@ -17,9 +18,11 @@ import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.plugin.data.DeviceValuesTable;
 import ggc.plugin.data.DeviceValuesTableModel;
+import ggc.plugin.data.enums.DownloaderFilterType;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.output.*;
 import ggc.plugin.util.DataAccessPlugInBase;
+import ggc.plugin.util.LogEntryType;
 
 /**
  * Application: GGC - GNU Gluco Control 
@@ -52,73 +55,41 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
 
     private static final long serialVersionUID = 3365114423740706212L;
 
-    DeviceReaderRunner mrr;
+    protected DeviceReaderRunner deviceReaderRunner;
 
-    private DataAccessPlugInBase m_da; // = DataAccessMeter.getInstance();
-    I18nControlAbstract m_ic; // = dataAccess.getI18nControlInstance();
+    protected DataAccessPlugInBase dataAccess;
+    protected I18nControlAbstract i18nControl;
+    protected DeviceDataHandler deviceDataHandler;
 
-    /**
-     * 
-     */
-    public JProgressBar progress = null;
-    private JProgressBar progress_old = null;
+    protected DeviceValuesTableModel model = null;
+    protected DeviceValuesTable table = null;
 
-    private DeviceValuesTableModel model = null;
-    private DeviceValuesTable table = null;
+    protected JButton btnClose, btnImport, btnBreak, btnHelp, btnSelectAll, btnUnselectAll;
+    protected JButton btnInfo, btnErrors;
+    protected JComboBox cmbFilter;
+    protected JTabbedPane tabPane;
+    protected JLabel lblStatus, lblComment;
+    protected JTextArea taInfo, taLogText;
+    protected JFrame parentFrame = null;
+    protected JProgressBar progress, progressOld;
 
-    private JButton bt_close, bt_import, bt_break;
-    private JTabbedPane tabPane;
+    protected boolean indeterminate = false;
 
-    JLabel lbl_status, lbl_comment;
-    JTextArea ta_info = null;
-    JTextArea logText = null;
-    JButton help_button;
-    DeviceDataHandler m_ddh;
-    JFrame m_parent = null;
-    JDialog m_parent_d = null;
-
-    boolean indeterminate = false;
-
-    /*
-     * public String statuses[] = { i18nControl.getMessage("STATUS_NONE"),
-     * i18nControl.getMessage("STATUS_READY"), i18nControl.getMessage("STATUS_DOWNLOADING"),
-     * i18nControl.getMessage("STATUS_STOPPED_DEVICE"),
-     * i18nControl.getMessage("STATUS_STOPPED_USER"),
-     * i18nControl.getMessage("STATUS_DOWNLOAD_FINISHED"),
-     * i18nControl.getMessage("STATUS_READER_ERROR"), };
-     */
+    //
+    protected DeviceIdentification deviceIdentification;
+    protected String subStatus = null;
+    protected OutputUtil outputUtil;
+    protected int count = 0;
+    protected int currentStatus = 0;
+    protected boolean deviceShouldBeStopped = false;
+    protected int readingStatus = AbstractOutputWriter.STATUS_READY;
+    protected String deviceSource;
+    protected List<ErrorMessageDto> errorMessageList = new ArrayList<ErrorMessageDto>();
 
 
-    /*
-     * public DeviceDisplayDataDialog(DataAccessPlugInBase da) { super();
-     * this.dataAccess = da; this.i18nControl = da.getI18nControlInstance();
-     * //this.loadConfiguration();
-     * this.mrr = new DeviceReaderRunner(dataAccess, this.configured_meter,
-     * this);
-     * dialogPreInit(); }
-     */
-
-    /**
-     * Constructor
-     * 
-     * @param parent 
-     * @param da
-     * @param ddh
-     */
     public DeviceDisplayDataDialog(JFrame parent, DataAccessPlugInBase da, DeviceDataHandler ddh)
     {
-        super(parent, "", true);
-
-        this.m_da = da;
-        this.m_ic = da.getI18nControlInstance();
-        this.m_parent = parent;
-
-        this.m_ddh = ddh;
-        this.m_ddh.dialog_data = this;
-        // this.deviceDataHandler.setTransferType(DeviceDataHandler.TRANSFER_READ_DATA);
-        this.mrr = new DeviceReaderRunner(m_da, this.m_ddh);
-
-        dialogPreInit();
+        this(parent, da, ddh, true);
     }
 
 
@@ -129,24 +100,29 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      * @param da
      * @param ddh
      */
-    /*
-     * public DeviceDisplayDataDialog(JDialog parent, DataAccessPlugInBase da,
-     * DeviceDataHandler ddh)
-     * {
-     * super(parent, "", true);
-     * this.dataAccess = da;
-     * this.i18nControl = da.getI18nControlInstance();
-     * //this.m_parent_d = parent;
-     * this.deviceDataHandler = ddh;
-     * this.deviceDataHandler.dialog_data = this;
-     * //
-     * this.deviceDataHandler.setTransferType(DeviceDataHandler.
-     * TRANSFER_READ_DATA
-     * );
-     * this.mrr = new DeviceReaderRunner(dataAccess, this.deviceDataHandler);
-     * dialogPreInit();
-     * }
-     */
+    public DeviceDisplayDataDialog(JFrame parent, DataAccessPlugInBase da, DeviceDataHandler ddh, boolean init)
+    {
+        super(parent, "", true);
+
+        this.dataAccess = da;
+        this.i18nControl = da.getI18nControlInstance();
+        this.parentFrame = parent;
+
+        this.deviceDataHandler = ddh;
+        if (ddh != null)
+        {
+            this.deviceDataHandler.dialog_data = this;
+        }
+        outputUtil = OutputUtil.getInstance(this);
+
+        if (init)
+        {
+            initReader();
+
+            dialogPreInit();
+        }
+    }
+
 
     /**
      * Constructor (for testing GUI)
@@ -159,57 +135,53 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     {
         super();
 
-        this.m_da = da;
-        this.m_ic = da.getI18nControlInstance();
+        this.dataAccess = da;
+        this.i18nControl = da.getI18nControlInstance();
 
-        this.m_ddh = ddh;
-        // this.mrr = new DeviceReaderRunner(dataAccess,
-        // this.deviceDataHandler.getConfiguredDevice(), this);
+        this.deviceDataHandler = ddh;
+        outputUtil = OutputUtil.getInstance(this);
 
         dialogPreInit();
     }
 
-    /*
-     * public DeviceDisplayDataDialog(DataAccessPlugInBase da, DeviceConfigEntry
-     * mce) { super();
-     * this.dataAccess = da; this.i18nControl = da.getI18nControlInstance();
-     * this.configured_meter = mce;
-     * this.mrr = new DeviceReaderRunner(dataAccess, this.configured_meter,
-     * this);
-     * dialogPreInit(); }
-     */
 
-
-    /*
-     * public DeviceDisplayDataDialog(DataAccessPlugInBase da, DeviceConfigEntry
-     * mce, Hashtable<String,?> meter_data, DevicePlugInServer server) {
-     * super();
-     * this.dataAccess = da; this.i18nControl = da.getI18nControlInstance();
-     * this.configured_meter = mce; this.meter_data = meter_data;
-     * this.mrr = new DeviceReaderRunner(dataAccess, this.configured_meter,
-     * this);
-     * this.server = server; dialogPreInit(); }
-     */
-
-    private void dialogPreInit()
+    protected void initReader()
     {
-        if (m_ddh != null)
-        {
-            setTitle(String.format(m_ic.getMessage("READ_DEVICE_DATA_TITLE"),
-                this.m_ddh.getConfiguredDevice().device_device, this.m_ddh.getConfiguredDevice().communication_port));
-        }
+        this.deviceReaderRunner = new DeviceReaderRunner(dataAccess, this.deviceDataHandler);
+    }
 
-        m_da.addComponent(this);
+
+    protected void startReader()
+    {
+        if (this.deviceReaderRunner != null)
+        {
+            this.deviceReaderRunner.start();
+        }
+    }
+
+
+    protected void dialogPreInit()
+    {
+        setTitle();
+
+        dataAccess.addComponent(this);
 
         init();
 
-        if (this.mrr != null)
-        {
-            this.mrr.start();
-        }
+        startReader();
 
         this.setVisible(true);
+    }
 
+
+    protected void setTitle()
+    {
+        if (deviceDataHandler != null)
+        {
+            setTitle(String.format(i18nControl.getMessage("READ_DEVICE_DATA_TITLE"),
+                this.deviceDataHandler.getConfiguredDevice().device_device,
+                this.deviceDataHandler.getConfiguredDevice().communication_port));
+        }
     }
 
 
@@ -228,9 +200,9 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     }
 
 
-    private void addLogText(String s)
+    protected void addLogText(String s)
     {
-        logText.append(s + "\n");
+        taLogText.append(s + "\n");
     }
 
 
@@ -238,10 +210,8 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     {
         ATSwingUtils.initLibrary();
 
-        model = this.m_ddh.getDeviceValuesTableModel();
+        model = this.deviceDataHandler.getDeviceValuesTableModel();
         model.clearData();
-
-        // System.out.println("Model: " + model);
 
         JPanel panel = new JPanel();
         panel.setLayout(null);
@@ -251,7 +221,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
 
         int wide_add = 0;
 
-        if (m_da.isDataDownloadScreenWide())
+        if (dataAccess.isDataDownloadScreenWide())
         {
             wide_add = 200;
         }
@@ -261,71 +231,80 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
 
         setBounds(0, 0, 480 + wide_add, 660);
 
-        m_da.centerJDialog(this);
+        dataAccess.centerJDialog(this);
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         getContentPane().add(panel, BorderLayout.CENTER);
 
         // TabControl with two tabs: log and data
 
-        logText = new JTextArea(m_ic.getMessage("LOG__") + ":\n", 8, 35);
-        logText.setAutoscrolls(true);
-        JScrollPane sp = new JScrollPane(logText, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+        taLogText = new JTextArea(i18nControl.getMessage("LOG__") + ":\n", 8, 35);
+        taLogText.setAutoscrolls(true);
+        JScrollPane sp = new JScrollPane(taLogText, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-        addLogText(m_ic.getMessage("LOG_IS_CURRENTLY_NOT_IMPLEMENTED"));
+        addLogText(i18nControl.getMessage("LOG_IS_CURRENTLY_NOT_IMPLEMENTED"));
 
-        this.table = new DeviceValuesTable(m_da, model);
+        this.table = new DeviceValuesTable(dataAccess, model);
 
         tabPane = new JTabbedPane();
-        tabPane.add(m_ic.getMessage("DATA"), this.createTablePanel(this.table));
-        tabPane.add(m_ic.getMessage("LOG"), sp);
+        tabPane.add(i18nControl.getMessage("DATA"), this.createTablePanel(this.table));
+        tabPane.add(i18nControl.getMessage("LOG"), sp);
         tabPane.setBounds(30, 15, 410 + wide_add, 250); // 410
         panel.add(tabPane);
 
         // Info
-        label = new JLabel(String.format(m_ic.getMessage("DEVICE_INFO"), m_ic.getMessage("DEVICE_NAME_BIG")) + ":");
+        label = new JLabel(String.format(i18nControl.getMessage("DEVICE_INFO"),
+            i18nControl.getMessage("DEVICE_NAME_BIG"))
+                + ":");
         label.setBounds(30, 310, 310, 25);
         label.setFont(normal_b);
         panel.add(label);
 
-        ta_info = new JTextArea();
+        taInfo = new JTextArea();
 
-        JScrollPane sp3 = new JScrollPane(ta_info);
-        sp3.setBounds(30, 340, 410 + wide_add, 80);
+        JScrollPane sp3 = new JScrollPane(taInfo);
+        sp3.setBounds(30, 345, 410 + wide_add, 70);
         panel.add(sp3);
 
-        ta_info.setText(""); // this.meter_interface.getDeviceInfo().
-        // getInformation(""));
+        taInfo.setText("");
 
-        lbl_comment = new JLabel("");
-        lbl_comment.setBounds(30, 270, 410 + wide_add, 25);
-        lbl_comment.setFont(normal);
-        panel.add(lbl_comment);
+        lblComment = new JLabel("");
+        lblComment.setBounds(40, 270, 305 + wide_add, 45);
+        lblComment.setFont(normal);
+        panel.add(lblComment);
+
+        ATSwingUtils.getIconButton(355 + wide_add, 295, 40, 40, //
+            i18nControl.getMessage("GET_DL_INFO"), "document_info.png", 32, 32, //
+            "show_info", this, panel, dataAccess);
+
+        btnErrors = ATSwingUtils.getIconButton(400 + wide_add, 295, 40, 40, //
+            i18nControl.getMessage("GET_DL_ERRORS"), "document_warning.png", 31, 31, //
+            "show_errors", this, panel, dataAccess);
 
         // reading old data
-        label = new JLabel(m_ic.getMessage("READING_OLD_DATA") + ":");
+        label = new JLabel(i18nControl.getMessage("READING_OLD_DATA") + ":");
         label.setBounds(30, 425, 250, 25); // 420
         label.setFont(normal_b);
         panel.add(label);
 
-        this.progress_old = new JProgressBar();
-        this.progress_old.setBounds(30, 450, 410 + wide_add, 20); // 450
-        this.progress_old.setStringPainted(true);
+        this.progressOld = new JProgressBar();
+        this.progressOld.setBounds(30, 450, 410 + wide_add, 20); // 450
+        this.progressOld.setStringPainted(true);
         // this.progress.setIndeterminate(true);
-        panel.add(this.progress_old);
+        panel.add(this.progressOld);
 
         // device status
-        label = new JLabel(m_ic.getMessage("ACTION") + ":");
+        label = new JLabel(i18nControl.getMessage("ACTION") + ":");
         label.setBounds(30, 490, 100, 25); // 420
         label.setFont(normal_b);
         panel.add(label);
 
-        lbl_status = new JLabel(m_ic.getMessage("READY"));
-        lbl_status.setBounds(110, 490, 330, 25); // 420
-        // lbl_status.setBorder(new LineBorder(Color.red));
-        lbl_status.setFont(normal);
-        panel.add(lbl_status);
+        lblStatus = new JLabel(i18nControl.getMessage("READY"));
+        lblStatus.setBounds(110, 490, 330, 25); // 420
+        // lblStatus.setBorder(new LineBorder(Color.red));
+        lblStatus.setFont(normal);
+        panel.add(lblStatus);
 
         this.progress = new JProgressBar();
         this.progress.setBounds(30, 520, 410 + wide_add, 20); // 450
@@ -333,84 +312,39 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         // this.progress.setIndeterminate(true);
         panel.add(this.progress);
 
-        bt_break = new JButton(m_ic.getMessage("BREAK_COMMUNICATION"));
-        bt_break.setBounds(150 + wide_add, 570, 170, 25);
-        // bt_break.setEnabled(this.m_mim.isStatusOK());
-        bt_break.setActionCommand("break_communication");
-        bt_break.addActionListener(this);
-        panel.add(bt_break);
+        btnBreak = new JButton(i18nControl.getMessage("BREAK_COMMUNICATION"));
+        btnBreak.setBounds(150 + wide_add, 565, 170, 40);
+        btnBreak.setActionCommand("break_communication");
+        btnBreak.addActionListener(this);
+        panel.add(btnBreak);
 
-        help_button = ATSwingUtils.createHelpButtonByBounds(30, 570, 110, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
-        panel.add(help_button);
+        btnHelp = ATSwingUtils.createHelpButtonByBounds(30, 565, 110, 40, this, ATSwingUtils.FONT_NORMAL, dataAccess);
+        panel.add(btnHelp);
 
-        bt_close = new JButton(m_ic.getMessage("CLOSE"));
-        bt_close.setBounds(330 + wide_add, 570, 110, 25);
-        bt_close.setEnabled(false);
-        bt_close.setActionCommand("close");
-        bt_close.addActionListener(this);
-        panel.add(bt_close);
+        btnClose = new JButton(i18nControl.getMessage("CLOSE"));
+        btnClose.setBounds(330 + wide_add, 565, 110, 40);
+        btnClose.setEnabled(false);
+        btnClose.setFont(normal);
+        btnClose.setActionCommand("close");
+        btnClose.addActionListener(this);
+        panel.add(btnClose);
 
-        bt_import = new JButton(m_ic.getMessage("EXPORT_DATA"));
-        bt_import.setBounds(270 + wide_add, 300, 170, 25); // 270
-        bt_import.setActionCommand("export_data");
-        bt_import.addActionListener(this);
-        bt_import.setEnabled(false);
+        // btnImport = new JButton(i18nControl.getMessage("EXPORT_DATA"));
+        // btnImport.setBounds(270 + wide_add, 300, 170, 25); // 270
+        // btnImport.setActionCommand("export_data");
+        // btnImport.addActionListener(this);
+        // btnImport.setEnabled(false);
+        //
+        // // button.setEnabled(meterDevice.isStatusOK());
+        //
+        // panel.add(btnImport);
 
-        // button.setEnabled(meterDevice.isStatusOK());
-
-        panel.add(bt_import);
-
-        m_da.enableHelp(this);
+        dataAccess.enableHelp(this);
 
     }
 
-    /**
-     * Filter: All
-     */
-    public static final int FILTER_ALL = 0;
 
-    /**
-     * Filter: New
-     */
-    public static final int FILTER_NEW = 1;
-
-    /**
-     * Filter: Changed
-     */
-    public static final int FILTER_CHANGED = 2;
-
-    /**
-     * Filter: Existing
-     */
-    public static final int FILTER_EXISTING = 3;
-
-    /**
-     * Filter: Unknown
-     */
-    public static final int FILTER_UNKNOWN = 4;
-
-    /**
-     * Filter: New changed
-     */
-    public static final int FILTER_NEW_CHANGED = 5;
-
-    /**
-     * Filter: All but existing
-     */
-    public static final int FILTER_ALL_BUT_EXISTING = 6;
-
-    /*
-     * String[] filter_states = { i18nControl.getMessage("FILTER_ALL"),
-     * i18nControl.getMessage("FILTER_NEW"), i18nControl.getMessage("FILTER_CHANGED"),
-     * i18nControl.getMessage("FILTER_EXISTING"), i18nControl.getMessage("FILTER_UNKNOWN"),
-     * i18nControl.getMessage("FILTER_NEW_CHANGED"),
-     * i18nControl.getMessage("FILTER_ALL_BUT_EXISTING") };
-     */
-    JComboBox filter_combo;
-    JButton sel_all, unsel_all;
-
-
-    private JPanel createTablePanel(DeviceValuesTable table_in)
+    protected JPanel createTablePanel(DeviceValuesTable table_in)
     {
 
         JScrollPane scroller = new JScrollPane(table, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
@@ -423,49 +357,39 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         toolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 1));
         toolBar.setFloatable(false);
 
-        toolBar.add(new JLabel(m_ic.getMessage("FILTER") + ":   "));
-        toolBar.add(filter_combo = new JComboBox(this.m_da.getFilteringStates()));
-        toolBar.add(new JLabel("   "));
-        toolBar.add(sel_all = this.createButton("select_all", m_ic.getMessage("SELECT_ALL"), "element_selection.png"));
-        toolBar.add(new JLabel(" "));
-        toolBar.add(unsel_all = this.createButton("deselect_all", m_ic.getMessage("DESELECT_ALL"),
-            "element_selection_delete.png"));
+        JLabel label;
 
-        filter_combo.setSelectedIndex(DeviceDisplayDataDialog.FILTER_NEW_CHANGED);
-        filter_combo.setEnabled(false);
+        toolBar.add(label = new JLabel(i18nControl.getMessage("FILTER") + ":   "));
+        label.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_P2));
+        toolBar.add(cmbFilter = new JComboBox(DownloaderFilterType.values()));
+        toolBar.add(new JLabel("    "));
+        toolBar.add(btnSelectAll = this.createButton("select_all", //
+            i18nControl.getMessage("SELECT_ALL"), "element_selection.png"));
+        toolBar.add(new JLabel("  "));
+        toolBar.add(btnUnselectAll = this.createButton("deselect_all", //
+            i18nControl.getMessage("DESELECT_ALL"), "element_selection_delete.png"));
+        toolBar.add(new JLabel("                                      "));
+        toolBar.add(btnImport = this.createButton("export_data", //
+            i18nControl.getMessage("IMPORT_DATA"), "import1.png"));
 
-        sel_all.setEnabled(false);
-        unsel_all.setEnabled(false);
+        // cmbFilter.setSelectedIndex(DeviceDisplayDataDialog.FILTER_NEW_CHANGED);
+        cmbFilter.setSelectedItem(DownloaderFilterType.NewChanged);
+        cmbFilter.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_P2));
+        cmbFilter.setEnabled(false);
 
-        filter_combo.addItemListener(new ItemListener()
+        btnSelectAll.setEnabled(false);
+        btnUnselectAll.setEnabled(false);
+        btnImport.setEnabled(false);
+
+        cmbFilter.addItemListener(new ItemListener()
         {
 
-            /**
-             * itemStateChanged
-             */
             public void itemStateChanged(ItemEvent ev)
             {
-                model.setFilter(filter_combo.getSelectedIndex());
+                model.setFilter((DownloaderFilterType) cmbFilter.getSelectedItem());
             }
-
         });
 
-        // toolBar.add(addRowAction);
-        // toolBar.add(deleteRowAction);
-        // UIUtilities.addToolBarButton(toolBar, addRowAction);
-        // UIUtilities.addToolBarButton(toolBar, deleteRowAction);
-        // toolBar.add(addRowAction);
-        // toolBar.add(deleteRowAction);
-
-        // int[] cw = { 110, 80, 70, 80, 30 };
-
-        /*
-         * // removed TableColumn column = null; for (int i = 0; i <
-         * this.dataAccess.getColumnsWidthTable().length; i++) { column =
-         * table_in.getColumnModel().getColumn(i);
-         * column.setPreferredWidth(this.dataAccess.getColumnsWidthTable()[i]);
-         * }
-         */
         JPanel container = new JPanel(new BorderLayout());
         container.add(toolBar, "North");
         container.add(scroller, "Center");
@@ -478,7 +402,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     private JButton createButton(String command_text, String tooltip, String image_d)
     {
         JButton b = new JButton();
-        b.setIcon(ATSwingUtils.getImageIcon(image_d, 15, 15, this, m_da));
+        b.setIcon(ATSwingUtils.getImageIcon(image_d, 25, 25, this, dataAccess));
         b.addActionListener(this);
         b.setActionCommand(command_text);
         b.setToolTipText(tooltip);
@@ -500,7 +424,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         }
         else if (action.equals("close"))
         {
-            m_da.removeComponent(this);
+            dataAccess.removeComponent(this);
             this.dispose();
         }
         else if (action.equals("select_all"))
@@ -513,16 +437,12 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         }
         else if (action.equals("export_data"))
         {
-            // Hashtable<String,ArrayList<?>> ht =
-            // this.model.getCheckedEntries();
-
-            DeviceExportDialog med = new DeviceExportDialog(m_da, this, this.m_ddh);
+            DeviceExportDialog med = new DeviceExportDialog(dataAccess, this, this.deviceDataHandler);
 
             if (med.wasAction())
             {
-                this.bt_import.setEnabled(false);
+                this.btnImport.setEnabled(false);
             }
-
         }
         else
         {
@@ -549,8 +469,6 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         }
     }
 
-    DeviceIdentification deviceIdentification;
-
 
     /**
      * getDeviceIdentification
@@ -559,12 +477,11 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     {
         if (deviceIdentification == null)
         {
-            deviceIdentification = new DeviceIdentification(m_da.getI18nControlInstance());
+            deviceIdentification = new DeviceIdentification(dataAccess.getI18nControlInstance());
         }
+
         return deviceIdentification;
     }
-
-    String sub_status = null;
 
 
     /**
@@ -574,7 +491,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      */
     public void setSubStatus(String sub_status)
     {
-        this.sub_status = sub_status;
+        this.subStatus = sub_status;
         refreshStatus();
     }
 
@@ -586,10 +503,8 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      */
     public String getSubStatus()
     {
-        return this.sub_status;
+        return this.subStatus;
     }
-
-    OutputUtil output_util = OutputUtil.getInstance(this);
 
 
     /**
@@ -597,17 +512,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      */
     public OutputUtil getOutputUtil()
     {
-        return this.output_util;
-    }
-
-
-    /**
-     * interruptCommunication
-     */
-    public void interruptCommunication()
-    {
-        System.out.println("interComm()");
-
+        return this.outputUtil;
     }
 
 
@@ -617,7 +522,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     public void setBGOutputType(int bg_type)
     {
         // System.out.println("setBGOutput()");
-        // this.output_util.setBGMeasurmentType(bg_type);
+        // this.outputUtil.setBGMeasurmentType(bg_type);
     }
 
 
@@ -629,8 +534,6 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         this.deviceIdentification = di;
     }
 
-    int count = 0;
-
 
     /**
      * writeDeviceIdentification
@@ -639,15 +542,15 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     {
         if (this.deviceIdentification.company == null)
         {
-            this.deviceIdentification.company = m_da.getCompanyNameForSelectedDevice();
+            this.deviceIdentification.company = dataAccess.getCompanyNameForSelectedDevice();
         }
 
         if (this.deviceIdentification.device_selected == null)
         {
-            this.deviceIdentification.device_selected = m_da.getDeviceNameForSelectedDevice();
+            this.deviceIdentification.device_selected = dataAccess.getDeviceNameForSelectedDevice();
         }
 
-        this.ta_info.setText(this.deviceIdentification.getShortInformation());
+        this.taInfo.setText(this.deviceIdentification.getShortInformation());
     }
 
 
@@ -669,15 +572,13 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     {
     }
 
-    boolean device_should_be_stopped = false;
-
 
     /**
      * User can stop readings from his side (if supported)
      */
     public void setReadingStop()
     {
-        this.device_should_be_stopped = true;
+        this.deviceShouldBeStopped = true;
     }
 
 
@@ -687,10 +588,8 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      */
     public boolean isReadingStopped()
     {
-        return this.device_should_be_stopped;
+        return this.deviceShouldBeStopped;
     }
-
-    int reading_status = AbstractOutputWriter.STATUS_READY;
 
 
     /**
@@ -701,12 +600,12 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      */
     public void setStatus(int status)
     {
-        if (this.reading_status == AbstractOutputWriter.STATUS_STOPPED_DEVICE
-                || this.reading_status == AbstractOutputWriter.STATUS_STOPPED_USER
-                || this.reading_status == AbstractOutputWriter.STATUS_READER_ERROR)
+        if (this.readingStatus == AbstractOutputWriter.STATUS_STOPPED_DEVICE
+                || this.readingStatus == AbstractOutputWriter.STATUS_STOPPED_USER
+                || this.readingStatus == AbstractOutputWriter.STATUS_READER_ERROR)
             return;
 
-        this.reading_status = status;
+        this.readingStatus = status;
         setGUIStatus(status);
     }
 
@@ -718,7 +617,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      */
     public int getStatus()
     {
-        return this.reading_status;
+        return this.readingStatus;
     }
 
 
@@ -727,10 +626,8 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      */
     public void refreshStatus()
     {
-        setGUIStatus(current_status);
+        setGUIStatus(currentStatus);
     }
-
-    private int current_status = 0;
 
 
     /**
@@ -741,58 +638,69 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     public void setGUIStatus(int status)
     {
 
-        current_status = status;
+        currentStatus = status;
 
-        if (this.sub_status == null || this.sub_status.length() == 0)
+        if (this.subStatus == null || this.subStatus.length() == 0)
         {
-            this.lbl_status.setText(this.m_da.getReadingStatuses()[status]);
+            this.lblStatus.setText(this.dataAccess.getReadingStatuses()[status]);
         }
         else
         {
-            this.lbl_status.setText(this.m_da.getReadingStatuses()[status] + " - " + m_ic.getMessage(this.sub_status));
+            this.lblStatus.setText(this.dataAccess.getReadingStatuses()[status] + " - "
+                    + i18nControl.getMessage(this.subStatus));
         }
+
+        // System.out.println("btnImport:" + btnImport + "  STATUS: " + status);
 
         switch (status)
         {
 
             case AbstractOutputWriter.STATUS_DOWNLOADING: // downloading
                 {
-                    this.bt_break.setEnabled(true);
-                    this.bt_close.setEnabled(false);
-                    this.bt_import.setEnabled(false);
+                    this.btnBreak.setEnabled(true);
+                    this.btnClose.setEnabled(false);
+                    if (btnImport != null)
+                        this.btnImport.setEnabled(false);
                 }
                 break;
 
             case AbstractOutputWriter.STATUS_DOWNLOAD_FINISHED: // finished
                 {
-                    this.bt_break.setEnabled(false);
-                    this.bt_close.setEnabled(true);
-                    this.bt_import.setEnabled(true);
-                    filter_combo.setEnabled(true);
-                    sel_all.setEnabled(true);
-                    unsel_all.setEnabled(true);
-                    // this.progress.setIndeterminate(false);
-
+                    this.btnBreak.setEnabled(false);
+                    this.btnClose.setEnabled(true);
+                    if (this.btnImport != null)
+                    {
+                        this.btnImport.setEnabled(true);
+                        cmbFilter.setEnabled(true);
+                        btnSelectAll.setEnabled(true);
+                        btnUnselectAll.setEnabled(true);
+                    }
                 }
                 break;
 
             case AbstractOutputWriter.STATUS_READER_ERROR: // error
                 {
-                    this.bt_break.setEnabled(false);
-                    this.bt_close.setEnabled(true);
-                    this.bt_import.setEnabled(false);
-                    filter_combo.setEnabled(false);
-                    sel_all.setEnabled(false);
-                    unsel_all.setEnabled(false);
+                    this.btnBreak.setEnabled(false);
+                    this.btnClose.setEnabled(true);
+                    if (this.btnImport != null)
+                    {
+                        this.btnImport.setEnabled(false);
+                        cmbFilter.setEnabled(false);
+                        btnSelectAll.setEnabled(false);
+                        btnUnselectAll.setEnabled(false);
+                    }
                 }
                 break;
 
             case AbstractOutputWriter.STATUS_STOPPED_DEVICE: // stopped - device
             case AbstractOutputWriter.STATUS_STOPPED_USER: // stoped - user
                 {
-                    this.bt_break.setEnabled(false);
-                    this.bt_close.setEnabled(true);
-                    this.bt_import.setEnabled(false);
+                    this.btnBreak.setEnabled(false);
+                    this.btnClose.setEnabled(true);
+                    if (this.btnImport != null)
+                    {
+                        this.btnImport.setEnabled(false);
+                    }
                 }
                 break;
 
@@ -800,9 +708,12 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
                 // case 0: // none
             default:
                 {
-                    this.bt_break.setEnabled(false);
-                    this.bt_close.setEnabled(false);
-                    this.bt_import.setEnabled(false);
+                    this.btnBreak.setEnabled(false);
+                    this.btnClose.setEnabled(false);
+                    if (this.btnImport != null)
+                    {
+                        this.btnImport.setEnabled(false);
+                    }
                 }
                 break;
         }
@@ -817,7 +728,10 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      */
     public void setDeviceComment(String text)
     {
-        this.lbl_comment.setText(m_ic.getMessage(text));
+        if (lblComment != null)
+        {
+            this.lblComment.setText(i18nControl.getMessage(text));
+        }
     }
 
 
@@ -860,10 +774,10 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     /**
      * Write log entry
      * 
-     * @param entry_type
+     * @param entryType
      * @param message
      */
-    public void writeLog(int entry_type, String message)
+    public void writeLog(LogEntryType entryType, String message)
     {
         this.addLogText(message);
     }
@@ -872,11 +786,11 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     /**
      * Write log entry
      * 
-     * @param entry_type
+     * @param entryType
      * @param message
      * @param ex
      */
-    public void writeLog(int entry_type, String message, Exception ex)
+    public void writeLog(LogEntryType entryType, String message, Exception ex)
     {
         this.addLogText(message);
     }
@@ -900,7 +814,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      */
     public JButton getHelpButton()
     {
-        return this.help_button;
+        return this.btnHelp;
     }
 
 
@@ -923,7 +837,8 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      */
     public void setOldDataReadingProgress(int value)
     {
-        this.progress_old.setValue(value);
+        if (this.progressOld != null)
+            this.progressOld.setValue(value);
     }
 
 
@@ -937,8 +852,6 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     {
     }
 
-    String device_source;
-
 
     /**
      * Set Device Source
@@ -947,7 +860,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      */
     public void setDeviceSource(String dev)
     {
-        this.device_source = dev;
+        this.deviceSource = dev;
     }
 
 
@@ -958,7 +871,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      */
     public String getDeviceSource()
     {
-        return this.device_source;
+        return this.deviceSource;
     }
 
 
@@ -970,29 +883,36 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     {
         indeterminate = true;
         this.progress.setIndeterminate(true);
-        // this.progress.setString(null);
         this.progress.setStringPainted(false);
     }
 
 
-    public void addErrorMessage(String msg)
+    public void addErrorMessage(ErrorMessageDto msg)
     {
-        // TODO Auto-generated method stub
+        errorMessageList.add(msg);
 
+        if (btnErrors != null)
+        {
+            btnErrors.setEnabled(true);
+        }
     }
 
 
     public int getErrorMessageCount()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return errorMessageList.size();
     }
 
 
-    public ArrayList<String> getErrorMessages()
+    public List<ErrorMessageDto> getErrorMessages()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return errorMessageList;
+    }
+
+
+    public void setSpecialNote(int noteType, String note)
+    {
+        System.out.println("Special Note [" + noteType + "]: " + note);
     }
 
 }

@@ -59,79 +59,24 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
 {
 
     private static final long serialVersionUID = -1199131576461686895L;
-    private DataAccessPlugInBase m_da;
-    I18nControlAbstract m_ic = null;
-
-    // private DeviceInterfaceVersion deviceInterfaceVersion;
-
-    // DeviceInterface deviceInterfaceV1;
-    // DeviceInstanceWithHandler deviceInterfaceV2;
+    private DataAccessPlugInBase dataAccess;
+    I18nControlAbstract i18nControl = null;
 
     DeviceConfigEntry configured_device;
     DeviceDataHandler deviceDataHandler;
     JFrame m_parent = null;
-    JButton button_start, help_button;
+    JButton btnStart, btnHelp;
     JLabel label_waiting;
     boolean reading_old_done = false;
     boolean is_preinit_done = true;
     private String unknownTranslation;
 
-    // DeviceTransferData m_dtd = null;
-
-    // Hashtable<String,?> device_data = null;
-    // int x,y;
-    // JFrame parentMy;
-    // DbDataReaderAbstract reader;
-    // DevicePlugInServer server;
     int continuing_type = DeviceDataHandler.TRANSFER_READ_DATA;
-
-
-    /**
-     * Continuing Type: Read Data
-     */
-    // public static final int CONTINUING_TYPE_READ_DATA = 1;
-
-    /**
-     * Continuing Type: Read Configuration
-     */
-    // public static final int CONTINUING_TYPE_READ_CONFIGURATION = 2;
-
-    /**
-     * Constructor (for standalone start)
-     * 
-     * @param parent 
-     * @param da 
-     * @param continued_type 
-     */
-    /*
-     * public DeviceInstructionsDialog(Container parent, DataAccessPlugInBase
-     * da, int continued_type)
-     * {
-     * super();
-     * this.dataAccess = da;
-     * this.i18nControl = da.getI18nControlInstance();
-     * //this.m_dtd = DeviceTransferData.getInstance();
-     * this.deviceDataHandler = dataAccess.getDeviceDataHandler();
-     * this.deviceDataHandler.setTransferType(continued_type);
-     * //this.m_dtd.device_data_handler = this.deviceDataHandler;
-     * this.checkReading(this.deviceDataHandler.isOldDataReadingFinished());
-     * this.deviceDataHandler.setReadingFinishedObject(this);
-     * if (!loadConfiguration())
-     * {
-     * notConfigured();
-     * return;
-     * }
-     * init();
-     * dataAccess.centerJDialog(this, parent);
-     * this.setResizable(false);
-     * this.setVisible(true);
-     * }
-     */
 
     /**
      * Constructor
-
-     * @param da 
+     *
+     * @param da
      * @param parent 
      * @param server
      * @param _continued_type 
@@ -141,23 +86,23 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
     {
         super((JFrame) parent, "", true);
 
-        this.m_da = da;
-        this.m_ic = da.getI18nControlInstance();
+        this.dataAccess = da;
+        this.i18nControl = da.getI18nControlInstance();
         this.m_parent = (JFrame) parent;
 
-        unknownTranslation = m_ic.getMessage("UNKNOWN");
+        unknownTranslation = i18nControl.getMessage("UNKNOWN");
 
-        this.deviceDataHandler = m_da.getDeviceDataHandler();
+        this.deviceDataHandler = dataAccess.getDeviceDataHandler();
         this.deviceDataHandler.setDevicePlugInServer(server);
         // this.deviceDataHandler.setDbDataReader(reader);
         this.checkReading(this.deviceDataHandler.isOldDataReadingFinished());
         this.deviceDataHandler.setReadingFinishedObject(this);
-        m_da.addComponent(this);
+        dataAccess.addComponent(this);
 
         this.continuing_type = _continued_type;
         this.deviceDataHandler.setTransferType(this.continuing_type);
 
-        button_start = new JButton(m_ic.getMessage("START_DOWNLOAD"));
+        btnStart = new JButton(i18nControl.getMessage("START_DOWNLOAD"));
 
         if (!loadConfiguration())
         {
@@ -175,8 +120,8 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
 
                 if (!warned)
                 {
-                    String msg = String.format(m_ic.getMessage("DEVICE_HAS_NO_DEVICE_DOWNLOAD_SUPPORT"),
-                        this.configured_device.device_device, this.configured_device.device_company);
+                    String msg = String.format(i18nControl.getMessage("DEVICE_HAS_NO_DEVICE_DOWNLOAD_SUPPORT"),
+                            this.configured_device.device_device, this.configured_device.device_company);
                     this.showWarningDialog(msg);
                 }
 
@@ -192,8 +137,8 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
 
                 if (!warned)
                 {
-                    String msg = String.format(m_ic.getMessage("DEVICE_HAS_NO_FILE_DOWNLOAD_SUPPORT"),
-                        this.configured_device.device_device, this.configured_device.device_company);
+                    String msg = String.format(i18nControl.getMessage("DEVICE_HAS_NO_FILE_DOWNLOAD_SUPPORT"),
+                            this.configured_device.device_device, this.configured_device.device_company);
                     this.showWarningDialog(msg);
                 }
 
@@ -209,8 +154,8 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
 
                 if (!warned)
                 {
-                    String msg = String.format(m_ic.getMessage("DEVICE_HAS_NO_CONFIG_DOWNLOAD_SUPPORT"),
-                        this.configured_device.device_device, this.configured_device.device_company);
+                    String msg = String.format(i18nControl.getMessage("DEVICE_HAS_NO_CONFIG_DOWNLOAD_SUPPORT"),
+                            this.configured_device.device_device, this.configured_device.device_company);
                     this.showWarningDialog(msg);
                 }
 
@@ -247,8 +192,8 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         // else
         if (DownloadSupportType.isOptionSet(status, DownloadSupportType.NotSupportedByGGC))
         {
-            String msg = String.format(m_ic.getMessage("DEVICE_DOWNLOAD_NOT_SUPPORTED_BY_GGC"),
-                this.configured_device.device_device, this.configured_device.device_company);
+            String msg = String.format(i18nControl.getMessage("DEVICE_DOWNLOAD_NOT_SUPPORTED_BY_GGC"),
+                    this.configured_device.device_device, this.configured_device.device_company);
             showWarningDialog(msg);
             return true;
         }
@@ -266,16 +211,16 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
 
     private void showWarningDialog(String msg)
     {
-        JOptionPane.showMessageDialog(m_da.getCurrentComponentParent(), msg, m_ic.getMessage("WARNING"),
+        JOptionPane.showMessageDialog(dataAccess.getCurrentComponentParent(), msg, i18nControl.getMessage("WARNING"),
             JOptionPane.WARNING_MESSAGE);
     }
 
 
     private void notConfigured()
     {
-        String dv = m_ic.getMessage("DEVICE_NAME_NORMAL");
-        String msg = String.format(m_ic.getMessage("OOPS_DEVICE_NOT_CONFIGURED"), dv, dv, dv);
-        JOptionPane.showMessageDialog(this, msg, m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
+        String dv = i18nControl.getMessage("DEVICE_NAME_NORMAL");
+        String msg = String.format(i18nControl.getMessage("OOPS_DEVICE_NOT_CONFIGURED"), dv, dv, dv);
+        JOptionPane.showMessageDialog(this, msg, i18nControl.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
     }
 
 
@@ -283,7 +228,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
     {
         // System.out.println("Load configuration");
 
-        this.configured_device = this.m_da.getDeviceConfiguration().getSelectedDeviceInstance();
+        this.configured_device = this.dataAccess.getDeviceConfiguration().getSelectedDeviceInstance();
 
         // System.out.println("Cfg: " + this.configured_device);
 
@@ -301,7 +246,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
     {
         boolean configured = false;
 
-        DeviceInstanceWithHandler diwh = m_da.getManager().getDeviceV2(this.configured_device.device_company,
+        DeviceInstanceWithHandler diwh = dataAccess.getManager().getDeviceV2(this.configured_device.device_company,
             this.configured_device.device_device);
 
         boolean doPreInit = false;
@@ -323,7 +268,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
 
             this.deviceDataHandler.setDeviceInterfaceVersion(DeviceInterfaceVersion.DeviceInterfaceVersion1);
 
-            DeviceInterface deviceV1 = m_da.getManager().getDeviceV1(this.configured_device.device_company,
+            DeviceInterface deviceV1 = dataAccess.getManager().getDeviceV1(this.configured_device.device_company,
                 this.configured_device.device_device);
 
             if (deviceV1 != null)
@@ -333,13 +278,13 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
                 this.deviceDataHandler.setDeviceInterfaceV1(deviceV1);
 
                 DeviceAbstract dva = (DeviceAbstract) deviceV1;
-                dva.preInitInit(this.configured_device.communication_port_raw, new ConsoleOutputWriter(), m_da);
+                dva.preInitInit(this.configured_device.communication_port_raw, new ConsoleOutputWriter(), dataAccess);
 
                 if (deviceV1.hasPreInit())
                 {
                     is_preinit_done = false;
-                    this.button_start.setEnabled(false);
-                    dva.setDataAccessInstance(m_da);
+                    this.btnStart.setEnabled(false);
+                    dva.setDataAccessInstance(dataAccess);
                     dva.setOutputWriter(new ConsoleOutputWriter());
 
                     doPreInit = true;
@@ -380,13 +325,13 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
     private ImageIcon getDeviceIcon()
     {
 
-        String root = m_da.getDeviceImagesRoot();
+        String root = dataAccess.getDeviceImagesRoot();
 
         if (this.configured_device == null)
-            return m_da.getImageIcon(root, "no_device.gif");
+            return dataAccess.getImageIcon(root, "no_device.gif");
         else
         {
-            return m_da.getImageIcon(root, getDeviceInterfaceParameter(DEVICE_INTERFACE_PARAM_ICON_NAME));
+            return dataAccess.getImageIcon(root, getDeviceInterfaceParameter(DEVICE_INTERFACE_PARAM_ICON_NAME));
         }
     }
 
@@ -406,12 +351,12 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
                 {
                     if (deviceDataHandler.getDeviceInterfaceV2() != null)
                     {
-                        value = m_ic.getMessage(deviceDataHandler.getDeviceInterfaceV2().getConnectionProtocol()
+                        value = i18nControl.getMessage(deviceDataHandler.getDeviceInterfaceV2().getConnectionProtocol()
                                 .getI18nKey());
                     }
                     else if (deviceDataHandler.getDeviceInterfaceV1() != null)
                     {
-                        value = m_ic.getMessage(deviceDataHandler.getDeviceInterfaceV1().getConnectionProtocol()
+                        value = i18nControl.getMessage(deviceDataHandler.getDeviceInterfaceV1().getConnectionProtocol()
                                 .getI18nKey());
                     }
 
@@ -420,12 +365,12 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
 
             case DeviceInstructionsDialog.DEVICE_INTERFACE_PARAM_STATUS:
                 {
-                    value = m_ic.getMessage("ERROR_IN_CONFIG");
+                    value = i18nControl.getMessage("ERROR_IN_CONFIG");
 
                     if ((deviceDataHandler.getDeviceInterfaceV1() != null)
                             || (deviceDataHandler.getDeviceInterfaceV2() != null))
                     {
-                        value = m_ic.getMessage("READY");
+                        value = i18nControl.getMessage("READY");
                     }
 
                     return value;
@@ -435,11 +380,11 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
                 {
                     if (deviceDataHandler.getDeviceInterfaceV2() != null)
                     {
-                        value = m_ic.getMessage(deviceDataHandler.getDeviceInterfaceV2().getInstructions());
+                        value = i18nControl.getMessage(deviceDataHandler.getDeviceInterfaceV2().getInstructions());
                     }
                     else if (deviceDataHandler.getDeviceInterfaceV1() != null)
                     {
-                        value = m_ic.getMessage(deviceDataHandler.getDeviceInterfaceV1().getInstructions());
+                        value = i18nControl.getMessage(deviceDataHandler.getDeviceInterfaceV1().getInstructions());
                     }
 
                     return value;
@@ -473,7 +418,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
     {
         ATSwingUtils.initLibrary();
 
-        setTitle(String.format(m_ic.getMessage("CONFIGURED_DEVICE_INSTRUCTIONS"), m_ic.getMessage("DEVICE_NAME_BIG")));
+        setTitle(String.format(i18nControl.getMessage("CONFIGURED_DEVICE_INSTRUCTIONS"), i18nControl.getMessage("DEVICE_NAME_BIG")));
 
         JPanel panel = new JPanel();
         panel.setLayout(null);
@@ -484,14 +429,14 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         Font normal = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL);
 
         setBounds(0, 0, 650, 600);
-        m_da.centerJDialog(this);
+        dataAccess.centerJDialog(this);
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         getContentPane().add(panel, BorderLayout.CENTER);
 
         // panel icon
         JPanel panel_icon = ATSwingUtils.getPanel(10, 10, 280, 380, null,
-            new TitledBorder(String.format(m_ic.getMessage("DEVICE_ICON"), m_ic.getMessage("DEVICE_NAME_BIG"))), panel);
+            new TitledBorder(String.format(i18nControl.getMessage("DEVICE_ICON"), i18nControl.getMessage("DEVICE_NAME_BIG"))), panel);
 
         label = new JLabel(this.getDeviceIcon());
         label.setBounds(10, 20, 260, 350);
@@ -501,49 +446,49 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
 
         // panel configured device
         JPanel panel_device = ATSwingUtils.getPanel(300, 10, 330, 170, null,
-            new TitledBorder(m_ic.getMessage("CONFIGURED_DEVICE")), panel);
+            new TitledBorder(i18nControl.getMessage("CONFIGURED_DEVICE")), panel);
 
-        ATSwingUtils.getLabel(m_ic.getMessage("MY_DEVICE_NAME") + ":", 15, 20, 320, 25, panel_device,
+        ATSwingUtils.getLabel(i18nControl.getMessage("MY_DEVICE_NAME") + ":", 15, 20, 320, 25, panel_device,
             ATSwingUtils.FONT_NORMAL_BOLD);
 
         ATSwingUtils.getLabel(this.configured_device.name, 130, 20, 320, 25, panel_device, ATSwingUtils.FONT_NORMAL);
 
-        ATSwingUtils.getLabel(m_ic.getMessage("DEVICE_COMPANY") + ":", 15, 40, 320, 25, panel_device,
+        ATSwingUtils.getLabel(i18nControl.getMessage("DEVICE_COMPANY") + ":", 15, 40, 320, 25, panel_device,
             ATSwingUtils.FONT_NORMAL_BOLD);
 
         ATSwingUtils.getLabel(this.configured_device.device_company, 130, 40, 320, 25, panel_device,
             ATSwingUtils.FONT_NORMAL);
 
-        ATSwingUtils.getLabel(m_ic.getMessage("DEVICE_NAME_") + ":", 15, 60, 320, 25, panel_device,
+        ATSwingUtils.getLabel(i18nControl.getMessage("DEVICE_NAME_") + ":", 15, 60, 320, 25, panel_device,
             ATSwingUtils.FONT_NORMAL_BOLD);
 
         ATSwingUtils.getLabel(this.configured_device.device_device, 130, 60, 320, 25, panel_device,
             ATSwingUtils.FONT_NORMAL);
 
-        ATSwingUtils.getLabel(m_ic.getMessage("CONNECTION_TYPE") + ":", 15, 80, 320, 25, panel_device,
+        ATSwingUtils.getLabel(i18nControl.getMessage("CONNECTION_TYPE") + ":", 15, 80, 320, 25, panel_device,
             ATSwingUtils.FONT_NORMAL_BOLD);
 
         ATSwingUtils.getLabel(this.getDeviceInterfaceParameter(DEVICE_INTERFACE_PARAM_CONNECTION_TYPE), 130, 80, 320,
             25, panel_device, ATSwingUtils.FONT_NORMAL);
 
-        ATSwingUtils.getLabel(m_ic.getMessage("CONNECTION_PARAMETER") + ":", 15, 100, 320, 25, panel_device,
+        ATSwingUtils.getLabel(i18nControl.getMessage("CONNECTION_PARAMETER") + ":", 15, 100, 320, 25, panel_device,
             ATSwingUtils.FONT_NORMAL_BOLD);
 
         ATSwingUtils.getLabel(this.configured_device.communication_port, 130, 100, 320, 25, panel_device,
             ATSwingUtils.FONT_NORMAL);
 
-        ATSwingUtils.getLabel(m_ic.getMessage("STATUS") + ":", 15, 120, 320, 25, panel_device,
+        ATSwingUtils.getLabel(i18nControl.getMessage("STATUS") + ":", 15, 120, 320, 25, panel_device,
             ATSwingUtils.FONT_NORMAL_BOLD);
 
         label = ATSwingUtils.getLabel(this.getDeviceInterfaceParameter(DEVICE_INTERFACE_PARAM_STATUS), 130, 120, 320,
             25, panel_device, ATSwingUtils.FONT_NORMAL);
 
-        JLabel dsFixName = ATSwingUtils.getLabel(m_ic.getMessage("DAYLIGHTSAVINGS_FIX") + ":", 15, 140, 320, 25,
+        JLabel dsFixName = ATSwingUtils.getLabel(i18nControl.getMessage("DAYLIGHTSAVINGS_FIX") + ":", 15, 140, 320, 25,
             panel_device, ATSwingUtils.FONT_NORMAL_BOLD);
 
         label = ATSwingUtils.getLabel("", 130, 140, 320, 25, panel_device, ATSwingUtils.FONT_NORMAL);
 
-        if (m_da.getDeviceConfigurationDefinition().doesDeviceSupportTimeFix())
+        if (dataAccess.getDeviceConfigurationDefinition().doesDeviceSupportTimeFix())
         {
             if (this.configured_device.ds_fix)
             {
@@ -565,40 +510,42 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
 
         // device instructions
         JPanel panel_instruct = ATSwingUtils.getPanel(300, 190, 330, 200, new FlowLayout(),
-            new TitledBorder(m_ic.getMessage("INSTRUCTIONS")), panel);
+            new TitledBorder(i18nControl.getMessage("INSTRUCTIONS")), panel);
 
         label = ATSwingUtils.getLabel(
-            m_ic.getMessage(getDeviceInterfaceParameter(DEVICE_INTERFACE_PARAM_INSTRUCTIONS)), 5, 0, 280, 180,
+            i18nControl.getMessage(getDeviceInterfaceParameter(DEVICE_INTERFACE_PARAM_INSTRUCTIONS)), 5, 0, 280, 180,
             panel_instruct, ATSwingUtils.FONT_NORMAL_SMALLER);
         label.setVerticalAlignment(SwingConstants.TOP);
         label.setHorizontalAlignment(SwingConstants.LEFT);
 
         // bottom
-        label = ATSwingUtils.getLabel(m_ic.getMessage("INSTRUCTIONS_DESC"), 20, 400, 590, 120, panel,
+        label = ATSwingUtils.getLabel(i18nControl.getMessage("INSTRUCTIONS_DESC"), 20, 400, 590, 120, panel,
             ATSwingUtils.FONT_NORMAL);
         label.setVerticalAlignment(SwingConstants.TOP);
         label.setHorizontalAlignment(SwingConstants.CENTER);
 
-        help_button = ATSwingUtils.createHelpButtonByBounds(30, 520, 130, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
-        help_button.setFont(normal);
-        panel.add(help_button);
+        btnHelp = ATSwingUtils.createHelpButtonByBounds(30, 510, 130, 35, this, ATSwingUtils.FONT_NORMAL, dataAccess);
+        btnHelp.setFont(normal);
+        panel.add(btnHelp);
 
-        m_da.enableHelp(this);
+        dataAccess.enableHelp(this);
 
-        ATSwingUtils.getButton(m_ic.getMessage("CANCEL"), 170, 520, 130, 25, panel, ATSwingUtils.FONT_NORMAL, null,
-            "cancel", this, m_da);
+        ATSwingUtils.getButton("   " + i18nControl.getMessage("CANCEL"), 170, 510, 130, 35, panel, ATSwingUtils.FONT_NORMAL, "cancel.png",
+            "cancel", this, dataAccess);
 
-        label_waiting = ATSwingUtils.getLabel(m_ic.getMessage("WAIT_UNTIL_DEVICE_PREINIT"), 310, 498, 300, 25, panel,
+        label_waiting = ATSwingUtils.getLabel(i18nControl.getMessage("WAIT_UNTIL_DEVICE_PREINIT"), 310, 498, 300, 25, panel,
             ATSwingUtils.FONT_NORMAL);
         label_waiting.setVerticalAlignment(SwingConstants.TOP);
         label_waiting.setHorizontalAlignment(SwingConstants.RIGHT);
 
-        button_start.setBounds(370, 520, 240, 25);
-        button_start.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL));
-        button_start.setActionCommand("start_download");
-        button_start.addActionListener(this);
-        // button_start.setEnabled(true);
-        panel.add(button_start);
+        btnStart.setBounds(370, 510, 240, 35);
+        btnStart.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL));
+        btnStart.setIcon(ATSwingUtils.getImageIcon("arrow_right_blue.png", this, dataAccess));
+        btnStart.setHorizontalTextPosition(SwingConstants.LEFT);
+        btnStart.setActionCommand("start_download");
+        btnStart.addActionListener(this);
+        // btnStart.setEnabled(true);
+        panel.add(btnStart);
 
         this.preInitDone(false);
     }
@@ -613,12 +560,12 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
 
         if (action.equals("cancel"))
         {
-            m_da.removeComponent(this);
+            dataAccess.removeComponent(this);
             this.dispose();
         }
         else if (action.equals("start_download"))
         {
-            if (this.m_da.getDeviceConfigurationDefinition().doesDeviceSupportTimeFix()
+            if (this.dataAccess.getDeviceConfigurationDefinition().doesDeviceSupportTimeFix()
                     && this.configured_device.ds_fix)
             {
                 TimeZoneUtil tzu = TimeZoneUtil.getInstance();
@@ -632,13 +579,13 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
 
             if (this.continuing_type == DeviceDataHandler.TRANSFER_READ_DATA)
             {
-                m_da.removeComponent(this);
-                new DeviceDisplayDataDialog(m_parent, m_da, deviceDataHandler);
+                dataAccess.removeComponent(this);
+                new DeviceDisplayDataDialog(m_parent, dataAccess, deviceDataHandler);
             }
             else if (this.continuing_type == DeviceDataHandler.TRANSFER_READ_CONFIGURATION)
             {
-                m_da.removeComponent(this);
-                new DeviceDisplayConfigDialog(m_parent, m_da, deviceDataHandler);
+                dataAccess.removeComponent(this);
+                new DeviceDisplayConfigDialog(m_parent, dataAccess, deviceDataHandler);
             }
             else if (this.continuing_type == DeviceDataHandler.TRANSFER_READ_DATA_FILE)
             {
@@ -665,19 +612,19 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
 
         if (downloadTypes == null)
         {
-            showWarningDialog(this.m_ic.getMessage("INTERNAL_CONFIGURATION_ERROR"));
-            m_da.removeComponent(this);
+            showWarningDialog(this.i18nControl.getMessage("INTERNAL_CONFIGURATION_ERROR"));
+            dataAccess.removeComponent(this);
         }
         else if (downloadTypes.size() == 1)
         {
             deviceDataHandler.selected_file_context = downloadTypes.get(0);
-            m_da.removeComponent(this);
-            new ImportFileSelectorDialog(m_da, this, deviceDataHandler, downloadSupportType);
+            dataAccess.removeComponent(this);
+            new ImportFileSelectorDialog(dataAccess, this, deviceDataHandler, downloadSupportType);
         }
         else
         {
-            m_da.removeComponent(this);
-            new MultipleFileSelectorDialog(m_da, this, deviceDataHandler, downloadSupportType);
+            dataAccess.removeComponent(this);
+            new MultipleFileSelectorDialog(dataAccess, this, deviceDataHandler, downloadSupportType);
         }
 
     }
@@ -691,9 +638,9 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         /*
          * checkReading(true);
          * //System.out.println("DeviceInstructionDialog:readingFinished");
-         * if (this.button_start!=null)
+         * if (this.btnStart!=null)
          * {
-         * this.button_start.setEnabled(true);
+         * this.btnStart.setEnabled(true);
          * this.label_waiting.setText("");
          * }
          */
@@ -725,7 +672,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
      */
     public JButton getHelpButton()
     {
-        return this.help_button;
+        return this.btnHelp;
     }
 
 
@@ -757,12 +704,12 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         {
             if (this.label_waiting != null)
             {
-                this.button_start.setEnabled(true);
+                this.btnStart.setEnabled(true);
                 this.label_waiting.setVisible(false);
             }
             else
             {
-                this.button_start.setEnabled(true);
+                this.btnStart.setEnabled(true);
             }
 
         }

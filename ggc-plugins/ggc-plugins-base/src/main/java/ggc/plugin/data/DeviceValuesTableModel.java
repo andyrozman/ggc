@@ -9,7 +9,7 @@ import com.atech.graphics.components.MultiLineTooltip;
 import com.atech.graphics.components.MultiLineTooltipModel;
 
 import ggc.plugin.data.enums.DeviceEntryStatus;
-import ggc.plugin.gui.DeviceDisplayDataDialog;
+import ggc.plugin.data.enums.DownloaderFilterType;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
@@ -42,15 +42,15 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
 {
 
     private static final long serialVersionUID = -6542265335372702616L;
-    protected ArrayList<DeviceValuesEntryInterface> dl_data;
-    protected ArrayList<DeviceValuesEntryInterface> displayed_dl_data;
+    protected List<DeviceValuesEntryInterface> dl_data;
+    protected List<DeviceValuesEntryInterface> displayed_dl_data;
     protected DeviceDataHandler deviceDataHandler = null;
-    protected int current_filter = DeviceDisplayDataDialog.FILTER_NEW_CHANGED;
     protected DataAccessPlugInBase m_da;
     protected String device_source;
     protected boolean debug = false;
     protected List<ColumnSettings> columns;
     protected int checkableColumn;
+    DownloaderFilterType currentFilter = DownloaderFilterType.NewChanged;
 
 
     /**
@@ -95,10 +95,11 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
     @Override
     public void setValueAt(Object aValue, int row, int column)
     {
+        System.out.println("Checkable column: " + checkableColumn);
         if (checkableColumn == column)
         {
             Boolean b = (Boolean) aValue;
-            this.displayed_dl_data.get(row).setChecked(b.booleanValue());
+            this.displayed_dl_data.get(row).setChecked(b);
         }
     }
 
@@ -147,29 +148,77 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
 
     /**
      * set Filter
+     * @deprecated use setFilter(DownloadFilerType) instead
      * 
      * @param filter
      */
-    public void setFilter(int filter)
+    // public void setFilter(int filter)
+    // {
+    // this.setFilter(filter, false);
+    // }
+
+    /**
+     * set Filter
+     *
+     * @param filter
+     */
+    public void setFilter(DownloaderFilterType filter)
     {
         this.setFilter(filter, false);
     }
 
 
+    // /**
+    // * Set Filter
+    // *
+    // * @param filter
+    // * @param force
+    // *
+    // * @deprecated
+    // */
+    // public void setFilter(int filter, boolean force)
+    // {
+    // // System.out.println("Set FILTER !!!!!!!!!!!!!!!!!!!!!! " + filter);
+    //
+    // if (this.current_filter == filter && !force)
+    // return;
+    //
+    // this.current_filter = filter;
+    //
+    // this.displayed_dl_data.clear();
+    //
+    // for (int i = 0; i < this.dl_data.size(); i++)
+    // {
+    // DeviceValuesEntryInterface mve = this.dl_data.get(i);
+    //
+    // if (shouldBeDisplayedOld(mve.getStatusType()))
+    // {
+    // this.displayed_dl_data.add(mve);
+    // }
+    // }
+    //
+    // System.out.println("Display data: " + displayed_dl_data.size());
+    //
+    // Collections.sort(displayed_dl_data);
+    //
+    // this.fireTableDataChanged();
+    //
+    // }
+
     /**
      * Set Filter
-     * 
+     *
      * @param filter
-     * @param force 
+     * @param force
      */
-    public void setFilter(int filter, boolean force)
+    public void setFilter(DownloaderFilterType filter, boolean force)
     {
         // System.out.println("Set FILTER !!!!!!!!!!!!!!!!!!!!!! " + filter);
 
-        if (this.current_filter == filter && !force)
+        if (this.currentFilter == filter && !force)
             return;
 
-        this.current_filter = filter;
+        this.currentFilter = filter;
 
         this.displayed_dl_data.clear();
 
@@ -183,6 +232,8 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
             }
         }
 
+        // System.out.println("Display data: " + displayed_dl_data.size());
+
         Collections.sort(displayed_dl_data);
 
         this.fireTableDataChanged();
@@ -190,72 +241,58 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
     }
 
 
-    /**
-     * Should be displayed filter
-     * 
-     * @param status
-     * @return
-     */
-//    public boolean shouldBeDisplayed(int status)
-//    {
-//        switch (this.current_filter)
-//        {
-//            case DeviceDisplayDataDialog.FILTER_ALL:
-//                return true;
-//
-//            case DeviceDisplayDataDialog.FILTER_NEW:
-//                return status == DeviceValuesEntryInterface.STATUS_NEW;
-//
-//            case DeviceDisplayDataDialog.FILTER_CHANGED:
-//                return status == DeviceValuesEntryInterface.STATUS_CHANGED;
-//
-//            case DeviceDisplayDataDialog.FILTER_EXISTING:
-//                return status == DeviceValuesEntryInterface.STATUS_OLD;
-//
-//            case DeviceDisplayDataDialog.FILTER_UNKNOWN:
-//                return status == DeviceValuesEntryInterface.STATUS_UNKNOWN;
-//
-//            case DeviceDisplayDataDialog.FILTER_NEW_CHANGED:
-//                return status == DeviceValuesEntryInterface.STATUS_NEW
-//                        || status == DeviceValuesEntryInterface.STATUS_CHANGED;
-//
-//            case DeviceDisplayDataDialog.FILTER_ALL_BUT_EXISTING:
-//                return status != DeviceValuesEntryInterface.STATUS_OLD;
-//        }
-//        return false;
-//
-//    }
-
+    // public boolean shouldBeDisplayedOld(DeviceEntryStatus status)
+    // {
+    // switch (this.current_filter)
+    // {
+    // case DeviceDisplayDataDialog.FILTER_ALL:
+    // return true;
+    //
+    // case DeviceDisplayDataDialog.FILTER_NEW:
+    // return status == DeviceEntryStatus.New;
+    //
+    // case DeviceDisplayDataDialog.FILTER_CHANGED:
+    // return status == DeviceEntryStatus.Changed;
+    //
+    // case DeviceDisplayDataDialog.FILTER_EXISTING:
+    // return status == DeviceEntryStatus.Old;
+    //
+    // case DeviceDisplayDataDialog.FILTER_UNKNOWN:
+    // return status == DeviceEntryStatus.Unknown;
+    //
+    // case DeviceDisplayDataDialog.FILTER_NEW_CHANGED:
+    // return status == DeviceEntryStatus.New || status == DeviceEntryStatus.Changed;
+    //
+    // case DeviceDisplayDataDialog.FILTER_ALL_BUT_EXISTING:
+    // return status != DeviceEntryStatus.Old;
+    // }
+    // return false;
+    //
+    // }
 
     public boolean shouldBeDisplayed(DeviceEntryStatus status)
     {
-        switch (this.current_filter)
+        switch (this.currentFilter)
         {
-            case DeviceDisplayDataDialog.FILTER_ALL:
+            case All:
                 return true;
 
-            case DeviceDisplayDataDialog.FILTER_NEW:
-                return status == DeviceEntryStatus.New;
+            case New:
+            case Changed:
+            case Existing:
+            case Unknown:
+                return status == currentFilter.getDeviceEntryStatus();
 
-            case DeviceDisplayDataDialog.FILTER_CHANGED:
-                return status == DeviceEntryStatus.Changed;
-
-            case DeviceDisplayDataDialog.FILTER_EXISTING:
-                return status == DeviceEntryStatus.Old;
-
-            case DeviceDisplayDataDialog.FILTER_UNKNOWN:
-                return status == DeviceEntryStatus.Unknown;
-
-            case DeviceDisplayDataDialog.FILTER_NEW_CHANGED:
+            case NewChanged:
                 return status == DeviceEntryStatus.New || status == DeviceEntryStatus.Changed;
 
-            case DeviceDisplayDataDialog.FILTER_ALL_BUT_EXISTING:
+            case AllButExisting:
                 return status != DeviceEntryStatus.Old;
         }
+
         return false;
 
     }
-
 
 
     /**
@@ -319,7 +356,7 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
 
             if (!this.deviceDataHandler.getOldData().containsKey("" + dve.getSpecialId()))
             {
-                dve.setStatusType(DeviceEntryStatus.New); //DeviceValuesEntryInterface.STATUS_NEW);
+                dve.setStatusType(DeviceEntryStatus.New); // DeviceValuesEntryInterface.STATUS_NEW);
                 dve.setObjectStatus(DeviceValuesEntryInterface.OBJECT_STATUS_NEW);
             }
             else
@@ -328,23 +365,21 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
                 DeviceValuesEntryInterface dve_old = (DeviceValuesEntryInterface) this.deviceDataHandler.getOldData()
                         .get(dve.getSpecialId());
 
-                //System.out.println("Old: " + dve_old.getValue());
                 dve.prepareEntry_v2();
-                //System.out.println("New: " + dve.getValue());
 
                 if (dve_old.getValue().equals(dve.getValue()))
                 {
-                    dve.setStatusType(DeviceEntryStatus.Old); // DeviceValuesEntryInterface.STATUS_OLD);
+                    dve.setStatusType(DeviceEntryStatus.Old);
                     dve.setObjectStatus(DeviceValuesEntryInterface.OBJECT_STATUS_OLD);
                     dve.setId(dve_old.getId());
                 }
                 else
                 {
-                    dve.setStatusType(DeviceEntryStatus.Changed); //DeviceValuesEntryInterface.STATUS_CHANGED);
+                    dve.setStatusType(DeviceEntryStatus.Changed);
                     dve.setObjectStatus(DeviceValuesEntryInterface.OBJECT_STATUS_EDIT);
                     // dve.entry_object = mve_old.getHibernateObject();
 
-                    //if (debug)
+                    if (debug)
                     {
                         System.out.println("!!! OLD ID: " + dve_old.getId());
                         System.out.println("Data: \nnew_value=" + dve.getValue() + "\nold_value=" + dve_old.getValue());
@@ -356,7 +391,7 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
         }
         else
         {
-            dve.setStatusType(DeviceEntryStatus.New); // DeviceValuesEntryInterface.STATUS_NEW);
+            dve.setStatusType(DeviceEntryStatus.New);
             dve.setObjectStatus(DeviceValuesEntryInterface.OBJECT_STATUS_NEW);
         }
 
@@ -476,7 +511,7 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
                 continue;
             }
 
-            //dve.prepareEntry();
+            // dve.prepareEntry();
 
             if (dve.getObjectStatus() == DeviceValuesEntry.OBJECT_STATUS_NEW)
             {
@@ -487,7 +522,6 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
                 listEdit.add(dve);
             }
         }
-
 
         ht.put("ADD", listAdd);
         ht.put("EDIT", listEdit);

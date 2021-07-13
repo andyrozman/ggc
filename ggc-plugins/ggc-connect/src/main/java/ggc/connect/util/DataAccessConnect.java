@@ -4,8 +4,10 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 
+import ggc.connect.data.ConnectDataHandler;
 import ggc.connect.db.GGCConnectDb;
 import ggc.connect.defs.ConnectPluginDefinition;
+import ggc.connect.enums.ConnectOperationType;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
@@ -88,12 +90,13 @@ public class DataAccessConnect extends DataAccessPlugInBase
 
         this.prepareTranslationForEnums();
         this.prepareGraphContext();
+        
     }
 
 
     private void prepareTranslationForEnums()
     {
-
+        ConnectOperationType.translateKeywords(this.i18n);
     }
 
 
@@ -240,27 +243,7 @@ public class DataAccessConnect extends DataAccessPlugInBase
     @Override
     public void createPlugInDataRetrievalContext()
     {
-        // loadBasePluginTranslations();
-        //
-        // m_entry_type = new CGMSValuesEntry();
-        //
-        // this.data_download_screen_wide = false;
-        //
-        // DataAccessConnect.value_type = new String[7];
-        // DataAccessConnect.value_type[0] = "";
-        // DataAccessConnect.value_type[1] =
-        // this.i18n_plugin.getMessage("CGMS_READING");
-        // DataAccessConnect.value_type[2] =
-        // this.i18n_plugin.getMessage("CALIBRATION_READINGS");
-        // DataAccessConnect.value_type[4] =
-        // this.i18n_plugin.getMessage("CGMS_DATA_EVENT");
-        // DataAccessConnect.value_type[3] =
-        // this.i18n_plugin.getMessage("CGMS_DATA_ALARM");
-        // DataAccessConnect.value_type[5] =
-        // this.i18n_plugin.getMessage("CGMS_DATA_ERROR");
-        // DataAccessConnect.value_type[6] =
-        // this.i18n_plugin.getMessage("CGMS_READING_TREND");
-
+        this.data_download_screen_wide = true;
     }
 
 
@@ -281,6 +264,7 @@ public class DataAccessConnect extends DataAccessPlugInBase
     @Override
     public void loadDeviceDataHandler()
     {
+        this.deviceDataHandler = new ConnectDataHandler(this);
     }
 
 

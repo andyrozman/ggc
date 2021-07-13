@@ -6,6 +6,7 @@ import java.util.Map;
 /**
  * Created by andy on 28/08/17.
  */
+// TODO is this real class
 public enum BaseCommand
 {
 

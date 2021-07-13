@@ -322,7 +322,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     @Override
     public void loadDeviceDataHandler()
     {
-        this.m_ddh = new PumpDataHandler(this);
+        this.deviceDataHandler = new PumpDataHandler(this);
     }
 
 

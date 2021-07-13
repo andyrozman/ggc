@@ -495,12 +495,12 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
 
         StringTokenizer strtok2 = new StringTokenizer(versions, "\\");
 
-        di.device_software_version = strtok2.nextToken();
-        di.device_hardware_version = strtok2.nextToken();
-        di.device_serial_number = serial;
+        di.deviceSoftwareVersion = strtok2.nextToken();
+        di.deviceHardwareVersion = strtok2.nextToken();
+        di.deviceSerialNumber = serial;
 
-        inf += i18nControlAbstract.getMessage("SOFTWARE_VERSION") + ": " + di.device_software_version;
-        inf += i18nControlAbstract.getMessage("\nEEPROM_VERSION") + ": " + di.device_hardware_version;
+        inf += i18nControlAbstract.getMessage("SOFTWARE_VERSION") + ": " + di.deviceSoftwareVersion;
+        inf += i18nControlAbstract.getMessage("\nEEPROM_VERSION") + ": " + di.deviceHardwareVersion;
 
         inf += i18nControlAbstract.getMessage("\nSERIAL_NUMBER") + ": " + serial;
 

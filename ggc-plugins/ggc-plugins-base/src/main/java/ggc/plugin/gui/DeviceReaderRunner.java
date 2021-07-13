@@ -1,7 +1,7 @@
 package ggc.plugin.gui;
 
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.*;
 
@@ -115,8 +115,8 @@ public class DeviceReaderRunner extends Thread implements OutputWriter
 
             Class<?> c = Class.forName(className);
 
-            Constructor<?> cnst = c.getDeclaredConstructor(String.class, OutputWriter.class,
-                DataAccessPlugInBase.class);
+            Constructor<?> cnst = c
+                    .getDeclaredConstructor(String.class, OutputWriter.class, DataAccessPlugInBase.class);
             this.m_mi = (DeviceInterface) cnst.newInstance(this.configured_device.communication_port_raw, this, m_da);
             this.setDeviceComment(this.m_mi.getDeviceSpecialComment());
             this.setStatus(AbstractOutputWriter.STATUS_DOWNLOADING);
@@ -140,8 +140,8 @@ public class DeviceReaderRunner extends Thread implements OutputWriter
                 this.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
 
                 JOptionPane.showMessageDialog(this.getDialog(),
-                    m_da.getI18nControlInstance().getMessage("ERROR_CONTACTING_DEVICE"),
-                    m_da.getI18nControlInstance().getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
+                    m_da.getI18nControlInstance().getMessage("ERROR_CONTACTING_DEVICE"), m_da.getI18nControlInstance()
+                            .getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
 
                 return;
             }
@@ -293,10 +293,10 @@ public class DeviceReaderRunner extends Thread implements OutputWriter
             // return;
             // }
 
-            System.out.println("dataTransfer: " + this.m_ddh.isDataTransfer());
-            System.out.println("TransferType: " + this.m_ddh.getTransferType());
+            // System.out.println("dataTransfer: " + this.deviceDataHandler.isDataTransfer());
+            // System.out.println("TransferType: " + this.deviceDataHandler.getTransferType());
             // System.out.println("dataTransfer: " +
-            // this.m_ddh.isDataTransfer());
+            // this.deviceDataHandler.isDataTransfer());
 
             if (this.m_ddh.isDataTransfer())
             {
@@ -317,6 +317,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter
                     this.m_ddh.selected_file_context.setOutputWriter(this);
                     this.m_ddh.selected_file_context.readFile(m_ddh.selected_file);
                 }
+                lg = "End reading of data";
             }
             else
             {
@@ -333,7 +334,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter
                     this.m_ddh.selected_file_context.setOutputWriter(this);
                     this.m_ddh.selected_file_context.readFile(m_ddh.selected_file);
                 }
-
+                lg = "End reading of configuration";
             }
 
             running = false;
@@ -342,7 +343,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter
             this.setSpecialProgress(100);
             this.endOutput();
 
-            lg = "Reading finished";
+            // lg = "End reading of data/configuration.";
             LOG.debug(lg);
             writeLog(LogEntryType.DEBUG, lg);
 
@@ -435,7 +436,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter
 
             // int i = (int)((count/500) * 100);
             // System.out.println("Progress: " + f + " " + count + " max: " +
-            // this.dialog.output_util.getMaxMemoryRecords());
+            // this.dialog.outputUtil.getMaxMemoryRecords());
 
             if (this.m_ddh.isDataTransfer())
             {
@@ -468,7 +469,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter
 
             // int i = (int)((count/500) * 100);
             // System.out.println("Progress: " + f + " " + count + " max: " +
-            // this.dialog.output_util.getMaxMemoryRecords());
+            // this.dialog.outputUtil.getMaxMemoryRecords());
 
             this.dialog_config.progress.setValue((int) f);
         }
@@ -493,25 +494,25 @@ public class DeviceReaderRunner extends Thread implements OutputWriter
     /**
      * Write LOG entry
      * 
-     * @param entry_type
+     * @param entryType
      * @param message
      */
-    public void writeLog(int entry_type, String message)
+    public void writeLog(LogEntryType entryType, String message)
     {
-        getOutputWriter().writeLog(entry_type, message);
+        getOutputWriter().writeLog(entryType, message);
     }
 
 
     /**
      * Write LOG entry
      * 
-     * @param entry_type
+     * @param entryType
      * @param message
      * @param ex
      */
-    public void writeLog(int entry_type, String message, Exception ex)
+    public void writeLog(LogEntryType entryType, String message, Exception ex)
     {
-        getOutputWriter().writeLog(entry_type, message, ex);
+        getOutputWriter().writeLog(entryType, message, ex);
     }
 
 
@@ -608,7 +609,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter
      */
     public void setSubStatus(String sub_status)
     {
-        // System.out.println("Runner: Sub Status: " + sub_status);
+        // System.out.println("Runner: Sub Status: " + subStatus);
         getOutputWriter().setSubStatus(sub_status);
     }
 
@@ -752,20 +753,27 @@ public class DeviceReaderRunner extends Thread implements OutputWriter
     }
 
 
-    public void addErrorMessage(String msg)
+    public void addErrorMessage(ErrorMessageDto msg)
     {
+        getOutputWriter().addErrorMessage(msg);
     }
 
 
     public int getErrorMessageCount()
     {
-        return 0;
+        return getOutputWriter().getErrorMessageCount();
     }
 
 
-    public ArrayList<String> getErrorMessages()
+    public List<ErrorMessageDto> getErrorMessages()
     {
-        return null;
+        return getOutputWriter().getErrorMessages();
+    }
+
+
+    public void setSpecialNote(int noteType, String note)
+    {
+        getOutputWriter().setSpecialNote(noteType, note);
     }
 
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>net.sf.ggc</groupId>
+  <artifactId>ggc-cgms-tool</artifactId>
+  <version>1.3.2-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <localCopy>true</localCopy>
+    </snapshot>
+    <lastUpdated>20150923165120</lastUpdated>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>jar</extension>
+        <value>1.3.2-SNAPSHOT</value>
+        <updated>20150923165120</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>1.3.2-SNAPSHOT</value>
+        <updated>20150923165120</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <classifier>sources</classifier>
+        <extension>jar</extension>
+        <value>1.3.2-SNAPSHOT</value>
+        <updated>20150505175104</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <classifier>javadoc</classifier>
+        <extension>jar</extension>
+        <value>1.3.2-SNAPSHOT</value>
+        <updated>20150505175104</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+</metadata>

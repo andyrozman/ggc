@@ -12,7 +12,7 @@ import ggc.plugin.device.impl.minimed.cfg.MinimedSpecialConfig;
 import ggc.plugin.device.impl.minimed.enums.MinimedConverterType;
 import ggc.plugin.device.impl.minimed.enums.MinimedDeviceType;
 import ggc.plugin.device.impl.minimed.enums.MinimedTargetType;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 import ggc.plugin.device.v2.DeviceDefinition;
 import ggc.plugin.device.v2.DeviceInstanceWithHandler;
 import ggc.plugin.gui.DeviceSpecialConfigPanelAbstract;
@@ -149,18 +149,18 @@ public class MinimedPumpDeviceHandler extends PumpDeviceHandler implements Minim
     {
         MinimedTargetType targetType = getDeviceTargetType();
 
-        if (!MinimedUtil.isTargetRegistered(targetType))
+        if (!MedtronicUtil.isTargetRegistered(targetType))
         {
-            MinimedUtil.registerConverter(targetType, MinimedConverterType.Pump511Converter,
-                new Minimed511PumpDataConverter(dataAccess));
-            MinimedUtil.registerConverter(targetType, MinimedConverterType.Pump512Converter,
-                new Minimed512PumpDataConverter(dataAccess));
-            MinimedUtil.registerConverter(targetType, MinimedConverterType.Pump515Converter,
-                new Minimed515PumpDataConverter(dataAccess));
-            MinimedUtil.registerConverter(targetType, MinimedConverterType.Pump523Converter,
-                new Minimed523PumpDataConverter(dataAccess));
+            MedtronicUtil.registerConverter(targetType, MinimedConverterType.Pump511Converter,
+                    new Minimed511PumpDataConverter(dataAccess));
+            MedtronicUtil.registerConverter(targetType, MinimedConverterType.Pump512Converter,
+                    new Minimed512PumpDataConverter(dataAccess));
+            MedtronicUtil.registerConverter(targetType, MinimedConverterType.Pump515Converter,
+                    new Minimed515PumpDataConverter(dataAccess));
+            MedtronicUtil.registerConverter(targetType, MinimedConverterType.Pump523Converter,
+                    new Minimed523PumpDataConverter(dataAccess));
 
-            MinimedUtil.registerDecoder(MinimedTargetType.Pump, new MinimedPumpHistoryDecoder());
+            MedtronicUtil.registerDecoder(MinimedTargetType.Pump, new MinimedPumpHistoryDecoder());
         }
     }
 

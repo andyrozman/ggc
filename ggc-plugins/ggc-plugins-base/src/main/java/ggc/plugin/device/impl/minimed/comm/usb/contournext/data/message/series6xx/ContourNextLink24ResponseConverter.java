@@ -14,7 +14,7 @@ import ggc.plugin.device.impl.minimed.comm.usb.contournext.enums.CommandType;
 import ggc.plugin.device.impl.minimed.comm.usb.contournext.enums.SendMessageType;
 import ggc.plugin.device.impl.minimed.comm.usb.contournext.tmp.PumpStatusEvent;
 import ggc.plugin.device.impl.minimed.data.MinimedCommandReply;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 
 /**
  * Created by andy on 01/06/17.
@@ -32,7 +32,7 @@ public class ContourNextLink24ResponseConverter
     {
         // super(dataAccess);
         this.pumpSession = pumpSession;
-        MinimedUtil.setMedtronicCnlSession(this.pumpSession);
+        MedtronicUtil.setMedtronicCnlSession(this.pumpSession);
     }
 
 

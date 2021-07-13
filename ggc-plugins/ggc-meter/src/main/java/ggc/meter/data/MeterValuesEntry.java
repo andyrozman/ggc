@@ -47,13 +47,13 @@ import ggc.plugin.output.OutputWriterType;
 public class MeterValuesEntry extends DeviceValuesEntry
 {
 
-    private static DataAccessMeter da; // = DataAccessMeter.getInstance();
+    private static DataAccessMeter dataAccess;
     private static ExtendedDailyValueHandler extendedDailyValueHandler;
 
     private ATechDate datetime;
     private Integer bgOriginal = null;
     private Float ch = null;
-    private Hashtable<String, String> params;
+    private Map<String, String> params;
     private Float bgMmolL;
     public DayValueH entry_object = null;
     private Map<ExtendedDailyValueType, String> extendedMap;
@@ -67,14 +67,23 @@ public class MeterValuesEntry extends DeviceValuesEntry
     public MeterValuesEntry()
     {
         super();
-        if (da == null)
-            da = DataAccessMeter.getInstance();
 
-        this.source = da.getSourceDevice();
-        if (extendedDailyValueHandler == null)
-            extendedDailyValueHandler = da.getExtendedDailyValueHandler();
+        checkStaticObjects();
+
+        this.source = dataAccess.getSourceDevice();
+
         this.loadExtendedEntries(null);
         resetExtendedType();
+    }
+
+
+    private void checkStaticObjects()
+    {
+        if (dataAccess == null)
+            dataAccess = DataAccessMeter.getInstance();
+
+        if (extendedDailyValueHandler == null)
+            extendedDailyValueHandler = dataAccess.getExtendedDailyValueHandler();
     }
 
 
@@ -85,12 +94,13 @@ public class MeterValuesEntry extends DeviceValuesEntry
     public MeterValuesEntry(DayValueH dv)
     {
         super();
+
+        checkStaticObjects();
         this.datetime = new ATechDate(this.getDateTimeFormat(), dv.getDtInfo());
-        this.setBgValue("" + dv.getBg(), GlucoseUnitType.mg_dL);
+        this.setBgValue("" + dv.getBg(), GlucoseUnitType.mg_dL, false);
         this.entry_object = dv;
         this.object_status = DeviceValuesEntry.OBJECT_STATUS_OLD;
         this.ch = dv.getCh();
-        extendedDailyValueHandler = da.getExtendedDailyValueHandler();
 
         this.loadExtendedEntries(dv.getExtended());
 
@@ -177,14 +187,14 @@ public class MeterValuesEntry extends DeviceValuesEntry
     {
         if (unitType == GlucoseUnitType.mg_dL)
         {
-            this.bgOriginal = da.getIntValueFromString(value, 0);
-            this.bgMmolL = da.getBGValueFromDefault(GlucoseUnitType.mmol_L, this.bgOriginal);
+            this.bgOriginal = dataAccess.getIntValueFromString(value, 0);
+            this.bgMmolL = dataAccess.getBGValueFromDefault(GlucoseUnitType.mmol_L, this.bgOriginal);
         }
         else
         {
-            this.bgMmolL = da.getFloatValueFromString(value);
+            this.bgMmolL = dataAccess.getFloatValueFromString(value);
 
-            Float f = da.getBGValueByType(GlucoseUnitType.mmol_L, GlucoseUnitType.mg_dL, this.bgMmolL);
+            Float f = dataAccess.getBGValueByType(GlucoseUnitType.mmol_L, GlucoseUnitType.mg_dL, this.bgMmolL);
             this.bgOriginal = f.intValue();
         }
 
@@ -198,13 +208,13 @@ public class MeterValuesEntry extends DeviceValuesEntry
         if (unitType == GlucoseUnitType.mg_dL)
         {
             this.bgOriginal = (int) value;
-            this.bgMmolL = da.getBGValueFromDefault(GlucoseUnitType.mmol_L, this.bgOriginal);
+            this.bgMmolL = dataAccess.getBGValueFromDefault(GlucoseUnitType.mmol_L, this.bgOriginal);
         }
         else
         {
             this.bgMmolL = value;
 
-            Float f = da.getBGValueByType(GlucoseUnitType.mmol_L, GlucoseUnitType.mg_dL, this.bgMmolL);
+            Float f = dataAccess.getBGValueByType(GlucoseUnitType.mmol_L, GlucoseUnitType.mg_dL, this.bgMmolL);
             this.bgOriginal = f.intValue();
         }
 
@@ -224,10 +234,8 @@ public class MeterValuesEntry extends DeviceValuesEntry
 
         StringBuffer sb = new StringBuffer();
 
-        for (java.util.Enumeration<String> en = this.params.keys(); en.hasMoreElements();)
+        for (String key : params.keySet())
         {
-            String key = en.nextElement();
-
             sb.append(key + "=" + this.params.get(key) + ";");
         }
 
@@ -316,7 +324,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
 
                     if (this.hasCHEntry())
                     {
-                        v += this.da.getFormatedValueUS(this.ch, 1);
+                        v += this.dataAccess.getFormatedValueUS(this.ch, 1);
                     }
                     else
                     {
@@ -357,7 +365,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
     @Override
     public Object getColumnValue(int column)
     {
-        if (!da.isDataDownloadScreenWide())
+        if (!dataAccess.isDataDownloadScreenWide())
             return this.getColumnValueBase(column);
         else
             return this.getColumnValueExtended(column);
@@ -730,7 +738,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
 
         if (this.hasCHEntry())
         {
-            sb.append("CH=" + da.getFormatedValueUS(this.ch, 1));
+            sb.append("CH=" + dataAccess.getFormatedValueUS(this.ch, 1));
         }
 
         sb.append(this.createExtendedValueDailyValuesH());
@@ -953,13 +961,13 @@ public class MeterValuesEntry extends DeviceValuesEntry
             case BG:
                 {
                     if (both_bg)
-                        return this.bgOriginal + " mg/dL (" + da.getFormatedValue(this.bgMmolL, 1) + " mmol/L)";
+                        return this.bgOriginal + " mg/dL (" + dataAccess.getFormatedValue(this.bgMmolL, 1) + " mmol/L)";
                     else
                         return getDisplayableBgValueWithUnit();
                 }
 
             case CH:
-                return da.getFormatedValue(this.ch, 1);
+                return dataAccess.getFormatedValue(this.ch, 1);
 
             case Urine:
                 return getUrineValue();
@@ -978,7 +986,8 @@ public class MeterValuesEntry extends DeviceValuesEntry
 
     public String getDisplayableBgValueWithUnit()
     {
-        return this.da.getDisplayedBGFromDefault(this.bgOriginal) + " " + da.getGlucoseUnitType().getTranslation();
+        return this.dataAccess.getDisplayedBGFromDefault(this.bgOriginal) + " "
+                + dataAccess.getGlucoseUnitType().getTranslation();
     }
 
 
@@ -993,7 +1002,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
 
         if (this.hasCHEntry())
         {
-            values.put(MeterValuesEntryDataType.CH.getTranslation() + ": ", da.getFormatedValue(this.ch, 1));
+            values.put(MeterValuesEntryDataType.CH.getTranslation() + ": ", dataAccess.getFormatedValue(this.ch, 1));
         }
 
         if (this.hasUrine())
@@ -1002,7 +1011,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
                 getUrineValue());
         }
 
-        return da.createKeyValueString(values, ";", true);
+        return dataAccess.createKeyValueString(values, ";", true);
     }
 
 
@@ -1201,7 +1210,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
     {
         if (ch instanceof String)
         {
-            this.ch = da.getFloatValueFromString((String) ch);
+            this.ch = dataAccess.getFloatValueFromString((String) ch);
         }
         else if (ch instanceof Number)
         {

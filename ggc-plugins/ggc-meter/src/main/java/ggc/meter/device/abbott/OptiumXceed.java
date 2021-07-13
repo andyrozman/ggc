@@ -446,9 +446,9 @@ public class OptiumXceed extends AbstractSerialMeter
             // first we read device identification data
             DeviceIdentification di = this.outputWriter.getDeviceIdentification();
 
-            di.device_serial_number = ids[0]; // this.readLineDebug();
+            di.deviceSerialNumber = ids[0]; // this.readLineDebug();
             this.outputWriter.setSpecialProgress(2);
-            di.device_hardware_version = ids[1]; // this.readLineDebug();
+            di.deviceHardwareVersion = ids[1]; // this.readLineDebug();
             this.outputWriter.setSpecialProgress(3);
             // this.readLineDebug();
             this.outputWriter.setSpecialProgress(4);
@@ -544,7 +544,7 @@ public class OptiumXceed extends AbstractSerialMeter
     {
         float proc_read = this.entries_current * 1.0f / this.entries_max;
         float proc_total = 5 + 95 * proc_read;
-        this.outputWriter.setSpecialProgress((int) proc_total); // .setSubStatus(sub_status)
+        this.outputWriter.setSpecialProgress((int) proc_total); // .setSubStatus(subStatus)
     }
 
 

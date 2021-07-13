@@ -1,8 +1,11 @@
 package ggc.core.data.defs;
 
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.misc.converter.UnitDefinition;
+import com.atech.misc.converter.UnitValuePrecision;
 import com.atech.utils.data.CodeEnumWithTranslation;
 
 /**
@@ -31,19 +34,21 @@ import com.atech.utils.data.CodeEnumWithTranslation;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public enum GlucoseUnitType implements CodeEnumWithTranslation
+public enum GlucoseUnitType implements CodeEnumWithTranslation, UnitDefinition
 {
 
-    mg_dL(1, "GLUCOSE_UNIT_MGDL"), //
-    mmol_L(2, "GLUCOSE_UNIT_MMOLL"), //
-    None(0, "NONE"); //
+    mg_dL(1, "GLUCOSE_UNIT_MGDL", UnitValuePrecision.Integer), //
+    mmol_L(2, "GLUCOSE_UNIT_MMOLL", UnitValuePrecision.FloatOneDecimalPlace), //
+    None(0, "NONE", UnitValuePrecision.None); //
 
     int code;
     String i18nKey;
     String translation;
     static String[] descriptions;
+    UnitValuePrecision valuePrecision;
 
-    static Hashtable<Integer, GlucoseUnitType> codeMapping = new Hashtable<Integer, GlucoseUnitType>();
+    static Map<Integer, GlucoseUnitType> codeMapping = new HashMap<Integer, GlucoseUnitType>();
+    static Map<String, GlucoseUnitType> mapByDescription = new HashMap<String, GlucoseUnitType>();
 
     static
     {
@@ -66,13 +71,19 @@ public enum GlucoseUnitType implements CodeEnumWithTranslation
         };
 
         descriptions = unitDescriptions;
+
+        for (GlucoseUnitType el : values())
+        {
+            mapByDescription.put(el.getTranslation(), el);
+        }
     }
 
 
-    GlucoseUnitType(int code, String i18nKey)
+    GlucoseUnitType(int code, String i18nKey, UnitValuePrecision valuePrecision)
     {
         this.code = code;
         this.i18nKey = i18nKey;
+        this.valuePrecision = valuePrecision;
     }
 
 
@@ -100,6 +111,18 @@ public enum GlucoseUnitType implements CodeEnumWithTranslation
     }
 
 
+    public String getDescription()
+    {
+        return translation;
+    }
+
+
+    public UnitValuePrecision getValuePrecision()
+    {
+        return this.valuePrecision;
+    }
+
+
     public String getName()
     {
         return this.name();
@@ -111,6 +134,19 @@ public enum GlucoseUnitType implements CodeEnumWithTranslation
         if (codeMapping.containsKey(code))
         {
             return codeMapping.get(code);
+        }
+        else
+        {
+            return GlucoseUnitType.None;
+        }
+    }
+
+
+    public static GlucoseUnitType getByDescription(String description)
+    {
+        if (mapByDescription.containsKey(description))
+        {
+            return mapByDescription.get(description);
         }
         else
         {

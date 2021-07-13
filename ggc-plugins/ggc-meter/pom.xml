@@ -11,9 +11,9 @@
     </parent>
 
 
-    <name>GGC Plugins - Meter Tool</name>
-    <artifactId>ggc-meter-tool</artifactId>
-    <version>${ggc-meter-tool.version}</version>
+    <name>GGC Plugins - Meter</name>
+    <artifactId>ggc-plugins-meter</artifactId>
+    <version>${ggc-plugins-meter.version}</version>
 
 
     <build>

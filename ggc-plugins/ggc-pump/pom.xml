@@ -8,9 +8,9 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <name>GGC Plugins - Pump Tool</name>
-    <artifactId>ggc-pump-tool</artifactId>
-    <version>${ggc-pump-tool.version}</version>
+    <name>GGC Plugins - Pump</name>
+    <artifactId>ggc-plugins-pump</artifactId>
+    <version>${ggc-plugins-pump.version}</version>
 
 
     <build>

@@ -99,7 +99,7 @@ public abstract class ArkraySerialMeterAbstract extends SerialMeterAbstract
     {
         DeviceIdentification deviceIdentification = this.outputWriter.getDeviceIdentification();
 
-        deviceIdentification.device_serial_number = serialNumber;
+        deviceIdentification.deviceSerialNumber = serialNumber;
         deviceIdentification.device_selected = this.deviceDefinition.getDeviceName();
         deviceIdentification.company = this.deviceDefinition.getDeviceCompany().getName();
 

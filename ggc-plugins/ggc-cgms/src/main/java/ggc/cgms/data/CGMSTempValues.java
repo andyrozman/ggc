@@ -149,6 +149,11 @@ public class CGMSTempValues extends DeviceTempValues
     @Override
     public OutputWriterData getData(ATechDate dt, Integer subType, String _value)
     {
+        return getData(dt, subType, _value, null);
+    }
+
+    @Override
+    public OutputWriterData getData(ATechDate dt, Integer subType, String _value, String source) {
         String val = _value;
         Integer stype = subType;
 
@@ -189,18 +194,22 @@ public class CGMSTempValues extends DeviceTempValues
             CGMSValuesSubEntry sub = new CGMSValuesSubEntry();
             sub.setDateTimeObject(dt);
             sub.setType(this.base_type);
-            sub.setSource(DataAccessCGMS.getInstance().getSourceDevice());
+
+            if (source==null)
+                sub.setSource(DataAccessCGMS.getInstance().getSourceDevice());
+            else
+                sub.setSource(source);
 
             if (val == null)
             {
                 if (subType != null)
-                    sub.value = subType;
-                else
-                    sub.value = 0;
+                    sub.value = "" + subType;
+//                else
+//                    sub.value = 0;
             }
             else
             {
-                sub.value = Integer.parseInt(val);
+                sub.value = val;
             }
 
             // if (this.value_template==null)
@@ -213,6 +222,10 @@ public class CGMSTempValues extends DeviceTempValues
             // }
 
             return sub;
+
+        }
+        else if (this.object_type == CGMSObject.Extended.getCode())
+        {
 
         }
 

@@ -1,0 +1,9 @@
+#NOTE: This is an internal implementation file, its format can be changed without prior notice.
+#Thu Sep 04 11:50:49 CEST 2014
+ehcache-core-2.6.5-sources.jar>nexus-infonova=
+ehcache-core-2.6.5-javadoc.jar>=
+ehcache-core-2.6.5-javadoc.jar>nexus-infonova=
+ehcache-core-2.6.5.jar>=
+ehcache-core-2.6.5.pom>nexus-infonova=
+ehcache-core-2.6.5.jar>nexus-infonova=
+ehcache-core-2.6.5-sources.jar>=

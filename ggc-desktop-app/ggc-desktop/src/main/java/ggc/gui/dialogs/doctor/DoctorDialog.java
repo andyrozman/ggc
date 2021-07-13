@@ -176,7 +176,7 @@ public class DoctorDialog extends StandardDialogForObject
             this.doctorH.setActiveTill(this.dcTill.getDate());
         }
         this.doctorH.setComment(getText(this.taComment));
-        this.doctorH.setPersonId((int) this.dataAccess.getCurrentUserId());
+        this.doctorH.setPersonId(this.dataAccess.getCurrentUserId());
 
         GGCDb db = ((DataAccess) dataAccess).getDb();
 

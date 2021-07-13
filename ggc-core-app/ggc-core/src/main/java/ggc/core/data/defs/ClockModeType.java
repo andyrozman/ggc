@@ -1,6 +1,7 @@
 package ggc.core.data.defs;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.CodeEnumWithTranslation;
@@ -41,7 +42,8 @@ public enum ClockModeType implements CodeEnumWithTranslation
     String i18nKey;
     String translation;
 
-    private static HashMap<Integer, ClockModeType> codeMapping = new HashMap<Integer, ClockModeType>();
+    private static Map<Integer, ClockModeType> codeMapping = new HashMap<Integer, ClockModeType>();
+    private static Map<String, ClockModeType> mapByDescription = new HashMap<String, ClockModeType>();
 
     static
     {
@@ -64,6 +66,11 @@ public enum ClockModeType implements CodeEnumWithTranslation
         for (ClockModeType pbt : values())
         {
             pbt.setTranslation(ic.getMessage(pbt.i18nKey));
+        }
+
+        for (ClockModeType el : values())
+        {
+            mapByDescription.put(el.getTranslation(), el);
         }
     }
 
@@ -103,6 +110,19 @@ public enum ClockModeType implements CodeEnumWithTranslation
         if (codeMapping.containsKey(code))
         {
             return codeMapping.get(code);
+        }
+        else
+        {
+            return ClockModeType.ClockMode12Hour;
+        }
+    }
+
+
+    public static ClockModeType getByDescription(String description)
+    {
+        if (mapByDescription.containsKey(description))
+        {
+            return mapByDescription.get(description);
         }
         else
         {

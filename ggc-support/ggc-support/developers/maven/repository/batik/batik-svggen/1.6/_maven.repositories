@@ -1,0 +1,6 @@
+#NOTE: This is an internal implementation file, its format can be changed without prior notice.
+#Sun Sep 14 17:05:20 CEST 2014
+batik-svggen-1.6.jar>=
+batik-svggen-1.6.pom>central=
+batik-svggen-1.6.jar>nexus-infonova=
+batik-svggen-1.6.pom>nexus-infonova=

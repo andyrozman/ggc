@@ -2,12 +2,7 @@ package ggc.meter.data.cfg;
 
 import ggc.meter.device.DummyMeter;
 import ggc.meter.manager.MeterManager;
-import ggc.plugin.cfg.DeviceConfigurationDefinition;
-
-import java.util.List;
-import java.util.Vector;
-
-import com.atech.graphics.dialogs.selector.SelectableInterface;
+import ggc.plugin.cfg.DeviceConfigurationDefinitionAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -35,43 +30,22 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class MeterConfigurationDefinition implements DeviceConfigurationDefinition
+public class MeterConfigurationDefinition extends DeviceConfigurationDefinitionAbstract
 {
 
-    /**
-     * Keyword used through configuration and configuration file describing device (for meter plugin, this
-     * would be word METER).
-     *  
-     * @return keyword representing device
-     */
-    public String getDevicePrefix()
+    public MeterConfigurationDefinition()
     {
-        return "METER";
-    }
-
-    /**
-     * Only certain devices support manual time fix for application (meters do, other's don't).
-     * 
-     * @return true if time fix is supported, false otherwise
-     */
-    public boolean doesDeviceSupportTimeFix()
-    {
-        return true;
-    }
-
-    /**
-     * Get path to Configuration file as string
-     * 
-     * @return path to configuration file
-     */
-    public String getDevicesConfigurationFile()
-    {
-        return "../data/tools/MeterConfiguration.properties";
+        super(true, // timeFix
+                MeterManager.getInstance(), // deviceManager
+                "METER", // DevicePrefix
+                "MeterConfiguration.properties", // ConfigurationFilename
+                "MeterTool_" // Help Prefix
+        );
     }
 
     /**
      * Returns Dummy object (needed for some actions)
-     * 
+     *
      * @return
      */
     public Object getDummyObject()
@@ -79,36 +53,11 @@ public class MeterConfigurationDefinition implements DeviceConfigurationDefiniti
         return new DummyMeter();
     }
 
-    /**
-     * Returns list of all supported devices for plugin. Needed for device selection
-     * 
-     * @return
-     */
-    public List<SelectableInterface> getSupportedDevices()
+    @Override
+    public void initDeviceManager()
     {
-        return MeterManager.getInstance().getSupportedDevicesForSelector();
-    }
-
-    /**
-     * Returns prefix for help context
-     * 
-     * @return help context prefix
-     */
-    public String getHelpPrefix()
-    {
-        return "MeterTool_";
+        this.deviceManager = MeterManager.getInstance();
     }
 
 
-    public Object getSpecificDeviceInstance(String company, String deviceName)
-    {
-        Object device = MeterManager.getInstance().getDeviceV2(company, deviceName);
-
-        if (device==null)
-        {
-            device = MeterManager.getInstance().getDeviceV1(company, deviceName);
-        }
-
-        return device;
-    }
 }

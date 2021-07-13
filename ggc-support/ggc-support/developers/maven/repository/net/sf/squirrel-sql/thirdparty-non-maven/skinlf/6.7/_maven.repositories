@@ -1,0 +1,9 @@
+#NOTE: This is an internal implementation file, its format can be changed without prior notice.
+#Thu May 07 09:17:05 CEST 2015
+skinlf-6.7.jar>=
+skinlf-6.7.pom>central=
+skinlf-6.7.jar>central=
+skinlf-6.7.jar>nexus-infonova=
+skinlf-6.7-sources.jar>nexus-infonova=
+skinlf-6.7.pom>nexus-infonova=
+skinlf-6.7-sources.jar>sonatype=

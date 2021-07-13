@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import ggc.core.data.defs.GlucoseUnitType;
 import ggc.plugin.device.impl.minimed.data.MinimedCommandReply;
 import ggc.plugin.device.impl.minimed.enums.MinimedCommandType;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.data.defs.PumpBaseType;
 import ggc.pump.data.defs.PumpConfigurationGroup;
@@ -295,7 +295,7 @@ public class Minimed512PumpDataConverter extends Minimed511PumpDataConverter
             }
         }
 
-        MinimedUtil.setGlucoseUnitType(glucoseUnitType);
+        MedtronicUtil.setGlucoseUnitType(glucoseUnitType);
 
         writeSetting("CFG_BASE_GLUCOSE_UNIT", glucoseUnitType.getTranslation(), PumpConfigurationGroup.General);
     }

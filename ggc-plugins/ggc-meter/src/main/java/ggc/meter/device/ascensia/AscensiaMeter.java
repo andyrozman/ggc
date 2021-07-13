@@ -117,7 +117,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     {
         super(comm_parameters, writer, da);
 
-        decoder = new AscensiaDecoder(writer, MeterDeviceDefinition.AscensiaContourNext);
+        decoder = new AscensiaDecoder(writer, MeterDeviceDefinition.AscensiaContourNext, null);
 
         // communcation settings for this meter(s)
         this.setCommunicationSettings(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE,

@@ -1,0 +1,9 @@
+#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
+#Sun Sep 14 16:36:07 CEST 2014
+http\://repo.maven.apache.org/maven2/.lastUpdated=1410705367040
+9b633899ea946b795d805f336eda2268f6d2d0dc@default-http\://grzmvn01.infonova.at\:8082/nexus/content/groups/public/.lastUpdated=1410705363320
+http\://grzmvn01.infonova.at\:8082/nexus/content/groups/public/.error=Could not transfer artifact com.h2database\:h2\:jar\:1.0.69 from/to nexus-infonova (http\://grzmvn01.infonova.at\:8082/nexus/content/groups/public/)\: grzmvn01.infonova.at
+http\://oss.sonatype.org/content/groups/public/.lastUpdated=1410705364640
+http\://oss.sonatype.org/content/groups/public/.error=
+https\://oss.sonatype.org/service/local/repositories/netsfggc-042/content/.error=
+https\://oss.sonatype.org/service/local/repositories/netsfggc-042/content/.lastUpdated=1410705365756

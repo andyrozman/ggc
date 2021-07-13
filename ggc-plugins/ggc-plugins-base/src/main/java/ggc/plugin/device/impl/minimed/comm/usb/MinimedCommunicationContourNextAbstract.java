@@ -6,6 +6,8 @@ import java.nio.ByteBuffer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.atech.utils.data.BitUtils;
+
 import ggc.plugin.data.enums.ASCII;
 import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.device.PlugInBaseException;
@@ -18,7 +20,7 @@ import ggc.plugin.device.impl.minimed.comm.usb.contournext.enums.CommandType;
 import ggc.plugin.device.impl.minimed.comm.usb.contournext.tmp.HexDump;
 import ggc.plugin.device.impl.minimed.enums.MinimedCommInterfaceType;
 import ggc.plugin.device.impl.minimed.handler.MinimedDataHandler;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
@@ -45,6 +47,7 @@ public abstract class MinimedCommunicationContourNextAbstract extends MinimedUsb
     private static final String BAYER_USB_HEADER = "ABC";
 
     protected MedtronicCnlSession session;
+    protected BitUtils bitUtils;
 
 
     /**
@@ -66,40 +69,67 @@ public abstract class MinimedCommunicationContourNextAbstract extends MinimedUsb
         MedtronicCnlSession sess = new MedtronicCnlSession();
         sess.setMinimedCommunicationInterfaceType(getInterfaceType());
         // sess.setStickSerial("C16325");
-        sess.setPumpSerial(MinimedUtil.getConnectionParameters().serialNumber);
+        sess.setPumpSerial(MedtronicUtil.getConnectionParameters().serialNumber);
 
         session = sess;
 
+        bitUtils = MedtronicUtil.getBitUtils();
+
         // FIXME
-        // MinimedUtil.setMedtronicCnlSession(sess);
+        // MedtronicUtil.setMedtronicCnlSession(sess);
     }
 
 
     public abstract MinimedCommInterfaceType getInterfaceType();
 
 
+    public void terminateCommunication()
+    {
+        // Terminate comms with the pump, then try again
+        try
+        {
+            sendMessage(new ContourNextLinkCommandMessage(ASCII.EOT.getValue()));
+            readMessage();
+            checkControlMessage(readMessage(), ASCII.ENQ);
+
+            sendMessage(new ContourNextLinkCommandMessage(ASCII.CHAR_X.getValue()));
+            readMessage();
+            checkControlMessage(readMessage(), ASCII.ENQ);
+
+        }
+        catch (PlugInBaseException ex)
+        {
+            LOG.error("Error terminating communication: " + ex.getMessage(), ex);
+        }
+    }
+
+
     public void enterControlMode() throws PlugInBaseException
     {
         boolean doRetry = false;
 
+        LOG.debug("enterControlMode()");
+
         try
         {
+            terminateCommunication();
+
             sendMessage(new ContourNextLinkCommandMessage(ASCII.NAK));
-            checkControlMessage(readMessage(), ASCII.EOT);
+            checkControlMessage(readMessage(), ASCII.EOT); // ASCII.EOT
 
             sendMessage(new ContourNextLinkCommandMessage(ASCII.ENQ.getValue()));
             checkControlMessage(readMessage(), ASCII.ACK);
         }
-        catch (PlugInBaseException e2)
+        catch (PlugInBaseException ex)
         {
-            // Terminate comms with the pump, then try again
-            sendMessage(new ContourNextLinkCommandMessage(ASCII.EOT.getValue()));
+            LOG.error("Error entering control mode. (will retry). " + ex.getMessage());
             doRetry = true;
         }
         finally
         {
             if (doRetry)
             {
+                LOG.debug("enterControlMode() will be retried.");
                 enterControlMode();
             }
         }
@@ -163,6 +193,8 @@ public abstract class MinimedCommunicationContourNextAbstract extends MinimedUsb
         {
             bytesRead = communicationHandler.read(responseBuffer, READ_TIMEOUT_MS);
 
+            System.out.println("Bytes read: " + bytesRead);
+
             if (bytesRead == -1)
             {
                 throw new PlugInBaseException(PlugInExceptionType.TimeoutReadingData);
@@ -187,7 +219,49 @@ public abstract class MinimedCommunicationContourNextAbstract extends MinimedUsb
         } while (bytesRead > 0 && messageSize == 60);
 
         String responseString = HexDump.dumpHexString(responseMessage.toByteArray());
-        LOG.debug("READ: " + responseString);
+        LOG.debug("READ: " + bitUtils.getDebugArrayHexValue(responseMessage.toByteArray()));
+
+        return responseMessage.toByteArray();
+    }
+
+
+    public byte[] readMessageOld() throws PlugInBaseException
+    {
+        ByteArrayOutputStream responseMessage = new ByteArrayOutputStream();
+
+        byte[] responseBuffer = new byte[USB_BLOCKSIZE];
+        int bytesRead;
+        int messageSize = 0;
+
+        do
+        {
+            bytesRead = communicationHandler.read(responseBuffer, READ_TIMEOUT_MS);
+
+            if (bytesRead == -1)
+            {
+                throw new PlugInBaseException(PlugInExceptionType.TimeoutReadingData);
+            }
+            else if (bytesRead > 0)
+            {
+                // Validate the header
+                ByteBuffer header = ByteBuffer.allocate(3);
+                header.put(responseBuffer, 0, 3);
+                String headerString = new String(header.array());
+                if (!headerString.equals(BAYER_USB_HEADER))
+                {
+                    throw new PlugInBaseException(PlugInExceptionType.DeviceInvalidResponse);
+                }
+                messageSize = responseBuffer[3];
+                responseMessage.write(responseBuffer, 4, messageSize);
+            }
+            else
+            {
+                LOG.warn("readMessage: got a zero-sized response.");
+            }
+        } while (bytesRead > 0 && messageSize == 60);
+
+        String responseString = HexDump.dumpHexString(responseMessage.toByteArray());
+        LOG.debug("READ: " + bitUtils.getDebugArrayHexValue(responseMessage.toByteArray()));
 
         return responseMessage.toByteArray();
     }
@@ -213,6 +287,39 @@ public abstract class MinimedCommunicationContourNextAbstract extends MinimedUsb
     {
         int pos = 0;
 
+        // while (message.length > pos)
+        {
+            int size = 4 + message.length;
+
+            ByteBuffer outputBuffer = ByteBuffer.allocate(size);
+            // int sendLength = (pos + 60 > message.length) ? message.length - pos : 60;
+            int sendLength = message.length;
+            // outputBuffer.put(BAYER_USB_HEADER.getBytes());
+            outputBuffer.put((byte) 0);
+            outputBuffer.put((byte) 0);
+            outputBuffer.put((byte) 0);
+            outputBuffer.put((byte) sendLength);
+            outputBuffer.put(message); // , pos, sendLength);
+
+            byte[] outMessage = outputBuffer.array();
+
+            communicationHandler.write(outMessage); // ,
+            // PlugInBaseException
+            pos += sendLength;
+
+            String outputString = HexDump.dumpHexString(outputBuffer.array());
+
+            // System.out.println("Sending bytes: " + bitUtils.getDebugArrayHexValue(outMessage));
+
+            LOG.debug("WRITE: " + bitUtils.getDebugArrayHexValue(outMessage));
+        }
+    }
+
+
+    public void sendMessageOld(byte[] message) throws PlugInBaseException
+    {
+        int pos = 0;
+
         while (message.length > pos)
         {
             ByteBuffer outputBuffer = ByteBuffer.allocate(USB_BLOCKSIZE);
@@ -226,6 +333,9 @@ public abstract class MinimedCommunicationContourNextAbstract extends MinimedUsb
             pos += sendLength;
 
             String outputString = HexDump.dumpHexString(outputBuffer.array());
+
+            System.out.println("Packet: " + MedtronicUtil.getBitUtils().getDebugArrayHexValue(outputBuffer.array()));
+
             LOG.debug("WRITE: " + outputString);
         }
     }

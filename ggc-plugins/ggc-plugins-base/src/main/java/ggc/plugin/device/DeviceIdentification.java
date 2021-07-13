@@ -1,6 +1,7 @@
 package ggc.plugin.device;
 
 import com.atech.i18n.I18nControlAbstract;
+
 import ggc.plugin.device.v2.DeviceDefinition;
 
 /**
@@ -59,16 +60,16 @@ public class DeviceIdentification
     /**
      * Device Software Version
      */
-    public String device_software_version = null;
+    public String deviceSoftwareVersion = null;
 
     /**
      * Device Hardware Version 
      */
-    public String device_hardware_version = null;
+    public String deviceHardwareVersion = null;
     /**
      * 
      */
-    public String device_serial_number = null;
+    public String deviceSerialNumber = null;
 
     /**
      * Is File Import
@@ -132,21 +133,21 @@ public class DeviceIdentification
         sb.append(prefix + " ");
         appendParameter(this.device_identified, "Device identified", sb);
         appendParameter(this.device_family, "Device family", sb);
-        appendParameter(this.device_serial_number, "S/N", sb);
+        appendParameter(this.deviceSerialNumber, "S/N", sb);
         sb.append("\n");
 
-        if (this.device_hardware_version != null || this.device_software_version != null)
+        if (this.deviceHardwareVersion != null || this.deviceSoftwareVersion != null)
         {
             sb.append(prefix + " ");
 
-            if (this.device_software_version != null)
+            if (this.deviceSoftwareVersion != null)
             {
-                appendParameter(this.device_software_version, "Sw version", sb);
+                appendParameter(this.deviceSoftwareVersion, "Sw version", sb);
             }
 
-            if (this.device_hardware_version != null)
+            if (this.deviceHardwareVersion != null)
             {
-                appendParameter(this.device_hardware_version, "Hw version", sb);
+                appendParameter(this.deviceHardwareVersion, "Hw version", sb);
             }
             sb.append("\n");
         }
@@ -179,21 +180,21 @@ public class DeviceIdentification
             sb.append(this.device_identified + " ");
         }
 
-        appendParameter(this.device_serial_number, "S/N", sb);
+        appendParameter(this.deviceSerialNumber, "S/N", sb);
         sb.append("\n");
 
-        if (this.device_hardware_version != null || this.device_software_version != null)
+        if (this.deviceHardwareVersion != null || this.deviceSoftwareVersion != null)
         {
             // sb.append(prefix + " ");
 
-            if (this.device_software_version != null)
+            if (this.deviceSoftwareVersion != null)
             {
-                appendParameter(this.device_software_version, m_ic.getMessage("SW_VERSION"), sb);
+                appendParameter(this.deviceSoftwareVersion, m_ic.getMessage("SW_VERSION"), sb);
             }
 
-            if (this.device_hardware_version != null)
+            if (this.deviceHardwareVersion != null)
             {
-                appendParameter(this.device_hardware_version, m_ic.getMessage("HW_VERSION"), sb);
+                appendParameter(this.deviceHardwareVersion, m_ic.getMessage("HW_VERSION"), sb);
             }
 
             sb.append("\n");

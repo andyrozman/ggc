@@ -30,6 +30,8 @@ import com.atech.i18n.mgr.LanguageManagerRunnerDual;
 public class GGCLanguageManagerRunner extends LanguageManagerRunnerDual
 {
 
+    //UserDataDirectory dataDirectory = UserDataDirectory.getInstance();
+
     /**
      * Constructor
     
@@ -45,19 +47,19 @@ public class GGCLanguageManagerRunner extends LanguageManagerRunnerDual
     @Override
     public String getLanguageConfigFile()
     {
-        return "../data/lang/GGC_Languages.properties";
+        return "%USER_DATA_DIR%/lang/GGC_Languages.properties";
     }
 
     @Override
     public String getLanguageSelectionConfigFile()
     {
-        return "../data/GGC_Config.properties";
+        return "%USER_DATA_DIR%/GGC_Config.properties";
     }
 
     @Override
     public String getTranslationToolConfigFile()
     {
-        return "../data/tools/translation/TranslationGGC.config";
+        return "%USER_DATA_DIR%/tools/translation/TranslationGGC.config";
     }
 
     @Override

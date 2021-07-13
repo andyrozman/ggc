@@ -74,13 +74,15 @@ public class MeterConsoleTester
         // tzu.setSummerTimeChange(+1);
         tzu.setSummerTimeChange(0);
 
+        preparePlugInContext();
+
         // thread = new TimerThread();
         // thread.start();
 
         try
         {
-            // startAscensia(portName);
-            // this.startOneTouchUltra(portName);
+            //startAscensia(portName);
+            this.startOneTouchUltra(portName);
 
             // this.startOneTouchEasy(portName);
             // startOptiumXceed(portName);
@@ -89,7 +91,7 @@ public class MeterConsoleTester
             // testLogger();
 
             // startAccuChekAviva();
-            startAscensiaUsb();
+            //startAscensiaUsb();
 
             /*
              * //GGCFileOutputWriter gfo = new GGCFileOutputWriter();
@@ -341,7 +343,7 @@ public class MeterConsoleTester
     /**
      * Display Serial Ports
      */
-    public void displaySerialPorts()
+    public static String displaySerialPorts()
     {
         try
         {
@@ -353,12 +355,22 @@ public class MeterConsoleTester
             {
                 System.out.println(vct.get(i));
             }
+
+            if (vct.size()==1)
+            {
+                return vct.get(0);
+            }
+
+
+
         }
         catch (Exception ex)
         {
             System.out.println("Exception getting serial ports. Ex: " + ex);
             ex.printStackTrace();
         }
+
+        return null;
     }
 
 
@@ -369,12 +381,23 @@ public class MeterConsoleTester
      */
     public static void main(String args[])
     {
+
+        String onlyPort = MeterConsoleTester.displaySerialPorts();
+
+
+
         try
         {
 
             if (args.length == 0)
             {
-                new MeterConsoleTester("COM9"); // "/dev/ttyUSB0"); //COM5");
+                if (onlyPort!=null)
+                {
+                    System.out.println("Found only port: " + onlyPort);
+                    new MeterConsoleTester(onlyPort); // "/dev/ttyUSB0"); //COM5");
+                }
+                else
+                    new MeterConsoleTester("COM9"); // "/dev/ttyUSB0"); //COM5");
             }
             else
             {

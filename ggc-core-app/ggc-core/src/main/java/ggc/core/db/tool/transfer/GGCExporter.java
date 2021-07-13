@@ -1,7 +1,6 @@
 package ggc.core.db.tool.transfer;
 
 import java.io.File;
-import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
@@ -178,10 +177,10 @@ public class GGCExporter extends ExportTool implements Runnable
         else if (class_name.equals("ggc.core.db.hibernate.settings.ColorSchemeH"))
             return new SettingsColorScheme();
 
-        for (Enumeration<String> en = da.getPlugins().keys(); en.hasMoreElements();)
+        for (PlugInClient pic : da.getPlugins().values())
         {
-            String key = en.nextElement();
-            PlugInClient pic = da.getPlugIn(key);
+            //String key = en.nextElement();
+            //PlugInClient pic = da.getPlugIn(key);
 
             if (pic.getBackupRestoreHandler().doesContainBackupRestoreObject(class_name))
                 return pic.getBackupRestoreHandler().getBackupRestoreObject(class_name);
@@ -204,10 +203,10 @@ public class GGCExporter extends ExportTool implements Runnable
             return new SettingsColorScheme(eh);
         }
 
-        for (Enumeration<String> en = da.getPlugins().keys(); en.hasMoreElements();)
+        for (PlugInClient pic : da.getPlugins().values())
         {
-            String key = en.nextElement();
-            PlugInClient pic = da.getPlugIn(key);
+            //String key = en.nextElement();
+            //PlugInClient pic = da.getPlugIn(key);
 
             if (pic.getBackupRestoreHandler().doesContainBackupRestoreObject(bro.getBackupClassName()))
                 return pic.getBackupRestoreHandler().getBackupRestoreObject(obj, bro);

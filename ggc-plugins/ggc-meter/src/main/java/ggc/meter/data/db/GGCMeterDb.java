@@ -202,7 +202,7 @@ public class GGCMeterDb extends PluginDb
     //
     // Query q = this.getSession().createQuery( //
     // " SELECT dv from ggc.core.db.hibernate.pen.DayValueH as dv " + //
-    // " WHERE person_id=" + m_da.getCurrentUserId() + //
+    // " WHERE person_id=" + dataAccess.getCurrentUserId() + //
     // " AND dv.dt_info IN " + getDataListForSQL(timeMarks) + //
     // " ORDER BY dv.dt_info ASC");
     //

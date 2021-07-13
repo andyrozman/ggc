@@ -69,8 +69,8 @@ public class MultipleFileSelectorDialog extends AbstractFileSelectorDialog
         ATSwingUtils.initLibrary();
         this.setLayout(null);
 
-        JLabel l = ATSwingUtils.getTitleLabel(this.m_ic.getMessage("Multiple Import Selector"), 50, 30, 300, 30, this,
-            ATSwingUtils.FONT_BIG_BOLD);
+        JLabel l = ATSwingUtils.getTitleLabel(this.i18nControl.getMessage("Multiple Import Selector"), 50, 30, 300, 30,
+            this, ATSwingUtils.FONT_BIG_BOLD);
         l.setHorizontalAlignment(SwingConstants.CENTER);
 
         JPanel r = new JPanel();
@@ -78,7 +78,7 @@ public class MultipleFileSelectorDialog extends AbstractFileSelectorDialog
         r.setBackground(Color.red);
         // this.add(r);
 
-        ATSwingUtils.getLabel(m_ic.getMessage("MULTIPLE_IMPORT_SELECTOR_DESC"), 50, 60, 300, 120, this,
+        ATSwingUtils.getLabel(i18nControl.getMessage("MULTIPLE_IMPORT_SELECTOR_DESC"), 50, 60, 300, 120, this,
             ATSwingUtils.FONT_NORMAL);
 
         fileReaderContexts = this.deviceDataHandler.getFileDownloadTypes(downloadSupportType);
@@ -86,18 +86,19 @@ public class MultipleFileSelectorDialog extends AbstractFileSelectorDialog
         cb_contexts = ATSwingUtils.getComboBox(getFileReaderContexts(), 50, 180, 300, 25, this,
             ATSwingUtils.FONT_NORMAL);
 
-        this.helpButton = ATSwingUtils.createHelpIconByBounds(50, 230, 60, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
+        this.helpButton = ATSwingUtils.createHelpIconByBounds(50, 230, 60, 25, this, ATSwingUtils.FONT_NORMAL,
+            dataAccess);
         this.add(helpButton); // 60, 25
 
-        ATSwingUtils.getButton("" /* i18nControl.getMessage("CANCEL") */, 120, 230, 60, 25, this, ATSwingUtils.FONT_NORMAL,
-            "cancel.png", "cancel", this, m_da);
+        ATSwingUtils.getButton("" /* i18nControl.getMessage("CANCEL") */, 120, 230, 60, 25, this,
+            ATSwingUtils.FONT_NORMAL, "cancel.png", "cancel", this, dataAccess);
 
-        ATSwingUtils.getButton("" /* i18nControl.getMessage("NEXT") */, 290, 230, 60, 25, this, ATSwingUtils.FONT_NORMAL,
-            "nav_right_blue.png", "next", this, m_da);
+        ATSwingUtils.getButton("" /* i18nControl.getMessage("NEXT") */, 290, 230, 60, 25, this,
+            ATSwingUtils.FONT_NORMAL, "nav_right_blue.png", "next", this, dataAccess);
 
         this.setBounds(0, 0, 400, 320);
 
-        this.m_da.enableHelp(this);
+        this.dataAccess.enableHelp(this);
     }
 
 
@@ -126,7 +127,7 @@ public class MultipleFileSelectorDialog extends AbstractFileSelectorDialog
         {
             deviceDataHandler.selected_file_context = fileReaderContexts.get(this.cb_contexts.getSelectedIndex());
             this.dispose();
-            new ImportFileSelectorDialog(m_da, this.dialogParent, deviceDataHandler, downloadSupportType);
+            new ImportFileSelectorDialog(dataAccess, this.dialogParent, deviceDataHandler, downloadSupportType);
         }
     }
 

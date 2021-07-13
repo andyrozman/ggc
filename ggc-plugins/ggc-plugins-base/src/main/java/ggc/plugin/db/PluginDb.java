@@ -408,8 +408,10 @@ public abstract class PluginDb implements GraphDbDataRetriever
             int sum_all = 0;
 
             Criteria criteria = this.getSession().createCriteria(hibernateClazz);
-            criteria.add(getPersonCriterion());
-            criteria.add(Restrictions.like("extended", "%" + dataAccess.getSourceDevice() + "%"));
+            addPersonAndSourceDevice(criteria);
+            // criteria.add(getPersonCriterion());
+            // criteria.add(Restrictions.like("extended", "%" + dataAccess.getSourceDevice() +
+            // "%"));
 
             if (CollectionUtils.isNotEmpty(criterionList))
             {

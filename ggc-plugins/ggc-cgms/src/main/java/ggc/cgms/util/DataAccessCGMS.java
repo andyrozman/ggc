@@ -49,7 +49,7 @@ import ggc.plugin.util.DataAccessPlugInBase;
 public class DataAccessCGMS extends DataAccessPlugInBase
 {
 
-    private static final String EXTENDED_HANDLER_CGMSValuesExtendedEntry = "CGMSValuesExtendedEntry";
+    public static final String EXTENDED_HANDLER_CGMSValuesExtendedEntry = "CGMSValuesExtendedEntry";
 
     private static DataAccessCGMS s_da = null; // This is handle to unique
 
@@ -113,6 +113,8 @@ public class DataAccessCGMS extends DataAccessPlugInBase
         CGMSAlarms.translateKeywords(this.getI18nControlInstance());
         CGMSErrors.translateKeywords(this.getI18nControlInstance());
         CGMSBaseDataType.translateKeywords(this.getI18nControlInstance());
+        CGMSExtendedDataType.translateKeywords(this.getI18nControlInstance());
+        CGMSViewerFilter.translateKeywords(this.getI18nControlInstance());
     }
 
 
@@ -156,10 +158,10 @@ public class DataAccessCGMS extends DataAccessPlugInBase
         m_i18n = null;
     }
 
-
     // ********************************************************
     // ****** Abstract Methods *****
     // ********************************************************
+
 
     // ********************************************************
     // ****** Manager *****
@@ -175,10 +177,10 @@ public class DataAccessCGMS extends DataAccessPlugInBase
         return this.m_cgms_manager;
     }
 
-
     // ********************************************************
     // ****** Parent handling (for UIs) *****
     // ********************************************************
+
 
     // ********************************************************
     // ****** Dates and Times Handling *****
@@ -244,7 +246,6 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     {
         this.device_config = new DeviceConfiguration(this);
     }
-
 
     // ********************************************************
     // ****** About Methods *****
@@ -326,6 +327,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     // ****** Web Lister Methods *****
     // ********************************************************
 
+
     // /**
     // * Create WebLister (for List) Context for plugin
     // */
@@ -389,14 +391,15 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     @Override
     public void loadDeviceDataHandler()
     {
-        this.m_ddh = new CGMSDataHandler(this);
+        this.deviceDataHandler = new CGMSDataHandler(this);
     }
 
 
     @Override
     public void loadExtendedHandlers()
     {
-        this.addExtendedHandler(DataAccessCGMS.EXTENDED_HANDLER_CGMSValuesExtendedEntry, new ExtendedCGMSValueHandler());
+        this.addExtendedHandler(DataAccessCGMS.EXTENDED_HANDLER_CGMSValuesExtendedEntry,
+            new ExtendedCGMSValueHandler());
     }
 
 

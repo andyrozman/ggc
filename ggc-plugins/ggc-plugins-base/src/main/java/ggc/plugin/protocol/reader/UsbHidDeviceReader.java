@@ -44,11 +44,11 @@ public abstract class UsbHidDeviceReader extends AbstractDeviceReader
 
     protected Hid4JavaCommunicationHandler communicationHandler;
     private boolean debug = false;
-    private BitUtils bitUtils = new BitUtils();
-    private boolean communicationStopped = false;
+    protected BitUtils bitUtils = new BitUtils();
+    protected boolean communicationStopped = false;
 
-    private OutputWriter outputWriter;
-    UsbHidDeviceHandler handler;
+    protected OutputWriter outputWriter;
+    protected UsbHidDeviceHandler handler;
 
 
     public UsbHidDeviceReader(UsbHidDeviceHandler handler, String selectedDevice, OutputWriter outputWriter)

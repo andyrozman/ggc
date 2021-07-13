@@ -12,14 +12,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
+import com.atech.misc.browser.BrowserStart;
 import com.atech.plugin.BackupRestorePlugin;
 import com.atech.utils.ATDataAccessLMAbstract;
 import com.atech.utils.ATSwingUtils;
 
+import ggc.connect.data.ConnectHandlerParameters;
 import ggc.connect.defs.ConnectPluginDefinition;
+import ggc.connect.enums.ConnectHandlerConfiguration;
+import ggc.connect.gui.ConnectShowSummaryDialog;
+import ggc.connect.gui.config.ConnectConfigurationDialog;
 import ggc.connect.util.DataAccessConnect;
 import ggc.core.util.DataAccess;
 import ggc.plugin.DevicePlugInServer;
+import ggc.plugin.data.enums.DeviceHandlerType;
+import ggc.plugin.device.mgr.DeviceHandlerManager;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
@@ -74,6 +81,8 @@ public class ConnectPlugInServer extends DevicePlugInServer implements ActionLis
     DataAccessConnect dataAccessConnect;
     private JMenuItem[] menus = new JMenuItem[3];
 
+    DeviceHandlerManager deviceHandlerManager; // = DeviceHandlerManager.getInstance();
+
 
     /**
     * Constructor
@@ -114,7 +123,7 @@ public class ConnectPlugInServer extends DevicePlugInServer implements ActionLis
     @Override
     public String getName()
     {
-        return ic.getMessage("CONNECT_PLUGIN");
+        return i18nControl.getMessage("CONNECT_PLUGIN");
     }
 
 
@@ -134,7 +143,7 @@ public class ConnectPlugInServer extends DevicePlugInServer implements ActionLis
     @Override
     public void initPlugIn()
     {
-        ic = dataAccess.getI18nControlInstance();
+        i18nControl = dataAccess.getI18nControlInstance();
 
         if (dataAccessConnect == null)
         {
@@ -144,6 +153,7 @@ public class ConnectPlugInServer extends DevicePlugInServer implements ActionLis
 
         this.initPlugInServer((DataAccess) dataAccess, dataAccessConnect);
 
+        deviceHandlerManager = DeviceHandlerManager.getInstance();
         // this.backup_restore_enabled = (this.backupRestoreCollection != null);
 
         this.installed = true;
@@ -179,6 +189,8 @@ public class ConnectPlugInServer extends DevicePlugInServer implements ActionLis
         return null;
     }
 
+    JMenu menuConnect;
+
 
     /**
      * {@inheritDoc}
@@ -187,14 +199,14 @@ public class ConnectPlugInServer extends DevicePlugInServer implements ActionLis
     public JMenu getPlugInMainMenu()
     {
 
-        JMenu menuConnect = ATSwingUtils.createMenu("MN_CONNECT", null, ic_local);
+        menuConnect = ATSwingUtils.createMenu("MN_CONNECT", null, i18nControlLocal);
 
-        // JMenu menu_cgms = ATSwingUtils.createMenu("MN_CGMS", null, ic_local);
+        // JMenu menu_cgms = ATSwingUtils.createMenu("MN_CGMS", null, i18nControlLocal);
         //
         // JMenuItem menu = ATSwingUtils.createMenuItem(menu_cgms,
         // "MN_CGMS_READ", //
         // "MN_CGMS_READ_DESC", "plugin_read_data", //
-        // this, null, ic_local, DataAccessCGMS.getInstance(), parent);
+        // this, null, i18nControlLocal, DataAccessCGMS.getInstance(), parent);
         //
         // menus[0] = menu;
         // menus[0].setEnabled(
@@ -204,7 +216,7 @@ public class ConnectPlugInServer extends DevicePlugInServer implements ActionLis
         // menu = ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_READ_CONFIG",
         // //
         // "MN_CGMS_READ_CONFIG_DESC", "plugin_read_config", //
-        // this, null, ic_local, DataAccessCGMS.getInstance(), parent);
+        // this, null, i18nControlLocal, DataAccessCGMS.getInstance(), parent);
         //
         // menus[1] = menu;
         // menus[1].setEnabled(DownloadSupportType.isOptionSet(dataAccessConnect.getDownloadStatus(),
@@ -212,7 +224,7 @@ public class ConnectPlugInServer extends DevicePlugInServer implements ActionLis
         //
         // menu = ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_READ_FILE", //
         // "MN_CGMS_READ_FILE_DESC", "plugin_read_data_file", //
-        // this, null, ic_local, DataAccessCGMS.getInstance(), parent);
+        // this, null, i18nControlLocal, DataAccessCGMS.getInstance(), parent);
         //
         // menus[2] = menu;
         // menus[2].setEnabled(DownloadSupportType.isOptionSet(dataAccessConnect.getDownloadStatus(),
@@ -222,27 +234,80 @@ public class ConnectPlugInServer extends DevicePlugInServer implements ActionLis
         //
         // ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_VIEW_DATA", //
         // "MN_CGMS_VIEW_DATA_DESC", "cgms_view_data", //
-        // this, null, ic_local, DataAccessCGMS.getInstance(), parent);
+        // this, null, i18nControlLocal, DataAccessCGMS.getInstance(), parent);
         //
         // menu_cgms.addSeparator();
         //
         // ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_LIST", //
         // "MN_CGMS_LIST_DESC", "plugin_list", //
-        // this, null, ic_local, DataAccessCGMS.getInstance(), parent);
+        // this, null, i18nControlLocal, DataAccessCGMS.getInstance(), parent);
         //
         // menu_cgms.addSeparator();
         //
         // ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_CONFIG", //
         // "MN_CGMS_CONFIG_DESC", "plugin_config", //
-        // this, null, ic_local, DataAccessCGMS.getInstance(), parent);
-        //
-        // menu_cgms.addSeparator();
-        //
-        ATSwingUtils.createMenuItem(menuConnect, "MN_CGMS_ABOUT", //
-            "MN_CGMS_ABOUT_DESC", "plugin_about", //
-            this, null, ic_local, DataAccessConnect.getInstance(), parent);
+        // this, null, i18nControlLocal, DataAccessCGMS.getInstance(), parent);
+
+        refreshMenus();
 
         return menuConnect;
+
+    }
+
+
+    public void refreshMenus()
+    {
+        menuConnect.removeAll();
+
+        // modules
+
+        JMenu menuDiaSend = createMenu("MN_DIASEND", menuConnect);
+
+        createMenuItem(menuDiaSend, "MN_CONNECT_IMPORT_EXCEL", "connect_diasend_import_excel");
+
+        menuConnect.addSeparator();
+
+        JMenu menuNightScout = createMenu("MN_NIGHTSCOUT", menuConnect);
+
+        createMenuItem(menuNightScout, "MN_NIGHTSCOUT_VIEWER", "connect_nightscout_view");
+
+        // ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_CONFIG", //
+        // "MN_CGMS_CONFIG_DESC", "plugin_config", //
+        // this, null, i18nControlLocal, DataAccessCGMS.getInstance(), parent);
+
+        // static
+
+        menuConnect.addSeparator();
+
+        createMenuItem(menuConnect, "MN_CONNECT_CONFIG", "connect_config");
+
+        menuConnect.addSeparator();
+
+        ATSwingUtils.createMenuItem(menuConnect, "MN_CONNECT_ABOUT", //
+            "MN_CONNECT_ABOUT_DESC", "plugin_about", //
+            this, null, i18nControlLocal, DataAccessConnect.getInstance(), parent);
+
+    }
+
+
+    public JMenu createMenu(String key, JMenu parentMenu)
+    {
+        if (parentMenu == null)
+        {
+            JMenu menu = ATSwingUtils.createMenu(key, null, i18nControlLocal);
+            return menu;
+        }
+        else
+            return ATSwingUtils.createMenu(key, null, parentMenu, i18nControlLocal);
+    }
+
+
+    public JMenuItem createMenuItem(JMenu parentMenu, String key, String action)
+    {
+        JMenuItem menu = ATSwingUtils.createMenuItem(parentMenu, key, //
+            key + "_DESC", action, //
+            this, null, i18nControlLocal, DataAccessConnect.getInstance(), parent);
+        return menu;
     }
 
 
@@ -282,17 +347,92 @@ public class ConnectPlugInServer extends DevicePlugInServer implements ActionLis
 
         if (!executeBasePluginAction(command, this.dataAccessConnect))
         {
+            if (command.equals("connect_diasend_import_excel"))
+            {
+                // new ConnectSelectImportMethodDialog(
+                // (JFrame) this.parent, //
+                // DeviceHandlerType.DiasendHandler, //
+                // ConnectHandlerConfiguration.DiaSendExcelImport);
+
+                new ConnectShowSummaryDialog((JFrame) this.parent, //
+                        DeviceHandlerType.DiaSendHandler, //
+                        ConnectHandlerConfiguration.DiaSendExcelImport, getParameters(DeviceHandlerType.DiaSendHandler));
+
+            }
+            else if (command.equals("connect_config"))
+            {
+                new ConnectConfigurationDialog(dataAccessConnect, (JFrame) this.parent);
+                // new CGMSDataDialog(dataAccessConnect, (JFrame) this.parent);
+            }
+            else if (command.equals("connect_nightscout_view"))
+            {
+
+
+
+
+                try
+                {
+                    // SwingBrowser browser = new SwingBrowser();
+                    // browser.displayURL("https://andyslittleloopi547@andyrozman.ns.10be.de:25508/");
+
+                    //new NightScoutViewer((JFrame) this.parent,
+                    //        "https://andyslittleloopi547@andyrozman.ns.10be.de:25508/");
+
+
+                    BrowserStart.startBrowser("https://andyslittleloopi547@andyrozman.ns.10be.de:25508/");
+
+                    // Viewer viewer = new Viewer(null);
+                    //
+                    // org.jdesktop.jdic.browser.WebBrowser browser = new WebBrowser();
+                    // browser.setBounds(0, 0, 640, 480);
+                    //
+                    // browser.setURL(new
+                    // URL("https://andyslittleloopi547@andyrozman.ns.10be.de:25508/"));
+                    //
+                    // browser.setVisible(true);
+
+                }
+                catch (Exception e)
+                {
+                    LOG.error("Error loading browser: " + e.getMessage(), e);
+                }
+
+                // new NightScoutViewer((JFrame) this.parent,
+                // "https://andyslittleloopi547@andyrozman.ns.10be.de:25508/");
+                // https://andyrozman.ns.10be.de:25508/
+            }
+
             // if (command.equals("cgms_view_data"))
             // {
             // //new CGMSDataDialog(dataAccessConnect, (JFrame) this.parent);
             // }
-            // else
+            else
             {
                 System.out.println("ConnectPluginServer::Unknown Command: " + command);
             }
         }
 
+
+
     }
+
+
+
+
+
+
+
+    public ConnectHandlerParameters getParameters(DeviceHandlerType deviceHander)
+    {
+        ConnectHandlerParameters parameters = new ConnectHandlerParameters();
+
+        parameters
+                .setFileName("/home/andy/Dropbox/workspaces/ggc/ggc-desktop-app/ggc-desktop/src/andy.rozman@gmail.com.xls");
+
+        return parameters;
+    }
+
+
 
 
     /**

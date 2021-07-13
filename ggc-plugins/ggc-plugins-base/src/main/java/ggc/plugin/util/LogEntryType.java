@@ -1,5 +1,7 @@
 package ggc.plugin.util;
 
+import com.atech.utils.data.CodeEnum;
+
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       GGC PlugIn Base (base class for all plugins)
@@ -26,31 +28,27 @@ package ggc.plugin.util;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class LogEntryType
+public enum LogEntryType implements CodeEnum
 {
-    /**
-     * Log: Trace
-     */
-    public static final int TRACE = 1;
+    TRACE(1), //
+    DEBUG(2), //
+    INFO(3), //
+    WARNING(4), //
+    ERROR(5), //
+    ;
 
-    /**
-     * Log: Debug
-     */
-    public static final int DEBUG = 2;
+    int code;
 
-    /**
-     * Log: Info
-     */
-    public static final int INFO = 3;
 
-    /**
-     * Log: Warning
-     */
-    public static final int WARNING = 4;
+    LogEntryType(int code)
+    {
+        this.code = code;
+    }
 
-    /**
-     * Log: Error
-     */
-    public static final int ERROR = 5;
+
+    public int getCode()
+    {
+        return code;
+    }
 
 }

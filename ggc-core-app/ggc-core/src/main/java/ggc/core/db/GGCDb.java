@@ -345,6 +345,7 @@ public class GGCDb extends HibernateDb
         return this.config;
     }
 
+
     /**
      * Get Db Cache
      * 
@@ -356,7 +357,6 @@ public class GGCDb extends HibernateDb
      * return cache_db;
      * }
      */
-
 
     // *************************************************************
     // **** DATABASE INIT METHODS ****
@@ -446,9 +446,9 @@ public class GGCDb extends HibernateDb
 
             Hashtable<String, String> table = new Hashtable<String, String>();
 
-            Query q = sess.createQuery(
-                "SELECT cfg FROM ggc.core.db.hibernate.SettingsH as cfg WHERE cfg.key LIKE 'EXTENDED_RATIO%' AND cfg.personId="
-                        + dataAccess.current_user_id);
+            Query q = sess
+                    .createQuery("SELECT cfg FROM ggc.core.db.hibernate.SettingsH as cfg WHERE cfg.key LIKE 'EXTENDED_RATIO%' AND cfg.personId="
+                            + dataAccess.current_user_id);
 
             Iterator<SettingsH> it = q.iterate();
 
@@ -975,6 +975,7 @@ public class GGCDb extends HibernateDb
 
     }
 
+
     // /**
     // * DateTime Exists
     // *
@@ -1004,7 +1005,6 @@ public class GGCDb extends HibernateDb
     // }
     //
     // }
-
 
     // *************************************************************
     // **** S t o c k s ****
@@ -1100,8 +1100,9 @@ public class GGCDb extends HibernateDb
             {
                 try
                 {
-                    Query q = getSession().createQuery("SELECT dv from ggc.core.db.hibernate.StocktakingH as dv "
-                            + "where datetime=" + dataAccess.getLongValue(o));
+                    Query q = getSession().createQuery(
+                        "SELECT dv from ggc.core.db.hibernate.StocktakingH as dv " + "where datetime="
+                                + dataAccess.getLongValue(o));
 
                     Iterator it = q.list().iterator();
 
@@ -1213,6 +1214,7 @@ public class GGCDb extends HibernateDb
         return false;
     }
 
+
     // // OLD ONE
     // public ArrayList<StocksH> getStocks(int type, int history)
     // {
@@ -1285,6 +1287,7 @@ public class GGCDb extends HibernateDb
     //
     // Iterator<StockTypeH> it = q.list().iterator();
     //
+    //
     // while (it.hasNext())
     // {
     // StockTypeH sv = it.next();
@@ -1304,7 +1307,6 @@ public class GGCDb extends HibernateDb
     // *************************************************************
     // **** DOCTORS and APPOINTMENTS ****
     // *************************************************************
-
 
     // public DoctorTypeH getDoctorType(long doctorTypeId)
     // {
@@ -1351,7 +1353,7 @@ public class GGCDb extends HibernateDb
     {
         return ((clazz == DoctorH.class) || //
                 (clazz == DoctorTypeH.class) || //
-                (clazz == InventoryItemTypeH.class) //
+        (clazz == InventoryItemTypeH.class) //
         );
     }
 

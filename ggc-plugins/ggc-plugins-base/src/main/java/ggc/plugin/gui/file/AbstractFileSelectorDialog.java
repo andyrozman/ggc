@@ -2,6 +2,7 @@ package ggc.plugin.gui.file;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 import javax.swing.*;
 
@@ -43,10 +44,11 @@ public abstract class AbstractFileSelectorDialog extends JDialog implements Acti
 {
 
     private static final long serialVersionUID = -7597376030031612506L;
-    JButton helpButton = null;
-    protected DataAccessPlugInBase m_da = null;
-    protected I18nControlAbstract m_ic = null;
+    protected JButton helpButton = null;
+    protected DataAccessPlugInBase dataAccess = null;
+    protected I18nControlAbstract i18nControl = null;
     protected JDialog dialogParent = null;
+    protected JFrame frameParent = null;
     protected DeviceDataHandler deviceDataHandler = null;
     protected DownloadSupportType downloadSupportType;
 
@@ -66,13 +68,56 @@ public abstract class AbstractFileSelectorDialog extends JDialog implements Acti
         super(parent);
         this.dialogParent = parent;
         this.deviceDataHandler = ddh;
-        this.m_da = da;
+        this.dataAccess = da;
         this.downloadSupportType = downloadSupportType;
-        m_ic = da.getI18nControlInstance();
+        i18nControl = da.getI18nControlInstance();
+        doInit();
+    }
+
+
+    public AbstractFileSelectorDialog(DataAccessPlugInBase da, DeviceDataHandler ddh, JFrame parent,
+            DownloadSupportType downloadSupportType)
+    {
+        this(da, ddh, parent, downloadSupportType, true);
+    }
+
+
+    public AbstractFileSelectorDialog(DataAccessPlugInBase da, DeviceDataHandler ddh, JFrame parent,
+            DownloadSupportType downloadSupportType, boolean doInit)
+    {
+        super(parent);
+        this.frameParent = parent;
+        this.deviceDataHandler = ddh;
+        this.dataAccess = da;
+        this.downloadSupportType = downloadSupportType;
+        i18nControl = da.getI18nControlInstance();
+
+        if (doInit)
+            doInit();
+    }
+
+
+    public void doInit()
+    {
         init();
         setSize(getSize());
-        ATSwingUtils.centerJDialog(this, this.dialogParent);
+        ATSwingUtils.centerJDialog(this, this.dialogParent != null ? this.dialogParent : this.frameParent);
         this.setVisible(true);
+    }
+
+
+    public void doInit(Map<String, String> parameters)
+    {
+        init();
+        setParameters(parameters);
+        setSize(getSize());
+        ATSwingUtils.centerJDialog(this, this.dialogParent != null ? this.dialogParent : this.frameParent);
+        this.setVisible(true);
+    }
+
+
+    protected void setParameters(Map<String, String> parameters)
+    {
     }
 
 

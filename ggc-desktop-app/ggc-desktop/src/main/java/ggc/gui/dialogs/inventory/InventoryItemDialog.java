@@ -76,9 +76,9 @@ public class InventoryItemDialog extends StandardDialogForObject
     // s boolean editValue;
 
     // // OLD
-    // private DataAccess m_da = DataAccess.getInstance();
-    // private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
-    // private GGCProperties props = m_da.getSettings();
+    // private DataAccess dataAccess = DataAccess.getInstance();
+    // private I18nControlAbstract i18nControl = dataAccess.getI18nControlInstance();
+    // private GGCProperties props = dataAccess.getSettings();
     //
     // private boolean m_actionDone = false;
 

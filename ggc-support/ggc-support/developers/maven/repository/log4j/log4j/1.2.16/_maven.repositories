@@ -1,0 +1,9 @@
+#NOTE: This is an internal implementation file, its format can be changed without prior notice.
+#Thu May 07 09:17:05 CEST 2015
+log4j-1.2.16-sources.jar>sonatype=
+log4j-1.2.16.pom>nexus-infonova=
+log4j-1.2.16.jar>nexus-infonova=
+log4j-1.2.16.pom>central=
+log4j-1.2.16.jar>central=
+log4j-1.2.16-sources.jar>nexus-infonova=
+log4j-1.2.16.jar>=

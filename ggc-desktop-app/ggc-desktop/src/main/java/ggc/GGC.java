@@ -2,10 +2,16 @@ package ggc;
 
 import java.awt.*;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
+import com.atech.data.user_data_dir.UserDataDirectory;
 import com.atech.db.hibernate.check.DbCheckReport;
+import com.atech.utils.Log4jUtil;
 
 import ggc.core.db.GGCDbConfig;
 import ggc.core.util.DataAccess;
+import ggc.core.util.GGCUserDataDirectoryContext;
 import ggc.gui.main.MainFrame;
 
 /**
@@ -81,12 +87,57 @@ public class GGC
     }
 
 
+    public static void initLogging()
+    {
+        String PATTERN = "%d{HH:mm:ss,SSS} %5p [%c{1}:%L] - %m%n";
+
+        Log4jUtil.initLogger("GGC");
+
+        Logger.getRootLogger().addAppender(Log4jUtil.createConsoleAppender(Level.DEBUG, PATTERN));
+
+        // Logger.getRootLogger().addAppender(Log4jUtil.createDailyRollingFileAppender(Level.DEBUG,
+        // PATTERN, "yyyy-MM-dd"));
+
+        Logger.getRootLogger().addAppender(
+            Log4jUtil.createDailyZippedRollingFileAppender(Level.DEBUG, PATTERN, "yyyy-MM-dd"));
+
+        filterLogging();
+    }
+
+
+    private static void filterLogging()
+    {
+        // GGC
+        Logger.getLogger("ggc.core.db.GGCDb").setLevel(Level.INFO);
+
+        // Hibernate
+        Logger.getLogger("org.hibernate").setLevel(Level.INFO);
+        Logger.getLogger("org.hibernate.SQL").setLevel(Level.INFO);
+        Logger.getLogger("org.hibernate.type").setLevel(Level.INFO);
+
+        // log schema export/update
+        Logger.getLogger("net.sf.hibernate.tool.hbm2ddl").setLevel(Level.INFO);
+        Logger.getLogger("net.sf.hibernate.tool.hbm2java").setLevel(Level.INFO);
+
+        // Limit display of logging for Hibernate
+        Logger.getLogger("net.sf.ehcache").setLevel(Level.ERROR);
+        Logger.getLogger("org.hibernate.cfg.SettingsFactoryWithException").setLevel(Level.WARN);
+        Logger.getLogger("org.hibernate.transaction").setLevel(Level.WARN);
+        Logger.getLogger("org.hibernate.cfg.SettingsFactory").setLevel(Level.WARN);
+        Logger.getLogger("org.hibernate.hql.ast.ASTQueryTranslatorFactory").setLevel(Level.WARN);
+        Logger.getLogger("org.hibernate.impl").setLevel(Level.WARN);
+    }
+
+
     /**
      * Main startup method
      * @param args
      */
     public static void main(String[] args)
     {
+        initLogging();
+
+        createDataDirectory();
 
         boolean dev = false;
 
@@ -105,6 +156,16 @@ public class GGC
 
         s_theApp = new GGC();
         s_theApp.init(dev);
+    }
+
+
+    private static void createDataDirectory()
+    {
+        UserDataDirectory instance = UserDataDirectory.getInstance();
+
+        instance.migrateAndValidateData(new GGCUserDataDirectoryContext("../ddda"));
+
+
     }
 
 

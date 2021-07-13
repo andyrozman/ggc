@@ -382,7 +382,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
         String dev = strtok.nextToken(); // 2. token: device id
 
         DeviceIdentification di = this.outputWriter.getDeviceIdentification();
-        di.device_serial_number = dev;
+        di.deviceSerialNumber = dev;
         // di.company = "OneTouch";
         // di.device_selected = "Ultra";
 
@@ -661,7 +661,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
         // System.out.println("proc_read: " + proc_read + ", proc_total: " +
         // proc_total);
 
-        this.outputWriter.setSpecialProgress((int) proc_total); // .setSubStatus(sub_status)
+        this.outputWriter.setSpecialProgress((int) proc_total); // .setSubStatus(subStatus)
     }
 
 

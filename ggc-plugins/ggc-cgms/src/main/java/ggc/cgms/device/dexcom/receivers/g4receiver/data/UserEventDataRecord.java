@@ -8,13 +8,13 @@ import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
 
-import ggc.cgms.device.dexcom.receivers.g4receiver.enums.Exercise;
-import ggc.cgms.device.dexcom.receivers.g4receiver.enums.Health;
 import ggc.cgms.device.dexcom.receivers.g4receiver.enums.ReceiverRecordType;
 import ggc.cgms.device.dexcom.receivers.g4receiver.enums.UserEvent;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.GenericReceiverRecordAbstract;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils.DexcomDateParsing;
+import ggc.core.data.defs.ExerciseStrength;
+import ggc.core.data.defs.Health;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -110,22 +110,15 @@ public class UserEventDataRecord extends GenericReceiverRecordAbstract
                 return "Insulin";
             case Health:
                 {
-                    Health health = Health.getEnum(this.eventSubType);
+                    Health health = Health.getByCode(this.eventSubType);
 
-                    if (health == null)
-                        return "Unknown";
-                    else
-                        return String.format("Health - %s", health.name());
-
+                    return health.getTranslation();
                 }
             case Exercise:
                 {
-                    Exercise exercise = Exercise.getEnum(this.eventSubType);
+                    ExerciseStrength exercise = ExerciseStrength.getByCode(this.eventSubType);
 
-                    if (exercise == null)
-                        return "Unknown";
-                    else
-                        return String.format("Exercise - %s", exercise.name());
+                    return exercise.getTranslation();
                 }
             default:
                 break;

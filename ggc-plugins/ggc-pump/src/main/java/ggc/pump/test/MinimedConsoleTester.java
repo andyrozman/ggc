@@ -161,13 +161,14 @@ public class MinimedConsoleTester extends AbstractPumpTest
         System.out.println("String Buffer - Start ");
 
         StringBuffer sb = new StringBuffer();
-        // sb.append(MinimedDevice.INTERFACE_COMLINK);
+        //sb.append(MinimedContourNextLinkTest);
         sb.append(";");
         // sb.append("COM3"); // port
-        sb.append("COM6");
+        //sb.append("COM6");
+        sb.append("1a79:6300");
         sb.append(";");
         // sb.append("904717"); // serial number
-        sb.append("499012"); // serial number
+        //sb.append("499012"); // serial number
 
         System.out.println("Minimed522 - Start ");
         /*

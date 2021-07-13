@@ -78,8 +78,8 @@ public enum PumpDeviceDefinition implements DeviceDefinition
 
     Insulet_Omnipod(60001, "Omnipod", "in_omnipod.jpg", "INSTRUCTIONS_INSULET_OMNIPOD", null,
             DeviceImplementationStatus.Done, DeviceCompanyDefinition.Insulet, DeviceHandlerType.InsuletOmnipodHandler,
-            DevicePortParameterType.NoParameters, DeviceConnectionProtocol.FileImport, DeviceProgressStatus.Special, "",
-            0.1f, 0.05f, null, -1, 0, null),
+            DevicePortParameterType.NoParameters, DeviceConnectionProtocol.FileImport, DeviceProgressStatus.Special,
+            "", 0.1f, 0.05f, null, -1, 0, null),
 
     // Minimed (not done yet)
 
@@ -97,7 +97,7 @@ public enum PumpDeviceDefinition implements DeviceDefinition
     Minimed_512_712(10004, "Minimed 512/712", "mm_515_715.jpg", "INSTRUCTIONS_MINIMED",
             MinimedDeviceType.Minimed_512_712, DeviceImplementationStatus.Planned, DeviceCompanyDefinition.Minimed,
             DeviceHandlerType.MinimedPumpHandler, DevicePortParameterType.PackedParameters,
-            DeviceConnectionProtocol.Serial_USBBridge, DeviceProgressStatus.Special, "", 0.1f, 0.1f, null, -1, 0,
+            DeviceConnectionProtocol.USB_Hid, DeviceProgressStatus.Special, "", 0.1f, 0.1f, null, -1, 0,
             PumpProfileDefinition.MinimedProfile), // TODO
 
     Minimed_515_715(10005, "Minimed 515/715", "mm_515_715.jpg", "INSTRUCTIONS_MINIMED",
@@ -155,18 +155,17 @@ public enum PumpDeviceDefinition implements DeviceDefinition
             DeviceProgressStatus.Normal, "", 0.1f, 0.1f, PumpTBRDefinition.RocheTBR, -1, 2000,
             PumpProfileDefinition.RocheProfile), //
 
-    AccuChekCombo(20004, "Combo", "ac_combo.jpg", "INSTRUCTIONS_ACCUCHEK_SPIRIT", null, DeviceImplementationStatus.Done,
-            DeviceCompanyDefinition.Roche, DeviceHandlerType.AccuChekPumpHandler,
+    AccuChekCombo(20004, "Combo", "ac_combo.jpg", "INSTRUCTIONS_ACCUCHEK_SPIRIT", null,
+            DeviceImplementationStatus.Done, DeviceCompanyDefinition.Roche, DeviceHandlerType.AccuChekPumpHandler,
             DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.MassStorageXML,
             DeviceProgressStatus.Normal, "", 0.1f, 0.01f, PumpTBRDefinition.RocheTBR, -1, 2000,
             PumpProfileDefinition.RocheProfile), //
 
     // FIXME
-    AccuChekInsight(20004, "Insight", "ac_insight.jpg", "INSTRUCTIONS_ACCUCHEK_SPIRIT", null,
-            DeviceImplementationStatus.NotAvailable, DeviceCompanyDefinition.Roche,
-            DeviceHandlerType.AccuChekPumpHandler, DevicePortParameterType.NoParameters,
-            DeviceConnectionProtocol.MassStorageXML, DeviceProgressStatus.Normal, "", 0.1f, 0.01f,
-            PumpTBRDefinition.RocheTBR, -1, 2000, PumpProfileDefinition.RocheProfile), //
+    AccuChekInsight(20005, "Insight", "ac_insight.jpg", "INSTRUCTIONS_ACCUCHEK_SPIRIT", null,
+            DeviceImplementationStatus.Testing, DeviceCompanyDefinition.Roche, DeviceHandlerType.AccuChekPumpHandler,
+            DevicePortParameterType.NoParameters, DeviceConnectionProtocol.MassStorageXML, DeviceProgressStatus.Normal,
+            "", 0.1f, 0.01f, PumpTBRDefinition.RocheTBR, -1, 2000, PumpProfileDefinition.RocheProfile), //
 
     // Sooil (Dana) (bridged old implementation)
 
@@ -182,7 +181,8 @@ public enum PumpDeviceDefinition implements DeviceDefinition
             DeviceProgressStatus.Normal, "", 0.1f, 0.1f, PumpTBRDefinition.DanaTBR, -1, -1,
             PumpProfileDefinition.DanaProfile),
 
-    DanaDiabecare_III_R(70003, "Diabcare II R (III)", "so_danaIII.jpg", "INSTRUCTIONS_DANA_III_R", null, //
+    DanaDiabecare_III_R(70003, "Diabcare II R (III)", "so_danaIII.jpg", "INSTRUCTIONS_DANA_III_R",
+            null, //
             DeviceImplementationStatus.Done, DeviceCompanyDefinition.Sooil, DeviceHandlerType.DanaPumpHandler,
             DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.BlueTooth_Serial, //
             0.1f, null, 0.1f, null, //
@@ -292,8 +292,8 @@ public enum PumpDeviceDefinition implements DeviceDefinition
             DeviceImplementationStatus implementationStatus, DeviceCompanyDefinition companyDefinition,
             DeviceHandlerType deviceHandlerType, DevicePortParameterType portParameterType,
             DeviceConnectionProtocol connectionProtocol, DeviceProgressStatus progressStatus, String specialComment,
-            Float basalStep, Float bolusStep, PumpTBRDefinition tempBasalType, Integer monthsStored, Integer maxRecords,
-            PumpProfileDefinition profileDefinition)
+            Float basalStep, Float bolusStep, PumpTBRDefinition tempBasalType, Integer monthsStored,
+            Integer maxRecords, PumpProfileDefinition profileDefinition)
     {
         this.deviceId = id;
         this.deviceName = name;

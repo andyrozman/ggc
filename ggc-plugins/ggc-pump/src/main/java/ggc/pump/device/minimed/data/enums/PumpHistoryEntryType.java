@@ -10,7 +10,7 @@ import org.apache.commons.collections.CollectionUtils;
 import com.atech.utils.data.CodeEnum;
 
 import ggc.plugin.device.impl.minimed.enums.MinimedDeviceType;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -53,7 +53,7 @@ public enum PumpHistoryEntryType implements CodeEnum
     // Bolus(0x01, "Bolus", 2, 5, 4),
 
     // 523+[H=8]
-    Bolus(0x01, "Bolus", 4, 5, 0),
+    Bolus(0x01, "Bolus", 4, DateFormat.LongDate, 0),
 
     Prime(0x03, "Prime", 5, 5, 0), //
     NoDeliveryAlarm(0x06, "NoDelivery", 4, 5, 0), //
@@ -83,60 +83,100 @@ public enum PumpHistoryEntryType implements CodeEnum
     NewTimeSet(0x18, "NewTimeSet"), //
     LowBattery(0x19, "LowBattery"), //
     BatteryActivity(0x1a, "Battery Activity"), //
+    // case setAutoOff = 0x1b
     PumpSuspend(0x1e, "PumpSuspend"), //
     PumpResume(0x1f, "PumpResume"), //
-
+    // case selftest = 0x20
     Rewind(0x21, "Rewind"), //
-    Andy24(0x24, "Unknown", 2, 5, 0), //
+    // case clearSettings = 0x22
+    //changeChildBlockEnable((byte) 0x23, ChangeChildBlockEnablePumpEvent.class),  //
+    changeMaxBolus(0x24, "Unknown", 2, 5, 0), //
     ToggleRemote(0x26, "EnableDisableRemote", 2, 5, 14), //
-    ChangeRemoteId(0x27, "ChangeRemoteID"), //
-
+    ChangeRemoteId(0x27, "ChangeRemoteID"), // ??
+    //                case changeMaxBasal = 0x2c
     // V3 ?
     BolusWizardEnabled(0x2d, "BolusWizardEnabled"),
-
+    //            case changeBGReminderOffset = 0x31
+    //            case changeAlarmClockTime = 0x32
     TempBasalRate(0x33, "TempBasal", 2, 5, 1), //
     LowReservoir(0x34, "LowReservoir"), //
 
+    //            case changeMeterId = 0x36
+//            case questionable3b = 0x3b
     // V3 ?
     ChangeParadigmLinkID(0x3c, "ChangeParadigmLinkID"), //
 
     BGReceived(0x3f, "BGReceived/Ian3F", 2, 5, 3), // Ian3F
-
+    //             case journalEntryMealMarker = 0x40
+    //JournalEntryExerciseMarker((byte) 0x41, JournalEntryExerciseMarkerPumpEvent.class),  //
+    //JournalEntryInsulinMarker((byte) 0x42, Unknown7ByteEvent1.class),  //
+    //journalEntryOtherMarker((byte) 0x43, InsulinMarkerEvent.class),  //
     ChangeBolusWizardSetup(0x4f, "", 0, 0, 0), //
 
+//    changeSensorSetup2((byte) 0x50, ChangeSensorSetup2PumpEvent.class),  //
+    //                case restoreMystery51 = 0x51
+//            case restoreMystery52 = 0x52
+//            case changeSensorAlarmSilenceConfig = 0x53
+//            case restoreMystery54 = 0x54
+//            case restoreMystery55 = 0x55
+//    ChangeSensorRateOfChangeAlertSetup((byte) 0x56, ChangeSensorRateOfChangeAlertSetupPumpEvent.class),  //
+//    ChangeBolusScrollStepSize((byte) 0x57, ChangeBolusScrollStepSizePumpEvent.class),  //
+
+
     // V4
-    Andy58(0x58, "Unknown", 13, 5, 0), //
+    Andy58(0x58, "Unknown", 13, 5, 0), // TODO is this one really there
 
     // V2: 522+[B=143]
     BolusWizardChange(0x5a, "BolusWizard", 2, 5, 117), //
 
     // V2: 523+[B=15]
-    BolusWizard(0x5b, "BolusWizard", 2, 5, 13), // 15
+    BolusWizardBolusEstimate(0x5b, "BolusWizard", 2, 5, 13), // 15
 
     // head[1] -> body length
     UnabsorbedInsulin(0x5c, "UnabsorbedInsulinBolus", 5, 0, 0),
 
+    //             case saveSettings = 0x5d
+    //changeVariableBolus((byte) 0x5e, ChangeVariableBolusPumpEvent.class),  //
+
     // V3 ?
-    EasyBolusEnabled(0x5f, "EasyBolusEnabled"), //
+    changeAudioBolus(0x5f, "EasyBolusEnabled"), //
 
     // questionable60(0x60), //
+//    ChangeBGReminderEnable((byte) 0x60, ChangeBGReminderEnablePumpEvent.class), //
+//    ChangeAlarmClockEnable((byte) 0x61, ChangeAlarmClockEnablePumpEvent.class),  //
+//    ChangeTempBasalType((byte) 0x62, ChangeTempBasalTypePumpEvent.class),  //
 
     ChangeAlarmNotifyMode(0x63, "ChangeUtility"), // ChangeUtility
 
     ChangeTimeDisplay(0x64, "ChangeTimeDisplay"), //
 
-    Old6c(0x6c, "Old6c", 0, 0, 36), //
+//    ChangeTempBasalType((byte) 0x62, ChangeTempBasalTypePumpEvent.class),  //
+//    ChangeAlarmNotifyMode((byte) 0x63, ChangeAlarmNotifyModePumpEvent.class),  //
+//    ChangeTimeFormat((byte) 0x64, ChangeTimeFormatPumpEvent.class),  //
+//    ChangeReservoirWarningTime((byte) 0x65, ChangeReservoirWarningTimePumpEvent.class),  //
+//    ChangeBolusReminderEnable((byte) 0x66, ChangeBolusReminderEnablePumpEvent.class),  //
+//    ChangeBolusReminderTime((byte) 0x67, ChangeBolusReminderTimePumpEvent.class),  //
+//    DeleteBolusReminderTime((byte) 0x68, DeleteBolusReminderTimePumpEvent.class),  //
+//    // case bolusReminder = 0x69
+//    DeleteAlarmClockTime((byte) 0x6a, DeleteAlarmClockTimePumpEvent.class),  //
+//    // case dailyTotal515 = 0x6c
+
+    DailyTotals512(0x6c, "Daily Totals 512", 0, 0, 36), //
 
     // hack1(0x6d, "hack1", 46, 5, 0), //
     // V2: 1,2,41 V3:
-    Model522ResultTotals(0x6d, "Model522ResultTotals", 1, 2, 41), //
+    DailyTotals522(0x6d, "Daily Totals 522", 1, 2, 41), //
+    DailyTotals523(0x6e, "Daily Totals 523", 1, 2, 49), // 1102014-03-17T00:00:00
+    // ChangeCarbUnits((byte) 0x6f, ChangeCarbUnitsPumpEvent.class),  //
 
-    Sara6E(0x6e, "Sara6E", 1, 2, 49), // 1102014-03-17T00:00:00
-
-    // Model522ResultTotals
     // -
     // 722
     BasalProfileStart(0x7b, "BasalProfileStart", 2, 5, 3), //
+//    ChangeWatchdogEnable((byte) 0x7c, ChangeWatchdogEnablePumpEvent.class), //
+//    ChangeOtherDeviceID((byte) 0x7d, ChangeOtherDeviceIDPumpEvent.class),  //
+//    ChangeWatchdogMarriageProfile((byte) 0x81, ChangeWatchdogMarriageProfilePumpEvent.class),  //
+//    DeleteOtherDeviceID((byte) 0x82, DeleteOtherDeviceIDPumpEvent.class),  //
+//    ChangeCaptureEventEnable((byte) 0x83, ChangeCaptureEventEnablePumpEvent.class),
 
     Ian69(0x69, "xx", 1, 5, 2), //
 
@@ -189,11 +229,13 @@ public enum PumpHistoryEntryType implements CodeEnum
     }
 
 
+
+
     static void setSpecialRulesForEntryTypes()
     {
         Bolus.addSpecialRuleHead(new SpecialRule(MinimedDeviceType.Minimed_523andHigher, 8));
         BolusWizardChange.addSpecialRuleBody(new SpecialRule(MinimedDeviceType.Minimed_522andHigher, 143));
-        BolusWizard.addSpecialRuleBody(new SpecialRule(MinimedDeviceType.Minimed_523andHigher, 15));
+        BolusWizardBolusEstimate.addSpecialRuleBody(new SpecialRule(MinimedDeviceType.Minimed_523andHigher, 15));
     }
 
 
@@ -202,6 +244,10 @@ public enum PumpHistoryEntryType implements CodeEnum
         this(opCode, name, 2, 5, 0);
     }
 
+
+    PumpHistoryEntryType(int opCode, String name, int head, DateFormat dateFormat, int body) {
+        this(opCode, name, head, dateFormat.getLength(), body);
+    }
 
     PumpHistoryEntryType(int opCode, String name, int head, int date, int body)
     {
@@ -353,7 +399,7 @@ public enum PumpHistoryEntryType implements CodeEnum
 
         for (SpecialRule rule : rules)
         {
-            if (MinimedDeviceType.isSameDevice(MinimedUtil.getDeviceType(), rule.deviceType))
+            if (MinimedDeviceType.isSameDevice(MedtronicUtil.getDeviceType(), rule.deviceType))
             {
                 size = rule.size;
                 break;
@@ -376,6 +422,28 @@ public enum PumpHistoryEntryType implements CodeEnum
         {
             this.deviceType = deviceType;
             this.size = size;
+        }
+    }
+
+
+    enum DateFormat
+    {
+        None(0), //
+        LongDate(5), //
+        ShortDate(2);
+
+        private int length;
+
+        DateFormat(int length) {
+            this.length = length;
+        }
+
+        public int getLength() {
+            return length;
+        }
+
+        public void setLength(int length) {
+            this.length = length;
         }
     }
 

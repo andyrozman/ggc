@@ -95,8 +95,8 @@
             </testResource>
         </testResources>
         <pluginManagement>
-            <plugins>
 
+            <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -169,6 +169,104 @@
                     <version>${plexus.version}</version>
                 </plugin>
 
+
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>${build-helper-maven-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>${lifecycle-mapping.version}</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.codehaus.mojo</groupId>
+                                        <artifactId>build-helper-maven-plugin</artifactId>
+                                        <!-- <versionRange>[1.0,)</versionRange> -->
+                                        <version>${build-helper-maven-plugin.version}</version>
+                                        <goals>
+                                            <goal>parse-version</goal>
+                                            <goal>add-source</goal>
+                                            <goal>maven-version</goal>
+                                            <goal>add-resource</goal>
+                                            <goal>add-test-resource</goal>
+                                            <goal>add-test-source</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <execute>
+                                            <runOnConfiguration>true</runOnConfiguration>
+                                            <runOnIncremental>true</runOnIncremental>
+                                        </execute>
+                                    </action>
+                                </pluginExecution>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.apache.maven.plugins</groupId>
+                                        <artifactId>maven-resources-plugin</artifactId>
+                                        <versionRange>[1.0.0,)</versionRange>
+                                        <goals>
+                                            <goal>resources</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <execute>
+                                            <runOnConfiguration>true</runOnConfiguration>
+                                            <runOnIncremental>false</runOnIncremental>
+                                        </execute>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+
+                <!--
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>${lifecycle-mapping.version}</version>
+                </plugin>
+    -->
+
+                <plugin>
+                    <groupId>com.google.code.maven-replacer-plugin</groupId>
+                    <artifactId>maven-replacer-plugin</artifactId>
+                    <version>${maven-replacer-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <phase>process-sources</phase>
+                            <goals>
+                                <goal>replace</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <file>src/main/templates/Version.java.template</file>
+                        <outputFile>${version.file}</outputFile>
+                        <replacements>
+                            <replacement>
+                                <token>@buildnumber@</token>
+                                <value>${svn.revision}</value>
+                            </replacement>
+                            <replacement>
+                                <token>@buildtime@</token>
+                                <value>${timestamp}</value>
+                            </replacement>
+                            <replacement>
+                                <token>@pomversion@</token>
+                                <value>${project.version}</value>
+                            </replacement>
+                        </replacements>
+                    </configuration>
+                </plugin>
+
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-eclipse-plugin</artifactId>
@@ -200,10 +298,49 @@
                     </executions>
                 </plugin>
 
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-rar-plugin</artifactId>
+                    <version>2.4</version>
+                    <executions>
+                        <execution>
+                            <id>test</id>
+                            <goals>
+                                <goal>rar</goal>
+                            </goals>
+                            <configuration>
+                                <!-- your configuration here -->
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>2.5.5</version>
+                    <executions>
+                        <execution>
+                            <id>distro-assembly</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>single</goal>
+                            </goals>
+                            <configuration>
+                                <descriptors>
+                                    <descriptor>src/assembly/ggc-release.xml</descriptor>
+                                </descriptors>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
             </plugins>
 
         </pluginManagement>
     </build>
+
 
     <reporting>
         <outputDirectory>target/site</outputDirectory>
@@ -234,32 +371,32 @@
 
             <dependency>
                 <groupId>net.sf.ggc</groupId>
-                <artifactId>ggc-meter-tool</artifactId>
-                <version>${ggc-meter-tool.version}</version>
+                <artifactId>ggc-plugins-meter</artifactId>
+                <version>${ggc-plugins-meter.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>net.sf.ggc</groupId>
-                <artifactId>ggc-pump-tool</artifactId>
-                <version>${ggc-pump-tool.version}</version>
+                <artifactId>ggc-plugins-pump</artifactId>
+                <version>${ggc-plugins-pump.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>net.sf.ggc</groupId>
-                <artifactId>ggc-cgms-tool</artifactId>
-                <version>${ggc-cgms-tool.version}</version>
+                <artifactId>ggc-plugins-cgms</artifactId>
+                <version>${ggc-plugins-cgms.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>net.sf.ggc</groupId>
-                <artifactId>ggc-nutrition-tool</artifactId>
-                <version>${ggc-nutrition-tool.version}</version>
+                <artifactId>ggc-plugins-nutrition</artifactId>
+                <version>${ggc-plugins-nutrition.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>net.sf.ggc</groupId>
-                <artifactId>ggc-connect-tool</artifactId>
-                <version>${ggc-connect-tool.version}</version>
+                <artifactId>ggc-plugins-connect</artifactId>
+                <version>${ggc-plugins-connect.version}</version>
             </dependency>
 
             <dependency>
@@ -268,6 +405,27 @@
                 <version>${ggc-desktop.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>net.sf.ggc</groupId>
+                <artifactId>ggc-desktop-little</artifactId>
+                <version>${ggc-desktop-little.version}</version>
+            </dependency>
+
+
+            <!-- GGC Temporary -->
+            <!--
+            <dependency>
+                <groupId>net.sf.ggc</groupId>
+                <artifactId>ggc-device-menarini</artifactId>
+                <version>${ggc-device-menarini.version}</version>
+            </dependency>
+            -->
+
+            <dependency>
+                <groupId>net.sf.ggc</groupId>
+                <artifactId>ggc-sw-diasend</artifactId>
+                <version>0.1-SNAPSHOT</version>
+            </dependency>
 
             <!-- Atech Tools - Main Helper Library -->
             <dependency>
@@ -372,6 +530,13 @@
                 <version>${commons-lang.version}</version>
             </dependency>
 
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>commons-collections</groupId>
                 <artifactId>commons-collections</artifactId>
@@ -410,12 +575,37 @@
             <!-- Serial API Support -->
             <dependency>
                 <groupId>com.neuronrobotics</groupId>
-                <artifactId>nrjavaserial-j15</artifactId>
-                <version>${nrjavaserial-j15.version}</version>
+                <artifactId>nrjavaserial</artifactId>
+                <version>${nrjavaserial.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-net</groupId>
+                        <artifactId>commons-net</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
+            <!--
+            <dependency>
+                <groupId>com.neuronrobotics</groupId>
+                <artifactId>nrjavaserial-j15</artifactId>
+                <version>${nrjavaserial-j15.version}</version>
+            </dependency> -->
 
             <!-- USB Hid Support -->
+            <dependency>
+                <groupId>net.java.dev.jna</groupId>
+                <artifactId>jna</artifactId>
+                <version>${jna.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hid4java</groupId>
+                <artifactId>hid4java</artifactId>
+                <version>${hid4java.version}</version>
+            </dependency>
+
+            <!--
             <dependency>
                 <groupId>net.java.dev.jna</groupId>
                 <artifactId>jna-j15</artifactId>
@@ -427,6 +617,7 @@
                 <artifactId>hid4java-j15</artifactId>
                 <version>${hid4java-j15.version}</version>
             </dependency>
+            -->
 
 
             <!-- Upgrade feature dependencies - WIP !!! -->
@@ -451,23 +642,36 @@
             </dependency>
 
             <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>apache-log4j-extras</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/javax.jmdns/jmdns -->
+            <dependency>
+                <groupId>javax.jmdns</groupId>
+                <artifactId>jmdns</artifactId>
+                <version>3.2.2</version>
+            </dependency>
+
+            <!-- slf4j API -->
+            <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
-                <!-- slf4j API -->
                 <version>${slf4j.version}</version>
             </dependency>
 
+            <!-- slf4j over log4j -->
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-log4j12</artifactId>
-                <!-- slf4j over log4j -->
                 <version>${slf4j.version}</version>
             </dependency>
 
+            <!-- Commons logging over slf4j -->
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>jcl-over-slf4j</artifactId>
-                <!-- Commons logging over slf4j -->
                 <version>${slf4j.version}</version>
             </dependency>
 
@@ -497,6 +701,14 @@
             </dependency>
 
 
+            <!-- Zanata - Crowdsourcing translation possibility -->
+            <dependency>
+                <groupId>org.zanata</groupId>
+                <artifactId>zanata-maven-plugin</artifactId>
+                <version>4.2.1</version>
+            </dependency>
+
+
             <!--
         <dependency>
         <groupId>javax.servlet</groupId>
@@ -511,15 +723,6 @@
     <properties>
 
         <!-- GGC Modules versions -->
-        <ggc-core.version>0.8.0-SNAPSHOT</ggc-core.version>
-        <ggc-plugins-base.version>1.2.2-SNAPSHOT</ggc-plugins-base.version>
-        <ggc-meter-tool.version>2.4.1-SNAPSHOT</ggc-meter-tool.version>
-        <ggc-pump-tool.version>2.0.1-SNAPSHOT</ggc-pump-tool.version>
-        <ggc-cgms-tool.version>1.5.1-SNAPSHOT</ggc-cgms-tool.version>
-        <ggc-nutrition-tool.version>1.4.1-SNAPSHOT</ggc-nutrition-tool.version>
-        <ggc-connect-tool.version>0.1.0-SNAPSHOT</ggc-connect-tool.version>
-        <ggc-desktop.version>0.8.0-SNAPSHOT</ggc-desktop.version>
-        <ggc-help.version>0.2.2-SNAPSHOT</ggc-help.version>
 
 
         <!-- GGC Doctors  (not used yet)  -->
@@ -529,12 +732,10 @@
 
 
         <!-- NON MAVEN -->
-        <ggc-little.version>0.2.4-SNAPSHOT</ggc-little.version>
 
         <!-- Dependencies versions -->
         <ibm-compapi.version>1.3</ibm-compapi.version>
         <skinlf.version>6.7</skinlf.version>
-        <log4j.version>1.2.16</log4j.version>
         <jasperreports.version>3.7.1</jasperreports.version>
         <jfreechart.version>1.0.13</jfreechart.version>
         <hibernate.version>3.1.3</hibernate.version>
@@ -555,16 +756,41 @@
         <hid4java-j15.version>0.4.1-DEV</hid4java-j15.version>
         <nrjavaserial-j15.version>3.13.0-DEV</nrjavaserial-j15.version>
 
+        <!-- 0.8 REMOVED  -->
 
-        <!-- Changed: CGMS, Core, Meter  -->
-        <atech-tools.version>0.8.3-SNAPSHOT</atech-tools.version>
+
+        <!-- Changed: CGMS, Core, Meter (for new version)  -->
+        <atech-tools.version>0.8.5-SNAPSHOT</atech-tools.version>
+        <hid4java.version>0.5.0</hid4java.version>
+        <jna.version>4.2.2</jna.version>
+        <nrjavaserial.version>3.13.0</nrjavaserial.version>
+
+        <commons-lang3.version>3.4</commons-lang3.version>
+        <log4j.version>1.2.17</log4j.version>
+
+
+        <!-- 0.8 -->
+        <ggc-help.version>0.2.3</ggc-help.version>
+        <ggc-core.version>0.8.0</ggc-core.version>
+
+        <ggc-plugins-base.version>1.2.5</ggc-plugins-base.version>
+        <ggc-plugins-meter.version>2.4.2</ggc-plugins-meter.version>
+        <ggc-plugins-pump.version>2.0.4</ggc-plugins-pump.version>
+        <ggc-plugins-cgms.version>1.6.0</ggc-plugins-cgms.version>
+        <ggc-plugins-connect.version>0.1.0</ggc-plugins-connect.version>
+        <ggc-plugins-nutrition.version>1.4.2</ggc-plugins-nutrition.version>
+
+        <ggc-desktop.version>0.8.0</ggc-desktop.version>
+        <ggc-desktop-little.version>0.3.1</ggc-desktop-little.version>
+
+
+        <build-helper-maven-plugin.version>1.9.1</build-helper-maven-plugin.version>
+        <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
+        <maven-replacer-plugin.version>1.4.0</maven-replacer-plugin.version>
 
         <!-- 0.6.2 -->
-        <jssc.version>2.8.0</jssc.version> <!-- Not really used just for testing -->
-
-
-        <!-- 0.8 ?? -->
-
+        <jssc.version>2.8.0</jssc.version>
+        <!-- Not really used just for testing -->
         <!-- 0.9 ?? -->
         <simpleframework.version>2.7.1</simpleframework.version>
         <zip4j.version>1.3.2</zip4j.version>
@@ -582,183 +808,37 @@
         <maven-dependency-plugin.version>2.10</maven-dependency-plugin.version>
 
         <!-- Maven Settings -->
-        <maven.compiler.source>1.5</maven.compiler.source>
-        <maven.compiler.target>1.5</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
+
+        <!-- Replacer Plugin -->
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <maven.build.timestamp.format>dd.MM.yyyy HH:mm</maven.build.timestamp.format>
+
     </properties>
 
-    <modules>
 
+    <modules>
         <module>atech-tools</module>
         <module>ggc-core-app</module>
-        <module>ggc-plugins</module>
+        <!-- <module>ggc-plugins</module> -->
         <module>ggc-support</module>
         <module>ggc-future</module>
         <module>ggc-desktop-app</module>
         <module>ggc-doctor-app</module>
 
+        <!--       Old -->
+        <!--       <module>ggc-package</module> -->
+        <!--        <module>ggc-support/ggc-assembly</module> -->
     </modules>
-
-
-<!--
-    <modules>
-        <module>atech-tools</module>
-        <!- <module>ggc-master-pom</module> ->
-
-        <module>ggc-core</module>
-        <module>ggc-plugin_base</module>
-        <module>ggc-nutri</module>
-        <module>ggc-meter</module>
-        <module>ggc-cgm</module>
-        <module>ggc-pump</module>
-        <module>ggc-desktop</module>
-
-        <module>ggc-support</module>
-
-        <!-
-        <module>ggc-help</module> ->
-
-    </modules>
--->
 
 
     <organization>
         <name>GGC Development Team</name>
     </organization>
 </project>
-
-
-
-
-<!--
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
-    <parent>
-        <groupId>net.sf.ggc</groupId>
-        <artifactId>ggc-parent</artifactId>
-        <version>1.0-SNAPSHOT</version>
-        <relativePath>./ggc-master-pom/pom.xml</relativePath>
-     </parent>
-
-
-    <groupId>net.sf.ggc</groupId>
-    <artifactId>ggc-root</artifactId>
-    <name>ggc-root</name>
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>atech-tools</module>
-        <module>ggc-master-pom</module>
-
-        <module>ggc-core</module>
-        <module>ggc-plugin_base</module>
-        <module>ggc-nutri</module>
-        <module>ggc-meter</module>
-        <module>ggc-cgm</module>
-        <module>ggc-pump</module>
-        <module>ggc-desktop</module>
-
-        <module>ggc-support</module>
-
-        <!-
-        <module>ggc-help</module> ->
-
-    </modules>
-
-    <!- Need to extend this for real deployment  -->
-
-<!--
-    <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-release-plugin</artifactId>
-                    <version>2.2.1</version>
-                    <configuration>
-                        <autoVersionSubmodules>true</autoVersionSubmodules>
-                        <remoteTagging>false</remoteTagging>
-                        <suppressCommitBeforeBranch>true</suppressCommitBeforeBranch>
-                        <suppressCommitBeforeTag>true</suppressCommitBeforeTag>
-                        <!- - goals>deploy</goals -->
-<!--                    </configuration>
-                </plugin>
-
-                <plugin>
-        			<groupId>org.apache.maven.plugins</groupId>
-        			<artifactId>maven-surefire-plugin</artifactId>
-        			<configuration>
-          				<skipTests>${skipTests}</skipTests>
-        			</configuration>
-      			</plugin>
-
-
-
-            </plugins>
-        </pluginManagement>
-    </build>
--->
-<!--
-    <dependencyManagement>
-        <dependencies>
-			
-            
-            
-            
-            
-        </dependencies>
-    </dependencyManagement>
--->
-
-<!--
-    <profiles>
-        <profile>
-            <id>skipJtfTests</id>
-            <activation>
-                <property>
-                    <name>skipJtfTests</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <skipTests>true</skipTests>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>SmokeTests</id>
-            <activation>
-                <property>
-                    <name>skipJtfTests</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <groups>ggc.test.SmokeTests</groups>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
-
-</project>
--->
-
-
 
 

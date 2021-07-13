@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import ggc.plugin.device.impl.minimed.file.MinimedCareLink;
 import ggc.plugin.device.impl.minimed.file.MinimedCareLinkData;
+import ggc.plugin.output.ErrorMessageDto;
 import ggc.pump.data.defs.PumpEventType;
 
 /**
@@ -109,48 +110,65 @@ public class MinimedCareLinkPumpData extends MinimedCareLinkData
         if (
 
         // bolus
-        this.raw_type.equals("BolusNormal") || // bolus - normal
-                this.raw_type.equals("BolusSquare") || // bolus - square /
-                                                       // multiwave
-                this.raw_type.equals("BolusWizardBolusEstimate") || // bolus
-                                                                    // wizard
-                                                                    // estimate
-                                                                    // bg
-                this.raw_type.equals("BGReceived") || // bg data from meter
-                                                      // basal
-                this.raw_type.equals("ChangeTempBasalPercent") || // TBR
-                this.raw_type.equals("ChangeSuspendEnable") || // pump - suspend
-                this.raw_type.equals("ChangeActiveBasalProfilePattern") || // active
-                                                                           // basal
-                                                                           // profile
-                                                                           // pattern
-                this.raw_type.equals("ChangeBasalProfile") || // change basal
-                                                              // basal pattern -
-                                                              // processed
-                                                              // separately
-                                                              // this.raw_type.equals("ChangeBasalProfilePatternPre")
-                                                              // ||
-                                                              // this.raw_type.equals("ChangeBasalProfilePre")
-                                                              // ||
-                this.raw_type.equals("ChangeBasalProfilePattern") || // basal
-                                                                     // profile
-                                                                     // pattern
-                                                                     // - change
-                                                                     // pump
-                this.raw_type.equals("Prime") || // prime
-                this.raw_type.equals("Rewind") || // rewind
-                this.raw_type.equals("AlarmPump") || // alarm
-                this.raw_type.equals("ResultDailyTotal") || // report - result
-                                                            // daily total
-                this.raw_type.equals("SelfTest") || // self test
-                this.raw_type.equals("ChangeTime") || // time changed
-                                                      // journal
-                this.raw_type.equals("JournalEntryPumpLowBattery") || // warn -
-                                                                      // low
-                                                                      // baterry
-                this.raw_type.equals("JournalEntryPumpLowReservoir") || // warn
-                                                                        // - low
-                                                                        // reservoir
+        this.raw_type.equals("BolusNormal")
+                || // bolus - normal
+                this.raw_type.equals("BolusSquare")
+                || // bolus - square /
+                   // multiwave
+                this.raw_type.equals("BolusWizardBolusEstimate")
+                || // bolus
+                   // wizard
+                   // estimate
+                   // bg
+                this.raw_type.equals("BGReceived")
+                || // bg data from meter
+                   // basal
+                this.raw_type.equals("ChangeTempBasalPercent")
+                || // TBR
+                this.raw_type.equals("ChangeSuspendEnable")
+                || // pump - suspend
+                this.raw_type.equals("ChangeActiveBasalProfilePattern")
+                || // active
+                   // basal
+                   // profile
+                   // pattern
+                this.raw_type.equals("ChangeBasalProfile")
+                || // change basal
+                   // basal pattern -
+                   // processed
+                   // separately
+                   // this.raw_type.equals("ChangeBasalProfilePatternPre")
+                   // ||
+                   // this.raw_type.equals("ChangeBasalProfilePre")
+                   // ||
+                this.raw_type.equals("ChangeBasalProfilePattern")
+                || // basal
+                   // profile
+                   // pattern
+                   // - change
+                   // pump
+                this.raw_type.equals("Prime")
+                || // prime
+                this.raw_type.equals("Rewind")
+                || // rewind
+                this.raw_type.equals("AlarmPump")
+                || // alarm
+                this.raw_type.equals("ResultDailyTotal")
+                || // report - result
+                   // daily total
+                this.raw_type.equals("SelfTest")
+                || // self test
+                this.raw_type.equals("ChangeTime")
+                || // time changed
+                   // journal
+                this.raw_type.equals("JournalEntryPumpLowBattery")
+                || // warn -
+                   // low
+                   // baterry
+                this.raw_type.equals("JournalEntryPumpLowReservoir")
+                || // warn
+                   // - low
+                   // reservoir
 
                 // not yet - pump
 
@@ -180,37 +198,49 @@ public class MinimedCareLinkPumpData extends MinimedCareLinkData
                  * this.raw_type.equals("ChangeInsulinSensitivityPattern") || //
                  */
                 // current
-                this.raw_type.equals("CurrentAlarmNotifyMode") || this.raw_type.equals("CurrentRFEnable")
-                || this.raw_type.equals("CurrentBolusReminderEnable") ||
+                this.raw_type.equals("CurrentAlarmNotifyMode")
+                || this.raw_type.equals("CurrentRFEnable")
+                || this.raw_type.equals("CurrentBolusReminderEnable")
+                ||
 
-                this.raw_type.equals("CurrentRFEnable") ||
+                this.raw_type.equals("CurrentRFEnable")
+                ||
                 // this.raw_type.equals("CurrentTotalYesterday") ||
                 // this.raw_type.equals("CurrentBatteryStatus") ||
                 // this.raw_type.equals("CurrentTotalRemaining") ||
                 // this.raw_type.equals("CurrentErrorStatus") ||
-                this.raw_type.equals("CurrentDisplayLanguage") ||
+                this.raw_type.equals("CurrentDisplayLanguage")
+                ||
                 // this.raw_type.equals("CurrentGlucoseHistoryPageNumber") ||
-                this.raw_type.equals("CurrentTimeDisplayFormat") || this.raw_type.equals("CurrentAudioBolusStep")
-                || this.raw_type.equals("CurrentVariableBolusEnable") || this.raw_type.equals("CurrentAutoOffDuration")
+                this.raw_type.equals("CurrentTimeDisplayFormat")
+                || this.raw_type.equals("CurrentAudioBolusStep")
+                || this.raw_type.equals("CurrentVariableBolusEnable")
+                || this.raw_type.equals("CurrentAutoOffDuration")
                 ||
                 // this.raw_type.equals("CurrentTotalToday") ||
                 // this.raw_type.equals("CurrentTempBasal") ||
-                this.raw_type.equals("CurrentMaxBasal") || this.raw_type.equals("CurrentMaxBolus") ||
+                this.raw_type.equals("CurrentMaxBasal")
+                || this.raw_type.equals("CurrentMaxBolus")
+                ||
                 // this.raw_type.equals("CurrentActiveBasalProfilePattern") ||
                 this.raw_type.equals("CurrentVariableBasalProfilePatternEnable")
                 || this.raw_type.equals("CurrentBolusWizardSetupStatus")
-                || this.raw_type.equals("CurrentBGTargetRangePattern") || this.raw_type.equals("CurrentBGTargetRange")
+                || this.raw_type.equals("CurrentBGTargetRangePattern")
+                || this.raw_type.equals("CurrentBGTargetRange")
                 || this.raw_type.equals("CurrentReservoirWarningUnits")
                 || this.raw_type.equals("CurrentReservoirWarningValueInsulin")
-                || this.raw_type.equals("CurrentKeypadLockedEnable") ||
+                || this.raw_type.equals("CurrentKeypadLockedEnable")
+                ||
                 // this.raw_type.equals("CurrentSavedSettingsTime") ||
                 // this.raw_type.equals("CurrentHistoryPageNumber") ||
-                this.raw_type.equals("CurrentRemoteControlID") ||
+                this.raw_type.equals("CurrentRemoteControlID")
+                ||
                 // this.raw_type.equals("CurrentPumpStatus") ||
                 this.raw_type.equals("CurrentTempBasalType") || this.raw_type.equals("CurrentParadigmLinkEnable")
                 || this.raw_type.equals("CurrentInsulinActionCurve") || this.raw_type.equals("CurrentPumpModelNumber")
                 || this.raw_type.equals("CurrentAlarmClockEnable") || this.raw_type.equals("CurrentBGReminderEnable")
-                || this.raw_type.equals("CurrentBolusWizardEnable") || this.raw_type.equals("CurrentBolusWizardBGUnits")
+                || this.raw_type.equals("CurrentBolusWizardEnable")
+                || this.raw_type.equals("CurrentBolusWizardBGUnits")
                 || this.raw_type.equals("CurrentBolusWizardCarbUnits") // ||
         // this.raw_type.equals("CurrentCarbRatioPattern") ||
         // this.raw_type.equals("CurrentCarbRatio") ||
@@ -568,7 +598,7 @@ public class MinimedCareLinkPumpData extends MinimedCareLinkData
             {
                 String a = "Unsupported profile pattern change: " + s + "\n" + this.full_data_line;
 
-                this.mcl.output_writer.addErrorMessage(a);
+                this.mcl.output_writer.addErrorMessage(new ErrorMessageDto(a));
                 LOG.error(a);
                 return null;
             }
@@ -602,7 +632,7 @@ public class MinimedCareLinkPumpData extends MinimedCareLinkData
             {
                 String a = "Unsupported alarm mapping: " + s + "\n" + this.full_data_line;
 
-                this.mcl.output_writer.addErrorMessage(a);
+                this.mcl.output_writer.addErrorMessage(new ErrorMessageDto(a));
                 LOG.error(a);
                 return null;
             }
@@ -616,9 +646,10 @@ public class MinimedCareLinkPumpData extends MinimedCareLinkData
             this.processed_value = getDataAfter(this.raw_values, "MODE=");
             return null;
         }
-        else if (this.raw_type.equals("CurrentBolusReminderEnable") || this.raw_type.equals("CurrentParadigmLinkEnable")
-                || this.raw_type.equals("CurrentBGReminderEnable") || this.raw_type.equals("CurrentBolusWizardEnable")
-                || this.raw_type.equals("CurrentRFEnable") || this.raw_type.equals("CurrentKeypadLockedEnable")
+        else if (this.raw_type.equals("CurrentBolusReminderEnable")
+                || this.raw_type.equals("CurrentParadigmLinkEnable") || this.raw_type.equals("CurrentBGReminderEnable")
+                || this.raw_type.equals("CurrentBolusWizardEnable") || this.raw_type.equals("CurrentRFEnable")
+                || this.raw_type.equals("CurrentKeypadLockedEnable")
                 || this.raw_type.equals("CurrentVariableBolusEnable")
                 || this.raw_type.equals("CurrentVariableBasalProfilePatternEnable")
                 || this.raw_type.equals("CurrentBolusWizardEnable") || this.raw_type.equals("CurrentBolusWizardEnable")

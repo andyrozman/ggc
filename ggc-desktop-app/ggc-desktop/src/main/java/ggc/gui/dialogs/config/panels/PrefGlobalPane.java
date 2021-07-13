@@ -76,13 +76,26 @@ public class PrefGlobalPane extends AbstractPrefOptionsPanel
         label.setBounds(20, 5, 480, 25);
         label.setText(i18nControl.getMessage("WARN_GLOBAL_SETTINGS_AFFECT_ALL_USERS"));
         label.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD));
+        //this.add(label);
+
+        label = new JLabel();
+        label.setBounds(20, 5, 480, 75);
+
+
+        this.add(label);
+
+        label = new JLabel();
+        label.setBounds(20, 100, 480, 120);
+        label.setText("<html>This panel is intended for Global Settings. When we add Multi User functionality, this" +
+                " will contain global settings. <br><br>For now this page is just empty.<br></html>");
+        label.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD));
         this.add(label);
 
         // general ggcProperties
         JPanel a = new JPanel();
         a.setBounds(10, 30, 490, 90); // 40 = 10
         a.setLayout(null);
-        a.setBorder(new TitledBorder(i18nControl.getMessage("GENERAL_SETTINGS")));
+        a.setBorder(new TitledBorder(i18nControl.getMessage("GLOBAL_SETTINGS")));
 
         label = new JLabel();
         label.setBounds(20, 20, 100, 25);
@@ -104,7 +117,7 @@ public class PrefGlobalPane extends AbstractPrefOptionsPanel
         langBox.setBounds(170, 50, 300, 25);
         a.add(langBox);
 
-        this.add(a);
+        //this.add(a);
 
         // database ggcProperties
         JPanel p2 = new JPanel();
@@ -126,7 +139,7 @@ public class PrefGlobalPane extends AbstractPrefOptionsPanel
         this.cb_database.setSelectedIndex(this.dataAccess.getDbConfig().getSelectedDatabaseIndex());
         p2.add(this.cb_database);
 
-        this.add(p2);
+        //this.add(p2);
 
         JPanel p3 = new JPanel(/* new GridLayout(2, 1) */);
         p3.setBorder(new TitledBorder(i18nControl.getMessage("LAF_SETTINGS")));
@@ -189,9 +202,9 @@ public class PrefGlobalPane extends AbstractPrefOptionsPanel
         int idx = this.m_dbc.getSelectedLFIndex();
         this.cb_lf_type.setSelectedIndex(idx);
 
-        this.add(p3);
+        //this.add(p3);
 
-        registerForChange(cb_database);
+        //registerForChange(cb_database);
 
     }
 

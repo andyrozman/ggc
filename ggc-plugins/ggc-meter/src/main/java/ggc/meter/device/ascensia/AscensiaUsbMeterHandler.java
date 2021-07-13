@@ -3,12 +3,16 @@ package ggc.meter.device.ascensia;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ggc.meter.defs.device.MeterDeviceDefinition;
 import ggc.meter.defs.device.MeterDeviceHandler;
 import ggc.meter.device.ascensia.impl.AscensiaContourUsbReader;
 import ggc.plugin.comm.cfg.USBDevice;
 import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.data.enums.DeviceHandlerType;
+import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.v2.DeviceDefinition;
@@ -43,6 +47,8 @@ import ggc.plugin.output.OutputWriter;
 public class AscensiaUsbMeterHandler extends MeterDeviceHandler
 {
 
+    private static final Logger LOG = LoggerFactory.getLogger(AscensiaUsbMeterHandler.class);
+
     AscensiaContourUsbReader reader = null;
     MeterDeviceDefinition meterDefinition;
 
@@ -57,8 +63,25 @@ public class AscensiaUsbMeterHandler extends MeterDeviceHandler
             throws PlugInBaseException
     {
         meterDefinition = (MeterDeviceDefinition) definition;
-        reader = new AscensiaContourUsbReader(this, (String) connectionParameters, outputWriter);
-        reader.readFromDevice();
+        try
+        {
+            reader = new AscensiaContourUsbReader(this, (String) connectionParameters, outputWriter);
+            reader.readFromDevice();
+        }
+        catch (PlugInBaseException ex)
+        {
+            throw ex;
+        }
+        catch (Exception ex)
+        {
+            LOG.error("Unexpected exception: " + ex, ex);
+            throw new PlugInBaseException(PlugInExceptionType.UnexpectedException, new Object[] { ex.getMessage() },
+                    ex);
+        }
+        finally
+        {
+            this.closeDevice();
+        }
     }
 
 

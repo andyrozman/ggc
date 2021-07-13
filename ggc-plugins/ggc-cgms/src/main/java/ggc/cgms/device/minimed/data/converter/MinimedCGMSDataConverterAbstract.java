@@ -7,7 +7,7 @@ import ggc.plugin.device.impl.minimed.comm.usb.contournext.enums.SendMessageType
 import ggc.plugin.device.impl.minimed.data.MinimedCommandReply;
 import ggc.plugin.device.impl.minimed.data.converter.MinimedDataConverterAbstract;
 import ggc.plugin.device.impl.minimed.enums.MinimedCommandType;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 
 /**
  * Created by andy on 15.07.17.
@@ -18,8 +18,8 @@ public abstract class MinimedCGMSDataConverterAbstract extends MinimedDataConver
     public MinimedCGMSDataConverterAbstract(DataAccessCGMS dataAccess)
     {
         super(dataAccess);
-        this.bitUtils = MinimedUtil.getBitUtils();
-        this.outputWriter = MinimedUtil.getOutputWriter();
+        this.bitUtils = MedtronicUtil.getBitUtils();
+        this.outputWriter = MedtronicUtil.getOutputWriter();
     }
 
 
@@ -50,7 +50,7 @@ public abstract class MinimedCGMSDataConverterAbstract extends MinimedDataConver
 
     public void refreshOutputWriter()
     {
-        this.outputWriter = MinimedUtil.getOutputWriter();
+        this.outputWriter = MedtronicUtil.getOutputWriter();
     }
 
 

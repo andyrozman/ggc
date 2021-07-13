@@ -13,7 +13,9 @@ import ggc.plugin.device.impl.minimed.enums.MinimedCommInterfaceType;
 import ggc.plugin.device.impl.minimed.enums.MinimedCommandType;
 import ggc.plugin.device.impl.minimed.enums.MinimedDeviceType;
 import ggc.plugin.device.impl.minimed.enums.MinimedTargetType;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
+import ggc.plugin.output.ConsoleOutputWriter;
+import ggc.pump.device.minimed.MinimedPumpDeviceHandler;
 import ggc.pump.test.AbstractPumpTest;
 
 /**
@@ -23,6 +25,7 @@ public class MinimedContourNextLinkTest extends AbstractPumpTest
 {
 
     BitUtils bitUtils = new BitUtils();
+    String connectionString = null;
 
 
     public MinimedContourNextLinkTest()
@@ -39,9 +42,12 @@ public class MinimedContourNextLinkTest extends AbstractPumpTest
         sb.append(";");
         sb.append("MINIMED_SERIAL!=316551"); // serial number
 
-        MinimedConnectionParametersDTO parametersDTO = new MinimedConnectionParametersDTO(sb.toString());
+        this.connectionString = sb.toString();
+
+        MinimedConnectionParametersDTO parametersDTO = new MinimedConnectionParametersDTO(this.connectionString);
 
         // 316551
+        MedtronicUtil.setOutputWriter(new ConsoleOutputWriter());
     }
 
 
@@ -63,7 +69,14 @@ public class MinimedContourNextLinkTest extends AbstractPumpTest
 
     }
 
+    // 33 / 21
+    // OPEN:  00 00 00 21 51 01 33 31 36 35 35 31 00 00 00 00 00 00 00 00 00 00 10 01 1E 00 00 00 00 00 00 00 00 00 00 00 B6
+    //                    51 01 33 31 36 35 35 31 00 00 00 00 00 00 00 00 00 00 10 01 1E 00 00 00 00 00 00 00 00 00 00 00 B6
+    //        41 42 43 01 15 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
 
+    // SETT:  00 00 00 28 51 01 33 31 36 35 35 31 00 00 00 00 00 00 00 00 00 00 12 21 05 00 00 00 00 00 00 00 07 00 00 00 66 A7 31 65 51 C0 00 52
+    //                    51 01 33 31 36 35 35 31 00 00 00 00 00 00 00 00 00 00 12 21 05 00 00 00 00 00 00 00 07 00 00 00 4A A7 31 65 51 91 00 65
+    //        00 00 00 28 51 01 33 31 36 35 35 31 00 00 00 00 00 00 00 00 00 00 12 21 05 00 00 00 00 00 00 00 07 00 00 00 4A A7 31 65 51 91 00 65 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
     public static void main(String[] args)
     {
         MinimedContourNextLinkTest test = new MinimedContourNextLinkTest();
@@ -71,8 +84,22 @@ public class MinimedContourNextLinkTest extends AbstractPumpTest
     }
 
 
+    private void testCommunicateWithPumpReal()
+    {
+
+        MinimedPumpDeviceHandler handler = new MinimedPumpDeviceHandler(dataAccessPump);
+
+        //handler.readConfiguration();
+
+
+    }
+
+
+
     private void testCommunicateWithPump()
     {
+        //MinimedPumpDeviceHandler handler = new MinimedPumpDeviceHandler(dataAccessPump);
+
         MinimedCommunicationContourNext2 handler = new MinimedCommunicationContourNext2(dataAccessPump, null);
 
         try
@@ -82,15 +109,23 @@ public class MinimedContourNextLinkTest extends AbstractPumpTest
 
             MinimedCommandReply minimedCommandReply = handler.executeCommandWithRetry(MinimedCommandType.Settings_512);
 
-            MinimedDataConverter dataConverter = MinimedUtil.getDataConverter(MinimedDeviceType.Minimed_512_712,
-                MinimedTargetType.Pump);
+            MinimedDataConverter dataConverter = MedtronicUtil.getDataConverter(MinimedDeviceType.Minimed_512_712,
+                    MinimedTargetType.Pump);
 
+            dataConverter.refreshOutputWriter();
             dataConverter.convertData(minimedCommandReply);
 
         }
         catch (PlugInBaseException e)
         {
             e.printStackTrace();
+        }
+        finally {
+            try {
+                handler.closeDevice();
+            } catch (PlugInBaseException e) {
+                System.out.println("Error disconnecting from device: " + e);
+            }
         }
 
     }

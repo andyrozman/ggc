@@ -48,7 +48,7 @@ public class SimpleReadContourNext
         sess.setStickSerial("C16325");
         sess.setPumpSerial("316551");
 
-        // MinimedUtil.
+        // MedtronicUtil.
 
         return sess;
     }

@@ -88,7 +88,7 @@ public class AppointmentsInfoPanel extends AbstractInfoPanel
             {
                 setLayout(new GridLayout(0, 1));
                 // setLayout(new GridLayout(0, 2));
-                // JList list = new JList()
+                // CheckBoxList list = new CheckBoxList()
 
                 java.util.List<JPanel> itemList = new ArrayList<JPanel>();
 

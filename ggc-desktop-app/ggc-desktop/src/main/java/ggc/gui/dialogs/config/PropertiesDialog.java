@@ -72,7 +72,7 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
      * Config types
      */
     public String configTypes[] = { //
-                                    i18nControl.getMessage("GLOBAL"), //
+                                    //i18nControl.getMessage("GLOBAL"), //
                                     i18nControl.getMessage("MODE"), //
                                     i18nControl.getMessage("GENERAL"), //
                                     i18nControl.getMessage("MEDICAL_DATA"), //
@@ -82,7 +82,8 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
                                     i18nControl.getMessage("LANGUAGE"), //
                                     i18nControl.getMessage("PUMP"), //
                                     i18nControl.getMessage("CGMS"), //
-                                    i18nControl.getMessage("USERS") };
+                                    //i18nControl.getMessage("USERS") //
+    };
 
     /**
      * Config types
@@ -115,7 +116,7 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
         this.propertiesDialogType = propertiesDialogType;
 
         setSize(640, 480);
-        setTitle(i18nControl.getMessage("PREFERENCES_DEFAULT"));
+        setTitle(i18nControl.getMessage("PREFERENCES"));
 
         ATSwingUtils.initLibrary();
 
@@ -199,7 +200,7 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
 
         if (this.propertiesDialogType == PropertiesDialogType.Standard)
         {
-            addPanel(new PrefGlobalPane(this));
+            //addPanel(new PrefGlobalPane(this));
             addPanel(new PrefModePane(this));
             addPanel(new PrefGeneralPane(this));
             addPanel(new PrefMedicalDataPane(this));
@@ -209,7 +210,7 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
             addPanel(new PrefLanguagePane(this));
             addPanel(new ConfigPumpPanel(this));
             addPanel(new ConfigCGMSPanel(this));
-            addPanel(new ConfigUsersPanel(this));
+            //addPanel(new ConfigUsersPanel(this));
         }
         else
         {

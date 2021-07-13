@@ -7,15 +7,13 @@ import com.atech.utils.data.ATechDate;
 
 import ggc.cgms.data.defs.CGMSTrendArrow;
 import ggc.cgms.device.abbott.libre.enums.ResultValueType;
+import ggc.plugin.device.impl.abbott.hid.AbbottHidRecordDto;
 
-public class ManualMeasurementDto extends LibreRecordDto
+public class ManualMeasurementDto extends AbbottHidRecordDto
 {
 
     private static final Logger LOG = LoggerFactory.getLogger(ManualMeasurementDto.class);
 
-    int recordId;
-    int recordType;
-    ATechDate dateTime;
     int unknown1;
     ResultValueType readingType;
     // blood-glucose = "0"

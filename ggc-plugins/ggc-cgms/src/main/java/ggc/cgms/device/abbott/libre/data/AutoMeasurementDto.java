@@ -3,14 +3,12 @@ package ggc.cgms.device.abbott.libre.data;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
-import com.atech.utils.data.ATechDate;
+import ggc.plugin.device.impl.abbott.hid.AbbottHidRecordDto;
 
-public class AutoMeasurementDto extends LibreRecordDto
+public class AutoMeasurementDto extends AbbottHidRecordDto
 {
 
-    int recordId;
     byte unknownValue1;
-    ATechDate dateTime;
 
     byte unknownValue2;
     byte unknownValue3;

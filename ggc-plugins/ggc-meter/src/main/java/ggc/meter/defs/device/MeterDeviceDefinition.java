@@ -46,17 +46,18 @@ public enum MeterDeviceDefinition implements DeviceDefinition
             "INSTRUCTIONS_ASCENSIA_CONTOUR_USB", null, DeviceImplementationStatus.Done, //
             DeviceCompanyDefinition.Ascensia, DeviceHandlerType.AscensiaUsbHandler,
             DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.USB_Hid, DeviceProgressStatus.Special, "",
-            2000, MeterDisplayInterfaceType.Simple),
+            1000, MeterDisplayInterfaceType.Simple),
 
     AscensiaContourNextOne(10011, "Contour Next One", "ascensia_contour_next_one.png", //
             "INSTRUCTIONS_ASCENSIA_CONTOUR_USB", null, DeviceImplementationStatus.Done, //
             DeviceCompanyDefinition.Ascensia, DeviceHandlerType.AscensiaUsbHandler,
             DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.USB_Hid, DeviceProgressStatus.Special, "",
-            2000, MeterDisplayInterfaceType.Simple),
+            800, MeterDisplayInterfaceType.Simple),
 
     // -- Missing: Contour Next EZ, Contour Next Link 2.4, Didget, Contour XT ?
     // -- Planned: Contour Next Link 2.4 (Test with current usb code)
-    // -- Not planned: Contour Next EZ, Didget, Contour XT (this might actually work without any changes)
+    // -- Not planned: Contour Next EZ, Didget, Contour XT (this might actually work without any
+    // changes)
 
     // --------------------
     // AccuChek
@@ -140,7 +141,6 @@ public enum MeterDeviceDefinition implements DeviceDefinition
             DeviceProgressStatus.Normal, "", 500, MeterDisplayInterfaceType.Extended), //
 
     // -- Missing: Mobile, Connect, ...Connect
-
 
     // --------------------
     // Meanrini
@@ -229,7 +229,6 @@ public enum MeterDeviceDefinition implements DeviceDefinition
             DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
             DeviceProgressStatus.Special, "", 830, MeterDisplayInterfaceType.Extended), // ket,
 
-
     // --------------------
     // Arkray
     // --------------------
@@ -263,7 +262,18 @@ public enum MeterDeviceDefinition implements DeviceDefinition
             DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.USB_Hid, //
             DeviceProgressStatus.Special, "", 500, MeterDisplayInterfaceType.Simple), //
 
-    // Missing: Implementations there but incomplete: ArkrayGlucoCardPlus() [450], ArkrayGlucoCard(), ArkrayGlucoCardMemoryPC(),
+    // Missing: Implementations there but incomplete: ArkrayGlucoCardPlus() [450],
+    // ArkrayGlucoCard(), ArkrayGlucoCardMemoryPC(),
+
+
+    // --------------------
+    // Abbott
+    // --------------------
+    AbbottFreeStyleOptiumNeo(50003, "GlucoFix ID", "mn_glucofix_id.png", //
+            "INSTRUCTIONS_MENARINI", null, DeviceImplementationStatus.Planned, //
+            DeviceCompanyDefinition.Menarini, DeviceHandlerType.MenariniMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DeviceProgressStatus.Special, "", 250, MeterDisplayInterfaceType.Simple), //
 
 
 
@@ -307,6 +317,7 @@ public enum MeterDeviceDefinition implements DeviceDefinition
     String specialComment;
     int maxRecords;
     MeterDisplayInterfaceType displayInterfaceType;
+
 
     @Deprecated
     MeterDeviceDefinition()

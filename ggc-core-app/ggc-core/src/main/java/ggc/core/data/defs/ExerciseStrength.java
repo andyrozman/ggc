@@ -1,6 +1,9 @@
 package ggc.core.data.defs;
 
-import java.util.HashMap;
+import java.util.Hashtable;
+
+import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.data.CodeEnumWithTranslation;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -27,43 +30,101 @@ import java.util.HashMap;
  *  Author:    Andy {andy@atech-software.com}
  */
 
-public enum ExerciseStrength
+public enum ExerciseStrength implements CodeEnumWithTranslation
 {
-    Heavy(3), //
-    Light(1), //
-    MaxValue(4), //
-    Medium(2), //
-    Null(0);
+    Undefined(0, "EXERCISE_UNDEFINED"), //
+    Light(1, "EXERCISE_LIGHT"), //
+    Medium(2, "EXERCISE_MEDIUM"), //
+    Heavy(3, "EXERCISE_HEAVY"), //
+    MaxValue(4, "EXERCISE_MAX"), //
+    ;
 
-    private int value;
-    private static HashMap<Integer, ExerciseStrength> map = new HashMap<Integer, ExerciseStrength>();
+
+
+
+    static Hashtable<String, ExerciseStrength> translationMapping = new Hashtable<String, ExerciseStrength>();
+    static Hashtable<Integer, ExerciseStrength> codeMapping = new Hashtable<Integer, ExerciseStrength>();
 
     static
     {
-        for (ExerciseStrength el : values())
+        for (ExerciseStrength pbt : values())
         {
-            map.put(el.getValue(), el);
+            codeMapping.put(pbt.code, pbt);
         }
     }
 
-    ExerciseStrength(int value)
+
+
+
+
+    public static void translateKeywords(I18nControlAbstract ic)
     {
-        this.value = value;
+        if (translated)
+            return;
+
+        for (ExerciseStrength pbt : values())
+        {
+            pbt.setTranslation(ic.getMessage(pbt.i18nKey));
+            translationMapping.put(pbt.getTranslation(), pbt);
+        }
+
+        translated = true;
     }
 
-    public int getValue()
+    int code;
+    String i18nKey;
+    String translation;
+    static boolean translated = false;
+
+
+    ExerciseStrength(int code, String i18nKey)
     {
-        return value;
+        this.code = code;
+        this.i18nKey = i18nKey;
     }
 
-    public void setValue(int value)
+
+    public String getTranslation()
     {
-        this.value = value;
+        return translation;
     }
 
-    public static ExerciseStrength getEnum(int value)
+
+    public void setTranslation(String translation)
     {
-        return map.get(value);
+        this.translation = translation;
+    }
+
+
+    public int getCode()
+    {
+        return code;
+    }
+
+
+    public String getI18nKey()
+    {
+        return i18nKey;
+    }
+
+
+    public String getName()
+    {
+        return this.name();
+    }
+
+
+    public static ExerciseStrength getByCode(int code)
+    {
+        if (codeMapping.containsKey(code))
+            return codeMapping.get(code);
+        else
+            return ExerciseStrength.Undefined;
+    }
+
+    public static ExerciseStrength[] getAllValues()
+    {
+        return values();
     }
 
 }

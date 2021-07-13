@@ -1,0 +1,25 @@
+
+IMPORT
+DiaSend / Glooko Excel import                                            PLANNED (2018)
+
+
+
+
+EXPORT
+
+
+
+IMPORT/EXPORT
+
+
+OTHER HARDWARE
+LibraScale - BT Scale for Food                                           PLANNED (2018)
+
+
+
+WEB SERVICES
+OpenPlatformForClinicalNutrition - API for nutrition                     PLANNED (2018)
+
+
+
+

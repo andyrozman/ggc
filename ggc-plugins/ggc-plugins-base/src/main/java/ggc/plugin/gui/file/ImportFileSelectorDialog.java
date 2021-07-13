@@ -83,13 +83,13 @@ public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
     {
         ATSwingUtils.initLibrary();
         this.setLayout(null);
-        m_da.addComponent(this);
+        dataAccess.addComponent(this);
 
-        JLabel l = ATSwingUtils.getTitleLabel(m_ic.getMessage("IMPORT_FILE_SELECTOR"), 50, 30, 300, 30, this,
+        JLabel l = ATSwingUtils.getTitleLabel(i18nControl.getMessage("IMPORT_FILE_SELECTOR"), 50, 30, 300, 30, this,
             ATSwingUtils.FONT_BIG_BOLD);
         l.setHorizontalAlignment(SwingConstants.CENTER);
 
-        ATSwingUtils.getLabel(m_ic.getMessage("IMPORT_FILE_SELECTOR_DESC"), 50, 60, 300, 60, this,
+        ATSwingUtils.getLabel(i18nControl.getMessage("IMPORT_FILE_SELECTOR_DESC"), 50, 60, 300, 60, this,
             ATSwingUtils.FONT_NORMAL);
 
         ATSwingUtils.getLabel("Selected type:", 50, 95, 300, 60, this, ATSwingUtils.FONT_NORMAL_BOLD);
@@ -97,30 +97,31 @@ public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
         label_type = ATSwingUtils.getLabel(this.deviceDataHandler.selected_file_context.getFullFileDescription(), 50,
             115, 300, 60, this, ATSwingUtils.FONT_NORMAL);
 
-        ATSwingUtils.getLabel(this.m_ic.getMessage("SELECT_FILE"), 50, 150, 300, 60, this,
+        ATSwingUtils.getLabel(this.i18nControl.getMessage("SELECT_FILE"), 50, 150, 300, 60, this,
             ATSwingUtils.FONT_NORMAL_BOLD);
 
         tf_file = ATSwingUtils.getTextField("", 50, 195, 300, 25, this);
         tf_file.setEnabled(false);
 
         /* JButton b = */
-        ATSwingUtils.getButton(m_ic.getMessage("BROWSE"), 250, 170, 100, 20, this, ATSwingUtils.FONT_NORMAL, null,
-            "browse", this, m_da);
+        ATSwingUtils.getButton(i18nControl.getMessage("BROWSE"), 250, 170, 100, 20, this, ATSwingUtils.FONT_NORMAL,
+            null, "browse", this, dataAccess);
 
-        this.helpButton = ATSwingUtils.createHelpIconByBounds(50, 250, 60, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
+        this.helpButton = ATSwingUtils.createHelpIconByBounds(50, 250, 60, 25, this, ATSwingUtils.FONT_NORMAL,
+            dataAccess);
         // helpButton.setFont(normal);
         this.add(helpButton);
 
-        ATSwingUtils
-                .getButton("", 115, 250, 60, 25, this, ATSwingUtils.FONT_NORMAL, "cancel.png", "cancel", this, m_da);
+        ATSwingUtils.getButton("", 115, 250, 60, 25, this, ATSwingUtils.FONT_NORMAL, "cancel.png", "cancel", this,
+            dataAccess);
 
         b_prev = ATSwingUtils.getButton("", 220, 250, 60, 25, this, ATSwingUtils.FONT_NORMAL, "nav_left_blue.png",
-            "prev", this, m_da);
+            "prev", this, dataAccess);
         b_prev.setEnabled(false);
         b_prev.setVisible(false);
 
         b_next = ATSwingUtils.getButton("", 290, 250, 60, 25, this, ATSwingUtils.FONT_NORMAL, "nav_right_blue.png",
-            "next", this, m_da);
+            "next", this, dataAccess);
         b_next.setEnabled(false);
 
         this.setBounds(0, 0, 400, 320);
@@ -134,7 +135,7 @@ public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
             b_prev.setVisible(true);
         }
 
-        m_da.enableHelp(this);
+        dataAccess.enableHelp(this);
 
     }
 
@@ -178,23 +179,23 @@ public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
             else
             {
                 this.dispose();
-                m_da.removeComponent(this);
+                dataAccess.removeComponent(this);
 
                 if (downloadSupportType == DownloadSupportType.DownloadDataFile)
                 {
-                    new DeviceDisplayDataDialog(m_da.getMainParent(), m_da, deviceDataHandler);
+                    new DeviceDisplayDataDialog(dataAccess.getMainParent(), dataAccess, deviceDataHandler);
                 }
                 else
                 {
-                    new DeviceDisplayConfigDialog(m_da.getMainParent(), m_da, deviceDataHandler);
+                    new DeviceDisplayConfigDialog(dataAccess.getMainParent(), dataAccess, deviceDataHandler);
                 }
             }
         }
         else if (action.equals("prev"))
         {
-            m_da.removeComponent(this);
+            dataAccess.removeComponent(this);
             this.dispose();
-            new MultipleFileSelectorDialog(m_da, this.dialogParent, deviceDataHandler, downloadSupportType);
+            new MultipleFileSelectorDialog(dataAccess, this.dialogParent, deviceDataHandler, downloadSupportType);
         }
     }
 

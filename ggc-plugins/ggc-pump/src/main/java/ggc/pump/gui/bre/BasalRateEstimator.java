@@ -26,6 +26,7 @@ import ggc.pump.util.DataAccessPump;
  */
 public class BasalRateEstimator extends JDialog implements ActionListener
 {
+
     private static final long serialVersionUID = 3285623806907044947L;
 
     /**
@@ -53,6 +54,7 @@ public class BasalRateEstimator extends JDialog implements ActionListener
      */
     Hashtable<String, BREGraphsAbstract> m_graphs;
 
+
     /**
      * Instantiates a new basal rate estimator.
      */
@@ -65,6 +67,7 @@ public class BasalRateEstimator extends JDialog implements ActionListener
 
         this.setSize(900, 550);
     }
+
 
     private void init()
     {
@@ -216,6 +219,7 @@ public class BasalRateEstimator extends JDialog implements ActionListener
      */
     public static final int GRAPH_BASALS = 5;
 
+
     private JPanel createPanelGraph(int type)
     {
 
@@ -259,25 +263,25 @@ public class BasalRateEstimator extends JDialog implements ActionListener
      * ATSwingUtils.FONT_BIG_BOLD);
      * ATSwingUtils.getLabel("List of BGs:", 50, 85, 200, 25, panel,
      * ATSwingUtils.FONT_NORMAL_BOLD);
-     * lst_bgs = new JList();
+     * lst_bgs = new CheckBoxList();
      * JScrollPane scr = new JScrollPane(lst_bgs);
      * scr.setBounds(40, 110, 160, 100);
      * panel.add(scr);
      * ATSwingUtils.getLabel("List of Old Basals:", 220, 85, 200, 25, panel,
      * ATSwingUtils.FONT_NORMAL_BOLD);
-     * this.lst_basals_old = new JList();
+     * this.lst_basals_old = new CheckBoxList();
      * scr = new JScrollPane(this.lst_basals_old);
      * scr.setBounds(210, 110, 160, 100);
      * panel.add(scr);
      * ATSwingUtils.getLabel("List of Ratios:", 390, 85, 200, 25, panel,
      * ATSwingUtils.FONT_NORMAL_BOLD);
-     * this.lst_ratios = new JList();
+     * this.lst_ratios = new CheckBoxList();
      * scr = new JScrollPane(this.lst_ratios);
      * scr.setBounds(380, 110, 160, 100);
      * panel.add(scr);
      * ATSwingUtils.getLabel("List of New Basals:", 50, 280, 200, 25, panel,
      * ATSwingUtils.FONT_NORMAL_BOLD);
-     * this.lst_basals_new = new JList();
+     * this.lst_basals_new = new CheckBoxList();
      * scr = new JScrollPane(this.lst_basals_new);
      * scr.setBounds(40, 310, 160, 240);
      * panel.add(scr);
@@ -321,25 +325,25 @@ public class BasalRateEstimator extends JDialog implements ActionListener
      * ATSwingUtils.FONT_BIG_BOLD);
      * ATSwingUtils.getLabel("List of BGs:", 50, 85, 200, 25, panel,
      * ATSwingUtils.FONT_NORMAL_BOLD);
-     * lst_bgs = new JList();
+     * lst_bgs = new CheckBoxList();
      * JScrollPane scr = new JScrollPane(lst_bgs);
      * scr.setBounds(40, 110, 160, 160);
      * panel.add(scr);
      * ATSwingUtils.getLabel("List of Old Basals:", 220, 85, 200, 25, panel,
      * ATSwingUtils.FONT_NORMAL_BOLD);
-     * this.lst_basals_old = new JList();
+     * this.lst_basals_old = new CheckBoxList();
      * scr = new JScrollPane(this.lst_basals_old);
      * scr.setBounds(210, 110, 160, 160);
      * panel.add(scr);
      * ATSwingUtils.getLabel("List of Ratios:", 390, 85, 200, 25, panel,
      * ATSwingUtils.FONT_NORMAL_BOLD);
-     * this.lst_ratios = new JList();
+     * this.lst_ratios = new CheckBoxList();
      * scr = new JScrollPane(this.lst_ratios);
      * scr.setBounds(380, 110, 160, 160);
      * panel.add(scr);
      * ATSwingUtils.getLabel("List of New Basals:", 50, 280, 200, 25, panel,
      * ATSwingUtils.FONT_NORMAL_BOLD);
-     * this.lst_basals_new = new JList();
+     * this.lst_basals_new = new CheckBoxList();
      * scr = new JScrollPane(this.lst_basals_new);
      * scr.setBounds(40, 310, 160, 240);
      * panel.add(scr);
@@ -356,6 +360,7 @@ public class BasalRateEstimator extends JDialog implements ActionListener
      * panel.add(panel_graph);
      * bre_algorithm = new BasalRateEstimatorAlgorithm(gv);
      */
+
 
     /*
      * ATSwingUtils.getLabel("Date of display: ", 570, 120, 200, 25, panel,
@@ -415,6 +420,7 @@ public class BasalRateEstimator extends JDialog implements ActionListener
         bre_algorithm.setData(coll);
     }
 
+
     private void refreshList(int type, ArrayList<?> lst)
     {
         DefaultListModel listModel = new DefaultListModel();
@@ -454,6 +460,7 @@ public class BasalRateEstimator extends JDialog implements ActionListener
 
     }
 
+
     /**
      * The main method.
      * 
@@ -466,6 +473,7 @@ public class BasalRateEstimator extends JDialog implements ActionListener
         bre.setVisible(true);
 
     }
+
 
     /** 
      * actionPerformed

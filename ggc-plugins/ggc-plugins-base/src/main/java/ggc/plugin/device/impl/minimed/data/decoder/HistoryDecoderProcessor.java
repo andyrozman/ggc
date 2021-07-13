@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.minimed.data.MinimedDataPage;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 import ggc.plugin.output.OutputWriter;
 
 /**
@@ -47,7 +47,7 @@ public class HistoryDecoderProcessor
 
     public boolean processPage(MinimedDataPage dataPage, OutputWriter outputWriter) throws PlugInBaseException
     {
-        MinimedHistoryDecoder decoder = MinimedUtil.getDecoder(dataPage.getTargetType(), dataPage.commandType);
+        MinimedHistoryDecoder decoder = MedtronicUtil.getDecoder(dataPage.getTargetType(), dataPage.commandType);
 
         LOG.debug("Process Page: targetType={}, commandType={}", dataPage.getTargetType(), dataPage.commandType);
 

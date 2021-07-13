@@ -1,8 +1,9 @@
 package ggc.plugin.output;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.util.LogEntryType;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -100,12 +101,6 @@ public interface OutputWriter
 
 
     /**
-     * Interrupt Communication
-     */
-    void interruptCommunication();
-
-
-    /**
      * User can stop readings from his side (if supported)
      */
     void setReadingStop();
@@ -125,7 +120,7 @@ public interface OutputWriter
      * 
      * @param status status of device 
      */
-    public abstract void setStatus(int status);
+    void setStatus(int status);
 
 
     /**
@@ -133,7 +128,7 @@ public interface OutputWriter
      * 
      * @return status of device
      */
-    public abstract int getStatus();
+    int getStatus();
 
 
     /**
@@ -144,7 +139,7 @@ public interface OutputWriter
      * 
      * @param di DeviceIdentification object
      */
-    public abstract void setDeviceIdentification(DeviceIdentification di);
+    void setDeviceIdentification(DeviceIdentification di);
 
 
     /**
@@ -168,7 +163,7 @@ public interface OutputWriter
      * Get Sub Status
      * @return Sub status String
      */
-    public abstract String getSubStatus();
+    String getSubStatus();
 
 
     /**
@@ -189,20 +184,20 @@ public interface OutputWriter
     /**
      * Write log entry
      * 
-     * @param entry_type
+     * @param entryType
      * @param message
      */
-    void writeLog(int entry_type, String message);
+    void writeLog(LogEntryType entryType, String message);
 
 
     /**
      * Write log entry
      * 
-     * @param entry_type
+     * @param entryType
      * @param message
      * @param ex
      */
-    void writeLog(int entry_type, String message, Exception ex);
+    void writeLog(LogEntryType entryType, String message, Exception ex);
 
 
     /**
@@ -211,7 +206,7 @@ public interface OutputWriter
      * 
      * @param value
      */
-    public abstract void canOldDataReadingBeInitiated(boolean value);
+    void canOldDataReadingBeInitiated(boolean value);
 
 
     /**
@@ -239,11 +234,11 @@ public interface OutputWriter
 
 
     /**
-     * Add Error Message
+     * Add Error Message (in gui this should enable error button)
      * 
      * @param msg
      */
-    void addErrorMessage(String msg);
+    void addErrorMessage(ErrorMessageDto msg);
 
 
     /**
@@ -259,6 +254,15 @@ public interface OutputWriter
      * 
      * @return
      */
-    ArrayList<String> getErrorMessages();
+    List<ErrorMessageDto> getErrorMessages();
+
+
+    /**
+     * Special Note (noteType = 1, text is displayed on label, 2: text is displayed in
+     * experimental window)
+     * @param noteType note type
+     * @param note
+     */
+    void setSpecialNote(int noteType, String note);
 
 }

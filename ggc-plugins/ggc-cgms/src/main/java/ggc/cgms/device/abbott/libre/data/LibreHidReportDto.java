@@ -10,6 +10,7 @@ import com.atech.utils.data.BitUtils;
 import ggc.cgms.device.abbott.libre.util.LibreUtil;
 import ggc.plugin.device.PlugInBaseException;
 
+// TODO is this real class
 public class LibreHidReportDto
 {
 

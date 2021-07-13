@@ -1,5 +1,8 @@
 package ggc.pump.device.animas.impl.data.dto;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ggc.plugin.device.impl.animas.data.AnimasDeviceReplyPacket;
 import ggc.plugin.device.impl.animas.util.AnimasUtils;
 import ggc.pump.device.animas.impl.converter.AnimasBaseDataV2Converter;
@@ -34,9 +37,12 @@ import ggc.pump.util.DataAccessPump;
 public class BolusExtEntry
 {
 
+    private static final Logger LOG = LoggerFactory.getLogger(BolusExtEntry.class);
+
     public short syncRecordId;
     public short i2C;
     public int carbs;
+    public int bgOriginal;
     public int bg;
     public int isf;
     public int bgTarget;
@@ -47,16 +53,13 @@ public class BolusExtEntry
     public float iobDuration;
     public BolusEntry bolusEntry;
 
+    boolean hasBg = false;
+
     static DataAccessPump dataAccessPump = DataAccessPump.getInstance();
 
 
     public void createPreparedData(AnimasDeviceReplyPacket packet, AnimasBaseDataV2Converter conv)
     {
-        if (this.bg > 0)
-        {
-            conv.writeDataInternal("AdditionalData_BG", bolusEntry.dateTime, //
-                AnimasUtils.getDecimalValueString(this.bg, 4, 2));
-        }
 
         if (this.carbs > 0)
         {
@@ -65,6 +68,15 @@ public class BolusExtEntry
         }
 
         float bolus = this.bolusEntry.getValue();
+        // float bgEntry = 0.0f;
+
+        hasBg = determineBg();
+
+        if (hasBg)
+        {
+            bg = bgOriginal;
+        }
+
         float bgCorrIns = calculateBGCorrectionInsulin();
 
         String bolusWizard = "BG=" + this.bg + ";CH=" + this.carbs + ";CH_UNIT=g" + ";CH_INS_RATIO=" + this.i2C
@@ -74,8 +86,39 @@ public class BolusExtEntry
                 + AnimasUtils.getDecimalValueString(bolus - bgCorrIns, 4, 2) + ";UNABSORBED_INSULIN="
                 + AnimasUtils.getDecimalValueString(this.iobValue, 4, 3);
 
+        if (this.bg > 0)
+        {
+            conv.writeDataInternal("AdditionalData_BG", bolusEntry.dateTime, //
+                AnimasUtils.getDecimalValueString(this.bg, 4, 2));
+        }
+
         conv.writeDataInternal("Event_BolusWizard", bolusEntry.dateTime, bolusWizard);
 
+        // LOG.debug(toStringFull());
+    }
+
+
+    private boolean determineBg()
+    {
+        if (this.bgOriginal > 0)
+        {
+            if (bolusEntry.bolusTypeAnimas == 4)
+            {
+                return true;
+            }
+            else if ((bolusEntry.bolusTypeAnimas == 5) || (bolusEntry.bolusTypeAnimas == 6))
+            {
+                return this.bgCorrection;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
     }
 
 
@@ -87,6 +130,10 @@ public class BolusExtEntry
         }
         else
         {
+            if (!hasBg)
+            {
+                return 0.0f;
+            }
 
             float bgLimit = this.bg - this.bgTarget;
 
@@ -96,6 +143,8 @@ public class BolusExtEntry
             }
             else
             {
+                checkDataAccessSet();
+
                 float corr = bgLimit / (this.isf * 1.0f);
                 return dataAccessPump
                         .getFloatValueFromString(dataAccessPump.getDecimalHandler().getDecimalNumberAsString(corr, 2));
@@ -105,23 +154,33 @@ public class BolusExtEntry
     }
 
 
+    private void checkDataAccessSet()
+    {
+        if (dataAccessPump == null)
+        {
+            dataAccessPump = DataAccessPump.getInstance();
+        }
+    }
+
+
     public String toStringFull()
     {
         return String.format(
-            "BolusExtEntry [syncRecordId=%s, i2C=%s, carbs=%s, bg=%s, isf=%s"
+            "BolusExtEntry [syncRecordId=%s, i2C=%s, carbs=%s, bg=%s (%s), isf=%s"
                     + ", bgTarget=%s, bgDelta=%s, iobEnabled=%s, iobValue=%s, bgCorrection=%s, IOBDuaration=%s,"
                     + "BolusEntry=%s]",
-            syncRecordId, i2C, carbs, bg, isf, bgTarget, bgDelta, iobEnabled, iobValue, bgCorrection, iobDuration,
-            bolusEntry.toString());
+            syncRecordId, i2C, carbs, bg, bgOriginal, isf, bgTarget, bgDelta, iobEnabled, iobValue, bgCorrection,
+            iobDuration, bolusEntry.toString());
     }
 
 
     public String toString()
     {
         return String.format(
-            "BolusExtEntry [syncRecordId=%s, i2C=%s, carbs=%s, bg=%s, isf=%s"
+            "BolusExtEntry [syncRecordId=%s, i2C=%s, carbs=%s, bg=%s (%s), isf=%s"
                     + ", bgTarget=%s, bgDelta=%s, iobEnabled=%s, iobValue=%s, bgCorrection=%s, IOBDuaration=%s" + "]",
-            syncRecordId, i2C, carbs, bg, isf, bgTarget, bgDelta, iobEnabled, iobValue, bgCorrection, iobDuration);
+            syncRecordId, i2C, carbs, bg, bgOriginal, isf, bgTarget, bgDelta, iobEnabled, iobValue, bgCorrection,
+            iobDuration);
     }
 
 }

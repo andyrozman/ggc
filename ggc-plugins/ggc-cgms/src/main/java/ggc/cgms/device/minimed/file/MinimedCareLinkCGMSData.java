@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import ggc.cgms.util.DataAccessCGMS;
 import ggc.plugin.device.impl.minimed.file.MinimedCareLink;
 import ggc.plugin.device.impl.minimed.file.MinimedCareLinkData;
+import ggc.plugin.output.ErrorMessageDto;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -109,57 +110,79 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
          * DONE
          */
 
-        if (this.raw_type.equals("GlucoseSensorData") || // glucose sensor data
-                this.raw_type.equals("GlucoseSensorDataLow") || // data low
-                this.raw_type.equals("SensorWeakSignal") || // warning - sensor
-                                                            // weak signal
-        this.raw_type.equals("AlarmSensor") || // alarm
+        if (this.raw_type.equals("GlucoseSensorData")
+                || // glucose sensor data
+                this.raw_type.equals("GlucoseSensorDataLow")
+                || // data low
+                this.raw_type.equals("SensorWeakSignal")
+                || // warning - sensor
+                   // weak signal
+                this.raw_type.equals("AlarmSensor")
+                || // alarm
 
-        // this.raw_type.equals("SensorSync") || // sensor sync - ignore
-        this.raw_type.equals("SensorCalFactor") || // unknown
-                this.raw_type.equals("SensorCal") || // unknown
-                this.raw_type.equals("SensorStatus") || // status - unknown
-                this.raw_type.equals("SensorPacket") || // packets from sensor
-                this.raw_type.equals("SensorError") || // sensor errors
+                // this.raw_type.equals("SensorSync") || // sensor sync - ignore
+                this.raw_type.equals("SensorCalFactor")
+                || // unknown
+                this.raw_type.equals("SensorCal")
+                || // unknown
+                this.raw_type.equals("SensorStatus")
+                || // status - unknown
+                this.raw_type.equals("SensorPacket")
+                || // packets from sensor
+                this.raw_type.equals("SensorError")
+                || // sensor errors
 
-        this.raw_type.equals("BGTherasense") || // meter entry
+                this.raw_type.equals("BGTherasense")
+                || // meter entry
 
-        // this.raw_type.equals("SensorTimestamp") || // timstamp
-        // this.raw_type.equals("CalBGForGH") || // meter - ignore
-        // this.raw_type.equals("CalBGForPH") || // meter - ignore
-        // this.raw_type.equals("ChangeBatteryEnable") || // battery
-        // change - ignore
-        // this.raw_type.equals("ChangeBatteryEnableGH") || // battery
-        // change - ignore
+                // this.raw_type.equals("SensorTimestamp") || // timstamp
+                // this.raw_type.equals("CalBGForGH") || // meter - ignore
+                // this.raw_type.equals("CalBGForPH") || // meter - ignore
+                // this.raw_type.equals("ChangeBatteryEnable") || // battery
+                // change - ignore
+                // this.raw_type.equals("ChangeBatteryEnableGH") || // battery
+                // change - ignore
 
-        // config
-        this.raw_type.equals("ChangeSensorGlucoseLimitProfile") || // config
+                // config
+                this.raw_type.equals("ChangeSensorGlucoseLimitProfile")
+                || // config
                 this.raw_type.equals("ChangeSensorAlarmSilenceConfig")
-                || this.raw_type.equals("ChangeSensorGlucoseLimitPattern") ||
+                || this.raw_type.equals("ChangeSensorGlucoseLimitPattern")
+                ||
                 // this.raw_type.equals("ChangeSensorGlucoseLimitPatternSetup")
                 // ||
                 // this.raw_type.equals("ChangeSensorSetup2") ||
-        this.raw_type.equals("ChangeSensorSetupConfig2") ||
+                this.raw_type.equals("ChangeSensorSetupConfig2")
+                ||
 
-        // current ?
-        // this.raw_type.equals("CurrentSensorGlucoseLimitProfile") ||
-        this.raw_type.equals("CurrentSensorHighGlucoseSnoozeTime")
-                || this.raw_type.equals("CurrentSensorPredictiveAlertProfile") ||
+                // current ?
+                // this.raw_type.equals("CurrentSensorGlucoseLimitProfile") ||
+                this.raw_type.equals("CurrentSensorHighGlucoseSnoozeTime")
+                || this.raw_type.equals("CurrentSensorPredictiveAlertProfile")
+                ||
                 // this.raw_type.equals("CurrentSensorGlucoseLimitPattern") ||
                 this.raw_type.equals("CurrentSensorPredictiveAlertPattern")
-                || this.raw_type.equals("CurrentTimeDisplayFormat") || this.raw_type.equals("CurrentBeepVolume")
-                || this.raw_type.equals("CurrentChildBlockEnable") || this.raw_type.equals("CurrentKeypadLockedEnable")
-                || this.raw_type.equals("CurrentAlarmClockEnable") || this.raw_type.equals("CurrentAlarmNotifyMode") ||
+                || this.raw_type.equals("CurrentTimeDisplayFormat")
+                || this.raw_type.equals("CurrentBeepVolume")
+                || this.raw_type.equals("CurrentChildBlockEnable")
+                || this.raw_type.equals("CurrentKeypadLockedEnable")
+                || this.raw_type.equals("CurrentAlarmClockEnable")
+                || this.raw_type.equals("CurrentAlarmNotifyMode")
+                ||
                 // this.raw_type.equals("CurrentBatteryStatus") ||
                 // this.raw_type.equals("CurrentErrorStatus") ||
                 // this.raw_type.equals("CurrentPumpStatus") ||
-        this.raw_type.equals("CurrentPumpModelNumber") || this.raw_type.equals("CurrentDisplayLanguage")
-                || this.raw_type.equals("CurrentParadigmLinkEnable") ||
+                this.raw_type.equals("CurrentPumpModelNumber")
+                || this.raw_type.equals("CurrentDisplayLanguage")
+                || this.raw_type.equals("CurrentParadigmLinkEnable")
+                ||
                 // this.raw_type.equals("CurrentSavedSettingsTime") ||
                 // this.raw_type.equals("CurrentHistoryPageNumber") ||
-        this.raw_type.equals("CurrentCarbUnits") ||
+                this.raw_type.equals("CurrentCarbUnits")
+                ||
                 // this.raw_type.equals("CurrentGlucoseHistoryPageNumber") ||
-                this.raw_type.equals("CurrentSensorCalFactor") || this.raw_type.equals("CurrentSensorCalReminderEnable")
+                this.raw_type.equals("CurrentSensorCalFactor")
+                || this.raw_type.equals("CurrentSensorCalReminderEnable")
                 || this.raw_type.equals("CurrentSensorEnable") || this.raw_type.equals("CurrentSensorCalReminderTime")
                 || this.raw_type.equals("CurrentSensorAlarmSnoozeTime")
                 || this.raw_type.equals("CurrentSensorLowGlucoseSnoozeTime")
@@ -170,10 +193,10 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
                 || this.raw_type.equals("CurrentSensorRateOfChangeAlertConfig")
                 || this.raw_type.equals("CurrentSensorAreaUnderCurveConfig") ||
 
-        // JournalEntryPumpLowBattery
+                // JournalEntryPumpLowBattery
 
-        // ignore
-        this.raw_type.equals("CurrentParadigmLinkID") // ignore
+                // ignore
+                this.raw_type.equals("CurrentParadigmLinkID") // ignore
 
         )
             return true;
@@ -273,8 +296,8 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
             {
                 if (this.isig_set)
                 {
-                    v = String.format("VALUE=%s;ISIG=%s", v,
-                        m_da.getDecimalHandler().getDecimalNumberAsString(ISIG, 2));
+                    v = String
+                            .format("VALUE=%s;ISIG=%s", v, m_da.getDecimalHandler().getDecimalNumberAsString(ISIG, 2));
                 }
 
                 this.mcl.dvw.writeObject(this.raw_type, this.mcl.mm_date.getAtechDate(date, time), v);
@@ -358,7 +381,7 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
             {
                 String a = "Unsupported alarm mapping: " + s + "\n" + this.full_data_line;
 
-                this.mcl.output_writer.addErrorMessage(a);
+                this.mcl.output_writer.addErrorMessage(new ErrorMessageDto(a));
                 LOG.error(a);
                 return null;
             }
@@ -429,7 +452,7 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
             {
                 String a = "Unsupported error mapping: " + this.processed_value + "\n" + this.full_data_line;
 
-                this.mcl.output_writer.addErrorMessage(a);
+                this.mcl.output_writer.addErrorMessage(new ErrorMessageDto(a));
                 LOG.error(a);
                 return null;
             }

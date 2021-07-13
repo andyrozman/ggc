@@ -1,5 +1,6 @@
 package ggc.pump.data;
 
+import com.atech.data.NotImplementedException;
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.CodeEnumWithTranslation;
 
@@ -173,6 +174,12 @@ public class PumpWriterValues extends DeviceTempValues
         }
 
         return null;
+    }
+
+    @Override
+    public OutputWriterData getData(ATechDate dt, Integer _sub_type, String _value, String source) {
+        throw new NotImplementedException(this.getClass(), "getData(ATechDate, Integer, String, String)");
+        //return null;
     }
 
 }

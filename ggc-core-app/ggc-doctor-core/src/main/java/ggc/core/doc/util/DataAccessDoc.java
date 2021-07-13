@@ -3,7 +3,10 @@ package ggc.core.doc.util;
 import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.*;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Hashtable;
+import java.util.Properties;
 
 import javax.swing.*;
 
@@ -513,12 +516,9 @@ public class DataAccessDoc extends DataAccess
         brc1.addNodeChild(new SettingsColorScheme(this.m_i18n));
         brc_full.addNodeChild(brc1);
 
-        // for(int i=0; i<)
 
-        for (Enumeration<String> en = this.plugins.keys(); en.hasMoreElements();)
+        for (PlugInClient pic : this.plugins.values())
         {
-            PlugInClient pic = this.plugins.get(en.nextElement());
-
             BackupRestoreCollection brc = pic.getBackupObjects();
 
             if (brc != null)

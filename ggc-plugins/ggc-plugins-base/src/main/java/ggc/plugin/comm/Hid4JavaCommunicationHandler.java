@@ -5,9 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-import org.hid4java.HidDevice;
-import org.hid4java.HidManager;
-import org.hid4java.HidServices;
+import org.hid4java.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,17 +35,20 @@ public class Hid4JavaCommunicationHandler extends SerialCommunicationAbstract
     {
         LOG.debug("connectAndInitDevice - USB/Hid");
 
-        // 0.5
-        // HidServicesSpecification hidServicesSpecification = new
-        // HidServicesSpecification();
-        // hidServicesSpecification.setAutoShutdown(true);
-        // hidServicesSpecification.setScanInterval(500);
-        // hidServicesSpecification.setPauseInterval(5000);
-        // hidServicesSpecification.setScanMode(ScanMode.SCAN_AT_FIXED_INTERVAL_WITH_PAUSE_AFTER_WRITE);
+        HidServicesSpecification hidServicesSpecification = new HidServicesSpecification();
+
+        //if (System.getProperty("os.name").toLowerCase().contains("windows"))
+        {
+            // disable autoscan on windows
+            hidServicesSpecification.setAutoShutdown(true);
+            hidServicesSpecification.setScanInterval(500);
+            hidServicesSpecification.setPauseInterval(5000);
+            hidServicesSpecification.setScanMode(ScanMode.SCAN_AT_FIXED_INTERVAL_WITH_PAUSE_AFTER_WRITE);
+        }
 
         try
         {
-            hidServices = HidManager.getHidServices();
+            hidServices = HidManager.getHidServices(hidServicesSpecification);
         }
         catch (Exception ex)
         {
@@ -73,10 +74,11 @@ public class Hid4JavaCommunicationHandler extends SerialCommunicationAbstract
         // 0.4.x
         HidDevice selHidDeviceInfo = null;
 
+        StringBuilder stringBuilder = new StringBuilder("List of found devices:");
         // Provide a list of attached devices
         for (HidDevice hidDeviceInfo : hidServices.getAttachedHidDevices())
         {
-            LOG.debug("Attached USB Device: " + hidDeviceInfo);
+            stringBuilder.append("\n    " + hidDeviceInfo);
             if (isCorrectDevice(hidDeviceInfo.getVendorId(), hidDeviceInfo.getProductId()))
             {
                 selHidDeviceInfo = hidDeviceInfo;
@@ -85,6 +87,7 @@ public class Hid4JavaCommunicationHandler extends SerialCommunicationAbstract
 
         if (selHidDeviceInfo == null)
         {
+            LOG.debug("{}", stringBuilder.toString());
             throw new PlugInBaseException(PlugInExceptionType.DeviceNotFound);
         }
         else
@@ -96,8 +99,7 @@ public class Hid4JavaCommunicationHandler extends SerialCommunicationAbstract
 
         if (!hidDevice.isOpen())
         {
-            LOG.debug("Device was not opened, so we opened it.");
-            hidDevice.open();
+            LOG.debug("Device was not opened, so we opened it. opened={}", hidDevice.open());
         }
         else
         {
@@ -322,21 +324,6 @@ public class Hid4JavaCommunicationHandler extends SerialCommunicationAbstract
 
         Set<USBDevice> list = new HashSet<USBDevice>();
 
-        // FIXME
-        // Provide a list of attached devices
-        // 0.3.1 remove
-        // for (HidDeviceInfo hidDeviceInfo :
-        // hidServices.getAttachedHidDevices())
-        // {
-        // USBDevice device = new
-        // USBDevice(hidDeviceInfo.getProductString().toString(),
-        // hidDeviceInfo.getVendorId(),
-        // hidDeviceInfo.getProductId());
-        //
-        // list.add(device);
-        // }
-
-        // 0.4.x
         for (HidDevice hidDeviceInfo : hidServices.getAttachedHidDevices())
         {
             USBDevice device = new USBDevice(hidDeviceInfo.getProduct(), hidDeviceInfo.getVendorId(),

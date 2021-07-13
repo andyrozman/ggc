@@ -13,7 +13,7 @@ import ggc.plugin.data.DeviceValueConfigEntry;
 import ggc.plugin.device.impl.minimed.data.MinimedCommandReply;
 import ggc.plugin.device.impl.minimed.enums.MinimedCommandType;
 import ggc.plugin.device.impl.minimed.enums.MinimedDeviceType;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 import ggc.pump.data.defs.PumpBaseType;
 import ggc.pump.data.defs.PumpConfigurationGroup;
 import ggc.pump.util.DataAccessPump;
@@ -53,8 +53,8 @@ public class Minimed511PumpDataConverter extends MinimedPumpDataConverterAbstrac
     public Minimed511PumpDataConverter(DataAccessPump dataAccess)
     {
         super(dataAccess);
-        this.bitUtils = MinimedUtil.getBitUtils();
-        this.outputWriter = MinimedUtil.getOutputWriter();
+        this.bitUtils = MedtronicUtil.getBitUtils();
+        this.outputWriter = MedtronicUtil.getOutputWriter();
     }
 
 
@@ -159,7 +159,7 @@ public class Minimed511PumpDataConverter extends MinimedPumpDataConverterAbstrac
 
     public void refreshOutputWriter()
     {
-        this.outputWriter = MinimedUtil.getOutputWriter();
+        this.outputWriter = MedtronicUtil.getOutputWriter();
     }
 
 
@@ -175,14 +175,14 @@ public class Minimed511PumpDataConverter extends MinimedPumpDataConverterAbstrac
 
         // int i = rd[1];
 
-        if (rd[0] == 4)
+        if (rd[1] == 4)
         {
             writeSetting("PCFG_ALARM_MODE", getMessage("PCFG_ALARM_MODE_SILENT"), PumpConfigurationGroup.Sound);
         }
         else
         {
             writeSetting("PCFG_ALARM_MODE", getMessage("PCFG_ALARM_MODE_NORMAL"), PumpConfigurationGroup.Sound);
-            writeSetting("PCFG_ALARM_BEEP_VOLUME", "" + rd[0], PumpConfigurationGroup.Sound);
+            writeSetting("PCFG_ALARM_BEEP_VOLUME", "" + rd[1], PumpConfigurationGroup.Sound);
         }
 
         writeSetting("PCFG_AUDIO_BOLUS_ENABLED", parseResultEnable(rd[2]), PumpConfigurationGroup.Bolus);
@@ -201,7 +201,7 @@ public class Minimed511PumpDataConverter extends MinimedPumpDataConverterAbstrac
 
         ClockModeType clockModeType = ClockModeType.getByCode(rd[getSettingIndexTimeDisplayFormat()], true);
 
-        MinimedUtil.setClockMode(clockModeType);
+        MedtronicUtil.setClockMode(clockModeType);
 
         writeSetting("CFG_BASE_CLOCK_MODE", clockModeType.getTranslation(), PumpConfigurationGroup.General);
         writeSetting("PCFG_INSULIN_CONCENTRATION", "" + (rd[9] != 0 ? 50 : 100), PumpConfigurationGroup.Insulin);
@@ -408,7 +408,7 @@ public class Minimed511PumpDataConverter extends MinimedPumpDataConverterAbstrac
 
         GregorianCalendar gc;
 
-        if (MinimedUtil.getDeviceType() == MinimedDeviceType.Minimed_511)
+        if (MedtronicUtil.getDeviceType() == MinimedDeviceType.Minimed_511)
         {
             int year = rd[2];
 
@@ -511,6 +511,7 @@ public class Minimed511PumpDataConverter extends MinimedPumpDataConverterAbstrac
 
     protected void writeSetting(String key, String value, PumpConfigurationGroup group)
     {
+        //System.out.println("outputWriter: " + outputWriter + ", i18nControl: " + i18nControl);
         outputWriter.writeConfigurationData(new DeviceValueConfigEntry(i18nControl.getMessage(key), value, group));
 
         if (dataDebug)

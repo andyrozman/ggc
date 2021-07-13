@@ -1,6 +1,9 @@
 package ggc.core.data.defs;
 
-import java.util.HashMap;
+import java.util.Hashtable;
+
+import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.data.CodeEnumWithTranslation;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -27,47 +30,100 @@ import java.util.HashMap;
  *  Author:    Andy {andy@atech-software.com}
  */
 
-public enum Health
+public enum Health implements CodeEnumWithTranslation
 {
-    Null(0), //
-    Illness(1), //
-    Stress(2), //
-    HighSymptoms(3), //
-    LowSymptoms(4), //
-    Cycle(5), //
-    Alcohol(6), //
-
+    Undefined(0, "BASE_UNDEFINED"), //
+    Illness(1, "HEALTH_ILLNESS"), //
+    Stress(2, "HEALTH_STRESS"), //
+    HighSymptoms(3, "HEALTH_HIGH_SYMPTOMS"), //
+    LowSymptoms(4, "HEALTH_LOW_SYMPTOMS"), //
+    Cycle(5, "HEALTH_CYCLE"), //
+    Alcohol(6, "HEALTH_ALCOHOL"), //
+    Medication(7, "HEALTH_MEDICATION"), //
     ;
 
-    private int value;
-    private static HashMap<Integer, Health> map = new HashMap<Integer, Health>();
+
+    static Hashtable<String, Health> translationMapping = new Hashtable<String, Health>();
+    static Hashtable<Integer, Health> codeMapping = new Hashtable<Integer, Health>();
 
     static
     {
-        for (Health el : values())
+        for (Health pbt : values())
         {
-            map.put(el.getValue(), el);
+            codeMapping.put(pbt.code, pbt);
         }
     }
 
-    Health(int value)
+
+    public static void translateKeywords(I18nControlAbstract ic)
     {
-        this.value = value;
+        if (translated)
+            return;
+
+        for (Health pbt : values())
+        {
+            pbt.setTranslation(ic.getMessage(pbt.i18nKey));
+            translationMapping.put(pbt.getTranslation(), pbt);
+        }
+
+        translated = true;
     }
 
-    public int getValue()
+    int code;
+    String i18nKey;
+    String translation;
+    static boolean translated = false;
+
+
+    Health(int code, String i18nKey)
     {
-        return value;
+        this.code = code;
+        this.i18nKey = i18nKey;
     }
 
-    public void setValue(int value)
+
+    public String getTranslation()
     {
-        this.value = value;
+        return translation;
     }
 
-    public static Health getEnum(int value)
+
+    public void setTranslation(String translation)
     {
-        return map.get(value);
+        this.translation = translation;
+    }
+
+
+    public int getCode()
+    {
+        return code;
+    }
+
+
+    public String getI18nKey()
+    {
+        return i18nKey;
+    }
+
+
+    public String getName()
+    {
+        return this.name();
+    }
+
+
+    public static Health getByCode(int code)
+    {
+        if (codeMapping.containsKey(code))
+            return codeMapping.get(code);
+        else
+            return Health.Undefined;
+    }
+
+
+    public static Health[] getAllValues()
+    {
+        return values();
     }
 
 }

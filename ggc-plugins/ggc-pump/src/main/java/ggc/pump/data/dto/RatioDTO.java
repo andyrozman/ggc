@@ -36,6 +36,8 @@ import ggc.pump.util.DataAccessPump;
 public class RatioDTO
 {
 
+    public static I18nControlAbstract i18nControl;
+
     RatioType type;
     ATechDate time;
     int index;
@@ -151,7 +153,8 @@ public class RatioDTO
     {
         if (templateNoDeltaMain == null)
         {
-            I18nControlAbstract ic = DataAccessPump.getInstance().getI18nControlInstance();
+            I18nControlAbstract ic = i18nControl == null ? DataAccessPump.getInstance().getI18nControlInstance()
+                    : i18nControl;
 
             templateNoDeltaMain = ic.getMessage("CFG_BASE_FROM") + "=%s, " + ic.getMessage("CFG_BASE_AMOUNT")
                     + "=<ValueFormat>";

@@ -30,9 +30,6 @@
             <artifactId>ggc-core</artifactId>
         </dependency>
 
-        <!-- <dependency> <groupId>org.bidib.jbidib.org.qbang.rxtx</groupId> <artifactId>rxtxcomm</artifactId>
-            </dependency> -->
-
         <dependency>
             <groupId>com.atech-software</groupId>
             <artifactId>atech-tools</artifactId>
@@ -48,12 +45,6 @@
             <artifactId>ibm-compapi</artifactId>
         </dependency>
 
-        <!--
-        <dependency>
-            <groupId>com.neuronrobotics</groupId>
-            <artifactId>nrjavaserial</artifactId>
-        </dependency>
--->
         <dependency>
             <groupId>jaxen</groupId>
             <artifactId>jaxen</artifactId>
@@ -66,36 +57,32 @@
 
         <dependency>
             <groupId>com.neuronrobotics</groupId>
-            <artifactId>nrjavaserial-j15</artifactId>
+            <artifactId>nrjavaserial</artifactId>
         </dependency>
 
         <dependency>
             <groupId>net.java.dev.jna</groupId>
-            <artifactId>jna-j15</artifactId>
+            <artifactId>jna</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.hid4java</groupId>
-            <artifactId>hid4java-j15</artifactId>
+            <artifactId>hid4java</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.scream3r</groupId>
-        <artifactId>jssc</artifactId>
+            <artifactId>jssc</artifactId>
         </dependency>
-
-
 
         <dependency>
             <groupId>com.ibm.old.comapi</groupId>
             <artifactId>ibm-compapi</artifactId>
         </dependency>
 
-
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.1</version>
         </dependency>
 
     </dependencies>

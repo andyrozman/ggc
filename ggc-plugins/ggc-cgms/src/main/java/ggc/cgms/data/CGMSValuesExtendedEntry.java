@@ -7,13 +7,16 @@ import org.apache.commons.lang.StringUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.misc.statistics.StatisticsItem;
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.ATechDateType;
 
-import ggc.cgms.data.defs.extended.CGMSExtendedDataType;
+import ggc.cgms.data.defs.CGMSExtendedDataType;
 import ggc.cgms.util.CGMSUtil;
 import ggc.cgms.util.DataAccessCGMS;
+import ggc.core.data.defs.ExerciseStrength;
+import ggc.core.data.defs.Health;
 import ggc.core.db.hibernate.cgms.CGMSDataExtendedH;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.output.OutputWriterType;
@@ -49,23 +52,33 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
 
     public long id;
     public long datetime;
-    // public int type;
     private CGMSExtendedDataType type;
     public String value;
     public String extended;
     public int personId;
     public String comment;
-    public int subType = -1; // not stored directly
+    public Integer subType; // = -1; // not stored directly
 
 
-    // DataAccessCGMS dataAccess = DataAccessCGMS.getInstance();
+    static DataAccessCGMS dataAccess;
+    static I18nControlAbstract i18nControl;
 
     public CGMSValuesExtendedEntry()
     {
         super();
-        this.source = DataAccessCGMS.getInstance().getSourceDevice();
+        setDataAccess();
+        this.source = dataAccess.getSourceDevice();
     }
 
+
+    private void setDataAccess()
+    {
+        if (dataAccess==null)
+        {
+            dataAccess = DataAccessCGMS.getInstance();
+            i18nControl = dataAccess.getI18nControlInstance();
+        }
+    }
 
     /**
      * Constructor
@@ -75,7 +88,7 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
     public CGMSValuesExtendedEntry(CGMSDataExtendedH pdh)
     {
         super();
-
+        setDataAccess();
         loadDbData(pdh);
     }
 
@@ -85,7 +98,7 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
         this.id = pdh.getId();
 
         this.datetime = pdh.getDtInfo();
-        this.type = CGMSExtendedDataType.getEnum(pdh.getType());
+        this.type = CGMSExtendedDataType.getByCode(pdh.getType());
         this.value = pdh.getValue();
         loadExtended(pdh.getExtended());
         this.personId = pdh.getPersonId();
@@ -101,16 +114,17 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
                 return this.getDateTimeObject().getDateTimeString();
 
             case 1:
-                return CGMSUtil.getTranslatedString(this.type.getDescription());
+                return this.type.getTranslation();
 
             case 2:
                 return getDisplayValue();
 
             case 3:
-                return new Boolean(getChecked());
+                return this.getStatusType();
 
             case 4:
-                return this.getStatusType();
+                return getChecked();
+
 
             default:
                 return "";
@@ -118,32 +132,70 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
     }
 
 
-    private Object getDisplayValue()
+    private String getDisplayValue()
     {
-        // FIXME
         switch (type)
         {
-            case Insulin:
             case Carbs:
-                return this.value;
+                return getValueWithUnit("CFG_BASE_CARBOHYDRATE_UNIT_GRAMS_SHORT");
 
-            case Exercise:
-                // FIXME
-                return "N/I: " + this.subType;
+            case InsulinShortActing:
+            case InsulinLongActing:
+                return getValueWithUnit("CFG_BASE_UNIT_UNIT_SHORT");
 
             case Health:
-                // FIXME
-                return "N/I: " + this.subType;
+            {
+                if (subType==null)
+                {
+                    return this.getValue();
+                }
+                else
+                {
+                    Health health = Health.getByCode(subType);
+
+                    if ((StringUtils.isBlank(this.getValue())) || //
+                            ("null".equals(this.getValue())))
+                    {
+                        return health.getTranslation();
+                    }
+                    else
+                    {
+                        return String.format("%s - %s", health.getTranslation(), this.getValue());
+                    }
+                }
+            }
+
+            case Exercise:
+            {
+                ExerciseStrength exerciseStrength;
+
+                if (subType == null)
+                {
+                    exerciseStrength = ExerciseStrength.Undefined;
+                }
+                else
+                {
+                    exerciseStrength = ExerciseStrength.getByCode(subType);
+                }
+
+                return String.format(dataAccess.getI18nControlInstance().getMessage("EXERCISE_DISPLAY"), exerciseStrength.getTranslation(), this.getValue());
+            }
 
             case None:
             default:
-                break;
+                return this.getValue();
 
         }
 
-        // TODO Auto-generated method stub
-        return "N/I";
+
     }
+
+    private String getValueWithUnit(String unitKey)
+    {
+        return String.format("%s %s", this.getValue(), dataAccess.getI18nControlInstance().getMessage(unitKey));
+    }
+
+
 
 
     /**
@@ -152,7 +204,14 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
     @Override
     public void prepareEntry_v2()
     {
-        this.saveExtended();
+        this.extended = this.saveExtended();
+        this.personId = dataAccess.getCurrentUserId();
+    }
+
+    @Override
+    public Object getColumnValue(int index)
+    {
+        return getTableColumnValue(index);
     }
 
 
@@ -166,6 +225,12 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
     {
         return this.value;
     }
+
+    public void setValue(String value)
+    {
+        this.value = value;
+    }
+
 
     long old_id;
 
@@ -219,8 +284,9 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
 
     public String getSpecialId()
     {
-        return "CDE_" + this.datetime + "_" + this.type.getValue();
+        return "CDE_" + this.datetime + "_" + this.type.getCode();
     }
+
 
 
     public String getDataAsString()
@@ -232,7 +298,7 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
 
             case OutputWriterType.CONSOLE:
             case OutputWriterType.FILE:
-                return this.getDateTimeObject().getDateTimeString() + ":  Type=" + this.type.getDescription()
+                return this.getDateTimeObject().getDateTimeString() + ":  Type=" + this.type.getTranslation()
                         + ", Value=" + this.getValue();
 
             case OutputWriterType.GGC_FILE_EXPORT:
@@ -262,7 +328,7 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
 
     public String getObjectUniqueId()
     {
-        return "" + this.datetime;
+        return "" + this.datetime + "" + type.getCode();
     }
 
 
@@ -270,17 +336,23 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
     {
         Transaction tx = sess.beginTransaction();
 
-        CGMSDataExtendedH ext = new CGMSDataExtendedH();
+        CGMSDataExtendedH ch = new CGMSDataExtendedH();
 
-        this.saveDbData(ext);
+        ch.setDtInfo(this.datetime);
+        ch.setType(this.type.getCode());
+        ch.setValue(this.getValue());
+        ch.setExtended(extended = this.saveExtended());
+        ch.setPersonId(this.personId);
+        ch.setComment(this.comment);
+        ch.setChanged(System.currentTimeMillis());
 
-        Long _id = (Long) sess.save(ext);
+        Long _id = (Long) sess.save(ch);
         tx.commit();
 
-        ext.setId(_id.longValue());
-        this.id = _id.longValue();
+        ch.setId(_id.longValue());
+        //this.id = _id.longValue();
 
-        return "" + _id.longValue();
+        return "" + _id;
     }
 
 
@@ -289,7 +361,7 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
         this.personId = CGMSUtil.getCurrentUserId();
 
         ch.setDtInfo(this.datetime);
-        ch.setType(this.type.getValue());
+        ch.setType(this.type.getCode());
         ch.setValue(this.getValue());
         ch.setExtended(extended = this.saveExtended());
         ch.setPersonId(this.personId);
@@ -393,13 +465,6 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
 
 
     @Override
-    public Object getColumnValue(int index)
-    {
-        return "N/A";
-    }
-
-
-    @Override
     public long getDateTime()
     {
         return this.datetime;
@@ -416,7 +481,7 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
     @Override
     public ATechDate getDateTimeObject()
     {
-        return new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, this.datetime);
+        return new ATechDate(ATechDateType.DateAndTimeSec, this.datetime);
     }
 
 
@@ -455,7 +520,7 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
         ExtendedCGMSValueHandler handler = getExtendedHandler();
         Map<ExtendedCGMSValueType, String> data = new HashMap<ExtendedCGMSValueType, String>();
 
-        if (this.subType > 0)
+        if (this.subType != null && this.subType > 0)
         {
             handler.setExtendedValue(ExtendedCGMSValueType.SubType, "" + this.subType, data);
         }
@@ -483,4 +548,12 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
         this.type = type;
     }
 
+    @Override
+    public String toString()
+    {
+        return "CGMSValuesExtendedEntry [" +
+                "id=" + id + ", datetime=" + datetime + ", type=" + type + ", value=" + value +  //
+                ", extended=" + extended + ", personId=" + personId +
+                ", checked=" + checked + ", source=" + this.source + ", subType=" + this.subType + "]";
+    }
 }

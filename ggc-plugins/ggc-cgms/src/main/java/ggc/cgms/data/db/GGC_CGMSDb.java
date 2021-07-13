@@ -20,7 +20,9 @@ import com.atech.utils.data.ATechDateType;
 
 import ggc.cgms.data.CGMSDataReader;
 import ggc.cgms.data.CGMSValuesEntry;
+import ggc.cgms.data.CGMSValuesSubEntryExtended;
 import ggc.cgms.util.DataAccessCGMS;
+import ggc.core.db.hibernate.cgms.CGMSDataExtendedH;
 import ggc.core.db.hibernate.cgms.CGMSDataH;
 import ggc.plugin.data.DeviceValuesDay;
 import ggc.plugin.data.DeviceValuesEntryInterface;
@@ -71,13 +73,19 @@ public class GGC_CGMSDb extends PluginDb implements GraphDbDataRetriever
     }
 
 
+    public DeviceValuesDay getDailyCGMSValues(GregorianCalendar gc)
+    {
+        return getDailyCGMSValues(gc, false);
+    }
+
+
     /**
      * Get Daily Pump Values
      * 
      * @param gc
      * @return
      */
-    public DeviceValuesDay getDailyCGMSValues(GregorianCalendar gc)
+    public DeviceValuesDay getDailyCGMSValues(GregorianCalendar gc, boolean loadExtendedData)
     {
         LOG.info("getDailyCGMSValues()");
 
@@ -93,7 +101,7 @@ public class GGC_CGMSDb extends PluginDb implements GraphDbDataRetriever
         {
             List<CGMSDataH> dataList = getHibernateData(CGMSDataH.class, //
                 Arrays.asList( //
-                    Restrictions.eq("personId", this.dataAccess.getCurrentUserId()), //
+                    Restrictions.eq("personId", (int) this.dataAccess.getCurrentUserId()), //
                     Restrictions.eq("dtInfo", dt)) //
                 , Arrays.asList(Order.asc("dtInfo")));
 
@@ -103,6 +111,28 @@ public class GGC_CGMSDb extends PluginDb implements GraphDbDataRetriever
 
                 dV.addList(dv.getSubEntryList());
             }
+
+            // extended
+            if (loadExtendedData)
+            {
+                // 20140814 200255
+                List<CGMSDataExtendedH> dataListExt = getHibernateData(CGMSDataExtendedH.class, //
+                    Arrays.asList( //
+                        Restrictions.eq("personId", (int) this.dataAccess.getCurrentUserId()), //
+                        Restrictions.and( //
+                                Restrictions.ge("dtInfo", getDayLimits(dt, true)),  //
+                                Restrictions.le("dtInfo", getDayLimits(dt, false)))), //
+                                Arrays.asList(Order.asc("dtInfo")));
+
+                for (CGMSDataExtendedH cgmsDataExtendedH : dataListExt)
+                {
+                    CGMSValuesSubEntryExtended dv = new CGMSValuesSubEntryExtended(cgmsDataExtendedH);
+
+                    dV.addEntry(dv, false);
+                }
+            }
+
+            //dV.sort();
 
         }
         catch (Exception ex)
@@ -116,8 +146,22 @@ public class GGC_CGMSDb extends PluginDb implements GraphDbDataRetriever
         // return null;
     }
 
-    // getHibernateData
 
+    public long getDayLimits(long date, boolean start)
+    {
+        long retData = date * 1000000;
+
+        if (!start)
+        {
+            retData += 235959;
+        }
+
+        return retData;
+    }
+
+
+
+    // getHibernateData
 
     /**
      * Get Pump Values Range
@@ -202,7 +246,7 @@ public class GGC_CGMSDb extends PluginDb implements GraphDbDataRetriever
 
             List<CGMSDataH> dataList = getHibernateData(CGMSDataH.class, //
                 Arrays.asList( //
-                    Restrictions.eq("personId", this.dataAccess.getCurrentUserId()), //
+                    Restrictions.eq("personId", (int)this.dataAccess.getCurrentUserId()), //
                     Restrictions.like("extended", "%" + dataAccess.getSourceDevice() + "%")) //
                 , Arrays.asList(Order.asc("dtInfo")));
 
@@ -242,11 +286,13 @@ public class GGC_CGMSDb extends PluginDb implements GraphDbDataRetriever
 
         try
         {
-            criteria = getSession().createCriteria(CGMSDataH.class)
+            criteria = getSession()
+                    .createCriteria(CGMSDataH.class)
                     .add(Restrictions.eq("personId", (int) dataAccess.getCurrentUserId()))
                     .add(Restrictions.eq("baseType", 1))
-                    .add(Restrictions.and(Restrictions.ge("dtInfo", dates.get(0).getATDateTimeAsLong()),
-                        Restrictions.le("dtInfo", dates.get(1).getATDateTimeAsLong())));
+                    .add(
+                        Restrictions.and(Restrictions.ge("dtInfo", dates.get(0).getATDateTimeAsLong()),
+                            Restrictions.le("dtInfo", dates.get(1).getATDateTimeAsLong())));
 
             List listData = criteria.list();
 

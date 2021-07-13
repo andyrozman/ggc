@@ -76,10 +76,10 @@ public class PumpPluginDefinition extends DevicePluginDefinitionAbstract
     {
         List<LibraryInfoEntry> libraryInfoList = new ArrayList<LibraryInfoEntry>();
 
-        libraryInfoList.add(
-            new LibraryInfoEntry("XML Pull Parser", "3.1.1.4c", "http://www.extreme.indiana.edu/xgws/xsoap/xpp/",
-                    "Indiana University Extreme! Lab Software License", "Xml parser for processing xml document",
-                    "Copyright (c) 2002 Extreme! Lab, Indiana University. All rights reserved."));
+        libraryInfoList.add(new LibraryInfoEntry("XML Pull Parser", "3.1.1.4c",
+                "http://www.extreme.indiana.edu/xgws/xsoap/xpp/", "Indiana University Extreme! Lab Software License",
+                "Xml parser for processing xml document",
+                "Copyright (c) 2002 Extreme! Lab, Indiana University. All rights reserved."));
 
         return libraryInfoList;
     }
@@ -152,8 +152,9 @@ public class PumpPluginDefinition extends DevicePluginDefinitionAbstract
     {
         List<FeaturesEntry> outList = new ArrayList<FeaturesEntry>();
 
-        outList.add(new FeaturesEntry("Minimed (end of 2015, start of 2016)"));
+        outList.add(new FeaturesEntry("Minimed (in 2018... probably)"));
         outList.add(new FeaturesEntry("Tandem (?? no contact from company yet)"));
+        // outList.add(new FeaturesEntry("Cellnovo, Roche III, 630G , new Dana"))
 
         return outList;
     }

@@ -1,13 +1,14 @@
 package ggc.plugin.data;
 
-import com.atech.utils.ATSwingUtils;
-import ggc.plugin.util.DataAccessPlugInBase;
-
 import java.awt.*;
-import javax.swing.*;
 
+import javax.swing.*;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
+
+import com.atech.utils.ATSwingUtils;
+
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -43,8 +44,9 @@ public class DeviceValuesConfigTable extends JTable
     protected DeviceValuesConfigTableModel model = null;
     protected DataAccessPlugInBase m_da;
 
-    Color blueLight = new Color(31,186,240);
+    Color backgroundGroup = new Color(12, 209, 97);
     Font normal, bold;
+
 
     /**
      * Constructor
@@ -58,6 +60,7 @@ public class DeviceValuesConfigTable extends JTable
 
         init();
     }
+
 
     /**
      *  Constructor
@@ -74,6 +77,7 @@ public class DeviceValuesConfigTable extends JTable
         init();
     }
 
+
     private void init()
     {
         ATSwingUtils.initLibrary();
@@ -86,6 +90,7 @@ public class DeviceValuesConfigTable extends JTable
         normal = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL);
         bold = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD);
     }
+
 
     /**
      * Create Default Table Header
@@ -102,17 +107,17 @@ public class DeviceValuesConfigTable extends JTable
     }
 
 
-
-    public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+    public Component prepareRenderer(TableCellRenderer renderer, int row, int column)
+    {
         Component c = super.prepareRenderer(renderer, row, column);
 
-        if (model!=null)
+        if (model != null)
         {
-            int index = (Integer)model.getValueAt(row, 2);
+            int index = (Integer) model.getIndex(row);
 
-            if (index==1)
+            if (index == 1)
             {
-                c.setBackground(blueLight);
+                c.setBackground(backgroundGroup);
                 c.setFont(bold);
             }
             else
@@ -124,6 +129,5 @@ public class DeviceValuesConfigTable extends JTable
 
         return c;
     }
-
 
 }

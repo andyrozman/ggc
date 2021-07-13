@@ -518,4 +518,10 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
         return null;
     }
 
+
+    public DataAccessPlugInBase getDataAccessInstance()
+    {
+        return m_da;
+    }
+
 }

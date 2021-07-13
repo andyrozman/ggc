@@ -13,7 +13,7 @@ import ggc.plugin.device.impl.minimed.comm.MinimedCommunicationAbstract;
 import ggc.plugin.device.impl.minimed.data.MinimedCommandReply;
 import ggc.plugin.device.impl.minimed.enums.MinimedCommandType;
 import ggc.plugin.device.impl.minimed.handler.MinimedDataHandler;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
@@ -95,7 +95,7 @@ public abstract class MinimedSerialCommunicationAbstract extends MinimedCommunic
         try
         {
             int j = 0;
-            MinimedUtil.sleepPhysicalCommunication();
+            MedtronicUtil.sleepPhysicalCommunication();
 
             while (commHandler.available() > 0)
             {
@@ -193,7 +193,7 @@ public abstract class MinimedSerialCommunicationAbstract extends MinimedCommunic
 
     private int readFromPhysicalPortBlocking_JSSC() throws PlugInBaseException
     {
-        MinimedUtil.sleepMs(200);
+        MedtronicUtil.sleepMs(200);
 
         long startTime = System.currentTimeMillis();
 
@@ -216,7 +216,7 @@ public abstract class MinimedSerialCommunicationAbstract extends MinimedCommunic
     {
         int data;
 
-        MinimedUtil.sleepMs(200);
+        MedtronicUtil.sleepMs(200);
 
         long startTime = System.currentTimeMillis();
         long end = startTime + this.deviceTimeout;
@@ -254,12 +254,12 @@ public abstract class MinimedSerialCommunicationAbstract extends MinimedCommunic
         {
             if (serialCommunicationType == 1)
             {
-                this.commHandler = new NRSerialCommunicationHandler(MinimedUtil.getConnectionParameters().portName,
+                this.commHandler = new NRSerialCommunicationHandler(MedtronicUtil.getConnectionParameters().portName,
                         getSerialSettings());
             }
             else
             {
-                this.commHandler = new JSSCCommunicationHandler(MinimedUtil.getConnectionParameters().portName,
+                this.commHandler = new JSSCCommunicationHandler(MedtronicUtil.getConnectionParameters().portName,
                         getSerialSettings());
             }
             return false;
@@ -295,32 +295,32 @@ public abstract class MinimedSerialCommunicationAbstract extends MinimedCommunic
 
                 LOG.info("Retry [" + retry + "/] to create Serial Port. Ex.: " + ex);
 
-                MinimedUtil.sleepMs(4000);
+                MedtronicUtil.sleepMs(4000);
             }
         }
 
         // this.readUntilDrained();
-        MinimedUtil.sleepPhysicalCommunication();
+        MedtronicUtil.sleepPhysicalCommunication();
     }
 
 
     public void writeToPhysicalPort(byte data) throws PlugInBaseException
     {
-        MinimedUtil.sleepPhysicalCommunication();
+        MedtronicUtil.sleepPhysicalCommunication();
         long startTime = System.currentTimeMillis();
         this.commHandler.write(data);
         debugWrite(data, startTime);
-        MinimedUtil.sleepPhysicalCommunication();
+        MedtronicUtil.sleepPhysicalCommunication();
     }
 
 
     public void writeToPhysicalPort(byte[] data) throws PlugInBaseException
     {
-        MinimedUtil.sleepPhysicalCommunication();
+        MedtronicUtil.sleepPhysicalCommunication();
         long startTime = System.currentTimeMillis();
         this.commHandler.write(data);
         debugWrite(data, startTime);
-        MinimedUtil.sleepPhysicalCommunication();
+        MedtronicUtil.sleepPhysicalCommunication();
     }
 
 

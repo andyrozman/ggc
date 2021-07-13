@@ -1,0 +1,10 @@
+#NOTE: This is an internal implementation file, its format can be changed without prior notice.
+#Sun Sep 14 17:02:30 CEST 2014
+itext-2.1.7.jar>=
+itext-2.1.7-javadoc.jar>=
+itext-2.1.7.jar>nexus-infonova=
+itext-2.1.7.pom>nexus-infonova=
+itext-2.1.7.pom>central=
+itext-2.1.7-sources.jar>=
+itext-2.1.7-javadoc.jar>nexus-infonova=
+itext-2.1.7-sources.jar>nexus-infonova=

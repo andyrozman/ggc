@@ -7,7 +7,7 @@ import ggc.plugin.comm.Hid4JavaCommunicationHandler;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.minimed.comm.MinimedCommunicationAbstract;
 import ggc.plugin.device.impl.minimed.handler.MinimedDataHandler;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
@@ -45,7 +45,7 @@ public abstract class MinimedUsbHidCommunicationAbstract extends MinimedCommunic
         LOG.debug("# Opening device");
 
         communicationHandler = new Hid4JavaCommunicationHandler();
-        communicationHandler.setTargetDevice(MinimedUtil.getConnectionParameters().portName);
+        communicationHandler.setTargetDevice(MedtronicUtil.getConnectionParameters().portName);
 
         boolean connected = communicationHandler.connectAndInitDevice();
 

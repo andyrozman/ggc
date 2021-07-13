@@ -48,6 +48,8 @@ public class CGMSDataWriter extends HashMap<String, DeviceTempValues>
 {
 
     private static final Logger LOG = LoggerFactory.getLogger(CGMSDataWriter.class);
+    private static final long serialVersionUID = 5485258901271944632L;
+
     OutputWriter outputWriter;
     CGMSValuesTableModel valuesModel;
     DataAccessCGMS dataAccess = DataAccessCGMS.getInstance();
@@ -78,7 +80,7 @@ public class CGMSDataWriter extends HashMap<String, DeviceTempValues>
     private void addEntry(CGMSValuesSubEntry entry)
     {
         this.valuesModel.addEntry(entry);
-        this.valuesModel.fireTableDataChanged();
+        // this.valuesModel.fireTableDataChanged();
     }
 
 

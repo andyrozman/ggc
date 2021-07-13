@@ -1,7 +1,7 @@
 package ggc.plugin.device.impl.minimed.data.dto;
 
 import ggc.plugin.device.impl.minimed.enums.MinimedCommInterfaceType;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -52,9 +52,9 @@ public class MinimedConnectionParametersDTO
 
         this.portName = ports[0];
         this.serialNumber = getParameterValue(ports[2]);
-        this.serialNumberBCD = MinimedUtil.getBitUtils().makePackedBCD(this.serialNumber);
+        this.serialNumberBCD = MedtronicUtil.getBitUtils().makePackedBCD(this.serialNumber);
 
-        MinimedUtil.setConnectionParameters(this);
+        MedtronicUtil.setConnectionParameters(this);
     }
 
 

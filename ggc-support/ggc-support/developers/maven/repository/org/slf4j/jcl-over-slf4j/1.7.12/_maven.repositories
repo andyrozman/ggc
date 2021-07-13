@@ -1,0 +1,10 @@
+#NOTE: This is an internal implementation file, its format can be changed without prior notice.
+#Sat Sep 12 19:33:53 CEST 2015
+jcl-over-slf4j-1.7.12.jar>nexus-infonova=
+jcl-over-slf4j-1.7.12.pom>nexus-infonova=
+jcl-over-slf4j-1.7.12.pom>sonatype=
+jcl-over-slf4j-1.7.12-sources.jar>=
+jcl-over-slf4j-1.7.12-sources.jar>nexus-infonova=
+jcl-over-slf4j-1.7.12-javadoc.jar>nexus-infonova=
+jcl-over-slf4j-1.7.12-javadoc.jar>=
+jcl-over-slf4j-1.7.12.jar>=

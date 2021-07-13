@@ -422,7 +422,7 @@ public class DanaCommProtocolV1 extends DanaCommProtocolAbstract
 
             String sn = this.hex_utils.getStringFromArray(6, 10);
 
-            di.device_serial_number = sn;
+            di.deviceSerialNumber = sn;
 
             this.readingEntryStatus(9);
 
@@ -514,8 +514,8 @@ public class DanaCommProtocolV1 extends DanaCommProtocolAbstract
         // float proc_read = ((this.entries_current*1.0f) / this.entries_max);
         // float proc_total = 6 + (94 * proc_read);
         // this.outputWriter.setSpecialProgress((int)proc_total);
-        // //.setSubStatus(sub_status)
-        this.outputWriter.setSpecialProgress(cur_ent); // .setSubStatus(sub_status)
+        // //.setSubStatus(subStatus)
+        this.outputWriter.setSpecialProgress(cur_ent); // .setSubStatus(subStatus)
 
     }
 

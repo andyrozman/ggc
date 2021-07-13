@@ -304,8 +304,8 @@ public abstract class AnimasDeviceData
         di.company = "Animas/One Touch";
         di.device_selected = "Vibe";
 
-        di.device_serial_number = this.pumpInfo.serialNumber;
-        di.device_software_version = this.pumpInfo.softwareCode;
+        di.deviceSerialNumber = this.pumpInfo.serialNumber;
+        di.deviceSoftwareVersion = this.pumpInfo.softwareCode;
 
         this.animasDeviceDataWriter.getOutputWriter().writeDeviceIdentification();
     }

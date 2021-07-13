@@ -1,9 +1,9 @@
 package ggc.plugin.data;
 
-import ggc.plugin.output.OutputWriterData;
-
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.CodeEnumWithTranslation;
+
+import ggc.plugin.output.OutputWriterData;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -149,6 +149,8 @@ public abstract class DeviceTempValues
      * @return
      */
     public abstract OutputWriterData getData(ATechDate dt, Integer _sub_type, String _value);
+
+    public abstract OutputWriterData getData(ATechDate dt, Integer _sub_type, String _value, String source);
 
     public Boolean getIsNumericValue()
     {

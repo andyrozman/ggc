@@ -15,7 +15,7 @@ import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.minimed.data.MinimedDataPage;
 import ggc.plugin.device.impl.minimed.data.MinimedHistoryEntry;
 import ggc.plugin.device.impl.minimed.enums.RecordDecodeStatus;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -62,7 +62,7 @@ public abstract class MinimedHistoryDecoder
     public MinimedHistoryDecoder(DataAccessPlugInBase dataAccess)
     {
         this.dataAccess = dataAccess;
-        this.bitUtils = MinimedUtil.getBitUtils();
+        this.bitUtils = MedtronicUtil.getBitUtils();
     }
 
 
@@ -109,7 +109,7 @@ public abstract class MinimedHistoryDecoder
             return byteList;
         }
 
-        if (MinimedUtil.getDeviceType() == null)
+        if (MedtronicUtil.getDeviceType() == null)
         {
             LOG.error("Device Type is not defined.");
             return byteList;
@@ -131,7 +131,7 @@ public abstract class MinimedHistoryDecoder
         }
         else
         {
-            if (MinimedUtil.isLowLevelDebug())
+            if (MedtronicUtil.isLowLevelDebug())
                 LOG.debug("CRC ok.");
         }
 

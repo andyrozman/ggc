@@ -1,0 +1,8 @@
+#NOTE: This is an internal implementation file, its format can be changed without prior notice.
+#Thu May 07 00:32:13 CEST 2015
+commons-beanutils-1.8.0.jar>=
+commons-beanutils-1.8.0-sources.jar>central=
+commons-beanutils-1.8.0.jar>central=
+commons-beanutils-1.8.0.jar>nexus-infonova=
+commons-beanutils-1.8.0.pom>central=
+commons-beanutils-1.8.0.pom>nexus-infonova=

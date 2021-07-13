@@ -3,7 +3,6 @@ package ggc.core.db.tool.transfer;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -231,9 +230,9 @@ public class GGCImporter extends ImportTool implements Runnable
             // ColorSchemeH eh = (ColorSchemeH)obj;
             return new SettingsColorScheme();
 
-        for (Enumeration<String> en = m_da.getPlugins().keys(); en.hasMoreElements();)
+        for (String key : m_da.getPlugins().keySet())
         {
-            String key = en.nextElement();
+            //String key = en.nextElement();
             System.out.println("key: " + key);
             PlugInClient pic = m_da.getPlugIn(key);
 

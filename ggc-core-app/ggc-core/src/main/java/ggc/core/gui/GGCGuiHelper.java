@@ -1,6 +1,7 @@
 package ggc.core.gui;
 
 import java.awt.*;
+import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +14,7 @@ import javax.swing.*;
 
 import org.slf4j.Logger;
 
+import com.atech.data.user_data_dir.UserDataDirectory;
 import com.atech.db.hibernate.HibernateConfiguration;
 import com.atech.help.HelpContext;
 import com.atech.i18n.I18nControlAbstract;
@@ -29,11 +31,12 @@ public class GGCGuiHelper
 {
 
     private static Logger LOG;
-    private static final String skinLFdir = "../data/skinlf_themes/";
+    private static final String skinLFdir = "%USER_DATA_DIR%/skinlf_themes/";
     private static SkinLookAndFeel s_skinlf;
     private static Map<String, Object> skinLfOverrides;
     private DataAccess dataAccess;
     private I18nControlAbstract i18nControl;
+    static UserDataDirectory userDataDirectory = UserDataDirectory.getInstance();
 
 
     public GGCGuiHelper()
@@ -71,7 +74,13 @@ public class GGCGuiHelper
             {
                 if (data[0].equals("com.l2fprod.gui.plaf.skin.SkinLookAndFeel"))
                 {
-                    SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack(skinLFdir + data[1]));
+                    String skinLfPath = userDataDirectory.getParsedUserDataPath(skinLFdir);
+
+                    File f = new File(skinLfPath + data[1]);
+
+                    System.out.println("SkinLf file: " + skinLfPath + data[1] + ", exists: " + f.exists());
+
+                    SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack(skinLfPath + data[1]));
 
                     s_skinlf = new com.l2fprod.gui.plaf.skin.SkinLookAndFeel();
                     UIManager.setLookAndFeel(s_skinlf);
@@ -246,8 +255,9 @@ public class GGCGuiHelper
             // sb.append("<br>Password: " + hc.db_conn_password);
             // sb.append("<br>Dialect: " + hc.db_hib_dialect);
 
-            return String.format(i18nControl.getMessage("DB_PROBLEM_NOT_CONNECTED_TOOLTIP"), hc.db_num, hc.db_conn_name,
-                hc.db_driver_class, hc.db_conn_url, hc.db_conn_username, hc.db_conn_password, hc.db_hib_dialect);
+            return String.format(i18nControl.getMessage("DB_PROBLEM_NOT_CONNECTED_TOOLTIP"), hc.db_num,
+                hc.db_conn_name, hc.db_driver_class, hc.db_conn_url, hc.db_conn_username, hc.db_conn_password,
+                hc.db_hib_dialect);
         }
         //
         // return sb.toString();

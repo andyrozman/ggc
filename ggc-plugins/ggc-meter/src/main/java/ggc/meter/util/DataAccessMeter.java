@@ -261,7 +261,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
     @Override
     public void loadDeviceDataHandler()
     {
-        this.m_ddh = new MeterDataHandler(this);
+        this.deviceDataHandler = new MeterDataHandler(this);
     }
 
 
@@ -345,16 +345,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
     @Override
     public void loadExtendedHandlers()
     {
-        // System.out.println("Load Extended Handler: " + new
-        // ExtendedDailyValue(this));
-
         this.addExtendedHandler(EXTENDED_HANDLER_DAILY_VALUE, new ExtendedDailyValueHandler());
-        // this.extended_handlers = new Hashtable<>();
-        // this.extended_handlers.put(EXTENDED_HANDLER_DAILY_VALUE, new
-        // ExtendedDailyValue(this));
-
-        System.out.println("!!!!!!!!!!!!!! LoadExtendedHandler: " + extended_handlers);
-
     }
 
 }

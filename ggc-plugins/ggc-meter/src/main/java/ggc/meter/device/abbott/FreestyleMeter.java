@@ -303,9 +303,9 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
             DeviceIdentification di = this.outputWriter.getDeviceIdentification();
 
             this.readLineDebug();
-            di.device_serial_number = this.readLineDebug();
+            di.deviceSerialNumber = this.readLineDebug();
             this.outputWriter.setSpecialProgress(2);
-            di.device_hardware_version = this.readLineDebug();
+            di.deviceHardwareVersion = this.readLineDebug();
             this.outputWriter.setSpecialProgress(3);
             this.readLineDebug();
             this.outputWriter.setSpecialProgress(4);
@@ -451,7 +451,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
         // System.out.println("proc_read: " + proc_read + ", proc_total: " +
         // proc_total);
 
-        this.outputWriter.setSpecialProgress((int) proc_total); // .setSubStatus(sub_status)
+        this.outputWriter.setSpecialProgress((int) proc_total); // .setSubStatus(subStatus)
     }
 
 

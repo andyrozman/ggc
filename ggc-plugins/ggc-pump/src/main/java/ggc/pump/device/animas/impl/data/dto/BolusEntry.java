@@ -44,6 +44,7 @@ public class BolusEntry
     public String bolusTypeDescription;
     public short bolusTypeAnimas;
     public int bolusSubType;
+    public boolean hasBg = false;
 
     public int bolusRecordType;
     public String bolusRecordTypeDescription;
@@ -60,6 +61,7 @@ public class BolusEntry
 
     public void prepareEntry()
     {
+        hasBg = false;
 
         switch (bolusType)
         {
@@ -93,10 +95,11 @@ public class BolusEntry
                 }
                 break;
 
-            case 1:
+            case 1: // bg
                 bolusTypeDescription = "EzBG_Bolus";
                 bolusGGC = "Bolus_Normal";
                 bolusTypeAnimas = 4;
+                hasBg = true;
                 break;
 
             case 2:

@@ -144,11 +144,13 @@ public class PlugInBaseException extends Exception
         this.setExceptionType(exceptionType);
     }
 
+
     public PlugInBaseException(PlugInExceptionType exceptionType, Exception ex)
     {
         super(PlugInBaseException.createMessage(exceptionType, null), ex);
         this.setExceptionType(exceptionType);
     }
+
 
     public PlugInBaseException(PlugInExceptionType exceptionType, Object[] parameters)
     {
@@ -166,22 +168,22 @@ public class PlugInBaseException extends Exception
 
     public PlugInBaseException(PlugInExceptionType exceptionType, Object[] parameters, Exception ex)
     {
-        super(PlugInBaseException.createMessage(exceptionType, parameters));
+        super(PlugInBaseException.createMessage(exceptionType, parameters), ex);
         this.setExceptionType(exceptionType);
     }
 
 
-    public PlugInBaseException(PlugInExceptionType exceptionType, Exception ex, Object... parameters)
-    {
-        super(PlugInBaseException.createMessage(exceptionType, parameters));
-        this.setExceptionType(exceptionType);
-    }
-
+    // public PlugInBaseException(PlugInExceptionType exceptionType, Exception ex, Object...
+    // parameters)
+    // {
+    // super(PlugInBaseException.createMessage(exceptionType, parameters), ex);
+    // this.setExceptionType(exceptionType);
+    // }
 
     public PlugInBaseException(PlugInExceptionType exceptionType, String errorDescription, Exception ex)
     {
         // FIXME
-        super(PlugInBaseException.createMessage(exceptionType, null));
+        super(PlugInBaseException.createMessage(exceptionType, null), ex);
 
         this.setExceptionType(exceptionType);
     }

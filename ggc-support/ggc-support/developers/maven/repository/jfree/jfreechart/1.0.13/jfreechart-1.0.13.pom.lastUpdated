@@ -1,0 +1,17 @@
+#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
+#Mon Sep 29 15:40:36 CEST 2014
+http\://www.atech-software.com\:8081/nexus/content/groups/public/.error=Could not transfer artifact jfree\:jfreechart\:pom\:1.0.13 from/to atechrepositorypublic (http\://www.atech-software.com\:8081/nexus/content/groups/public/)\: Connection timed out
+http\://www.atech-software.com\:8080/nexus/content/groups/public/.error=Could not transfer artifact jfree\:jfreechart\:pom\:1.0.13 from/to atechrepositorypublic (http\://www.atech-software.com\:8080/nexus/content/groups/public/)\: connect timed out
+5cd9c872353d1efb3b4be1945df773ec7b6dea45@default-http\://grzmvn01.infonova.at\:8082/nexus/content/groups/public/.lastUpdated=1410703730476
+http\://www.atech-software.com\:8081/repository/public/.error=Could not transfer artifact jfree\:jfreechart\:pom\:1.0.13 from/to atechrepositorypublic (http\://www.atech-software.com\:8081/repository/public/)\: Connection timed out
+https\://oss.sonatype.org/service/local/repositories/netsfggc-042/content/.lastUpdated=1410703741467
+@default-http\://www.atech-software.com\:8080/nexus/content/groups/public/.lastUpdated=1409750643889
+@default-http\://www.atech-software.com\:8081/nexus/content/groups/public/.lastUpdated=1411120812862
+http\://oss.sonatype.org/content/groups/public/.lastUpdated=1409750633871
+http\://repo.maven.apache.org/maven2/.lastUpdated=1409750644420
+http\://anonsvn.icesoft.org/repo/maven2/releases/.lastUpdated=1409750644277
+@default-http\://www.atech-software.com\:8081/repository/public/.lastUpdated=1411998036098
+http\://oss.sonatype.org/content/groups/public/.error=
+http\://grzmvn01.infonova.at\:8082/nexus/content/groups/public/.error=Could not transfer artifact jfree\:jfreechart\:pom\:1.0.13 from/to nexus-infonova (http\://grzmvn01.infonova.at\:8082/nexus/content/groups/public/)\: grzmvn01.infonova.at
+https\://oss.sonatype.org/service/local/repositories/netsfggc-042/content/.error=
+http\://anonsvn.icesoft.org/repo/maven2/releases/.error=

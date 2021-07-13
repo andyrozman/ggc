@@ -2,6 +2,7 @@ package ggc.plugin.device.mgr;
 
 import java.util.*;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +11,7 @@ import com.atech.utils.file.ClassTypeDefinition;
 
 import ggc.core.plugins.GGCPluginType;
 import ggc.plugin.data.enums.DeviceHandlerType;
+import ggc.plugin.defs.DevicePluginDefinitionAbstract;
 import ggc.plugin.device.v2.DeviceHandler;
 
 public class DeviceHandlerManager
@@ -19,11 +21,11 @@ public class DeviceHandlerManager
 
     private static DeviceHandlerManager deviceHandlerManager = null;
 
-    Map<DeviceHandlerType, DeviceHandler> deviceHandlers = new HashMap<DeviceHandlerType, DeviceHandler>();
+    static Map<DeviceHandlerType, DeviceHandler> deviceHandlers = new HashMap<DeviceHandlerType, DeviceHandler>();
 
-    Map<GGCPluginType, List<DeviceHandler>> handlersDiscoveredByType = new HashMap<GGCPluginType, List<DeviceHandler>>();
-    Set<Class<?>> unDynamicalClasses = new HashSet<Class<?>>();
-
+    static Map<GGCPluginType, List<DeviceHandler>> handlersDiscoveredByType = new HashMap<GGCPluginType, List<DeviceHandler>>();
+    static Set<Class<?>> unDynamicalClasses = new HashSet<Class<?>>();
+    boolean dynamicFailed = false;
 
     public static DeviceHandlerManager getInstance()
     {
@@ -52,7 +54,7 @@ public class DeviceHandlerManager
     {
         if (!deviceHandlers.containsKey(handler.getDeviceHandlerKey()))
         {
-            this.deviceHandlers.put(handler.getDeviceHandlerKey(), handler);
+            deviceHandlers.put(handler.getDeviceHandlerKey(), handler);
             LOG.debug("Device Handler registered [type={}, name={}, dynamic={}]", handler.getGGCPluginType(),
                 handler.getDeviceHandlerKey(), dynamicRegister);
         }
@@ -61,14 +63,12 @@ public class DeviceHandlerManager
 
     public DeviceHandler getDeviceHandler(DeviceHandlerType deviceHandlerType)
     {
-        if ((deviceHandlerType == DeviceHandlerType.NoHandler) || //
-                (deviceHandlerType == DeviceHandlerType.NullHandler) || //
-                (deviceHandlerType == DeviceHandlerType.NoSupportInDevice))
+        if (deviceHandlerType.getPluginType()==null)
             return null;
 
-        if (this.deviceHandlers.containsKey(deviceHandlerType))
+        if (deviceHandlers.containsKey(deviceHandlerType))
         {
-            return this.deviceHandlers.get(deviceHandlerType);
+            return deviceHandlers.get(deviceHandlerType);
         }
         else
         {
@@ -80,31 +80,77 @@ public class DeviceHandlerManager
 
     public void registerDeviceHandlersDynamically(GGCPluginType pluginType)
     {
-        if (this.handlersDiscoveredByType.size() == 0)
+
+        for(DeviceHandlerType handlerType : DeviceHandlerType.values())
         {
-            registerDeviceHandlersDynamically();
+            if (pluginType==handlerType.getPluginType())
+            {
+                if (StringUtils.isNotBlank(handlerType.getClassName()) && handlerType.isDynamicallyLoad()) {
+
+                    Class clazz = null;
+
+                    try {
+                        clazz = Class.forName(handlerType.getClassName());
+
+                        DeviceHandler handler = (DeviceHandler) clazz.newInstance();
+                        addDeviceHandler(handler, true);
+                    }
+                    catch (Exception ex)
+                    {
+                        LOG.warn("Problem instantiating DeviceHandler [{}]. Exception: {}", handlerType.getClassName(),
+                                ex.getMessage(), ex);
+                    }
+                }
+            }
         }
 
-        if (handlersDiscoveredByType.containsKey(pluginType))
-        {
-            List<DeviceHandler> deviceHandlers = handlersDiscoveredByType.get(pluginType);
+    }
 
-            for (DeviceHandler handler : deviceHandlers)
-            {
-                addDeviceHandler(handler, true);
+
+    @Deprecated
+    public void registerDeviceHandlersDynamicallyOld(GGCPluginType pluginType, DevicePluginDefinitionAbstract pluginInstance)
+    {
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Register Devices Handler Dynamicaly: " + pluginType.name());
+
+        if (handlersDiscoveredByType.size() == 0 && !dynamicFailed)
+        {
+            registerDeviceHandlersDynamicallyOld();
+        }
+
+        if (dynamicFailed)
+        {
+            //pluginInstance.getHandlerClasses();
+        }
+        else {
+
+            if (handlersDiscoveredByType.containsKey(pluginType)) {
+                List<DeviceHandler> deviceHandlers = handlersDiscoveredByType.get(pluginType);
+                // System.out.println("Device Handlers: " + deviceHandlers);
+
+                for (DeviceHandler handler : deviceHandlers) {
+                    addDeviceHandler(handler, true);
+                }
             }
         }
     }
 
-
+    @Deprecated
     public void registerDeviceHandlersDynamically()
     {
         try
         {
-            ClassFinder finder = new ClassFinder();
+            ClassFinder finder = new ClassFinder("ggc-plugins");
 
             Vector<Class<?>> subclasses = finder.findSubclasses(DeviceHandler.class.getName(),
-                ClassTypeDefinition.EndClass);
+                    ClassTypeDefinition.EndClass);
+
+            System.out.println("Subclasses found: " + subclasses.size() + ", List: " + subclasses);
+
+            if (subclasses.size()==0)
+            {
+                System.out.println("Errors: " + finder.getErrors());
+                dynamicFailed = true;
+            }
 
             for (Class c : subclasses)
             {
@@ -133,13 +179,87 @@ public class DeviceHandlerManager
                 catch (Exception ex)
                 {
                     LOG.warn("Problem instantiating DeviceHandler [{}]. Exception: {}", c.getSimpleName(),
-                        ex.getMessage());
+                            ex.getMessage(), ex);
                 }
 
             }
 
             for (GGCPluginType pluginType : Arrays.asList(GGCPluginType.MeterToolPlugin, GGCPluginType.PumpToolPlugin,
-                GGCPluginType.CGMSToolPlugin))
+                    GGCPluginType.CGMSToolPlugin, GGCPluginType.ConnectToolPlugin))
+            {
+                checkAndLogPluginHandlers(pluginType);
+            }
+
+        }
+        catch (Exception ex)
+        {
+            LOG.warn("Error loading dynamic device handlers. " + ex, ex);
+        }
+
+    }
+
+
+    public void showInstantiatedHandlers()
+    {
+        for (GGCPluginType pluginType : Arrays.asList(GGCPluginType.MeterToolPlugin, GGCPluginType.PumpToolPlugin,
+                GGCPluginType.CGMSToolPlugin, GGCPluginType.ConnectToolPlugin))
+        {
+            checkAndLogPluginHandlers(pluginType);
+        }
+    }
+
+
+    public void registerDeviceHandlersDynamicallyOld()
+    {
+        try
+        {
+            ClassFinder finder = new ClassFinder("ggc-plugins");
+
+            Vector<Class<?>> subclasses = finder.findSubclasses(DeviceHandler.class.getName(),
+                ClassTypeDefinition.EndClass);
+
+            System.out.println("Subclasses found: " + subclasses.size() + ", List: " + subclasses);
+
+            if (subclasses.size()==0)
+            {
+                System.out.println("Errors: " + finder.getErrors());
+                dynamicFailed = true;
+            }
+
+            for (Class c : subclasses)
+            {
+                try
+                {
+                    if (unDynamicalClasses.contains(c))
+                        continue;
+
+                    DeviceHandler handler = (DeviceHandler) c.newInstance();
+
+                    if (handler.isEnabled())
+                    {
+                        if (handlersDiscoveredByType.containsKey(handler.getGGCPluginType()))
+                        {
+                            handlersDiscoveredByType.get(handler.getGGCPluginType()).add(handler);
+                        }
+                        else
+                        {
+                            List<DeviceHandler> listHandlers = new ArrayList<DeviceHandler>();
+                            listHandlers.add(handler);
+
+                            handlersDiscoveredByType.put(handler.getGGCPluginType(), listHandlers);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LOG.warn("Problem instantiating DeviceHandler [{}]. Exception: {}", c.getSimpleName(),
+                        ex.getMessage(), ex);
+                }
+
+            }
+
+            for (GGCPluginType pluginType : Arrays.asList(GGCPluginType.MeterToolPlugin, GGCPluginType.PumpToolPlugin,
+                GGCPluginType.CGMSToolPlugin, GGCPluginType.ConnectToolPlugin))
             {
                 checkAndLogPluginHandlers(pluginType);
             }
@@ -176,7 +296,7 @@ public class DeviceHandlerManager
             Class<?> clazz = getClass(clazzName);
 
             if (clazz != null)
-                this.unDynamicalClasses.add(clazz);
+                unDynamicalClasses.add(clazz);
         }
 
     }

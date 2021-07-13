@@ -1,0 +1,12 @@
+
+NIGHTSCOUT PLAN
+===============
+
+- Viewer (browser) - to connect to main site
+
+- Importer - to download all data from NS site
+
+- HistoryViewer - local viewer of NS history (it takes only NighScout Source)
+
+- Printing report - change of local reports to accomodate NS differences (Profile Mainly)
+

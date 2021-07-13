@@ -95,7 +95,7 @@ public class TestDeviceInstructionsMeterEnum extends JDialog implements ActionLi
         Font normal = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL);
 
         setBounds(0, 0, 650, 600);
-        // m_da.centerJDialog(this);
+        // dataAccess.centerJDialog(this);
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         getContentPane().add(panel, BorderLayout.CENTER);
@@ -196,7 +196,7 @@ public class TestDeviceInstructionsMeterEnum extends JDialog implements ActionLi
         help_button.setFont(normal);
         panel.add(help_button);
 
-        // m_da.enableHelp(this);
+        // dataAccess.enableHelp(this);
 
         ComboBoxModel model = new ComboBoxModel()
         {
@@ -453,6 +453,8 @@ public class TestDeviceInstructionsMeterEnum extends JDialog implements ActionLi
      */
     public static void main(String[] args)
     {
+        System.out.println(System.getProperty("user.home"));
+
         JFrame f = new JFrame();
 
         DataAccess.dontLoadIcons = true;

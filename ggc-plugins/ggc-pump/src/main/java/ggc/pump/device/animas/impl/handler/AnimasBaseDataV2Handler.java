@@ -226,8 +226,7 @@ public class AnimasBaseDataV2Handler extends AbstractDeviceDataV2Handler
         // FIXME
         sendRequestAndWait(AnimasDataType.BolusHistory, 0, numberOfRecords, 500);
         // 21 : This has problem because firmware reports back false data
-        // (combined bolus is just defined as extended,
-        // so part of data gets lost)
+        // (combined bolus is just defined as extended, so part of data gets lost)
 
         sendRequestAndWait(AnimasDataType.TotalDailyDoseHistory, 0, numberOfRecords, 120);
 

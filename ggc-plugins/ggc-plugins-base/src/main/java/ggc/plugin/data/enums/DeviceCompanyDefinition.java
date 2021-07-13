@@ -28,8 +28,7 @@ import ggc.plugin.manager.DeviceImplementationStatus;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public enum DeviceCompanyDefinition
-{
+public enum DeviceCompanyDefinition {
     NoCompany(0, "No Company", "", DeviceImplementationStatus.NotAvailable), //
 
     // 1xx = Meter
@@ -48,6 +47,7 @@ public enum DeviceCompanyDefinition
 
     // 3xx = CGMS
     Dexcom(301, "Dexcom", "", DeviceImplementationStatus.Partitial), //
+    Senseonics(302, "Senseonics", "", DeviceImplementationStatus.Planned), //
 
     // 4xx = Pump + CGMS
     Animas(401, "Animas", "", DeviceImplementationStatus.Full), //
@@ -69,8 +69,7 @@ public enum DeviceCompanyDefinition
     DeviceImplementationStatus companyImplementationStatus;
 
 
-    DeviceCompanyDefinition(int id, String name, String description, DeviceImplementationStatus implementationStatus)
-    {
+    DeviceCompanyDefinition(int id, String name, String description, DeviceImplementationStatus implementationStatus) {
         this.id = id;
         this.companyName = name;
         this.companyDescription = description;
@@ -78,26 +77,22 @@ public enum DeviceCompanyDefinition
     }
 
 
-    public String getName()
-    {
+    public String getName() {
         return this.companyName;
     }
 
 
-    public int getCompanyId()
-    {
+    public int getCompanyId() {
         return this.id;
     }
 
 
-    public String getDescription()
-    {
+    public String getDescription() {
         return this.companyDescription;
     }
 
 
-    public DeviceImplementationStatus getImplementationStatus()
-    {
+    public DeviceImplementationStatus getImplementationStatus() {
         return this.companyImplementationStatus;
     }
 

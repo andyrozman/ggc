@@ -32,12 +32,13 @@ public enum CGMSObject implements CodeEnum
 {
     Base(1), //
     SubEntry(2), //
+    Extended(3), //
     ;
 
     int code;
 
 
-    private CGMSObject(int code)
+    CGMSObject(int code)
     {
         this.code = code;
     }

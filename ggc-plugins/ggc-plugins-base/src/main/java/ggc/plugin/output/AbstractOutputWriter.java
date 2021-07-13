@@ -1,8 +1,10 @@
 package ggc.plugin.output;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.util.LogEntryType;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -36,7 +38,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
     OutputUtil out_util;
     DeviceIdentification device_info = null;
     String sub_status;
-    protected ArrayList<String> error_list = null;
+    protected List<ErrorMessageDto> errorList = null;
     String pluginName;
 
 
@@ -234,10 +236,10 @@ public abstract class AbstractOutputWriter implements OutputWriter
     /**
      * Write log entry
      * 
-     * @param entry_type
+     * @param entryType
      * @param message
      */
-    public void writeLog(int entry_type, String message)
+    public void writeLog(LogEntryType entryType, String message)
     {
     }
 
@@ -245,11 +247,11 @@ public abstract class AbstractOutputWriter implements OutputWriter
     /**
      * Write log entry
      * 
-     * @param entry_type
+     * @param entryType
      * @param message
      * @param ex
      */
-    public void writeLog(int entry_type, String message, Exception ex)
+    public void writeLog(LogEntryType entryType, String message, Exception ex)
     {
     }
 
@@ -308,29 +310,29 @@ public abstract class AbstractOutputWriter implements OutputWriter
     }
 
 
-    public void addErrorMessage(String msg)
+    public void addErrorMessage(ErrorMessageDto msg)
     {
-        if (this.error_list == null)
+        if (this.errorList == null)
         {
-            this.error_list = new ArrayList<String>();
+            this.errorList = new ArrayList<ErrorMessageDto>();
         }
 
-        this.error_list.add(msg);
+        this.errorList.add(msg);
     }
 
 
     public int getErrorMessageCount()
     {
-        if (this.error_list == null)
+        if (this.errorList == null)
             return 0;
         else
-            return this.error_list.size();
+            return this.errorList.size();
     }
 
 
-    public ArrayList<String> getErrorMessages()
+    public List<ErrorMessageDto> getErrorMessages()
     {
-        return this.error_list;
+        return this.errorList;
     }
 
 
@@ -343,6 +345,12 @@ public abstract class AbstractOutputWriter implements OutputWriter
     public String getPluginName()
     {
         return this.pluginName;
+    }
+
+
+    public void setSpecialNote(int noteType, String note)
+    {
+        System.out.println("Special Note [" + noteType + "]: " + note);
     }
 
 }

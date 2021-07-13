@@ -16,7 +16,7 @@ import ggc.plugin.device.impl.minimed.data.MinimedHistoryEntry;
 import ggc.plugin.device.impl.minimed.data.decoder.MinimedHistoryDecoder;
 import ggc.plugin.device.impl.minimed.enums.MinimedDeviceType;
 import ggc.plugin.device.impl.minimed.enums.RecordDecodeStatus;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 import ggc.pump.data.defs.*;
 import ggc.pump.data.dto.BolusDTO;
 import ggc.pump.data.dto.BolusWizardDTO;
@@ -265,12 +265,13 @@ public class MinimedPumpHistoryDecoder extends MinimedHistoryDecoder
             case ChangeBasalProfile_NewProfile:
             case ChangeBasalProfile_OldProfile:
             case SelectBasalProfile:
-            case Model522ResultTotals:
+            case DailyTotals522:
             case Ian69:
             case Ian50:
             case Ian54:
             case IanA8:
-            case Sara6E:
+            case DailyTotals523:
+            case DailyTotals512:
                 return RecordDecodeStatus.NotSupported;
 
             case AndyB4:
@@ -345,7 +346,7 @@ public class MinimedPumpHistoryDecoder extends MinimedHistoryDecoder
                 this.writeData(PumpBaseType.Alarm, PumpAlarms.NoDelivery, entry.getATechDate());
                 return RecordDecodeStatus.OK;
 
-            case BolusWizard:
+            case BolusWizardBolusEstimate:
                 decodeBolusWizard(entry);
                 return RecordDecodeStatus.OK;
 
@@ -433,7 +434,7 @@ public class MinimedPumpHistoryDecoder extends MinimedHistoryDecoder
         Float rate = null;
         int index = body[2];
 
-        if (MinimedDeviceType.isSameDevice(MinimedUtil.getDeviceType(), MinimedDeviceType.Minimed_523andHigher))
+        if (MinimedDeviceType.isSameDevice(MedtronicUtil.getDeviceType(), MinimedDeviceType.Minimed_523andHigher))
         {
             rate = body[1] * 0.025f;
         }
@@ -461,7 +462,7 @@ public class MinimedPumpHistoryDecoder extends MinimedHistoryDecoder
 
         float bolus_strokes = 10.0f;
 
-        if (MinimedDeviceType.isSameDevice(MinimedUtil.getDeviceType(), MinimedDeviceType.Minimed_523andHigher))
+        if (MinimedDeviceType.isSameDevice(MedtronicUtil.getDeviceType(), MinimedDeviceType.Minimed_523andHigher))
         {
             // https://github.com/ps2/minimed_rf/blob/master/lib/minimed_rf/log_entries/bolus_wizard.rb#L102
             bolus_strokes = 40.0f;
@@ -532,7 +533,7 @@ public class MinimedPumpHistoryDecoder extends MinimedHistoryDecoder
     @Override
     public void refreshOutputWriter()
     {
-        this.pumpValuesWriter.setOutputWriter(MinimedUtil.getOutputWriter());
+        this.pumpValuesWriter.setOutputWriter(MedtronicUtil.getOutputWriter());
     }
 
 
@@ -551,7 +552,7 @@ public class MinimedPumpHistoryDecoder extends MinimedHistoryDecoder
 
         int[] data = entry.getHead();
 
-        if (MinimedDeviceType.isSameDevice(MinimedUtil.getDeviceType(), MinimedDeviceType.Minimed_523andHigher))
+        if (MinimedDeviceType.isSameDevice(MedtronicUtil.getDeviceType(), MinimedDeviceType.Minimed_523andHigher))
         {
             bolus.setRequestedAmount(bitUtils.toInt(data[0], data[1]) / 40.0f);
             bolus.setDeliveredAmount(bitUtils.toInt(data[2], data[3]) / 10.0f);

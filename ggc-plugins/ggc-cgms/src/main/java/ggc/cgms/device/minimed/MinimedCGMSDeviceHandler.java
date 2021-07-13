@@ -16,7 +16,7 @@ import ggc.plugin.device.impl.minimed.cfg.MinimedSpecialConfig;
 import ggc.plugin.device.impl.minimed.enums.MinimedConverterType;
 import ggc.plugin.device.impl.minimed.enums.MinimedDeviceType;
 import ggc.plugin.device.impl.minimed.enums.MinimedTargetType;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 import ggc.plugin.device.v2.DeviceDefinition;
 import ggc.plugin.device.v2.DeviceInstanceWithHandler;
 import ggc.plugin.gui.DeviceSpecialConfigPanelAbstract;
@@ -114,12 +114,12 @@ public class MinimedCGMSDeviceHandler extends CGMSDeviceHandler implements Minim
 
     public void registerConverters()
     {
-        if (!MinimedUtil.isTargetRegistered(MinimedTargetType.CGMS))
+        if (!MedtronicUtil.isTargetRegistered(MinimedTargetType.CGMS))
         {
-            MinimedUtil.registerConverter(MinimedTargetType.CGMS, MinimedConverterType.CGMS522Converter,
-                new Minimed522CGMSDataConverter(dataAccess));
-            MinimedUtil.registerConverter(MinimedTargetType.CGMS, MinimedConverterType.CGMS523Converter,
-                new Minimed523CGMSDataConverter(dataAccess));
+            MedtronicUtil.registerConverter(MinimedTargetType.CGMS, MinimedConverterType.CGMS522Converter,
+                    new Minimed522CGMSDataConverter(dataAccess));
+            MedtronicUtil.registerConverter(MinimedTargetType.CGMS, MinimedConverterType.CGMS523Converter,
+                    new Minimed523CGMSDataConverter(dataAccess));
         }
     }
 

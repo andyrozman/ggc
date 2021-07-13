@@ -147,11 +147,11 @@ public class CommunicationPortComponent extends JPanel implements ActionListener
      */
     public void setProtocol(DeviceConnectionProtocol protocol)
     {
-        System.out.println("Protocol: " + protocol);
+        // System.out.println("Protocol: " + protocol);
 
         if (protocol == null || isNoPortDevice(protocol))
         {
-            System.out.println("NULL Protocol");
+            // System.out.println("NULL Protocol");
             label.setText(m_ic.getMessage("COMMUNICATION_PORT") + ":");
             setCommunicationPort("N/A");
             this.bt_select.setEnabled(false);

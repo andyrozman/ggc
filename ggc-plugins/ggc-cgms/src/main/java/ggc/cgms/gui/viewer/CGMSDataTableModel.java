@@ -1,14 +1,15 @@
 package ggc.cgms.gui.viewer;
 
-import javax.swing.table.AbstractTableModel;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.atech.graphics.components.MultiLineTooltip;
-import com.atech.graphics.components.MultiLineTooltipModel;
+import com.atech.graphics.components.jtable.TableModelWithToolTip;
 import com.atech.i18n.I18nControlAbstract;
 
+import ggc.cgms.data.CGMSValuesSubEntry;
+import ggc.cgms.data.defs.CGMSViewerFilter;
 import ggc.cgms.util.DataAccessCGMS;
-import ggc.plugin.data.DeviceValuesDay;
-import ggc.plugin.data.DeviceValuesEntry;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -36,52 +37,54 @@ import ggc.plugin.data.DeviceValuesEntry;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class CGMSDataTableModel extends AbstractTableModel implements MultiLineTooltipModel
+public class CGMSDataTableModel extends TableModelWithToolTip // implements MultiLineTooltipModel
 {
 
     private static final long serialVersionUID = -8127006259458810208L;
 
-    DeviceValuesDay dayData;
-
     private DataAccessCGMS m_da = DataAccessCGMS.getInstance();
     private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
-    Object objects[] = { new String(""), new String(""), new String(""), new String(""), };
-
     private String[] column_names = { m_ic.getMessage("TIME"), m_ic.getMessage("ENTRY_TYPE"),
-                                     m_ic.getMessage("READING"), m_ic.getMessage("COMMENT") };
+                                     m_ic.getMessage("ENTRY_VALUE"), m_ic.getMessage("COMMENT") };
+
+    //List<CGMSValuesSubEntry> dayDataList;
+    List<CGMSValuesSubEntry> dayDataListFull;
+    List<CGMSValuesSubEntry> dayDataListFiltered;
+
 
 
     /**
      * Constructor
      * 
-     * @param dayData
+     * @param dayDataList
      */
-    public CGMSDataTableModel(DeviceValuesDay dayData)
+    public CGMSDataTableModel(List<CGMSValuesSubEntry> dayDataList)
     {
-        setDailyValues(dayData);
+        this.dayDataListFiltered = new ArrayList<CGMSValuesSubEntry>();
+        setDayDataList(dayDataList, CGMSViewerFilter.All);
     }
 
 
-    /**
-     * Get Daily Values
-     * 
-     * @return
-     */
-    public DeviceValuesDay getDailyValues()
+    public void setDayDataList(List<CGMSValuesSubEntry> dayDataList, CGMSViewerFilter filter)
     {
-        return this.dayData;
+        this.dayDataListFull = dayDataList;
+        filterData(filter);
     }
 
-
-    /**
-     * Set Daily Values
-     * 
-     * @param dayData
-     */
-    public void setDailyValues(DeviceValuesDay dayData)
+    public void filterData(CGMSViewerFilter filter)
     {
-        this.dayData = dayData;
+        List<CGMSValuesSubEntry> tempData = new ArrayList<CGMSValuesSubEntry>();
+
+        for (CGMSValuesSubEntry cgmsValuesSubEntry : this.dayDataListFull)
+        {
+            if (cgmsValuesSubEntry.isItemFiltered(filter))
+                tempData.add(cgmsValuesSubEntry);
+        }
+
+        this.dayDataListFiltered.clear();
+        this.dayDataListFiltered.addAll(tempData);
+
         fireTableChanged(null);
     }
 
@@ -91,10 +94,10 @@ public class CGMSDataTableModel extends AbstractTableModel implements MultiLineT
      */
     public int getRowCount()
     {
-        if (dayData == null)
+        if (dayDataListFiltered == null)
             return 0;
 
-        return dayData.getRowCount();
+        return dayDataListFiltered.size();
     }
 
 
@@ -103,7 +106,7 @@ public class CGMSDataTableModel extends AbstractTableModel implements MultiLineT
      */
     public Object getValueAt(int row, int column)
     {
-        return dayData.getValueAt(row, column);
+        return dayDataListFiltered.get(row).getColumnValue(column);
     }
 
 
@@ -123,7 +126,7 @@ public class CGMSDataTableModel extends AbstractTableModel implements MultiLineT
     @Override
     public Class<?> getColumnClass(int c)
     {
-        return this.objects[c].getClass();
+        return String.class;
     }
 
 
@@ -137,12 +140,12 @@ public class CGMSDataTableModel extends AbstractTableModel implements MultiLineT
     }
 
 
-    /** 
+    /**
      * get ToolTip Value
      */
     public String getToolTipValue(int row, int column)
     {
-        DeviceValuesEntry o = dayData.getRowAt(row);
+        CGMSValuesSubEntry o = dayDataListFiltered.get(row);
 
         if (o instanceof MultiLineTooltip)
             return ((MultiLineTooltip) o).getMultiLineToolTip(column);

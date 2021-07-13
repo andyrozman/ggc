@@ -19,7 +19,7 @@ import ggc.plugin.device.impl.minimed.data.MinimedDataPage;
 import ggc.plugin.device.impl.minimed.data.MinimedHistoryEntry;
 import ggc.plugin.device.impl.minimed.data.decoder.MinimedHistoryDecoder;
 import ggc.plugin.device.impl.minimed.enums.RecordDecodeStatus;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -408,7 +408,7 @@ public class MinimedCGMSHistoryDecoder extends MinimedHistoryDecoder
     @Override
     public void refreshOutputWriter()
     {
-        this.cgmsValuesWriter.setOutputWriter(MinimedUtil.getOutputWriter());
+        this.cgmsValuesWriter.setOutputWriter(MedtronicUtil.getOutputWriter());
     }
 
 

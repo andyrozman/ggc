@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>net.sf.ggc</groupId>
+  <artifactId>ggc-pump-tool</artifactId>
+  <version>1.5.1-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <localCopy>true</localCopy>
+    </snapshot>
+    <lastUpdated>20150708163137</lastUpdated>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>jar</extension>
+        <value>1.5.1-SNAPSHOT</value>
+        <updated>20150708163137</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>1.5.1-SNAPSHOT</value>
+        <updated>20150708163137</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+</metadata>

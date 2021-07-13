@@ -290,11 +290,11 @@ public class GlucofixMio extends AbstractSerialMeter
 
             StringTokenizer strtok = new StringTokenizer(lst.get(0), ",");
 
-            di.device_hardware_version = strtok.nextToken();
+            di.deviceHardwareVersion = strtok.nextToken();
             strtok.nextToken();
             strtok.nextToken();
-            di.device_serial_number = strtok.nextToken();
-            di.device_software_version = ATDataAccessAbstract.replaceExpression(strtok.nextToken(), "\n", "");
+            di.deviceSerialNumber = strtok.nextToken();
+            di.deviceSoftwareVersion = ATDataAccessAbstract.replaceExpression(strtok.nextToken(), "\n", "");
 
             this.outputWriter.setSpecialProgress(4);
             this.entries_max = this.getMaxMemoryRecords();
@@ -517,7 +517,7 @@ public class GlucofixMio extends AbstractSerialMeter
     {
         float proc_read = this.entries_current * 1.0f / this.entries_max;
         float proc_total = 5 + 95 * proc_read;
-        this.outputWriter.setSpecialProgress((int) proc_total); // .setSubStatus(sub_status)
+        this.outputWriter.setSpecialProgress((int) proc_total); // .setSubStatus(subStatus)
     }
 
 

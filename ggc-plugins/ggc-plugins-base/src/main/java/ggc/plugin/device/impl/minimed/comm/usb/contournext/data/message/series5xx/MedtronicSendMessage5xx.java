@@ -13,7 +13,7 @@ import ggc.plugin.device.impl.minimed.comm.usb.contournext.data.MedtronicCnlSess
 import ggc.plugin.device.impl.minimed.comm.usb.contournext.enums.CommandType;
 import ggc.plugin.device.impl.minimed.comm.usb.contournext.test.SimpleReadContourNext;
 import ggc.plugin.device.impl.minimed.enums.MinimedCommandType;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 
 /**
  * Based on 600SeriesAndroidUploader implementation. Message for 5xx devices by Andy
@@ -64,7 +64,7 @@ public class MedtronicSendMessage5xx extends ContourNextLinkBinaryMessage5xx
         ByteBuffer sendPayloadBuffer = ByteBuffer.allocate(ENVELOPE_SIZE + commandLength + CRC_SIZE);
         sendPayloadBuffer.order(ByteOrder.BIG_ENDIAN);
 
-        int[] serialNumberBCD = MinimedUtil.getSerialNumberBCD();
+        int[] serialNumberBCD = MedtronicUtil.getSerialNumberBCD();
 
         sendPayloadBuffer.put((byte) 0xA7);
         sendPayloadBuffer.put((byte) serialNumberBCD[0]);
@@ -88,9 +88,9 @@ public class MedtronicSendMessage5xx extends ContourNextLinkBinaryMessage5xx
 
         byte[] payload = sendPayloadBuffer.array();
 
-        LOG.info(MinimedUtil.getBitUtils().getByteArrayHex(payload));
+        LOG.info(MedtronicUtil.getBitUtils().getByteArrayHex(payload));
 
-        int crc = MinimedUtil.getBitUtils().computeCRC8WithPolynomial(payload, 0, payload.length - 1);
+        int crc = MedtronicUtil.getBitUtils().computeCRC8WithPolynomial(payload, 0, payload.length - 1);
 
         LOG.info("crc: " + crc);
 

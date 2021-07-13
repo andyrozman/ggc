@@ -48,7 +48,9 @@ public class BackupRestorePumpHandler extends BackupRestorePlugin
 
     I18nControlAbstract ic = DataAccessPump.getInstance().getI18nControlInstance();
 
-    private String[] object_desc = { ic.getMessage("PUMP_DATA"), ic.getMessage("PUMP_DATA_EXTENDED"),
+    private String[] object_desc = { //
+            ic.getMessage("PUMP_DATA"), //
+            ic.getMessage("PUMP_DATA_EXTENDED"), //
                                      ic.getMessage("PUMP_PROFILE") };
 
     private String[] object_name = { "ggc.core.db.hibernate.pump.PumpDataH",

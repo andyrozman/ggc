@@ -9,16 +9,17 @@ import ggc.plugin.data.enums.DeviceConfigurationGroup;
 public class DeviceValueConfigEntry implements DeviceValueConfigEntryInterface
 {
 
-    String key;
-    String value;
-    boolean isBg = false;
-    DeviceConfigurationGroup group;
-    int index = 2;
+    protected String key;
+    protected String value;
+    protected boolean isBg = false;
+    protected DeviceConfigurationGroup group;
+    protected int index = 2;
 
 
     public DeviceValueConfigEntry()
     {
     }
+
 
     public DeviceValueConfigEntry(DeviceConfigurationGroup group)
     {
@@ -27,6 +28,7 @@ public class DeviceValueConfigEntry implements DeviceValueConfigEntryInterface
         this.value = "";
         this.index = 1;
     }
+
 
     public DeviceValueConfigEntry(String key, String value)
     {
@@ -41,12 +43,14 @@ public class DeviceValueConfigEntry implements DeviceValueConfigEntryInterface
         this.isBg = isBg;
     }
 
+
     public DeviceValueConfigEntry(String key, String value, DeviceConfigurationGroup group)
     {
         this.key = key;
         this.value = value;
         this.group = group;
     }
+
 
     public Object getColumnValue(int index)
     {
@@ -71,32 +75,29 @@ public class DeviceValueConfigEntry implements DeviceValueConfigEntryInterface
 
     public int compare(DeviceValueConfigEntryInterface d1, DeviceValueConfigEntryInterface d2)
     {
-        //if (true)
-        //    return 0;
+        // if (true)
+        // return 0;
 
-
-        if (d2.getGroup()==d1.getGroup())
+        if (d2.getGroup() == d1.getGroup())
         {
 
-            if (d1.getIndex()==d2.getIndex())
+            if (d1.getIndex() == d2.getIndex())
             {
                 return (d1.getDataKey().compareTo(d2.getDataKey()));
             }
             else
             {
                 return d1.getIndex() - d2.getIndex();
-                //return 0;
+                // return 0;
             }
         }
         else
         {
-            //return 0;
+            // return 0;
             return d1.getGroup().getCode() - d2.getGroup().getCode();
         }
 
-
-
-        //return (d1.getDataKey().compareTo(d2.getDataKey()));
+        // return (d1.getDataKey().compareTo(d2.getDataKey()));
     }
 
 
@@ -159,6 +160,7 @@ public class DeviceValueConfigEntry implements DeviceValueConfigEntryInterface
         }
     }
 
+
     public String getDataValueRaw()
     {
         return this.value;
@@ -169,6 +171,7 @@ public class DeviceValueConfigEntry implements DeviceValueConfigEntryInterface
     {
         return this.isBg;
     }
+
 
     public DeviceConfigurationGroup getGroup()
     {
@@ -181,9 +184,25 @@ public class DeviceValueConfigEntry implements DeviceValueConfigEntryInterface
         this.group = group;
     }
 
+
     public Integer getIndex()
     {
         return this.index;
+    }
+
+
+    public int getColumnCount()
+    {
+        return 2;
+    }
+
+
+    public String getColumnName(int index)
+    {
+        if (index == 0)
+            return "SETTING_GROUP";
+        else
+            return "VALUE";
     }
 
 }

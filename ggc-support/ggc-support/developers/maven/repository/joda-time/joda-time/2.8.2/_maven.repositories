@@ -1,0 +1,6 @@
+#NOTE: This is an internal implementation file, its format can be changed without prior notice.
+#Mon Sep 28 21:42:00 CEST 2015
+joda-time-2.8.2.jar>sonatype=
+joda-time-2.8.2.pom>sonatype=
+joda-time-2.8.2.jar>nexus-infonova=
+joda-time-2.8.2.pom>nexus-infonova=

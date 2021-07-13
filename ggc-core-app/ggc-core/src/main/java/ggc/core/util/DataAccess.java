@@ -3,12 +3,17 @@ package ggc.core.util;
 import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.*;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Hashtable;
+import java.util.Properties;
 
 import javax.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import pygmy.core.Server;
 
 import com.atech.data.enums.InternalSetting;
 import com.atech.db.hibernate.HibernateDb;
@@ -51,7 +56,6 @@ import ggc.core.db.tool.DbToolApplicationGGC;
 import ggc.core.db.tool.data.GGCDatabaseTableConfiguration;
 import ggc.core.plugins.*;
 import ggc.gui.dialogs.selector.GGCSelectorConfiguration;
-import pygmy.core.Server;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -87,15 +91,6 @@ public class DataAccess extends ATDataAccessLMAbstract
      * Core Version
      */
     public static String CORE_VERSION = "0.7.0";
-
-    /**
-     * Current Db Version (can be found in GGCDb)
-     */
-
-    /**
-     * At later time this will be determined by user management part
-     */
-    public long current_user_id = 1;
 
     private static final Logger LOG = LoggerFactory.getLogger(DataAccess.class);
 
@@ -190,6 +185,9 @@ public class DataAccess extends ATDataAccessLMAbstract
 
     public static boolean dontLoadIcons = false;
 
+
+
+
     /**
      * Developer Version
      */
@@ -198,7 +196,6 @@ public class DataAccess extends ATDataAccessLMAbstract
     // ********************************************************
     // ****** Constructors and Access methods *****
     // ********************************************************
-
 
     // Constructor: DataAccess
     /**
@@ -240,7 +237,7 @@ public class DataAccess extends ATDataAccessLMAbstract
 
         loadOptions();
 
-        if (!new File("../data/debug.txt").exists())
+        if (!new File(userDataDirectory.getParsedUserDataPath("%USER_DATA_DIR%/debug.txt")).exists())
         {
             new RedirectScreen();
         }
@@ -254,6 +251,9 @@ public class DataAccess extends ATDataAccessLMAbstract
         this.loadVersion();
 
         this.translateEnums();
+
+        // FIXME this will be determined by user management at later time
+        current_user_id = 1;
 
         /*
          * System.out.println(Locale.getAvailableLocales());
@@ -275,6 +275,8 @@ public class DataAccess extends ATDataAccessLMAbstract
         GGCSoftwareMode.translateKeywords(this.m_i18n);
         InventoryItemUnit.translateKeywords(this.m_i18n);
         InventoryGroupType.translateKeywords(this.m_i18n);
+        Health.translateKeywords(this.m_i18n);
+        ExerciseStrength.translateKeywords(this.m_i18n);
     }
 
 
@@ -311,8 +313,7 @@ public class DataAccess extends ATDataAccessLMAbstract
                 I18nControlLangMgrDual mgrd = (I18nControlLangMgrDual) mgr;
                 mgrd.getDefaultLanguageInstance();
 
-                ctx.addLanguageInstance(GGCPluginType.Core, ctx.getDefaultLanguage(),
-                    this.getI18nControlInstanceBase());
+                ctx.addLanguageInstance(GGCPluginType.Core, ctx.getDefaultLanguage(), this.getI18nControlInstanceBase());
 
             }
             else
@@ -401,6 +402,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         return s_da;
     }
 
+
     /**
      * Create Instance
      * 
@@ -423,7 +425,6 @@ public class DataAccess extends ATDataAccessLMAbstract
     /*
      * static public DataAccess getInstance() { return dataAccess; }
      */
-
 
     // Method: deleteInstance
     /**
@@ -679,9 +680,9 @@ public class DataAccess extends ATDataAccessLMAbstract
         brc1.addNodeChild(new SettingsColorScheme(this.m_i18n));
         brc_full.addNodeChild(brc1);
 
-        for (Enumeration<String> en = this.plugins.keys(); en.hasMoreElements();)
+        for (PlugInClient pic : getPlugins().values())
         {
-            PlugInClient pic = this.plugins.get(en.nextElement());
+            // PlugInClient pic = this.plugins.get(en.nextElement());
 
             if (pic.isBackupRestoreEnabled())
             {
@@ -718,10 +719,8 @@ public class DataAccess extends ATDataAccessLMAbstract
 
         brc_full.addNodeChild(brc1);
 
-        for (Enumeration<String> en = this.plugins.keys(); en.hasMoreElements();)
+        for (PlugInClient pic : getPlugins().values())
         {
-            PlugInClient pic = this.plugins.get(en.nextElement());
-
             if (pic.isBackupRestoreEnabled())
             {
                 brc_full.addNodeChild(pic.getBackupObjects());
@@ -885,10 +884,10 @@ public class DataAccess extends ATDataAccessLMAbstract
         return this.m_db;
     }
 
+
     // ********************************************************
     // ****** Observer/Observable *****
     // ********************************************************
-
 
     @Override
     public void initObserverManager()
@@ -1134,6 +1133,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         return m_main;
     }
 
+
     /**
      * Get Parent Little
      * 
@@ -1177,21 +1177,20 @@ public class DataAccess extends ATDataAccessLMAbstract
      * }
      */
 
-
     // ********************************************************
     // ****** Person Id / Login *****
     // ********************************************************
 
-    /**
-     * Get Current Person Id
-     * 
-     * @return
-     */
-    @Override
-    public long getCurrentUserId()
-    {
-        return this.current_user_id;
-    }
+    // /**
+    // * Get Current Person Id
+    // *
+    // * @return
+    // */
+    // @Override
+    // public int getCurrentUserId()
+    // {
+    // return this.current_user_id;
+    // }
 
     // ********************************************************
     // ****** I18n Utils *****
@@ -1211,7 +1210,6 @@ public class DataAccess extends ATDataAccessLMAbstract
     // ********************************************************
     // ****** Look and Feel *****
     // ********************************************************
-
 
     /*
      * public void loadAvailableLFs() {
@@ -1252,7 +1250,8 @@ public class DataAccess extends ATDataAccessLMAbstract
         {
             Properties props = new Properties();
 
-            FileInputStream in = new FileInputStream("../data/GGC_Config.properties");
+            FileInputStream in = new FileInputStream(userDataDirectory.getUserDataDirectory()
+                    + "/GGC_Config.properties");
             props.load(in);
 
             out[0] = (String) props.get("LF_CLASS");
@@ -1498,7 +1497,8 @@ public class DataAccess extends ATDataAccessLMAbstract
         {
             LOG.info("Start internal Web Server");
 
-            String[] cnf = { "-config", "../data/tools/WebLister.properties" };
+            String[] cnf = { "-config", //
+                            userDataDirectory.getParsedUserDataPath("%USER_DATA_DIR%/tools/WebLister.properties") };
 
             Server web_server = new Server(cnf);
             web_server.start();
@@ -1506,7 +1506,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         }
         catch (Exception ex)
         {
-            System.out.println("Error starting WebServer on 444. Ex: " + ex);
+            System.out.println("Error starting WebServer on 4444. Ex: " + ex);
         }
 
     }
@@ -1626,6 +1626,7 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public static final int INSULIN_PUMP = 1;
 
+
     /**
      * @param mode
      * @param value
@@ -1637,7 +1638,6 @@ public class DataAccess extends ATDataAccessLMAbstract
     // // 1, 0.5, 0.1, 0.05, 0.01, 0.005, 0.001
     // return value;
     // }
-
 
     /**
      * @param mode
@@ -1878,8 +1878,8 @@ public class DataAccess extends ATDataAccessLMAbstract
         this.configurationManagerWrapper = configurationManagerWrapper;
     }
 
-    // Saving/ Loading sizes
 
+    // Saving/ Loading sizes
 
     // DialogSizePersistInterface
 
@@ -1945,4 +1945,9 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
 
     }
+
+
+
+
+
 }

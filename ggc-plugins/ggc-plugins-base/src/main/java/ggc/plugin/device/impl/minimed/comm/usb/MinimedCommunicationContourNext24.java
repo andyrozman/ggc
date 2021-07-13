@@ -33,7 +33,7 @@ import ggc.plugin.device.impl.minimed.enums.MinimedCommandType;
 import ggc.plugin.device.impl.minimed.enums.MinimedDeviceType;
 import ggc.plugin.device.impl.minimed.enums.MinimedTargetType;
 import ggc.plugin.device.impl.minimed.handler.MinimedDataHandler;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
@@ -72,7 +72,7 @@ public class MinimedCommunicationContourNext24 extends MinimedCommunicationConto
         super(dataAccess, minimedDataHandler);
 
         responseConverter = new ContourNextLink24ResponseConverter(session);
-        dataConverter = MinimedUtil.getDataConverter(MinimedDeviceType.Minimed_640G, MinimedTargetType.Pump);
+        dataConverter = MedtronicUtil.getDataConverter(MinimedDeviceType.Minimed_640G, MinimedTargetType.Pump);
     }
 
 

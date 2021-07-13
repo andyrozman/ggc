@@ -51,7 +51,7 @@ import ggc.plugin.util.DataAccessPlugInBase;
 public abstract class DevicePlugInServer extends PlugInServer implements ActionListener
 {
 
-    protected I18nControlAbstract ic_local = null;
+    protected I18nControlAbstract i18nControlLocal = null;
 
     /**
      * This is action that needs to be done, after read data.
@@ -102,8 +102,8 @@ public abstract class DevicePlugInServer extends PlugInServer implements ActionL
     {
         da_plugin.loadManager();
 
-        ic_local = da_plugin.getI18nControlInstance();
-        da_plugin.setParentI18nControlInstance(ic);
+        i18nControlLocal = da_plugin.getI18nControlInstance();
+        da_plugin.setParentI18nControlInstance(i18nControl);
 
         da_plugin.loadManager();
 

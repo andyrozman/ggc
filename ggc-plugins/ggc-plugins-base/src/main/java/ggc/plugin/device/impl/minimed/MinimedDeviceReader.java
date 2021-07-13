@@ -12,7 +12,7 @@ import ggc.plugin.device.impl.minimed.enums.MinimedCommInterfaceType;
 import ggc.plugin.device.impl.minimed.enums.MinimedDeviceType;
 import ggc.plugin.device.impl.minimed.enums.MinimedTargetType;
 import ggc.plugin.device.impl.minimed.handler.MinimedDataHandler;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.reader.AbstractDeviceReader;
 import gnu.io.CommPortIdentifier;
@@ -64,11 +64,11 @@ public class MinimedDeviceReader extends AbstractDeviceReader
         this.handler = handler;
         this.deviceTargetType = handler.getDeviceTargetType();
 
-        MinimedUtil.setDeviceType(minimedDevice);
+        MedtronicUtil.setDeviceType(minimedDevice);
 
         connectionParametersDTO = new MinimedConnectionParametersDTO(communicationParameters);
 
-        MinimedUtil.setConnectionParameters(connectionParametersDTO);
+        MedtronicUtil.setConnectionParameters(connectionParametersDTO);
 
         System.out.println("connectionParametersDTO.interfaceType: " + connectionParametersDTO.interfaceType);
 
@@ -109,7 +109,7 @@ public class MinimedDeviceReader extends AbstractDeviceReader
             throw new PlugInBaseException(PlugInExceptionType.UnsupportedDevice);
         }
 
-        MinimedUtil.setMinimedDeviceReader(this);
+        MedtronicUtil.setMinimedDeviceReader(this);
     }
 
 
@@ -155,10 +155,10 @@ public class MinimedDeviceReader extends AbstractDeviceReader
 
     public void refreshConverters()
     {
-        MinimedUtil.setOutputWriter(this.outputWriter);
-        MinimedUtil.setDeviceType(this.minimedDevice);
+        MedtronicUtil.setOutputWriter(this.outputWriter);
+        MedtronicUtil.setDeviceType(this.minimedDevice);
 
-        MinimedUtil.refreshConverters(getDeviceTargetType());
+        MedtronicUtil.refreshConverters(getDeviceTargetType());
     }
 
 

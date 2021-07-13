@@ -10,8 +10,8 @@
 
     <name>GGC Plugins - CGMS Tool</name>
 
-    <artifactId>ggc-cgms-tool</artifactId>
-    <version>${ggc-cgms-tool.version}</version>
+    <artifactId>ggc-plugins-cgms</artifactId>
+    <version>${ggc-plugins-cgms.version}</version>
 
     <build>
         <plugins>
@@ -37,7 +37,6 @@
                     </execution>
                 </executions>
             </plugin>
-
 
 
         </plugins>

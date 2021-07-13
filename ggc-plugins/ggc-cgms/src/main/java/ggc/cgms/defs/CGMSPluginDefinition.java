@@ -151,8 +151,9 @@ public class CGMSPluginDefinition extends DevicePluginDefinitionAbstract
     {
         List<FeaturesEntry> outList = new ArrayList<FeaturesEntry>();
 
-        outList.add(new FeaturesEntry("Minimed (2016)"));
-        outList.add(new FeaturesEntry("Freestyle Navigator (?? no contact from company)"));
+        outList.add(new FeaturesEntry("Minimed (2018)"));
+        outList.add(new FeaturesEntry("Freestyle Libre (2017)"));
+        //
 
         return outList;
     }
@@ -163,8 +164,8 @@ public class CGMSPluginDefinition extends DevicePluginDefinitionAbstract
     {
         List<BaseListEntry> weblister_items = new ArrayList<BaseListEntry>();
 
-        weblister_items
-                .add(new BaseListEntry("Abbott Diabetes Care", "/cgms/abbott.html", BaseListEntry.STATUS_NOTPLANNED));
+        weblister_items.add(new BaseListEntry("Abbott Diabetes Care", "/cgms/abbott.html",
+                BaseListEntry.STATUS_NOTPLANNED));
         weblister_items.add(new BaseListEntry("Animas", "/cgms/animas.html", BaseListEntry.STATUS_DONE));
         weblister_items.add(new BaseListEntry("Dexcom", "/cgms/dexcom.html", BaseListEntry.STATUS_PART_IMPLEMENTED));
         weblister_items.add(new BaseListEntry("Minimed", "/cgms/minimed.html", BaseListEntry.STATUS_PLANNED));
@@ -201,8 +202,8 @@ public class CGMSPluginDefinition extends DevicePluginDefinitionAbstract
     public void registerDeviceHandlers()
     {
         // Minimed CGMS - this one can't be registered Dynamically
-        DeviceHandlerManager.getInstance()
-                .addDeviceHandler(new MinimedCGMSDeviceHandler((DataAccessCGMS) this.dataAccess));
+        DeviceHandlerManager.getInstance().addDeviceHandler(
+            new MinimedCGMSDeviceHandler((DataAccessCGMS) this.dataAccess));
 
         // register dynamic handlers
         DeviceHandlerManager.getInstance().registerDeviceHandlersDynamically(getPluginType());

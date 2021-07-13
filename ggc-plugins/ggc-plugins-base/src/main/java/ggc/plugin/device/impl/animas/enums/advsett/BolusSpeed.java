@@ -31,15 +31,17 @@ import com.atech.utils.data.CodeEnum;
 public enum BolusSpeed implements CodeEnum
 {
     Normal, // (0), //
-    Slow// (1);
+    Slow // (1);
     ;
 
     int code;
+
 
     public int getCode()
     {
         return code;
     }
+
 
     public String getDescription()
     {

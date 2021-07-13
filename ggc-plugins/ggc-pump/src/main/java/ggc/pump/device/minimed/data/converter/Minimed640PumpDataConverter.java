@@ -15,7 +15,7 @@ import ggc.plugin.device.impl.minimed.comm.usb.contournext.data.message.MessageU
 import ggc.plugin.device.impl.minimed.comm.usb.contournext.enums.SendMessageType;
 import ggc.plugin.device.impl.minimed.comm.usb.contournext.tmp.PumpStatusEvent;
 import ggc.plugin.device.impl.minimed.data.MinimedCommandReply;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 import ggc.pump.data.defs.PumpConfigurationGroup;
 import ggc.pump.data.defs.PumpSettingsType;
 import ggc.pump.data.defs.RatioType;
@@ -59,7 +59,7 @@ public class Minimed640PumpDataConverter extends Minimed511PumpDataConverter
 
     private static final Logger LOG = LoggerFactory.getLogger(Minimed640PumpDataConverter.class);
 
-    PumpSettingsDTO pumpSettingsDTO = new PumpSettingsDTO();
+    PumpSettingsDTO pumpSettingsDTO = new PumpSettingsDTO(DataAccessPump.getInstance());
 
 
     public Minimed640PumpDataConverter(DataAccessPump dataAccess)
@@ -381,7 +381,7 @@ public class Minimed640PumpDataConverter extends Minimed511PumpDataConverter
 
     private void decodePumpTime(MinimedCommandReply minimedCommandReply)
     {
-        MedtronicCnlSession session = MinimedUtil.getMedtronicCnlSession();
+        MedtronicCnlSession session = MedtronicUtil.getMedtronicCnlSession();
 
         if (minimedCommandReply.getRawData().length < (61 + 8))
         {
@@ -412,7 +412,7 @@ public class Minimed640PumpDataConverter extends Minimed511PumpDataConverter
             return;
         }
 
-        long pumpTimeOffset = MinimedUtil.getMedtronicCnlSession().getPumpTimeOffset();
+        long pumpTimeOffset = MedtronicUtil.getMedtronicCnlSession().getPumpTimeOffset();
 
         ByteBuffer statusBuffer = ByteBuffer.allocate(96);
         statusBuffer.order(ByteOrder.BIG_ENDIAN);

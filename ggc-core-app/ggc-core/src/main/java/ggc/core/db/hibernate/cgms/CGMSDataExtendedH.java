@@ -17,6 +17,7 @@ public class CGMSDataExtendedH extends HibernateObject
     private int personId;
     private String comment;
     private long changed;
+    private int typeObject;
 
 
     /** full constructor 

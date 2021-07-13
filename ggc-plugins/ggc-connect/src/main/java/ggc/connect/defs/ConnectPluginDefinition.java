@@ -70,16 +70,15 @@ public class ConnectPluginDefinition extends DevicePluginDefinitionAbstract
 
     public String getAboutImagePath()
     {
-        // FIXME
-        return "/icons/cgms_about.jpg";
+        return "/icons/connect_about.jpg";
     }
 
 
     public int[] getAboutImageSize()
     {
         int[] sz = new int[2];
-        sz[0] = 400;
-        sz[1] = 203;
+        sz[0] = 290;
+        sz[1] = 190;
 
         return sz;
     }
@@ -88,15 +87,21 @@ public class ConnectPluginDefinition extends DevicePluginDefinitionAbstract
     @Override
     public List<LibraryInfoEntry> getPluginLibraries()
     {
-        return null;
+        List<LibraryInfoEntry> outList = new ArrayList<LibraryInfoEntry>();
+
+        outList.add(new LibraryInfoEntry("Apache POI", "3.16", //
+                "https://poi.apache.org/", "Apache Licence", //
+                "Java API for Microsoft Documents", //
+                "Copyright © 2002-2017 The Apache Software Foundation. All rights reserved."));
+
+        return outList;
     }
 
 
     public List<CreditsGroup> getCredits()
     {
         CreditsGroup cg = new CreditsGroup(this.i18nControl.getMessage("DEVELOPERS_DESC"));
-        cg.addCreditsEntry(
-            new CreditsEntry("Aleksander Rozman (Andy)", "andy@atech-software.com", "Framework, About."));
+        cg.addCreditsEntry(new CreditsEntry("Aleksander Rozman (Andy)", "andy@atech-software.com", "Framework, About."));
 
         return Arrays.asList(cg);
     }
@@ -107,6 +112,7 @@ public class ConnectPluginDefinition extends DevicePluginDefinitionAbstract
         List<FeaturesEntry> outList = new ArrayList<FeaturesEntry>();
 
         outList.add(new FeaturesEntry("Base Connect Framework"));
+        outList.add(new FeaturesEntry("About dialog"));
 
         return outList;
     }
@@ -117,7 +123,6 @@ public class ConnectPluginDefinition extends DevicePluginDefinitionAbstract
         List<FeaturesEntry> outList = new ArrayList<FeaturesEntry>();
 
         outList.add(new FeaturesEntry("Configuration"));
-        outList.add(new FeaturesEntry("About dialog"));
 
         return outList;
     }
@@ -127,6 +132,8 @@ public class ConnectPluginDefinition extends DevicePluginDefinitionAbstract
     {
         List<FeaturesEntry> outList = new ArrayList<FeaturesEntry>();
 
+        outList.add(new FeaturesEntry("Diasend (Work in Progress)"));
+
         return outList;
     }
 
@@ -135,10 +142,13 @@ public class ConnectPluginDefinition extends DevicePluginDefinitionAbstract
     {
         List<FeaturesEntry> outList = new ArrayList<FeaturesEntry>();
 
-        outList.add(new FeaturesEntry("SiDiary (2017)"));
-        outList.add(new FeaturesEntry("MS Health (2018)"));
-        outList.add(new FeaturesEntry("Libra (2018)"));
-        outList.add(new FeaturesEntry("Open Platform for Clinical Nutrition (2018)"));
+        outList.add(new FeaturesEntry("DiaSend (2017-18)"));
+        outList.add(new FeaturesEntry("SiDiary (2018)"));
+        outList.add(new FeaturesEntry("MS Health (2018-19)"));
+        outList.add(new FeaturesEntry("Libra (2018-19)"));
+        outList.add(new FeaturesEntry("Open Platform for Clinical Nutrition (2018-19)"));
+        outList.add(new FeaturesEntry("Tidepool (2018)"));
+        outList.add(new FeaturesEntry("NightScout (2018)"));
 
         return outList;
     }
@@ -201,16 +211,15 @@ public class ConnectPluginDefinition extends DevicePluginDefinitionAbstract
         return null;
     }
 
-
     // @Override
     // public String getPluginActionsPrefix()
     // {
     // return "connect_";
     // }
 
-    @Override
-    public void registerDeviceHandlers()
-    {
-    }
+    // @Override
+    // public void registerDeviceHandlers()
+    // {
+    // }
 
 }

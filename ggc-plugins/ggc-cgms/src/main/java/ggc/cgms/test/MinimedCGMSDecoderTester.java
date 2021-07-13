@@ -18,7 +18,7 @@ import ggc.plugin.device.impl.minimed.data.MinimedDataPage;
 import ggc.plugin.device.impl.minimed.enums.MinimedCommandType;
 import ggc.plugin.device.impl.minimed.enums.MinimedDeviceType;
 import ggc.plugin.device.impl.minimed.enums.MinimedTargetType;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 
 public class MinimedCGMSDecoderTester extends AbstractCGMSTest
 {
@@ -49,7 +49,7 @@ public class MinimedCGMSDecoderTester extends AbstractCGMSTest
         int page = 249;
         String path = "/home/andy/Dropbox/GGC/others/dcl/cgms/736868/";
         readFile(path + "ReadGlucoseHistory-page-" + page + ".data");
-        MinimedUtil.setDeviceType(MinimedDeviceType.Minimed_523_723);
+        MedtronicUtil.setDeviceType(MinimedDeviceType.Minimed_523_723);
     }
 
 
@@ -58,7 +58,7 @@ public class MinimedCGMSDecoderTester extends AbstractCGMSTest
         int page = 6;
         String path = "/home/andy/Dropbox/GGC/others/dcl/cgms/578398/";
         readFile(path + "ReadGlucoseHistory-page-" + page + ".data");
-        MinimedUtil.setDeviceType(MinimedDeviceType.Minimed_523_723);
+        MedtronicUtil.setDeviceType(MinimedDeviceType.Minimed_523_723);
     }
 
 
@@ -115,7 +115,7 @@ public class MinimedCGMSDecoderTester extends AbstractCGMSTest
             dataClear.add(b); // bitUtils.convertUnsignedByteToInt(b));
         }
 
-        // MinimedUtil.setDeviceType(MinimedDeviceType.Minimed_512_712);
+        // MedtronicUtil.setDeviceType(MinimedDeviceType.Minimed_512_712);
 
         // return result;
     }

@@ -2,11 +2,11 @@ package ggc.cgms.device.abbott.libre.data;
 
 import com.atech.utils.data.ATechDate;
 
-public class TimeChangeDto extends LibreRecordDto
+import ggc.plugin.device.impl.abbott.hid.AbbottHidRecordDto;
+
+public class TimeChangeDto extends AbbottHidRecordDto
 {
 
-    int recordId;
-    int recordType;
     ATechDate dateTimeNew;
     int unknown1;
     ATechDate dateTimeOld;
@@ -24,7 +24,6 @@ public class TimeChangeDto extends LibreRecordDto
         this.recordId = getInt(0);
         this.recordType = getInt(1); // 5
         this.dateTimeNew = getDateTime(3, 2, 4, 5, 6, 7);
-        ;
         this.unknown1 = getInt(8);
         this.dateTimeOld = getDateTime(10, 9, 11, 12, 13, 14);
         this.unknown2 = getInt(15);

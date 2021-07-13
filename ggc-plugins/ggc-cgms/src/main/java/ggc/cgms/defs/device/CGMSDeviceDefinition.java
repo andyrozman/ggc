@@ -44,25 +44,20 @@ public enum CGMSDeviceDefinition implements DeviceDefinition
 {
     // Abbott
 
-    AbbottFreeStyleNavigatorV1(10001, "Abbott FreeStyle Navigator V1", "no_device.gif", null, //
+    AbbottFreeStyleNavigatorV1(10001, "FreeStyle Navigator V1", "no_device.gif", null, //
             null, DeviceImplementationStatus.NotAvailable, //
             DeviceCompanyDefinition.Abbott, DeviceHandlerType.NoHandler, //
             DevicePortParameterType.NoParameters, DeviceConnectionProtocol.Serial_USBBridge, //
             DeviceProgressStatus.Special, ""), // TODO
 
-    AbbottFreeStyleNavigatorV2(10002, "Abbott FreeStyle Navigator V2", "no_device.gif", null, //
+    AbbottFreeStyleNavigatorV2(10002, "FreeStyle Navigator V2", "no_device.gif", null, //
             null, DeviceImplementationStatus.NotAvailable, //
             DeviceCompanyDefinition.Abbott, DeviceHandlerType.NoHandler, //
             DevicePortParameterType.NoParameters, DeviceConnectionProtocol.Serial_USBBridge, //
             DeviceProgressStatus.Special, ""), // TODO
 
-    AbbottFreeStyleNeo(10003, "Abbott FreeStyle Neo", "no_device.gif", null, //
-            null, DeviceImplementationStatus.NotAvailable, //
-            DeviceCompanyDefinition.Abbott, DeviceHandlerType.NoHandler, //
-            DevicePortParameterType.NoParameters, DeviceConnectionProtocol.Serial_USBBridge, //
-            DeviceProgressStatus.Special, ""), // TODO
 
-    AbbottFreeStyleLibre(10004, "Abbott FreeStyle Libre", "no_device.gif", null, //
+    AbbottFreeStyleLibre(10004, "FreeStyle Libre", "ab_fs_libre.png", "INSTRUCTIONS_ABBOTT_LIBRE", //
             null, DeviceImplementationStatus.InProgress, //
             DeviceCompanyDefinition.Abbott, DeviceHandlerType.AbbottLibreHandler, //
             DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.USB_Hid, //
@@ -157,12 +152,12 @@ public enum CGMSDeviceDefinition implements DeviceDefinition
     TandemTSlimX2(50002, "t:slim X2", "tan_tslimG4.jpg", null, null, //
             DeviceImplementationStatus.NotAvailable, DeviceCompanyDefinition.Tandem, DeviceHandlerType.NoHandler, //
             DevicePortParameterType.NoParameters, DeviceConnectionProtocol.Serial_USBBridge, //
-            DeviceProgressStatus.Special, ""), //
+            DeviceProgressStatus.Special, ""), // TODO
 
-    // Roche
-    RocheEversense(60001, "Roche Eversense", "ac_eversense.png", null, //
+    // Senseonics
+    SenseonicsEversense(60001, "Senseonics Eversense", "ac_eversense.png", null, //
             null, DeviceImplementationStatus.NotAvailable, //
-            DeviceCompanyDefinition.Roche, DeviceHandlerType.NoHandler, //
+            DeviceCompanyDefinition.Senseonics, DeviceHandlerType.NoHandler, //
             DevicePortParameterType.NoParameters, DeviceConnectionProtocol.Multiple, //
             DeviceProgressStatus.Special, ""), // TODO
 

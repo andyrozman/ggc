@@ -19,7 +19,7 @@ import ggc.plugin.device.impl.minimed.enums.MinimedCommandType;
 import ggc.plugin.device.impl.minimed.enums.MinimedDeviceType;
 import ggc.plugin.device.impl.minimed.enums.MinimedResponseStatus;
 import ggc.plugin.device.impl.minimed.handler.MinimedDataHandler;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
@@ -73,7 +73,7 @@ public class MinimedCommunicationComLink extends MinimedSerialCommunicationAbstr
 
     public void preInitInterface()
     {
-        serialBCD = MinimedUtil.getConnectionParameters().serialNumberBCD;
+        serialBCD = MedtronicUtil.getConnectionParameters().serialNumberBCD;
     }
 
 
@@ -312,7 +312,7 @@ public class MinimedCommunicationComLink extends MinimedSerialCommunicationAbstr
     {
         // LOG.debug("readFromPhysicalPort [timeout=" + timeout);
 
-        MinimedUtil.sleepPhysicalCommunication();
+        MedtronicUtil.sleepPhysicalCommunication();
 
         long startTime = System.currentTimeMillis();
         long endTime = startTime + timeout; // + 1000;
@@ -333,7 +333,7 @@ public class MinimedCommunicationComLink extends MinimedSerialCommunicationAbstr
                 }
             }
 
-            MinimedUtil.sleepMs(50);
+            MedtronicUtil.sleepMs(50);
 
         } while (System.currentTimeMillis() < endTime);
 
@@ -384,7 +384,7 @@ public class MinimedCommunicationComLink extends MinimedSerialCommunicationAbstr
         // ---
         executeCommandWithRetry(MinimedCommandType.RFPowerOn);
 
-        if (MinimedUtil.isDownloadCanceled())
+        if (MedtronicUtil.isDownloadCanceled())
             return -1;
 
         // ---
@@ -416,7 +416,7 @@ public class MinimedCommunicationComLink extends MinimedSerialCommunicationAbstr
         // ---
         executeCommandWithRetry(MinimedCommandType.RFPowerOn);
 
-        if (MinimedUtil.isDownloadCanceled())
+        if (MedtronicUtil.isDownloadCanceled())
             return -1;
 
         // ---
@@ -453,7 +453,7 @@ public class MinimedCommunicationComLink extends MinimedSerialCommunicationAbstr
         // --- Command: Read Pump State
         // ---
 
-        if (MinimedUtil.isDownloadCanceled())
+        if (MedtronicUtil.isDownloadCanceled())
             return -1;
 
         int pumpState = executeCommandWithIntegerReply(MinimedCommandType.ReadPumpErrorStatus, "Pump State");
@@ -466,7 +466,7 @@ public class MinimedCommunicationComLink extends MinimedSerialCommunicationAbstr
         // return -1;
         // }
 
-        if (MinimedUtil.isDownloadCanceled())
+        if (MedtronicUtil.isDownloadCanceled())
             return -1;
 
         // ---
@@ -511,7 +511,7 @@ public class MinimedCommunicationComLink extends MinimedSerialCommunicationAbstr
             // throw new PlugInBaseException(f);
         }
 
-        if (MinimedUtil.isDownloadCanceled())
+        if (MedtronicUtil.isDownloadCanceled())
             return -1;
 
         // ---
@@ -535,7 +535,7 @@ public class MinimedCommunicationComLink extends MinimedSerialCommunicationAbstr
         // util.getNAKDescription(12));
         // }
 
-        if (MinimedUtil.isDownloadCanceled())
+        if (MedtronicUtil.isDownloadCanceled())
             return -1;
 
         if (dataHandler.getDeviceType() == MinimedDeviceType.Minimed_511)
@@ -544,7 +544,7 @@ public class MinimedCommunicationComLink extends MinimedSerialCommunicationAbstr
             String fwVersion = executeCommandWithStringReply(
                 MinimedCommandType.getReadTemporaryBasal(this.dataHandler.getDeviceType()), "Temporary Basal");
 
-            MinimedUtil.setFirmwareVersion(fwVersion);
+            MedtronicUtil.setFirmwareVersion(fwVersion);
 
         }
 
@@ -569,12 +569,12 @@ public class MinimedCommunicationComLink extends MinimedSerialCommunicationAbstr
         // if (true)
         // return 0;
 
-        if (MinimedUtil.isFirmwareVersion_16_or_17())
+        if (MedtronicUtil.isFirmwareVersion_16_or_17())
         {
             executeCommandWithRetry(MinimedCommandType.PushAck);
-            MinimedUtil.sleepMs(500);
+            MedtronicUtil.sleepMs(500);
             executeCommandWithRetry(MinimedCommandType.PushEsc);
-            MinimedUtil.sleepMs(500);
+            MedtronicUtil.sleepMs(500);
         }
 
         executeCommandWithRetry(MinimedCommandType.CancelSuspend);
@@ -723,7 +723,7 @@ public class MinimedCommunicationComLink extends MinimedSerialCommunicationAbstr
         this.setDeviceTimeout(commandPacket.commandType.maxAllowedTime);
 
         LOG.info("    sendCommandToDevice: SENDING " + commandPacket.getFullCommandDescription() + " for pump #"
-                + MinimedUtil.getSerialNumber());
+                + MedtronicUtil.getSerialNumber());
 
         byte cmd[] = createTransmitPacketForCommand(commandPacket);
         this.writeToPhysicalPort(cmd);
@@ -796,12 +796,12 @@ public class MinimedCommunicationComLink extends MinimedSerialCommunicationAbstr
         if (debug)
             LOG.debug("readDeviceReadyByteDevice: sendData=" + sendData + " - Start");
 
-        MinimedUtil.sleepInterface();
+        MedtronicUtil.sleepInterface();
 
         if (sendData)
         {
             this.writeToPhysicalPort(COMMAND_7_BEL);
-            MinimedUtil.sleepInterface();
+            MedtronicUtil.sleepInterface();
             readAcknowledgeFromDevice();
         }
 
@@ -1067,7 +1067,7 @@ public class MinimedCommunicationComLink extends MinimedSerialCommunicationAbstr
 
         boolean ackFound = false;
 
-        MinimedUtil.sleepPhysicalCommunication();
+        MedtronicUtil.sleepPhysicalCommunication();
 
         byte deviceData[] = this.readDataUntilEmpty();
 
@@ -1147,7 +1147,7 @@ public class MinimedCommunicationComLink extends MinimedSerialCommunicationAbstr
 
         this.writeToPhysicalPort(COMMAND_8_BS);
 
-        // MinimedUtil.sleepPhysicalCommunication();
+        // MedtronicUtil.sleepPhysicalCommunication();
 
         byte endData[] = this.decrypt(this.readDataUntilEmptyAndRemoveACK());
 
@@ -1179,13 +1179,13 @@ public class MinimedCommunicationComLink extends MinimedSerialCommunicationAbstr
             throw new PlugInBaseException(PlugInExceptionType.DeviceNAKOrInvalidCRCDesc, new Object[] { error });
         }
 
-        if (MinimedUtil.getSerialNumberBCD()[0] != arrayData[1] || //
-                MinimedUtil.getSerialNumberBCD()[1] != arrayData[2] || //
-                MinimedUtil.getSerialNumberBCD()[2] != arrayData[3])
+        if (MedtronicUtil.getSerialNumberBCD()[0] != arrayData[1] || //
+                MedtronicUtil.getSerialNumberBCD()[1] != arrayData[2] || //
+                MedtronicUtil.getSerialNumberBCD()[2] != arrayData[3])
         {
             String error = "Command " + commandPacket.getFullCommandDescription()
                     + " returned bad serial number code (expected="
-                    + returnSerialBCD(null, MinimedUtil.getSerialNumberBCD()) + ", returned="
+                    + returnSerialBCD(null, MedtronicUtil.getSerialNumberBCD()) + ", returned="
                     + returnSerialBCD(arrayData, null) + ")";
             LOG.error(error);
             throw new PlugInBaseException(PlugInExceptionType.DeviceNAKOrInvalidCRCDesc, new Object[] { error });
@@ -1372,7 +1372,7 @@ public class MinimedCommunicationComLink extends MinimedSerialCommunicationAbstr
             MinimedDataPage dataPage = new MinimedDataPage(reply);
             dataPage.setTargetType(dataHandler.getDeviceTargetType());
 
-            MinimedUtil.getHistoryDecoderProcessor().processPage(dataPage, MinimedUtil.getOutputWriter());
+            MedtronicUtil.getHistoryDecoderProcessor().processPage(dataPage, MedtronicUtil.getOutputWriter());
         }
 
         if (lowLevelDebug)

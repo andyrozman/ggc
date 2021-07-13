@@ -6,13 +6,12 @@ import java.nio.ByteOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.minimed.comm.usb.contournext.data.MedtronicCnlSession;
 import ggc.plugin.device.impl.minimed.comm.usb.contournext.data.message.ContourNextLinkMessage;
 import ggc.plugin.device.impl.minimed.comm.usb.contournext.data.message.MessageUtils;
 import ggc.plugin.device.impl.minimed.comm.usb.contournext.enums.CommandType;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 
 /**
  * Based on 600SeriesAndroidUploader implementation. Message for 5xx devices by Andy
@@ -69,28 +68,22 @@ public class ContourNextLinkBinaryMessage5xx extends ContourNextLinkMessage
         payloadBuffer.position(32);
         payloadBuffer.put(MessageUtils.oneByteSum(payloadBuffer.array()));
 
-        System.out.println("Packet: " + MinimedUtil.getBitUtils().getDebugArrayHexValue(payloadBuffer.array()));
+        System.out.println("Packet internal: " + MedtronicUtil.getBitUtils().getDebugArrayHexValue(payloadBuffer.array()));
 
         return payloadBuffer.array();
 
     }
 
 
-    public static ContourNextLinkMessage fromBytes(byte[] bytes) throws PlugInBaseException
+    public static MedtronicReceiveMessage5xx fromBytes(byte[] bytes) throws PlugInBaseException
     {
-        ContourNextLinkMessage message = new ContourNextLinkMessage(bytes);
 
-        // Validate checksum
-        byte messageChecksum = message.mPayload.get(32);
-        byte calculatedChecksum = (byte) (MessageUtils.oneByteSum(message.mPayload.array()) - messageChecksum);
+        return MedtronicReceiveMessage5xx.fromBytes(bytes);
 
-        if (messageChecksum != calculatedChecksum)
-        {
-            throw new PlugInBaseException(PlugInExceptionType.FailedCRCCheck,
-                    new Object[] { (int) calculatedChecksum, (int) messageChecksum });
-        }
 
-        return message;
+
+
+        //return message;
     }
 
 }

@@ -16,6 +16,7 @@ import ggc.meter.defs.GlucoseMeterMarker;
 import ggc.meter.defs.device.MeterDeviceDefinition;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.data.enums.PlugInExceptionType;
+import ggc.plugin.data.progress.ProgressType;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.output.OutputWriter;
@@ -55,13 +56,16 @@ public class AscensiaDecoder
     private I18nControlAbstract i18nControl;
     protected TimeZoneUtil tzu = TimeZoneUtil.getInstance();
     private MeterDeviceDefinition meterDeviceDefinition;
+    AscensiaContourUsbReader ascensiaContourUsbReader;
 
 
-    public AscensiaDecoder(OutputWriter writer, MeterDeviceDefinition meterDeviceDefinition)
+    public AscensiaDecoder(OutputWriter writer, MeterDeviceDefinition meterDeviceDefinition,
+            AscensiaContourUsbReader ascensiaContourUsbReader)
     {
         this.outputWriter = writer;
         i18nControl = DataAccessMeter.getInstance().getI18nControlInstance();
         this.meterDeviceDefinition = meterDeviceDefinition;
+        this.ascensiaContourUsbReader = ascensiaContourUsbReader;
     }
 
 
@@ -117,6 +121,7 @@ public class AscensiaDecoder
     private void decodePatientInfo(String text)
     {
         // ignored for now
+        // System.out.println("Patient info: " + text);
     }
 
 
@@ -193,7 +198,8 @@ public class AscensiaDecoder
         ATechDate correctedDate = tzu.getCorrectedDateTime(new ATechDate(Long.parseLong(time)));
         GlucoseUnitType unitType = unit.startsWith("mg/dL") ? GlucoseUnitType.mg_dL : GlucoseUnitType.mmol_L;
 
-        LOG.debug("Data: dt={}, value={}, unit={}", correctedDate, value, unitType.getTranslation());
+        // LOG.debug("Data: dt={}, value={}, unit={}", correctedDate, value,
+        // unitType.getTranslation());
 
         mve.setDateTimeObject(correctedDate);
         mve.setBgValue(value, unitType);
@@ -369,12 +375,28 @@ public class AscensiaDecoder
 
     private void decodeHeader(String text)
     {
+        // System.out.println("Header: " + text);
+
         StringTokenizer stringTokenizer = new StringTokenizer(text, "|");
         stringTokenizer.nextToken();
         stringTokenizer.nextToken();
         stringTokenizer.nextToken();
         // stringTokenizer.nextToken();
         String identifier = stringTokenizer.nextToken();
+
+        if (stringTokenizer.hasMoreTokens())
+            stringTokenizer.nextToken();
+
+        if (stringTokenizer.hasMoreTokens())
+        {
+            String number = stringTokenizer.nextToken();
+            LOG.debug("Items count: {}", number);
+
+            if (ascensiaContourUsbReader != null)
+            {
+                ascensiaContourUsbReader.configureProgressReporter(ProgressType.Dynamic, 0, 0, Integer.valueOf(number));
+            }
+        }
 
         decodeHeaderDeviceIdentification(identifier);
 
@@ -414,12 +436,12 @@ public class AscensiaDecoder
 
         StringTokenizer strtok2 = new StringTokenizer(versions, "\\");
 
-        di.device_software_version = strtok2.nextToken();
-        di.device_hardware_version = strtok2.nextToken();
-        di.device_serial_number = serial;
+        di.deviceSoftwareVersion = strtok2.nextToken();
+        di.deviceHardwareVersion = strtok2.nextToken();
+        di.deviceSerialNumber = serial;
 
-        inf += i18nControl.getMessage("SOFTWARE_VERSION") + ": " + di.device_software_version;
-        inf += i18nControl.getMessage("\nEEPROM_VERSION") + ": " + di.device_hardware_version;
+        inf += i18nControl.getMessage("SOFTWARE_VERSION") + ": " + di.deviceSoftwareVersion;
+        inf += i18nControl.getMessage("\nEEPROM_VERSION") + ": " + di.deviceHardwareVersion;
 
         inf += i18nControl.getMessage("\nSERIAL_NUMBER") + ": " + serial;
 

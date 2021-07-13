@@ -61,6 +61,7 @@ public enum PlugInExceptionType
     DeviceFailedToReadResponse("Failed to read contents of device packet"), //
     DeviceModelCouldNotBeIdentified("Device Model could not be identified."), //
     DeviceCouldNotBeContacted("Device could not be contacted."), //
+    LostCommunicationWithDevice("Lost communication with device."), //
     TimeoutReadingData("Timeout reading data from device."), //
     DeviceErrorWritingToDevice("EXC_RECEIVER_ERROR_WRITING"), //
     DeviceNotFound("Device not found."), //
@@ -90,6 +91,7 @@ public enum PlugInExceptionType
     FailedEncryptionDecryption("Failed encryption/decryption of data."), //
     FailedEncryptionDecryptionDesc("Failed encryption/decryption of data - (%s)."), //
     UnsupportedTypeOfParametersForCommand("EXC_UNSUPPORTED_TYPE_OF_PARAMS_FOR_CMD"), //
+    NoDataFound("No data found."), //
 
     // Handler
     WrongDeviceConfigurationSelected("Wrong device implementation selected: %s (supported %s)"), //
@@ -109,7 +111,7 @@ public enum PlugInExceptionType
     ErrorCommunicationWithProtocolHandler("Error communicating with specific library [%s]: (%s)"), //
 
     Hid4JavaAPIError("Error using Hid4Java API: %s\n%s"), //
-    ;
+    UnexpectedException("Unexpected exception caught: %s");
 
     // DXC_PARSING_ERROR = Error parsing. Exception: %s
     // DXC_PARSING_ERROR_UNSUPP_DATA_LENGTH = Error parsing. Unsupported data

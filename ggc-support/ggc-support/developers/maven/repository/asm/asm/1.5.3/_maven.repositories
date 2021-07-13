@@ -1,0 +1,6 @@
+#NOTE: This is an internal implementation file, its format can be changed without prior notice.
+#Sun Sep 14 17:02:20 CEST 2014
+asm-1.5.3.jar>nexus-infonova=
+asm-1.5.3.pom>nexus-infonova=
+asm-1.5.3.jar>=
+asm-1.5.3.pom>central=

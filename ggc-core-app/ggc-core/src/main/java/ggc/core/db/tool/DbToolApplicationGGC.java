@@ -2,6 +2,7 @@ package ggc.core.db.tool;
 
 import java.io.BufferedWriter;
 
+import com.atech.data.user_data_dir.UserDataDirectory;
 import com.atech.db.hibernate.HibernateConfiguration;
 import com.atech.db.hibernate.tool.app.DbToolApplicationInitDb;
 import com.atech.db.hibernate.tool.app.DbToolApplicationInterface;
@@ -106,7 +107,7 @@ public class DbToolApplicationGGC extends DbToolApplicationLAF implements DbTool
      */
     public String getApplicationDatabaseConfig()
     {
-        return "../data/GGC_Config.properties";
+        return UserDataDirectory.getInstance().getParsedUserDataPath("%USER_DATA_DIR%/GGC_Config.properties");
     }
 
 

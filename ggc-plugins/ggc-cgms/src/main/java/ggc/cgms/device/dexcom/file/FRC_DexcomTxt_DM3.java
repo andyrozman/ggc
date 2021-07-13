@@ -213,7 +213,7 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileR
             sub.setDateTime(DexcomCGMS.getDateTimeFromString(tmp_time));
             sub.setType(CGMSBaseDataType.SensorReading);
             strtok.nextToken();
-            sub.value = Integer.parseInt(strtok.nextToken());
+            sub.value = strtok.nextToken();
             addEntry(sub);
 
             if (read_type == 2)
@@ -225,7 +225,7 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileR
                 // sub.time = DexcomCGMS.getTimeFromString(tmp_time);
                 sub.setType(CGMSBaseDataType.SensorCalibration);
                 strtok.nextToken();
-                sub.value = Integer.parseInt(strtok.nextToken());
+                sub.value = strtok.nextToken();
                 addEntry(sub);
 
                 // System.out.println("" + sub);

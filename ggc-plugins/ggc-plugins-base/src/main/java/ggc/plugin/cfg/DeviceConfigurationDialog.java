@@ -345,13 +345,13 @@ public class DeviceConfigurationDialog extends JDialog
 
         buttons = new JButton[3];
 
-        buttons[0] = ATSwingUtils.getButton("  " + m_ic.getMessage("OK"), 50, start_y + 10, 110, 25, main_panel,
+        buttons[0] = ATSwingUtils.getButton("  " + m_ic.getMessage("OK"), 50, start_y + 5, 110, 35, main_panel,
             ATSwingUtils.FONT_NORMAL, "ok.png", "ok", this, m_da);
 
-        buttons[1] = ATSwingUtils.getButton("  " + m_ic.getMessage("CANCEL"), 170, start_y + 10, 110, 25, main_panel,
+        buttons[1] = ATSwingUtils.getButton("  " + m_ic.getMessage("CANCEL"), 170, start_y + 5, 110, 35, main_panel,
             ATSwingUtils.FONT_NORMAL, "cancel.png", "cancel", this, m_da);
 
-        help_button = ATSwingUtils.createHelpButtonByBounds(290, start_y + 10, 110, 25, this, ATSwingUtils.FONT_NORMAL,
+        help_button = ATSwingUtils.createHelpButtonByBounds(290, start_y + 5, 110, 35, this, ATSwingUtils.FONT_NORMAL,
             m_da.getImagesRoot(), m_ic); // ATDataAccessAbstract.FONT_NORMAL);
         main_panel.add(help_button);
         buttons[2] = help_button;
@@ -419,9 +419,9 @@ public class DeviceConfigurationDialog extends JDialog
             start_y += 210;
         }
 
-        buttons[0].setBounds(50, start_y + 10, 110, 25);
-        buttons[1].setBounds(170, start_y + 10, 110, 25);
-        buttons[2].setBounds(290, start_y + 10, 110, 25);
+        buttons[0].setBounds(50, start_y + 5, 110, 35);
+        buttons[1].setBounds(170, start_y + 5, 110, 35);
+        buttons[2].setBounds(290, start_y + 5, 110, 35);
 
         setSize(450, start_y + 80);
         main_panel.setBounds(0, 0, 450, start_y + 80);
@@ -573,7 +573,7 @@ public class DeviceConfigurationDialog extends JDialog
                 this.refreshCommunicationSettings();
                 this.communicationSettingsPanel.setParameters(null);
 
-                System.out.println("Device V1 " + currentDeviceV1 + ", Device V2 " + currentDeviceV2);
+                //System.out.println("Device V1 " + currentDeviceV1 + ", Device V2 " + currentDeviceV2);
 
                 showDevice();
             }

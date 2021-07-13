@@ -1,6 +1,5 @@
 package ggc.pump.data.defs;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,48 +36,28 @@ import ggc.plugin.device.impl.animas.enums.AnimasTransferType;
 
 public enum PumpSettingsType implements CodeEnum
 {
-    UnknownDataType(0), //
-    SerialNumber(8, "Serial Number", false, 1, AnimasTransferType.All), //
-    BasalProfile(11, "Basal Profile", false, 4, AnimasTransferType.DownloadPumpSettings), //
-    ActiveBasal(12, "Active Basal", false, 1, AnimasTransferType.DownloadPumpSettings), //
+    UnknownDataType, //
+    // SerialNumber(8, "Serial Number", false, 1, AnimasTransferType.All), //
+    // BasalProfile(11, "Basal Profile", false, 4, AnimasTransferType.DownloadPumpSettings), //
+    // ActiveBasal(12, "Active Basal", false, 1, AnimasTransferType.DownloadPumpSettings), //
     AdvancedSettings(13, "Advanced Settings", false, 1, AnimasTransferType.DownloadPumpSettings), //
     SoundSettings(14, "Sound settings", false, 1, AnimasTransferType.DownloadPumpSettings), //
-    BasalProfileName(18, "Basal Profile Name", false, 4, AnimasTransferType.DownloadPumpSettings), //
-    PumpSettings1_Pre2020(19, "Pump Name (pre 2020)", false, 1, AnimasTransferType.DownloadPumpSettings, //
-            Arrays.asList(AnimasDeviceType.Animas_Family_Pre2200)), //
-    PumpSettings2_Pre2020(20, "Pump Profile Name (pre 2020)", false, 4, AnimasTransferType.DownloadPumpSettings, //
-            Arrays.asList(AnimasDeviceType.Animas_Family_Pre2200)),
-
-    // 21 - 26
-    BolusHistory(21, "Bolus History", true, 500, AnimasTransferType.DownloadPumpData), // 500?
-    TotalDailyDoseHistory(22, "Total Daily Dose History", true, 120, AnimasTransferType.DownloadPumpData), //
-    AlarmHistory(23, "Alarm History", true, 30, AnimasTransferType.DownloadPumpData), //
-    PrimeHistory(24, "Prime History", true, 60, AnimasTransferType.DownloadPumpData), //
-    SuspendHistory(25, "Suspend/Resume History", true, 30, AnimasTransferType.DownloadPumpData), //
-    BasalRateHistory(26, "Basal Rate History", true, 270, AnimasTransferType.DownloadPumpData), //
+    // BasalProfileName(18, "Basal Profile Name", false, 4,
+    // AnimasTransferType.DownloadPumpSettings), //
 
     ClockMode(28, "Clock Mode", false, 1, AnimasTransferType.All), //
-    BGUnit(29, "BG Unit", false, 1, AnimasTransferType.All), //
-    SoftwareCode(30, "Software Code", false, 1, AnimasTransferType.All), //
-
-    FontTableIndex(34, "Font Table Index", false, 1, AnimasTransferType.UploadFoodDb), //
-    LanguageIndex(35, "Language Font Index", false, 1, AnimasTransferType.UploadFoodDb), //
-    FoodDbSize(36, "Food Db Size", false, 1, AnimasTransferType.All), //
-
-    DosingSettings(37, "Dosing Settings (pre 2020)", false, 1, AnimasTransferType.DownloadPumpSettings, //
-            Arrays.asList(AnimasDeviceType.Animas_Family_Pre2200)), // pre 2002
-
-    BolusHistoryExt(38, "BolusHistoryExt", false, 500, AnimasTransferType.DownloadPumpData, Arrays.asList(//
-            AnimasDeviceType.Animas_Family_2200, //
-            AnimasDeviceType.Animas_Family_Ping, //
-            AnimasDeviceType.Animas_Family_Vibe)), //
+    // BGUnit(29, "BG Unit", false, 1, AnimasTransferType.All), //
+    // SoftwareCode(30, "Software Code", false, 1, AnimasTransferType.All), //
 
     // SETTINGS_ALL(39), //
     InsulinCarbRatio, //
     InsulinBGRatio, //
     BGTargets, //
     BasalPatterns, //
-    FriendlyName, DeviceSerialAndVersion(), GlucoseUnit(), ActiveBasalPattern();
+    FriendlyName, //
+    DeviceSerialAndVersion, //
+    GlucoseUnit, //
+    ActiveBasalPattern,;
 
     // 33215
 
@@ -117,19 +96,22 @@ public enum PumpSettingsType implements CodeEnum
     }
 
 
-    private PumpSettingsType(int code, String debugDescription, boolean isDateInDataType, int entriesCount, AnimasTransferType baseTransferType)
+    private PumpSettingsType(int code, String debugDescription, boolean isDateInDataType, int entriesCount,
+            AnimasTransferType baseTransferType)
     {
         this(code, debugDescription, isDateInDataType, entriesCount, baseTransferType, null);
     }
 
 
-    private PumpSettingsType(int code, String debugDescription, boolean isDateInDataType, int entriesCount, AnimasTransferType baseTransferType, List<AnimasDeviceType> allowedDevices)
+    private PumpSettingsType(int code, String debugDescription, boolean isDateInDataType, int entriesCount,
+            AnimasTransferType baseTransferType, List<AnimasDeviceType> allowedDevices)
     {
         this(code, debugDescription, isDateInDataType, entriesCount, baseTransferType, allowedDevices, false);
     }
 
 
-    private PumpSettingsType(int code, String debugDescription, boolean isDateInDataType, int entriesCount, AnimasTransferType baseTransferType, List<AnimasDeviceType> allowedDevices, boolean postProcessing)
+    private PumpSettingsType(int code, String debugDescription, boolean isDateInDataType, int entriesCount,
+            AnimasTransferType baseTransferType, List<AnimasDeviceType> allowedDevices, boolean postProcessing)
     {
         this.code = code;
         this.isDateInDataType = isDateInDataType;

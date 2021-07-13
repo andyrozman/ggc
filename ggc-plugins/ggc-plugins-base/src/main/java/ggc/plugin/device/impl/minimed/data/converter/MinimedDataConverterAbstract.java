@@ -12,7 +12,7 @@ import com.atech.utils.data.BitUtils;
 import ggc.core.data.defs.GlucoseUnitType;
 import ggc.plugin.device.impl.minimed.data.MinimedCommandReply;
 import ggc.plugin.device.impl.minimed.enums.MinimedCommandType;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -48,7 +48,7 @@ public abstract class MinimedDataConverterAbstract implements MinimedDataConvert
     private static final Logger LOG = LoggerFactory.getLogger(MinimedDataConverterAbstract.class);
 
     protected DataAccessPlugInBase dataAccess;
-    protected BitUtils bitUtils = MinimedUtil.getBitUtils();
+    protected BitUtils bitUtils = MedtronicUtil.getBitUtils();
     protected OutputWriter outputWriter;
     protected I18nControlAbstract i18nControl;
     public static String templateTimeAmount;
@@ -62,7 +62,7 @@ public abstract class MinimedDataConverterAbstract implements MinimedDataConvert
         this.i18nControl = dataAccess.getI18nControlInstance();
         templateTimeAmount = getMessage("CFG_BASE_FROM") + "=%s, " + getMessage("CFG_BASE_AMOUNT") + "=";
         optionOff = getMessage("CCFG_OPTION_OFF");
-        this.dataDebug = MinimedUtil.isLowLevelDebugData();
+        this.dataDebug = MedtronicUtil.isLowLevelDebugData();
     }
 
 

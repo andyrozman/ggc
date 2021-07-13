@@ -4,9 +4,10 @@
 ****************************************************************
 
 This TO-DO list is sorted by several types:
-I. Projects and sub-projects
-II. Sorted by version
-III. Sorted by Levels of priority
+  I. Projects and sub-projects
+ II. Sorted by version
+III. Planned Devices 
+IV.  Language Support
 
 
 =========
@@ -69,10 +70,134 @@ We plan to change version to 1.0, when all entries specified with [1.0] are
 finished (Help for english, Upgrade, Db Tool and Support for multiple persons)
 
 
-Version 0.8  [x.6.2017]
+Version 0.8  [31.5.2018]
 =================================
 
-Contour ONE: - check if works
+UserDirectory: * base functionality
+               - fill user directory if not present (unzip provided data file)
+
+Bugs: - nutrition pen/injection
+      - nutrition db pump
+
+Startup: * start using ext
+    - data dir redefine (hardcoded ../data, need to get away from that)
+             https://stackoverflow.com/questions/11113974/what-is-the-cross-platform-way-of-obtaining-the-path-to-the-local-application-da
+        - unpack if missing:
+             - db
+             - export/import
+             - print
+             - lang configuration
+             - db_info.txt
+             - GGC_Config
+             + log
+             - nutrition
+             - skin_lf_themes
+             - temp
+             - tools
+             - web-lister
+             - update
+             - configuration
+
+        - use:
+             - db
+             - export/import
+             - print
+             + lang configuration
+             - db_info.txt
+             - GGC_Config
+             + log
+             - nutrition
+             + skin_lf_themes
+             - temp
+             * tools
+             + web-lister
+             - update
+             - configuration
+
+FreeStyle Libre:
+         + Download (as Text)
+         + integration Settings
+         * integration Data
+         + remove display of download, add it to the log
+         - extend CGMS framework: + Db: + read extended data
+                                        + display extended data
+                                  * Writer: * write extended data:
+                                                 * BG
+                                                 * Insulin,
+                                                 * Ketones,
+                                                 * Health,
+                                                 * Exercise
+                                  + Viewer: + show extended data
+                                            + add filter
+         + test display settings
+         * test import data
+
+FreeStyle Neo:  * base downloading
+                - integration
+                - progress
+                - test BG
+                - test Ketones
+
+Connect (0.2):   + base
+                 + about
+                 + plugin info (main page)
+                 - import dialogs: + select
+                                   * summary
+                                   - download data dialog
+                                   - show settings dialog
+
+			     - diasend 0.1:  * Diasend CGM
+			                     - Diasend Insulin and pump settings
+
+			     - nightscout 0.1:
+
+			     - tidepool 0.1:
+			                
+			                
+Installer:   * Base installer package: 
+             - Linux
+             - Windows
+             - Mac
+			                
+
+HID interface:  - go through all log entries and change some to INFO
+
+Bugs:    - import / export (need to be fixed)
+
+HbA1c:   - add converter ICCT / DCCT /eAG
+         - add HbA1cType
+         - refactor ATechConverter to use interfaced Enums (UnitDefinition or smth)
+         - refactor BG Converter to interfaced Enums
+         - change HbA1c Dialog
+
+Release 0.8: - prepare release
+             - release
+             - webpage
+             - deploy SF
+             - update server - add info
+
+---------------------------------
+
+Installer:  ALL:
+                - README too small (not consistent)
+                - uninstall shouldn't uninstall everything (refactoring UserDirectory !!!)
+
+
+            Mac OsX:  - can't install for privileged user
+                      + no shortcut
+                      + setenv for java
+
+            Linux: - no shortcut 
+                   + shortcut there, but not visible, and not on desktop,
+                   + no icon
+                   - new installer directory
+                   - readme doesn't work on linux =, ticket opened
+
+            Windows: - ???
+
+=================================
+Version 0.8 - DONE
+=================================
 
 Menarini support: + implement
                   + integrate
@@ -82,14 +207,23 @@ Arkray support:  + implement
 
 Db Version: + determine version from resource file contents
 
-Release 0.8: - prepare release
-             - release
-             - webpage
-             - deploy SF
-             - update server - add info
+NrJavaSerial:   + change
+                + test
+
+Bugs:    + pump daily screen
+         + refresh after configuration
+         + animas bg import fix
+
+Hid4Java:   + change (version 0.5 for 1.6)
+            + changes for windows platform (disable USB scanner)
+            + test
+
+Contour ONE: + check if works
+             + fix implementation
+             + fix progress
 
 
-
+=================================
 Version 0.9  [x.12.2017]
 =================================
 
@@ -108,7 +242,6 @@ DbTool(?): - base GGC
            - restore GGC
 
 Menarini support: - test
-
 Arkray support: - test
 
 HbA1c: - for Pump
@@ -132,16 +265,37 @@ Doctors:  - integrate [Required Db Update functionality]
 Graph: - Configuration CGMS for Graph (Low, High Value)
 
 
+Hid4Java:   - use serialNumber to access devices
 
-Hid4Java: - use version 0.5
-          - use serialNumber to access devices
-          - changes to code (disable USB scanner)
+
+
 
 (4)
 Release 0.9:  - prepare release
               - release
               - upgrade configuration
               - upgrade server deploy
+
+
+
+
+
+
+      - 0.9
+            - translation tool integration
+
+			- DbTool (Init, Export, Import)
+			- Upgrade
+			- Db Upgrade
+
+
+			- Stocks (only in DB-8)
+			- Minimed through Meter (pumps 5xx)
+
+			- Release (x.12)
+
+
+
 
 
 ================================
@@ -235,8 +389,8 @@ Pen/Injection: - Additional data: BP, Weight, Pills
 PLUGINS - CONNECT
 -------------------------------------------------------------------------
 
-GGC Connect Plugin:  - base
-                     - about
+GGC Connect Plugin:  + base
+                     + about
                      - display version
                      - integrate
                      - export GUI
@@ -250,6 +404,12 @@ GGC Connect Plugin:  - base
                      - SiDiary: - export
                                 - import
                      - connect to Nutrition SLO Db
+                     			     - diasend 0.1:  * Diasend CGM
+                     			                     - Diasend Insulin and pump settings
+
+                     			     - nightscout 0.1: - ???
+
+                     			     - tidepool 0.1: - ???
 
 * Import of data from SiDiary Desktop application. SiDiary has its sister
     applications running on many small devices (PocketPC, Palms, SmartPhones,
@@ -427,13 +587,61 @@ ReportPluginDefinition:
 
 
 
+III.  PLANNED DEVICES
+=======================
+
+METER
+Ascensia One                                        Ready To Test
+Wellion Calla                                       NS - 2018
+GlucoMen Ready                                      Ready To Test
+Contour Next                                        Tested
+Contour One                                         Tested
+Healt Pro - od justineka 15 EUR                     NS - ??
+Abbott Neo                                          In implementation
+
+
+PUMP
+Minimed 5xx - Contour Next Link - Pump              20% (2018)
+Minimed 5xx - Contour Next Link - Pump Settings     20% (2018)
+
+
+CGMS
+Abbot Libre
+Minimed 5xx - Contour Next Link - CGMS              0%  (2019) 
+Minimed 5xx - Contour Next Link - CGMS Settings     0%  (2019) 
+
+
+OTHER
+- Weight
+
+
+
+SOFTWARE
+- DiaSend
+- NUTRI Db Slovenia
+- 
+
+
+
+METER
+
+Bauerfind
 
 
 
 
 
 
-III. LANGUAGE SUPPORT
+PUMPS
+Minimed L2 Files
+
+Tandem    
+
+
+
+
+
+IV. LANGUAGE SUPPORT
 ======================
 
 LANGUAGE           STATUS        LAST UPDATE

@@ -3,17 +3,16 @@ package ggc.cgms.gui.viewer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.*;
 
 import javax.swing.*;
 
 import com.atech.graphics.calendar.CalendarEvent;
 import com.atech.graphics.calendar.CalendarListener;
 import com.atech.graphics.calendar.CalendarPane;
-import com.atech.graphics.components.MultiLineTooltipModel;
+import com.atech.graphics.components.jtable.JTableWithToolTip;
 import com.atech.graphics.graphs.GraphViewer;
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
@@ -22,6 +21,7 @@ import com.atech.utils.ATSwingUtils;
 import ggc.cgms.data.CGMSDailyStatistics;
 import ggc.cgms.data.CGMSValuesSubEntry;
 import ggc.cgms.data.db.GGC_CGMSDb;
+import ggc.cgms.data.defs.CGMSViewerFilter;
 import ggc.cgms.data.graph.CGMSGraphViewDaily;
 import ggc.cgms.util.CGMSUtil;
 import ggc.cgms.util.DataAccessCGMS;
@@ -88,6 +88,7 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
     JButton saveButton;
     JButton help_button;
     DeviceValuesDay dayData;
+    JComboBox filterCombo;
 
     GGC_CGMSDb m_db = null;
 
@@ -155,17 +156,32 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
     }
 
 
-    private void refreshData()
+    private void refreshTable()
     {
-        dayData = m_da.getDb().getDailyCGMSValues(this.current_date);
-        dayData.sort();
-        model.setDailyValues(dayData);
+        refreshData();
 
-        dayDataList = CGMSUtil.getDataList(dayData.getList());
-        stats.processFullCollection(dayDataList);
-        updateLabels();
+        model.setDayDataList(dayDataList, (CGMSViewerFilter) filterCombo.getSelectedItem());
 
         this.model.fireTableChanged(null);
+    }
+
+
+    public void refreshData()
+    {
+        dayData = m_da.getDb().getDailyCGMSValues(this.current_date, true);
+        dayDataList = CGMSUtil.getDataList(dayData.getList());
+        stats.processFullCollection(dayDataList);
+
+        updateLabels();
+
+        Collections.sort(dayDataList, new Comparator<CGMSValuesSubEntry>()
+        {
+
+            public int compare(final CGMSValuesSubEntry keyValue1, final CGMSValuesSubEntry keyValue2)
+            {
+                return keyValue1.time - keyValue2.time;
+            }
+        });
     }
 
 
@@ -194,7 +210,7 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
         stats = new CGMSDailyStatistics();
         m_da.addComponent(this);
 
-        setSize(550, 470);
+        setSize(650, 500);
         ATSwingUtils.centerJDialog(this, parent);
 
         // setBounds(150, 150, 550, 500);
@@ -208,14 +224,14 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
 
         pan_sub.add(new JLabel(m_ic.getMessage("AVG_BG") + ":"));
         pan_sub.add(avg_BG_1 = new JLabel());
-        pan_sub.add(new JLabel(m_ic.getMessage("HIGHEST") + ":"));
-        pan_sub.add(high_BG_1 = new JLabel());
         pan_sub.add(new JLabel(m_ic.getMessage("READINGS") + ":"));
         pan_sub.add(readings_1 = new JLabel());
-        pan_sub.add(new JLabel(m_ic.getMessage("STD_DEV") + ":"));
-        pan_sub.add(std_dev_1 = new JLabel());
+        pan_sub.add(new JLabel(m_ic.getMessage("HIGHEST") + ":"));
+        pan_sub.add(high_BG_1 = new JLabel());
         pan_sub.add(new JLabel(m_ic.getMessage("LOWEST") + ":"));
         pan_sub.add(low_BG_1 = new JLabel());
+        pan_sub.add(new JLabel(m_ic.getMessage("STD_DEV") + ":"));
+        pan_sub.add(std_dev_1 = new JLabel());
 
         dayStats.add(pan_sub);
 
@@ -224,86 +240,36 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
 
         pan_sub.add(new JLabel(m_ic.getMessage("AVG_BG") + ":"));
         pan_sub.add(avg_BG_2 = new JLabel());
-        pan_sub.add(new JLabel(m_ic.getMessage("HIGHEST") + ":"));
-        pan_sub.add(high_BG_2 = new JLabel());
         pan_sub.add(new JLabel(m_ic.getMessage("READINGS") + ":"));
         pan_sub.add(readings_2 = new JLabel());
-        pan_sub.add(new JLabel(m_ic.getMessage("STD_DEV") + ":"));
-        pan_sub.add(std_dev_2 = new JLabel());
+        pan_sub.add(new JLabel(m_ic.getMessage("HIGHEST") + ":"));
+        pan_sub.add(high_BG_2 = new JLabel());
         pan_sub.add(new JLabel(m_ic.getMessage("LOWEST") + ":"));
         pan_sub.add(low_BG_2 = new JLabel());
+        pan_sub.add(new JLabel(m_ic.getMessage("STD_DEV") + ":"));
+        pan_sub.add(std_dev_2 = new JLabel());
 
         dayStats.add(pan_sub);
 
-        /*
-         * JPanel BGPanel = new JPanel(new GridLayout(0, 6));
-         * BGPanel.setBorder(BorderFactory.createTitledBorder(i18nControl.
-         * getMessage(
-         * "BLOOD_GLUCOSE_CALIB") + ":"));
-         * BGPanel.add(new JLabel(i18nControl.getMessage("AVG_BG") + ":"));
-         * BGPanel.add(avgBG = new JLabel());
-         * BGPanel.add(new JLabel(i18nControl.getMessage("HIGHEST") + ":"));
-         * BGPanel.add(highestBG = new JLabel());
-         * BGPanel.add(new JLabel(i18nControl.getMessage("READINGS") + ":"));
-         * BGPanel.add(readings = new JLabel());
-         * BGPanel.add(new JLabel(i18nControl.getMessage("STD_DEV") + ":"));
-         * BGPanel.add(stdDev = new JLabel());
-         * BGPanel.add(new JLabel(i18nControl.getMessage("LOWEST") + ":"));
-         * BGPanel.add(lowestBG = new JLabel());
-         * InsPanel.add(new JLabel(getIns1Abbr() + ":"));
-         * InsPanel.add(sumIns1 = new JLabel());
-         * InsPanel.add(new JLabel(i18nControl.getMessage("AVG") + " " +
-         * getIns1Abbr()
-         * + ":"));
-         * InsPanel.add(avgIns1 = new JLabel());
-         * InsPanel.add(new JLabel(i18nControl.getMessage("DOSE") + " " +
-         * getIns1Abbr()
-         * + ":"));
-         * InsPanel.add(doseIns1 = new JLabel());
-         * InsPanel.add(new JLabel(getIns2Abbr() + ":"));
-         * InsPanel.add(sumIns2 = new JLabel());
-         * InsPanel.add(new JLabel(i18nControl.getMessage("AVG") + " " +
-         * getIns2Abbr()
-         * + ":"));
-         * InsPanel.add(avgIns2 = new JLabel());
-         * InsPanel.add(new JLabel(i18nControl.getMessage("DOSE") + " " +
-         * getIns2Abbr()
-         * + ":"));
-         * InsPanel.add(doseIns2 = new JLabel());
-         * InsPanel.add(new JLabel(i18nControl.getMessage("TOTAL") + ":"));
-         * InsPanel.add(sumIns = new JLabel());
-         * InsPanel.add(new JLabel("")); //i18nControl.getMessage("AVG_INS") +
-         * ":"));
-         * InsPanel.add(avgIns = new JLabel());
-         * InsPanel.add(new JLabel(i18nControl.getMessage("DOSE_INS") + ":"));
-         * InsPanel.add(doseIns = new JLabel());
-         * // Panel for BU Stats
-         * JPanel BUPanel = new JPanel(new GridLayout(1, 6));
-         * BUPanel.setBorder(BorderFactory.createTitledBorder(i18nControl.
-         * getMessage(
-         * "BREAD_UNITS") + ":"));
-         * BUPanel.add(new JLabel(i18nControl.getMessage("SUM") + ":"));
-         * BUPanel.add(sumBE = new JLabel());
-         * BUPanel.add(new JLabel(i18nControl.getMessage("AVG") + ":"));
-         * BUPanel.add(avgBE = new JLabel());
-         * BUPanel.add(new JLabel(i18nControl.getMessage("MEALS") + ":"));
-         * BUPanel.add(meals = new JLabel());
-         * // Panel for BG Stats
-         * JPanel BGPanel = new JPanel(new GridLayout(0, 6));
-         * BGPanel.setBorder(BorderFactory.createTitledBorder(i18nControl.
-         * getMessage(
-         * "BLOOD_GLUCOSE") + ":"));
-         * BGPanel.add(new JLabel(i18nControl.getMessage("AVG_BG") + ":"));
-         * BGPanel.add(avgBG = new JLabel());
-         * BGPanel.add(new JLabel(i18nControl.getMessage("HIGHEST") + ":"));
-         * BGPanel.add(highestBG = new JLabel());
-         * BGPanel.add(new JLabel(i18nControl.getMessage("READINGS") + ":"));
-         * BGPanel.add(readings = new JLabel());
-         * BGPanel.add(new JLabel(i18nControl.getMessage("STD_DEV") + ":"));
-         * BGPanel.add(stdDev = new JLabel());
-         * BGPanel.add(new JLabel(i18nControl.getMessage("LOWEST") + ":"));
-         * BGPanel.add(lowestBG = new JLabel());
-         */
+        pan_sub = new JPanel(new BorderLayout());
+        pan_sub.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("FILTER") + ":"));
+
+        // pan_sub.add(new JLabel(i18nControl.getMessage("DATA_FILTER") + ":"));
+        pan_sub.add(filterCombo = new JComboBox(CGMSViewerFilter.getAllValues()));
+
+        filterCombo.addItemListener(new ItemListener()
+        {
+
+            public void itemStateChanged(ItemEvent e)
+            {
+                if (e.getStateChange() == ItemEvent.SELECTED)
+                {
+                    model.filterData((CGMSViewerFilter) e.getItem());
+                }
+            }
+        });
+
+        dayStats.add(pan_sub);
 
         JPanel dayHeader = new JPanel();
         dayHeader.setLayout(new BorderLayout());
@@ -318,7 +284,7 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
             public void dateHasChanged(CalendarEvent e)
             {
                 setTitle(e.getNewCalendar());
-                refreshData();
+                refreshTable();
             }
         });
 
@@ -328,72 +294,27 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
         dayHeader.add(dayCalendar, BorderLayout.WEST);
         dayHeader.add(dayStats, BorderLayout.CENTER);
 
-        dayData = m_da.getDb().getDailyCGMSValues(this.current_date);
-        dayData.sort();
-        dayDataList = CGMSUtil.getDataList(dayData.getList());
-        stats.processFullCollection(dayDataList);
+        refreshData();
 
-        updateLabels();
+        model = new CGMSDataTableModel(dayDataList);
 
-        model = new CGMSDataTableModel(dayData);
-
-        table = new JTable(model)
-        {
-
-            /**
-             *
-             */
-            private static final long serialVersionUID = -2174342213914259805L;
-
-
-            // Implement table cell tool tips.
-            @Override
-            public String getToolTipText(MouseEvent e)
-            {
-                // Object source = e.getSource();
-                String tip = null;
-                java.awt.Point p = e.getPoint();
-                int rowIndex = rowAtPoint(p);
-                int colIndex = columnAtPoint(p);
-                int realColumnIndex = convertColumnIndexToModel(colIndex);
-
-                if (model instanceof MultiLineTooltipModel)
-                {
-                    tip = ((MultiLineTooltipModel) model).getToolTipValue(rowIndex, colIndex);
-                }
-                else
-                {
-                    tip = (String) getValueAt(rowIndex, realColumnIndex);
-                }
-
-                if (tip != null && tip.length() == 0)
-                {
-                    tip = null;
-                }
-
-                return tip;
-            }
-
-        };
+        table = new JTableWithToolTip(model);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 
         DataAccess.getSkinManager().reSkinifyComponent(table);
 
         resultsPane = new JScrollPane(table);
-        // resultsPane.getViewport().addMouseListener(ma);
-        // resultsPane.getViewport().setBackground(table.getBackground());
 
-        @SuppressWarnings("unused")
-        DeviceValuesDay pvd = new DeviceValuesDay(DataAccessCGMS.getInstance());
+        float[] widths = { 0.2f, 0.2f, 0.4f, 0.2f };
 
-        m_da.getColumnsWidthManual();
-
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < widths.length; i++)
         {
-            // TODO
-            // table.getColumnModel().getColumn(i).setWidth(pvd.getColumnWidth(i,
-            // 460));
+            int ww = (int) (widths[i] * 460.0f);
+            // System.out.println("w: " + i+ " = " + ww);
+            table.getColumnModel().getColumn(i).setWidth(ww);
         }
+
+        System.out.println(resultsPane.getWidth());
 
         Dimension dim = new Dimension(110, 25);
 
@@ -419,34 +340,7 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
         gg.add(EntryBox1, BorderLayout.WEST);
 
         JPanel EntryBox = new JPanel(new FlowLayout(FlowLayout.RIGHT, 1, 2));
-        // Dimension dim = new Dimension(120, 20);
 
-        /*
-         * JButton addButton = new JButton("  " +
-         * i18nControl.getMessage("ADD"));
-         * addButton.setPreferredSize(dim);
-         * addButton.setIcon(dataAccess.getImageIcon_22x22("table_add.png",
-         * this));
-         * addButton.setActionCommand("add_row");
-         * addButton.addActionListener(this);
-         * EntryBox.add(addButton);
-         * JButton editButton = new JButton("  " +
-         * i18nControl.getMessage("EDIT"));
-         * editButton.setPreferredSize(dim);
-         * editButton.setIcon(dataAccess.getImageIcon_22x22("table_edit.png",
-         * this));
-         * editButton.setActionCommand("edit_row");
-         * editButton.addActionListener(this);
-         * EntryBox.add(editButton);
-         * JButton delButton = new JButton("  " +
-         * i18nControl.getMessage("DELETE"));
-         * delButton.setPreferredSize(dim);
-         * delButton.setIcon(dataAccess.getImageIcon_22x22("table_delete.png",
-         * this));
-         * delButton.setActionCommand("delete_row");
-         * delButton.addActionListener(this);
-         * EntryBox.add(delButton);
-         */
         saveButton = new JButton("  " + m_ic.getMessage("CLOSE"));
         saveButton.setPreferredSize(dim);
         saveButton.setIcon(ATSwingUtils.getImageIcon_22x22("cancel.png", this, m_da));
@@ -461,7 +355,6 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
         // getContentPane().add(EntryBox, BorderLayout.SOUTH);
         getContentPane().add(gg, BorderLayout.SOUTH);
 
-        // updateLabels();
         // TODO re-enable
         m_da.enableHelp(this);
 
@@ -474,9 +367,6 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
         if (dayData == null)
             return;
 
-        // JLabel avg_BG_1, high_BG_1, readings_1, std_dev_1, low_BG_1;
-        // JLabel avg_BG_2, high_BG_2, readings_2, std_dev_2, low_BG_2;
-
         this.readings_1.setText(this.stats.getItemStatisticValueAsStringInt(CGMSValuesSubEntry.STAT_COUNT_BG1));
         this.readings_2.setText(this.stats.getItemStatisticValueAsStringInt(CGMSValuesSubEntry.STAT_COUNT_BG2));
 
@@ -486,9 +376,6 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
         {
             dec_pls = 0;
         }
-
-        // JLabel avg_BG_1, high_BG_1, readings_1, std_dev_1, low_BG_1;
-        // JLabel avg_BG_2, high_BG_2, readings_2, std_dev_2, low_BG_2;
 
         avg_BG_1.setText(this.stats.getItemStatisticValueAsStringFloat(CGMSValuesSubEntry.STAT_AVG_BG1, dec_pls));
         std_dev_1.setText(this.stats.getItemStatisticValueAsStringFloat(CGMSValuesSubEntry.STAT_STD_DEV_BG1, dec_pls));
@@ -500,104 +387,9 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
         high_BG_2.setText(this.stats.getItemStatisticValueAsStringFloat(CGMSValuesSubEntry.STAT_MAX_BG2, dec_pls));
         low_BG_2.setText(this.stats.getItemStatisticValueAsStringFloat(CGMSValuesSubEntry.STAT_MIN_BG2, dec_pls));
 
-        /*
-         * sumIns1.setText(this.stats.getItemStatisticValueAsStringFloat(
-         * PumpValuesEntry.INS_SUM_BOLUS, 1));
-         * //df.format(dayData.getSumIns1()));
-         * sumIns2.setText(this.stats.getItemStatisticValueAsStringFloat(
-         * PumpValuesEntry.INS_SUM_BASAL, 1));
-         * //df.format(dayData.getSumIns2()));
-         * sumIns.setText(this.stats.getItemStatisticValueAsStringFloat(
-         * PumpValuesEntry.INS_SUM_TOGETHER, 1));
-         * //df.format(dayData.getSumIns()));
-         * avgIns1.setText(this.stats.getItemStatisticValueAsStringFloat(
-         * PumpValuesEntry.INS_AVG_BOLUS, 1));
-         * avgIns2.setText(this.stats.getItemStatisticValueAsStringFloat(
-         * PumpValuesEntry.INS_AVG_BASAL, 1));
-         * //df.format(dayData.getAvgIns2()));
-         * //avgIns.setText(this.stats.getItemStatisticValueAsStringFloat(
-         * PumpValuesEntry.INS_SUM_TOGETHER, 1));
-         * //df.format(dayData.getAvgIns()));
-         * doseIns1.setText(this.stats.getItemStatisticValueAsStringFloat(
-         * PumpValuesEntry.INS_DOSES_BOLUS, 0));
-         * doseIns2.setText(this.stats.getItemStatisticValueAsStringFloat(
-         * PumpValuesEntry.INS_DOSES_BASAL, 0)); //dayData.getIns2Count() + "");
-         * doseIns.setText(this.stats.getItemStatisticValueAsStringFloat(
-         * PumpValuesEntry.INS_DOSES_TOGETHER, 0)); //dayData.getInsCount() +
-         * "");
-         * sumBE.setText(this.stats.getItemStatisticValueAsStringFloat(
-         * PumpValuesEntry.CH_SUM, 0));
-         * avgBE.setText(this.stats.getItemStatisticValueAsStringFloat(
-         * PumpValuesEntry.CH_AVG, 0));
-         * meals.setText(this.stats.getItemStatisticValueAsStringFloat(
-         * PumpValuesEntry.MEALS, 0));
-         * readings.setText(this.stats.getItemStatisticValueAsStringFloat(
-         * PumpValuesEntry.BG_COUNT, 0));
-         * //if ()
-         * int dec_pls = 1;
-         * if (this.dataAccess.getGlucoseUnitType()==DataAccessPump.BG_MGDL)
-         * {
-         * dec_pls = 0;
-         * avgBG.setText(this.stats.getItemStatisticValueAsStringFloat(
-         * PumpValuesEntry.BG_AVG, dec_pls));
-         * stdDev.setText(this.stats.getItemStatisticValueAsStringFloat(
-         * PumpValuesEntry.BG_STD_DEV, dec_pls));
-         * highestBG.setText(this.stats.getItemStatisticValueAsStringFloat(
-         * PumpValuesEntry.BG_MAX, dec_pls));
-         * lowestBG.setText(this.stats.getItemStatisticValueAsStringFloat(
-         * PumpValuesEntry.BG_MIN, dec_pls));
-         * }
-         * else
-         * {
-         * dec_pls = 1;
-         * avgBG.setText(this.stats.getItemStatisticValueAsStringFloat(
-         * PumpValuesEntry.BG_AVG, dec_pls));
-         * stdDev.setText(this.stats.getItemStatisticValueAsStringFloat(
-         * PumpValuesEntry.BG_STD_DEV, dec_pls));
-         * highestBG.setText(this.stats.getItemStatisticValueAsStringFloat(
-         * PumpValuesEntry.BG_MAX, dec_pls));
-         * lowestBG.setText(this.stats.getItemStatisticValueAsStringFloat(
-         * PumpValuesEntry.BG_MIN, dec_pls));
-         * }
-         * /*
-         * DecimalFormat df = new DecimalFormat("#0.0");
-         * sumIns1.setText(df.format(dayData.getSumIns1()));
-         * sumIns2.setText(df.format(dayData.getSumIns2()));
-         * sumIns.setText(df.format(dayData.getSumIns()));
-         * avgIns1.setText(df.format(dayData.getAvgIns1()));
-         * avgIns2.setText(df.format(dayData.getAvgIns2()));
-         * avgIns.setText(df.format(dayData.getAvgIns()));
-         * doseIns1.setText(dayData.getIns1Count() + "");
-         * doseIns2.setText(dayData.getIns2Count() + "");
-         * doseIns.setText(dayData.getInsCount() + "");
-         * sumBE.setText(df.format(dayData.getSumCH()));
-         * avgBE.setText(df.format(dayData.getAvgCH()));
-         * meals.setText(dayData.getCHCount() + "");
-         * avgBG.setText(df.format(dayData.getAvgBG()));
-         * stdDev.setText(df.format(dayData.getStdDev()));
-         * highestBG.setText(df.format(dayData.getHighestBG()));
-         * lowestBG.setText(df.format(dayData.getLowestBG()));
-         * readings.setText(dayData.getBGCount() + "");
-         */
     }
 
 
-    /*
-     * public void processWindowEvent(WindowEvent e) { if (e.getID() ==
-     * WindowEvent.WINDOW_CLOSING) { this.dispose(); }
-     * super.processWindowEvent(e); }
-     */
-    /*
-     * private String getIns1Abbr()
-     * {
-     * return i18nControl.getMessage("BOLUS"); //"Bolus Insulin";
-     * }
-     * private String getIns2Abbr()
-     * {
-     * return i18nControl.getMessage("BASAL");
-     * //return "Basal Insulin";
-     * }
-     */
     /**
      * Action Performed
      */
@@ -606,75 +398,6 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
 
         String command = e.getActionCommand();
 
-        /*
-         * if (command.equals("add_row"))
-         * {
-         * SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
-         * PumpDataRowDialog pdrd = new PumpDataRowDialog(dayData,
-         * sf.format(calPane.getSelectedDate()), this);
-         * if (pdrd.wasAction())
-         * {
-         * refreshData();
-         * }
-         * }
-         * else if (command.equals("edit_row"))
-         * {
-         * this.editEntry(true);
-         * }
-         * else if (command.equals("delete_row"))
-         * {
-         * if (table.getSelectedRow() == -1)
-         * {
-         * JOptionPane.showMessageDialog(this,
-         * i18nControl.getMessage("SELECT_ROW_FIRST"),
-         * i18nControl.getMessage("ERROR"),
-         * JOptionPane.ERROR_MESSAGE);
-         * return;
-         * }
-         * //DeviceValuesEntryInterface dei =
-         * this.dayData.getRowAt(table.getSelectedRow());
-         * int option_selected = JOptionPane.showOptionDialog(this,
-         * i18nControl.getMessage("ARE_YOU_SURE_DELETE"), i18nControl
-         * .getMessage("QUESTION"), JOptionPane.YES_NO_OPTION,
-         * JOptionPane.QUESTION_MESSAGE, null,
-         * dataAccess.options_yes_no, JOptionPane.YES_OPTION);
-         * if (option_selected == JOptionPane.YES_OPTION)
-         * {
-         * int idx = table.getSelectedRow();
-         * PumpValuesEntry pve = (PumpValuesEntry)this.dayData.getRowAt(idx);
-         * boolean refresh = false;
-         * if (pve.getBaseType()==PumpBaseType.PUMP_DATA_ADDITIONAL_DATA)
-         * {
-         * refresh = deleteAdditionalDataCheck(pve, idx); //, false);
-         * if (refresh)
-         * {
-         * this.dayData.removeEntry(idx);
-         * refreshData();
-         * }
-         * }
-         * else
-         * {
-         * if (pve.getAdditionalDataCount()>0)
-         * {
-         * refresh = deleteAdditionalDataCheck(pve, idx); //, false);
-         * if (refresh)
-         * {
-         * m_db.delete(pve);
-         * this.dayData.removeEntry(idx);
-         * refreshData();
-         * }
-         * }
-         * else
-         * {
-         * m_db.delete(pve);
-         * this.dayData.removeEntry(idx);
-         * refreshData();
-         * }
-         * }
-         * }
-         * }
-         * else
-         */
         if (command.equals("close"))
         {
             m_da.removeComponent(this);

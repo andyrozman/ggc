@@ -8,9 +8,9 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <name>GGC Plugins - Nutrition Tool</name>
-    <artifactId>ggc-nutrition-tool</artifactId>
-    <version>${ggc-nutrition-tool.version}</version>
+    <name>GGC Plugins - Nutrition</name>
+    <artifactId>ggc-plugins-nutrition</artifactId>
+    <version>${ggc-plugins-nutrition.version}</version>
 
     <build>
         <plugins>

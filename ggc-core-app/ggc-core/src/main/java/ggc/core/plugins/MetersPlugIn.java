@@ -6,6 +6,7 @@ import javax.swing.*;
 
 import com.atech.graphics.components.StatusReporterInterface;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.plugin.PluginActionType;
 
 import ggc.core.data.defs.RefreshInfoType;
 import ggc.core.data.defs.ReturnActionType;
@@ -30,7 +31,8 @@ import ggc.core.data.defs.ReturnActionType;
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
  *  Filename:     MetersPlugIn  
- *  Description:  Class Meter Plugin Client
+ *  Description:  Meter Plugin Client (communicates with Server part and sends commands
+ *      to plugin)
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */
@@ -67,7 +69,8 @@ public class MetersPlugIn extends GGCPluginClient
     }
 
 
-    public void executeReturnAction(ReturnActionType actionType)
+    @Override
+    public void executeReturnAction(PluginActionType actionType)
     {
         if (actionType == ReturnActionType.ReadData)
         {

@@ -131,9 +131,9 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
             // this.doneBackupElements++;
         }
 
-        // if (this.isBackupObjectSelected(ic.getMessage("SETTINGS")))
+        // if (this.isBackupObjectSelected(i18nControl.getMessage("SETTINGS")))
         // {
-        // this.setTask(ic.getMessage("SETTINGS"));
+        // this.setTask(i18nControl.getMessage("SETTINGS"));
         // ExportSettings edv = new ExportSettings(this);
         // edv.run();
         // this.setStatus(100);
@@ -141,9 +141,9 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
         // }
 
         // FIXME whats up with this
-        // if (this.isBackupObjectSelected(ic.getMessage("COLOR_SCHEMES")))
+        // if (this.isBackupObjectSelected(i18nControl.getMessage("COLOR_SCHEMES")))
         // {
-        // this.setTask(ic.getMessage("COLOR_SCHEMES"));
+        // this.setTask(i18nControl.getMessage("COLOR_SCHEMES"));
         // GGCExporter ge = new GGCExporter(this);
         // // ge.setBackupObject("ggc.core.db.hibernate.settings.ColorSchemeH");
         // // ge.export();
@@ -200,10 +200,10 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
         }
 
         // plugins
-        for (Enumeration<String> en = dataAccess.getPlugins().keys(); en.hasMoreElements();)
+        for (PlugInClient pic : dataAccess.getPlugins().values())
         {
-            String key = en.nextElement();
-            PlugInClient pic = dataAccess.getPlugIn(key);
+            //String key = en.nextElement();
+            //PlugInClient pic = dataAccess.getPlugIn(key);
 
             if (pic.isBackupRestoreEnabled())
             {
@@ -342,7 +342,7 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
 
         // if (this.isRestoreObjectSelected("ggc.core.db.hibernate.settings.SettingsH"))
         // {
-        // this.setTask(ic.getMessage("SETTINGS"));
+        // this.setTask(i18nControl.getMessage("SETTINGS"));
         // ImportSettings edv = new ImportSettings(this,
         // this.getRestoreObject("ggc.core.db.hibernate.settings.SettingsH"));
         // edv.run();
@@ -380,7 +380,7 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
         // (this.isRestoreObjectSelected("ggc.core.db.hibernate.settings.ColorSchemeH"))
         // {
         // // System.out.println("in color scheme");
-        // this.setTask(ic.getMessage("COLOR_SCHEMES"));
+        // this.setTask(i18nControl.getMessage("COLOR_SCHEMES"));
         // GGCImporter ge = new GGCImporter(this,
         // this.getRestoreObject("ggc.core.db.hibernate.settings.ColorSchemeH"));
         // ge.importData("ggc.core.db.hibernate.settings.ColorSchemeH");
@@ -439,10 +439,10 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
             }
         }
 
-        for (Enumeration<String> en = dataAccess.getPlugins().keys(); en.hasMoreElements();)
+        for (PlugInClient pic : dataAccess.getPlugins().values())
         {
-            String key = en.nextElement();
-            PlugInClient pic = dataAccess.getPlugIn(key);
+            //String key = en.nextElement();
+            //PlugInClient pic = dataAccess.getPlugIn(key);
 
             if (pic.isBackupRestoreEnabled())
             {

@@ -180,4 +180,5 @@ public abstract class DevicePluginDefinitionAbstract extends AppPluginDefinition
     {
         return useBaseLibraries;
     }
+
 }

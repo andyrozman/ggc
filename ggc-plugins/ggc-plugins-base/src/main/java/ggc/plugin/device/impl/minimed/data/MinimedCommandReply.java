@@ -3,7 +3,7 @@ package ggc.plugin.device.impl.minimed.data;
 import com.atech.utils.data.BitUtils;
 
 import ggc.plugin.device.impl.minimed.enums.MinimedCommandType;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -39,7 +39,7 @@ public class MinimedCommandReply
 
     private MinimedCommandTypeInterface commandType;
 
-    private static BitUtils bitUtils = MinimedUtil.getBitUtils();
+    private static BitUtils bitUtils = MedtronicUtil.getBitUtils();
 
 
     public MinimedCommandReply(MinimedCommandTypeInterface commandType)

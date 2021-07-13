@@ -1,0 +1,166 @@
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0 http://maven.apache.org/xsd/assembly-2.0.0.xsd">
+    <id>bin</id>
+    <formats>
+        <format>dir</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+
+    <fileSets>
+        <fileSet>
+            <directory>${project.directory}/../ggc-support/ggc-support/data</directory>
+            <outputDirectory>/data</outputDirectory>
+            <includes>
+                <include>*</include>
+            </includes>
+        </fileSet>
+
+
+    </fileSets>
+
+
+    <dependencySets>
+
+        <dependencySet>
+            <outputDirectory>/lib/commons</outputDirectory>
+            <unpack>false</unpack>
+            <includes>
+                <include>commons-collections:commons-collections</include>
+                <include>commons-lang:commons-lang</include>
+            </includes>
+        </dependencySet>
+
+
+        <!-- FIXME -->
+        <dependencySet>
+            <outputDirectory>/lib/ggc</outputDirectory>
+            <unpack>false</unpack>
+            <includes>
+                <include>net.sf.ggc:ggc-desktop</include>
+                <include>net.sf.ggc:ggc-core</include>
+                <include>net.sf.ggc:ggc-desktop-little</include>
+                <include>net.sf.ggc:ggc-help</include>
+                <include>net.sf.ggc:ggc-meter-tool</include>
+                <include>net.sf.ggc:ggc-pump-tool</include>
+                <include>net.sf.ggc:ggc-cgms-tool</include>
+                <include>net.sf.ggc:ggc-nutrition-tool</include>
+                <include>net.sf.ggc:ggc-plugins-base</include>
+            </includes>
+        </dependencySet>
+
+        <!--
+
+
+
+        -->
+
+
+        <!-- FIXME -->
+        <dependencySet>
+            <outputDirectory>/lib/hibernate3</outputDirectory>
+            <unpack>false</unpack>
+            <includes>
+                <include>org.hibernate:hibernate</include>
+                <include>commons-logging:commons-logging</include>
+                <include>c3p0:c3p0</include>
+                <include>ehcache:ehcache</include>
+                <include>asm:asm</include>
+                <include>asm:asm-attrs</include>
+                <include>javax.transaction:jta</include>
+                <include>antlr:antlr</include>
+                <include>cglib:cglib</include>
+            </includes>
+        </dependencySet>
+
+        <!--
+
+
+                %ROOT%/jdbc2_0-stdext.jar;
+
+
+                <dependency>
+
+                <dependency>
+                    <groupId>cglib</groupId>
+                    <artifactId>cglib</artifactId>
+                    <version>2.1_3</version>
+                </dependency>
+
+
+        -->
+
+        <dependencySet>
+            <outputDirectory>/lib/icepdf</outputDirectory>
+            <unpack>false</unpack>
+            <includes>
+                <include>org.icepdf:icepdf-core</include>
+                <include>org.icepdf:icepdf-viewer</include>
+                <include>batik:batik-awt-util</include>
+                <include>batik:batik-dom</include>
+                <include>batik:batik-svg-dom</include>
+                <include>batik:batik-svggen</include>
+                <include>batik:batik-util</include>
+                <include>batik:batik-xml</include>
+                <include>com.sun.media:jai-codec</include>
+                <include>javax.media:jai-core</include>
+            </includes>
+        </dependencySet>
+
+
+        <dependencySet>
+            <outputDirectory>/lib/jdbc</outputDirectory>
+            <unpack>false</unpack>
+            <includes>
+                <include>com.h2database:h2</include>
+                <include>postgresql:postgresql</include>
+            </includes>
+        </dependencySet>
+
+
+        <!-- FIXME: missing jfreechart-experimental -->
+        <dependencySet>
+            <outputDirectory>/lib/jfreechart</outputDirectory>
+            <unpack>false</unpack>
+            <includes>
+                <include>jfree:jfreechart</include>
+                <include>jfree:jcommon</include>
+                <!-- Expermintal missing -->
+            </includes>
+        </dependencySet>
+
+        <!-- FIXME -->
+        <dependencySet>
+            <outputDirectory>/lib/utils</outputDirectory>
+            <unpack>false</unpack>
+            <includes>
+                <include>dom4j:dom4j</include>
+                <include>joda-time:joda-time</include>
+                <include>com.itextpdf:itextpdf</include>
+                <include>com.itextpdf:itext-xtra</include>
+                <include>javax.help:javahelp</include>
+                <include>log4j:log4j</include>
+                <include>net.sf.ggc.pygmy-httpd:pygmy-core</include>
+                <include>net.sf.ggc.pygmy-httpd:pygmy-handlers</include>
+                <include>jaxen:jaxen</include>
+                <include>org.jdom:jdom</include>
+
+                <!-- External libraries that change frequently -->
+                <include>net.java.dev.jna:jna-j15</include>
+                <include>org.hid4java:hid4java-j15</include>
+                <include>com.neuronrobotics:nrjavaserial-j15</include>
+
+                <include>com.atech-software:atech-tools</include>
+
+            </includes>
+        </dependencySet>
+
+
+        <!--
+%ROOT%/slf4j-api-1.7.12.jar;%ROOT%/slf4j-log4j12-1.7.12.jar;%ROOT%/jcl-over-slf4j-1.7.12.jar;
+
+-->
+
+
+    </dependencySets>
+</assembly>

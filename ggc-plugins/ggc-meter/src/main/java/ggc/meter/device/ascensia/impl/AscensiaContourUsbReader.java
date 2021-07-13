@@ -12,8 +12,10 @@ import ggc.meter.device.ascensia.AscensiaUsbMeterHandler;
 import ggc.plugin.comm.Hid4JavaCommunicationHandler;
 import ggc.plugin.data.enums.ASCII;
 import ggc.plugin.data.enums.PlugInExceptionType;
+import ggc.plugin.data.progress.ProgressType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.output.OutputWriter;
+import ggc.plugin.protocol.reader.AbstractDeviceReader;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -40,7 +42,7 @@ import ggc.plugin.output.OutputWriter;
  *
  *  Author: Andy {andy@atech-software.com}
  */
-public class AscensiaContourUsbReader
+public class AscensiaContourUsbReader extends AbstractDeviceReader
 {
 
     private static final Logger LOG = LoggerFactory.getLogger(AscensiaContourUsbReader.class);
@@ -52,17 +54,22 @@ public class AscensiaContourUsbReader
     private AscensiaDecoder decoder;
     private AscensiaUsbMeterHandler handler;
     private OutputWriter outputWriter;
+    int responseCount = 0;
 
 
     public AscensiaContourUsbReader(AscensiaUsbMeterHandler handler, String selectedDevice, OutputWriter outputWriter)
+            throws PlugInBaseException
     {
-        decoder = new AscensiaDecoder(outputWriter, handler.getMeterDefinition());
+        super(outputWriter, false);
+        decoder = new AscensiaDecoder(outputWriter, handler.getMeterDefinition(), this);
         communicationHandler = new Hid4JavaCommunicationHandler();
         communicationHandler.setTargetDevice(selectedDevice);
         communicationHandler.setAllowedDevices(handler.getAllowedDevicesList());
         communicationHandler.setDelayForTimedReading(100);
         this.outputWriter = outputWriter;
         this.handler = handler;
+
+        doInit();
     }
 
     public int countNAK = 0;
@@ -146,7 +153,10 @@ public class AscensiaContourUsbReader
         {
             String errorMessage = this.communicationHandler.getLastErrorMessage();
             LOG.error("Error on write to meter. Error message: " + errorMessage);
-            throw new PlugInBaseException(PlugInExceptionType.DeviceCouldNotBeContacted);
+            if (responseCount == 0)
+                throw new PlugInBaseException(PlugInExceptionType.DeviceCouldNotBeContacted);
+            else
+                throw new PlugInBaseException(PlugInExceptionType.LostCommunicationWithDevice);
         }
         else
         {
@@ -338,6 +348,10 @@ public class AscensiaContourUsbReader
             String text = getText(data);
             String code = decoder.decode(text);
 
+            responseCount++;
+
+            addToProgressAndCheckIfCanceled(ProgressType.Dynamic, 1);
+
             if (code.equals("L"))
             {
                 communicationStopped = true;
@@ -369,9 +383,37 @@ public class AscensiaContourUsbReader
     }
 
 
+    @Override
+    public void readData() throws PlugInBaseException
+    {
+
+    }
+
+
+    @Override
+    public void readConfiguration() throws PlugInBaseException
+    {
+
+    }
+
+
     public void closeDevice()
     {
         this.communicationHandler.disconnectDevice();
+    }
+
+
+    @Override
+    public void customInitAndChecks() throws PlugInBaseException
+    {
+
+    }
+
+
+    @Override
+    public void configureProgressReporter()
+    {
+        configureProgressReporter(ProgressType.Dynamic, 0, 0, this.handler.getMeterDefinition().getMaxRecords());
     }
 
 }

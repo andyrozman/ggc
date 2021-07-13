@@ -30,16 +30,17 @@ package ggc.core.db;
  * Author: andyrozman {andy@atech-software.com}
  */
 
+import java.util.HashMap;
+
 import javax.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.atech.data.user_data_dir.UserDataDirectory;
 import com.atech.db.hibernate.HibernateConfiguration;
 
 import ggc.core.util.DataAccess;
-
-import java.util.HashMap;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -124,7 +125,7 @@ public class GGCDbConfig extends HibernateConfiguration
     @Override
     public String getConfigurationFile()
     {
-        return "../data/GGC_Config.properties";
+        return UserDataDirectory.getInstance().getParsedUserDataPath("%USER_DATA_DIR%/GGC_Config.properties");
     }
 
 
@@ -158,7 +159,7 @@ public class GGCDbConfig extends HibernateConfiguration
 
         db_hib_dialect = "org.hibernate.dialect.H2Dialect";
         db_driver_class = "org.h2.Driver";
-        db_conn_url = "jdbc:h2:../data/db/ggc_db";
+        db_conn_url = userDataDirectory.getParsedUserDataPath("jdbc:h2:%USER_DATA_DIR%/db/ggc_db");
         db_conn_username = "sa";
         db_conn_password = "";
     }
@@ -183,7 +184,7 @@ public class GGCDbConfig extends HibernateConfiguration
      */
     public String getDbInfoReportFilename()
     {
-        return "../data/db_info.txt";
+        return userDataDirectory.getParsedUserDataPath("%USER_DATA_DIR%/db_info.txt");
     }
 
 
@@ -218,7 +219,7 @@ public class GGCDbConfig extends HibernateConfiguration
     {
         this.defaultVersion = 7;
         this.versionToResourceMap = new HashMap<String, Integer>();
-        this.versionToResourceMap.put("17f84910f226c9d9bf6c8218fc824c6d2a01d05b", 7); // 0.8 -19.6.
+        this.versionToResourceMap.put("17f84910f226c9d9bf6c8218fc824c6d2a01d05b", 7); // GGC 0.8 -19.6.2017
         this.versionToResourceMap.put("2916075f381e81835b94ad03dc89622ceaa1dd57", 8); // not released, just for testing
     }
 

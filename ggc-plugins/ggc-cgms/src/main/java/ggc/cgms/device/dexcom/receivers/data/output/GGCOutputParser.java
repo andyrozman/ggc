@@ -12,7 +12,7 @@ import ggc.cgms.data.CGMSValuesTableModel;
 import ggc.cgms.data.defs.CGMSBaseDataType;
 import ggc.cgms.data.defs.CGMSConfigurationGroup;
 import ggc.cgms.data.defs.CGMSEvents;
-import ggc.cgms.data.defs.extended.CGMSExtendedDataType;
+import ggc.cgms.data.defs.CGMSExtendedDataType;
 import ggc.cgms.device.dexcom.receivers.DexcomDevice;
 import ggc.cgms.device.dexcom.receivers.data.ReceiverDownloadData;
 import ggc.cgms.device.dexcom.receivers.g4receiver.data.EGVRecord;
@@ -167,21 +167,23 @@ public class GGCOutputParser implements DataOutputParserInterface
 
             case Insulin:
                 {
-                    cvex.setType(CGMSExtendedDataType.Insulin);
-                    cvex.value = "" + record.getEventValue();
+                    cvex.setType(CGMSExtendedDataType.InsulinShortActing);
+
+                    double num = record.getEventValue() / 100.0d;
+                    cvex.value = String.format("%5.2f", num);
                 }
                 break;
 
             case Health:
                 {
                     cvex.setType(CGMSExtendedDataType.Health);
-                    cvex.subType = record.eventSubType;
+                    cvex.subType = (int)record.eventSubType;
                 }
                 break;
             case Exercise:
                 {
                     cvex.setType(CGMSExtendedDataType.Exercise);
-                    cvex.subType = record.eventSubType;
+                    cvex.subType = (int)record.eventSubType;
                     cvex.value = "" + record.eventValue;
                 }
             default:
@@ -195,12 +197,10 @@ public class GGCOutputParser implements DataOutputParserInterface
 
     private void writeMeterData(MeterDataRecord record)
     {
-        // LOG.debug("DateTime meterdata device: " + record.getDisplayDate());
-
         CGMSValuesSubEntry sub = new CGMSValuesSubEntry();
         sub.setDateTime(ATechDate.getATDateTimeFromDate(record.getDisplayDate(), ATechDate.FORMAT_DATE_AND_TIME_S));
         sub.setType(CGMSBaseDataType.SensorCalibration);
-        sub.value = record.getMeterValue();
+        sub.value = "" + record.getMeterValue();
         sub.setSource(source);
 
         addEntry(sub);
@@ -214,7 +214,7 @@ public class GGCOutputParser implements DataOutputParserInterface
             CGMSValuesSubEntry sub = new CGMSValuesSubEntry();
             sub.setDateTime(ATechDate.getATDateTimeFromDate(record.getDisplayDate(), ATechDate.FORMAT_DATE_AND_TIME_S));
             sub.setType(CGMSBaseDataType.SensorReading);
-            sub.value = record.getGlucoseValue();
+            sub.value = "" +record.getGlucoseValue();
             sub.setSource(source);
 
             addEntry(sub);
@@ -225,7 +225,7 @@ public class GGCOutputParser implements DataOutputParserInterface
             CGMSValuesSubEntry sub = new CGMSValuesSubEntry();
             sub.setDateTime(ATechDate.getATDateTimeFromDate(record.getDisplayDate(), ATechDate.FORMAT_DATE_AND_TIME_S));
             sub.setType(CGMSBaseDataType.SensorReadingTrend);
-            sub.value = record.getTrendArrow().getValue();
+            sub.value = "" +record.getTrendArrow().getValue();
             sub.setSource(source);
 
             addEntry(sub);
@@ -242,11 +242,11 @@ public class GGCOutputParser implements DataOutputParserInterface
 
         if (record.getIsInserted())
         {
-            sub.value = CGMSEvents.SensorStart.getCode();
+            sub.value = "" +CGMSEvents.SensorStart.getCode();
         }
         else
         {
-            sub.value = CGMSEvents.SensorStop.getCode();
+            sub.value = "" +CGMSEvents.SensorStop.getCode();
         }
 
         addEntry(sub);
@@ -259,18 +259,18 @@ public class GGCOutputParser implements DataOutputParserInterface
             return;
 
         DeviceIdentification di = this.outputWriter.getDeviceIdentification();
-        di.device_serial_number = data.getSerialNumber();
+        di.deviceSerialNumber = data.getSerialNumber();
 
         if (parserType == DataOutputParserType.Configuration)
         {
             if (data.containsConfiguration("FIRMWARE_VERSION"))
             {
-                di.device_hardware_version = data.getConfigValueByKey("FIRMWARE_VERSION");
+                di.deviceHardwareVersion = data.getConfigValueByKey("FIRMWARE_VERSION");
             }
 
             if (data.containsConfiguration("SOFTWARE_NUMBER"))
             {
-                di.device_software_version = data.getConfigValueByKey("SOFTWARE_NUMBER");
+                di.deviceSoftwareVersion = data.getConfigValueByKey("SOFTWARE_NUMBER");
             }
         }
 

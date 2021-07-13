@@ -7,15 +7,18 @@ import java.util.concurrent.TimeoutException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.minimed.comm.usb.contournext.data.message.ContourNextLinkMessage;
+import ggc.plugin.device.impl.minimed.comm.usb.contournext.data.message.series5xx.ContourNextLinkBinaryMessage5xx;
+import ggc.plugin.device.impl.minimed.comm.usb.contournext.data.message.series5xx.MedtronicReceiveMessage5xx;
 import ggc.plugin.device.impl.minimed.comm.usb.contournext.data.message.series5xx.MedtronicSendMessage5xx;
-import ggc.plugin.device.impl.minimed.comm.usb.contournext.data.message.series6xx.ContourNextLinkBinaryMessage;
 import ggc.plugin.device.impl.minimed.comm.usb.contournext.enums.CommandType;
 import ggc.plugin.device.impl.minimed.data.MinimedCommandReply;
 import ggc.plugin.device.impl.minimed.enums.MinimedCommInterfaceType;
 import ggc.plugin.device.impl.minimed.enums.MinimedCommandType;
 import ggc.plugin.device.impl.minimed.handler.MinimedDataHandler;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
@@ -110,14 +113,41 @@ public class MinimedCommunicationContourNext2 extends MinimedCommunicationContou
     {
         LOG.debug("executeCommandWithRetry (commandType={}) - START", commandType.name());
 
-        sendMessage(commandType);
+        byte[] response = null;
+        int tryCount = 0;
 
-        // FIXME do we get 2 responses or one
-        // Read the 0x81
-        readMessage();
+        do
+        {
 
-        // Read the 0x80
-        MinimedCommandReply minimedCommandReply = getMinimedCommandReply(commandType, readMessage());
+            tryCount++;
+            System.out.println("  Send command (try=" + tryCount + ")");
+
+            MedtronicUtil.sleepMs(1000);
+
+            sendMessage(commandType);
+            response = readMessage();
+
+        } while (response.length < 34 && tryCount < 3);
+
+        if (tryCount == 3)
+        {
+            throw new PlugInBaseException(PlugInExceptionType.NoResponseFromDeviceForIssuedCommand,
+                    new Object[] { commandType.name() });
+        }
+
+        MedtronicReceiveMessage5xx responseMessage = MedtronicReceiveMessage5xx.fromBytes(response);
+
+        // System.out.println("Full:    " + bitUtils.getByteArrayHex(response));
+        //
+        // byte[] subArray = bitUtils.getByteSubArray(response, 33, response.length-33);
+        //
+        // System.out.println("Subarry  " + bitUtils.getByteArrayHex(subArray));
+        //
+        // System.out.println("Suuuuuu  " +
+        // bitUtils.getByteArrayHex(responseMessage.getResponsePayload()));
+
+        MinimedCommandReply minimedCommandReply = getMinimedCommandReply(commandType,
+            responseMessage.getResponsePayload());
 
         LOG.debug("executeCommandWithRetry (commandType={}) - END", commandType.name());
 
@@ -151,10 +181,14 @@ public class MinimedCommunicationContourNext2 extends MinimedCommunicationContou
     public void openConnection() throws IOException, TimeoutException, NoSuchAlgorithmException, PlugInBaseException
     {
         LOG.debug("Begin openConnection");
-        sendMessage(new ContourNextLinkBinaryMessage(CommandType.OPEN_CONNECTION, session, null));
+        sendMessage(new ContourNextLinkBinaryMessage5xx(CommandType.OPEN_CONNECTION, session, null));
         // FIXME - We need to care what the response message is - wrong MAC and
         // all that
-        readMessage();
+        byte[] res = readMessage();
+
+        // if (res.length==0)
+        res = readMessage();
+
         LOG.debug("Finished openConnection");
     }
 }

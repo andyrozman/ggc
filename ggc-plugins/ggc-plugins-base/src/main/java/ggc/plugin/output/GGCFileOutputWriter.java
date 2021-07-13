@@ -1,7 +1,5 @@
 package ggc.plugin.output;
 
-import ggc.plugin.util.DataAccessPlugInBase;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -10,6 +8,8 @@ import java.util.GregorianCalendar;
 
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.ATechDate;
+
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -44,6 +44,7 @@ public class GGCFileOutputWriter extends AbstractOutputWriter
     long time_created;
     DataAccessPlugInBase m_da;
 
+
     /**
      * Constructor 
      * 
@@ -67,6 +68,7 @@ public class GGCFileOutputWriter extends AbstractOutputWriter
         }
     }
 
+
     private String getCurrentDateForFile()
     {
         GregorianCalendar gc = new GregorianCalendar();
@@ -77,10 +79,12 @@ public class GGCFileOutputWriter extends AbstractOutputWriter
 
     }
 
+
     private void setReadData()
     {
         // b this.out_util.setLastChangedTime();
     }
+
 
     /**
      * {@inheritDoc}
@@ -122,6 +126,7 @@ public class GGCFileOutputWriter extends AbstractOutputWriter
         }
     }
 
+
     /**
      * {@inheritDoc}
      */
@@ -129,6 +134,7 @@ public class GGCFileOutputWriter extends AbstractOutputWriter
     {
         writeToFile(this.getDeviceIdentification().getInformation("; "));
     }
+
 
     /**
      * {@inheritDoc}
@@ -154,6 +160,7 @@ public class GGCFileOutputWriter extends AbstractOutputWriter
 
     }
 
+
     private void writeToFile(String values)
     {
         try
@@ -167,6 +174,7 @@ public class GGCFileOutputWriter extends AbstractOutputWriter
             System.out.println("Write to file failed: " + ex);
         }
     }
+
 
     /**
      * {@inheritDoc}
@@ -185,7 +193,7 @@ public class GGCFileOutputWriter extends AbstractOutputWriter
         {
             System.out.println("Closing file failed: " + ex);
         }
-        this.interruptCommunication();
+        // this.interruptCommunication();
 
     }
 

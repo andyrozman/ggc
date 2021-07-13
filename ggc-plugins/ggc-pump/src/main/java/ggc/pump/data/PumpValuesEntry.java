@@ -118,7 +118,7 @@ public class PumpValuesEntry extends DeviceValuesEntry
         this.comment = null;
 
         this.source = (src == null) ? dataAccess.getSourceDevice() : src;
-        this.person_id = dataAccess.getCurrentUserIdAsInt();
+        this.person_id = dataAccess.getCurrentUserId();
     }
 
 
@@ -141,7 +141,7 @@ public class PumpValuesEntry extends DeviceValuesEntry
         this.comment = null;
 
         this.source = dataAccess.getSourceDevice();
-        this.person_id = dataAccess.getCurrentUserIdAsInt();
+        this.person_id = dataAccess.getCurrentUserId();
     }
 
 

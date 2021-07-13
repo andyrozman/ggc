@@ -241,7 +241,7 @@ public abstract class SerialMeterAbstract
     {
         DeviceIdentification deviceIdentification = new DeviceIdentification(dataAccess.getI18nControlInstanceBase());
         deviceIdentification.setDeviceDefinition(this.deviceDefinition);
-        deviceIdentification.device_serial_number = serialNumber;
+        deviceIdentification.deviceSerialNumber = serialNumber;
 
         outputWriter.setDeviceIdentification(deviceIdentification);
         outputWriter.writeDeviceIdentification();
@@ -252,7 +252,7 @@ public abstract class SerialMeterAbstract
     {
         DeviceIdentification deviceIdentification = new DeviceIdentification(dataAccess.getI18nControlInstanceBase());
         deviceIdentification.setDeviceDefinition(this.deviceDefinition);
-        deviceIdentification.device_serial_number = serialNumber;
+        deviceIdentification.deviceSerialNumber = serialNumber;
         this.serialNumber = serialNumber;
 
         outputWriter.setDeviceIdentification(deviceIdentification);

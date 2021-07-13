@@ -1,28 +1,30 @@
 package ggc.cgms.device.abbott.libre.enums;
 
+import ggc.plugin.device.impl.abbott.hid.AbbottHidTextCommand;
+
 /**
  * Created by andy on 07/09/17.
  */
-public enum LibreTextCommand
+public enum LibreTextCommand implements AbbottHidTextCommand
 {
 
-    SerialNumber("$sn?"), //
-    SoftwareVersion("$swver?"), //
-    Date("$date?"), //
-    Time("$time?"), //
-    History("$history?"), //
-    OtherHistory("$arresult?"), //
+    SerialNumber("$sn?", "Serial Number"), //
+    SoftwareVersion("$swver?", "Software Version"), //
+    Date("$date?", "Date"), //
+    Time("$time?", "Time"), //
+    History("$history?", "History"), //
+    OtherHistory("$arresult?", ""), //
 
-    ComputerDateTime(""), //
+    ComputerDateTime("", null), //
 
-    NtSound("$ntsound?"), //
-    BtSound("$btsound?"), //
+    NtSound("$ntsound?", "Sound #1"), //
+    BtSound("$btsound?", "Sound #2"), //
 
     // NOT SUPPORTED FULLY
     // Language("$lang?"), //
     // AllLanguages("$alllang?"), //
 
-    Test("$frststrt?"), //
+    Test("$frststrt?", "Test"), //
 
     // NOT SUPPORTED ON LIBRE
     // GlucoseUnits("$gunits?"), // TODO no0t sure if this is correct
@@ -48,16 +50,35 @@ public enum LibreTextCommand
     // $inscalsetup? $inscalsetup? $frststrt? $mlcalget,3
 
     private String commandText;
+    private String description;
 
 
-    LibreTextCommand(String commandText)
+    LibreTextCommand(String commandText, String description)
     {
         this.commandText = commandText;
+        this.description = description;
     }
 
 
     public String getCommandText()
     {
         return this.commandText;
+    }
+
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
+
+    public String getName()
+    {
+        return this.name();
     }
 }

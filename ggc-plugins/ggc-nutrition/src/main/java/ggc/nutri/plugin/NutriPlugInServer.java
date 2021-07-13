@@ -234,7 +234,7 @@ public class NutriPlugInServer extends DevicePlugInServer // implements
     @Override
     public String getName()
     {
-        return ic.getMessage("NUTRITION_PLUGIN");
+        return i18nControl.getMessage("NUTRITION_PLUGIN");
     }
 
 
@@ -269,7 +269,7 @@ public class NutriPlugInServer extends DevicePlugInServer // implements
     public void initPlugIn()
     {
 
-        ic = dataAccess.getI18nControlInstance();
+        i18nControl = dataAccess.getI18nControlInstance();
 
         if (dataAccessNutri == null)
         {
@@ -288,7 +288,7 @@ public class NutriPlugInServer extends DevicePlugInServer // implements
         dataAccessNutri.addComponent(this.parent);
         dataAccessNutri.setHelpContext(this.dataAccess.getHelpContext());
         dataAccessNutri.setPlugInServerInstance(this);
-        dataAccessNutri.setParentI18nControlInstance(ic);
+        dataAccessNutri.setParentI18nControlInstance(i18nControl);
         // da.createDb(dataAccess.getHibernateDb());
         // da.initAllObjects();
         dataAccessNutri.loadSpecialParameters();

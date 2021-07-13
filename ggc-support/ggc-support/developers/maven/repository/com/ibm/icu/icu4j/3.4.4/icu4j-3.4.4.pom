@@ -1,0 +1,22 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.ibm.icu</groupId>
+    <artifactId>icu4j</artifactId>
+    <version>3.4.4</version>
+    <packaging>jar</packaging>
+    <name>ICU4J</name>
+    <url>http://www-306.ibm.com/software/globalization/icu/</url>
+    <description>The International Component for Unicode (ICU) is a mature,
+        portable set of C/C++ and Java libraries for Unicode support, software
+        internationalization (I18N) and globalization (G11N), giving
+        applications the same results on all platforms.</description>
+    <licenses>
+        <license>
+            <name>ICU License</name>
+            <url>http://www-306.ibm.com/software/globalization/icu/license.jsp</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+</project>

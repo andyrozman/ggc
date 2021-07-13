@@ -20,6 +20,7 @@ import ggc.pump.data.dto.PumpSettingsDTO;
 import ggc.pump.data.dto.RatioDTO;
 import ggc.pump.device.animas.impl.data.dto.BasalLogEntry;
 import ggc.pump.device.animas.impl.data.dto.BolusEntry;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -64,7 +65,7 @@ public class AnimasPumpDeviceData extends AnimasDeviceData
     {
         super(writer);
 
-        pumpSettings = new PumpSettingsDTO();
+        pumpSettings = new PumpSettingsDTO(DataAccessPump.getInstance());
 
     }
 

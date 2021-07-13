@@ -32,8 +32,7 @@ import com.atech.utils.data.CodeEnum;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public abstract class MinimedHistoryEntry
-{
+public abstract class MinimedHistoryEntry implements MinimedHistoryEntryInterface {
 
     protected List<Byte> rawData;
 

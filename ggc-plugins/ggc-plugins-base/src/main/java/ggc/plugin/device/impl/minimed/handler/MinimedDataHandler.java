@@ -12,6 +12,7 @@ import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.minimed.MinimedDeviceReader;
 import ggc.plugin.device.impl.minimed.comm.MinimedCommunicationInterface;
 import ggc.plugin.device.impl.minimed.comm.serial.MinimedCommunicationCareLinkUSB;
+import ggc.plugin.device.impl.minimed.comm.usb.MinimedCommunicationContourNext2;
 import ggc.plugin.device.impl.minimed.data.MinimedCommandReply;
 import ggc.plugin.device.impl.minimed.data.converter.MinimedDataConverter;
 import ggc.plugin.device.impl.minimed.data.dto.MinimedConnectionParametersDTO;
@@ -19,7 +20,7 @@ import ggc.plugin.device.impl.minimed.enums.MinimedCommandType;
 import ggc.plugin.device.impl.minimed.enums.MinimedDeviceType;
 import ggc.plugin.device.impl.minimed.enums.MinimedTargetType;
 import ggc.plugin.device.impl.minimed.enums.MinimedTransferType;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -101,7 +102,7 @@ public class MinimedDataHandler
     public void initCommunicationInterface(MinimedConnectionParametersDTO connectionParametersDTO)
             throws PlugInBaseException
     {
-        if (MinimedUtil.isLowLevelDebug())
+        if (MedtronicUtil.isLowLevelDebug())
             LOG.debug("Protocol ID: " + connectionParametersDTO.interfaceType.name());
 
         switch (connectionParametersDTO.interfaceType)
@@ -122,12 +123,13 @@ public class MinimedDataHandler
                 break;
             case ContourNextLink2:
                 {
+                    communicationProtocol = new MinimedCommunicationContourNext2(dataAccess, this);
                     // throw new
                     // PlugInBaseException(PlugInExceptionType.YetUnsupportedInterface,
                     // new Object[] {
                     // connectionParametersDTO.interfaceType.name() });
-                    break;
-                }
+
+                }break;
 
             case None:
             default:
@@ -135,20 +137,20 @@ public class MinimedDataHandler
 
         }
 
-        MinimedUtil.setCommunicationInterface(communicationProtocol);
+        MedtronicUtil.setCommunicationInterface(communicationProtocol);
     }
 
 
     public void initConverter() throws PlugInBaseException
     {
-        this.converter = MinimedUtil.getDataConverter(getDeviceType(), getDeviceTargetType());
+        this.converter = MedtronicUtil.getDataConverter(getDeviceType(), getDeviceTargetType());
         LOG.debug("Converter: " + getConverter());
     }
 
 
     public void checkIfDownloadCanceled() throws PlugInBaseException
     {
-        if (MinimedUtil.isDownloadCanceled())
+        if (MedtronicUtil.isDownloadCanceled())
         {
             LOG.debug("Communication with Minimed device was closed.");
             throw new PlugInBaseException(PlugInExceptionType.DownloadCanceledByUser);

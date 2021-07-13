@@ -13,6 +13,46 @@
     <artifactId>ggc-plugins</artifactId>
     <packaging>pom</packaging>
 
+    <!--
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.google.code.maven-replacer-plugin</groupId>
+                    <artifactId>maven-replacer-plugin</artifactId>
+                    <version>1.4.0</version>
+                    <executions>
+                        <execution>
+                            <phase>process-sources</phase>
+                            <goals>
+                                <goal>replace</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <file>src/main/templates/Version.java</file>
+                        <outputFile>${version.file}</outputFile>
+                        <replacements>
+                            <replacement>
+                                <token>@buildnumber@</token>
+                                <value>${svn.revision}</value>
+                            </replacement>
+                            <replacement>
+                                <token>@buildtime@</token>
+                                <value>${timestamp}</value>
+                            </replacement>
+                            <replacement>
+                                <token>@pomversion@</token>
+                                <value>${project.version}</value>
+                            </replacement>
+                        </replacements>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+    -->
+
 
     <modules>
         <module>ggc-plugins-base</module>
@@ -20,6 +60,8 @@
         <module>ggc-pump</module>
         <module>ggc-nutrition</module>
         <module>ggc-cgms</module>
+        <module>ggc-connect</module>
+        
     </modules>
 
 

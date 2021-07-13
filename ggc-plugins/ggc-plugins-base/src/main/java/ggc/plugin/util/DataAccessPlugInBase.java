@@ -14,6 +14,7 @@ import com.atech.app.data.about.CreditsGroup;
 import com.atech.app.data.about.FeaturesGroup;
 import com.atech.app.data.about.LibraryInfoEntry;
 import com.atech.app.defs.AppPluginDefinition;
+import com.atech.data.user_data_dir.UserDataDirectory;
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.graphics.graphs.v2.data.GraphContext;
@@ -38,6 +39,7 @@ import ggc.plugin.cfg.DeviceConfigurationDialog;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.data.enums.DeviceEntryStatus;
+import ggc.plugin.data.enums.DownloaderFilterType;
 import ggc.plugin.db.PluginDb;
 import ggc.plugin.defs.DevicePluginDefinitionAbstract;
 import ggc.plugin.device.DeviceInterface;
@@ -122,13 +124,12 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
     public GlucoseUnitType glucoseUnitType;
 
     // this are special configs for devices V1 (should be removed at later time)
-    public static Hashtable<String, DeviceSpecialConfigPanelAbstract> special_configs = new Hashtable<String, DeviceSpecialConfigPanelAbstract>();
+    public static Map<String, DeviceSpecialConfigPanelAbstract> special_configs = new HashMap<String, DeviceSpecialConfigPanelAbstract>();
 
     // this are special configs for devices V2
     public static Map<String, DeviceSpecialConfigPanelAbstract> specialConfigPanels = new HashMap<String, DeviceSpecialConfigPanelAbstract>();
 
     protected HibernateDb hibernateDb;
-
     protected PluginDb pluginDb;
 
     private PlugInDeviceUtil plugin_device_util = null;
@@ -139,34 +140,11 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
      */
     public static String[] yes_no_option = null;
 
-    // about
-    // protected String about_title;
-
-    // protected String about_plugin_name;
-    /**
-     * The about_plugin_copyright_from.
-     */
-
     // web lister
     /**
      * The web_lister_cfg.
      */
     protected Hashtable<String, String> web_lister_cfg;
-
-    // /**
-    // * The weblister_title.
-    // */
-    // protected String weblister_title;
-    //
-    // /**
-    // * The weblister_desc.
-    // */
-    // protected String weblister_desc;
-
-    /**
-     * The weblister_items.
-     */
-    // protected ArrayList<BaseListEntry> weblister_items;
 
     /**
      * The m_manager.
@@ -233,9 +211,9 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
     /**
      * The deviceDataHandler.
      */
-    protected DeviceDataHandler m_ddh;
+    protected DeviceDataHandler deviceDataHandler;
 
-    protected long current_user_id = 0;
+    // protected int current_user_id = 0;
 
     protected OldDataReaderAbstract m_old_data_reader = null;
 
@@ -253,13 +231,14 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
     protected GraphContext graphContext;
     protected DevicePluginDefinitionAbstract pluginDefinition;
     private DeviceConfigurationDialog deviceConfigurationDialog;
+    protected UserDataDirectory userDataDirectory;
+
 
     // protected DevicePluginDefinitionAbstract devicePluginDefinition;
 
     // ********************************************************
     // ****** Constructors and Access methods *****
     // ********************************************************
-
 
     // Constructor: DataAccessPlugInBase
     /**
@@ -281,6 +260,8 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
                 pluginDefinition.getI18nControlRunner(), this.getPluginType());
         this.i18n = new GGCI18nControl(this.getPluginType());
 
+        this.userDataDirectory = UserDataDirectory.getInstance();
+
         initBase();
         initSpecial();
 
@@ -301,6 +282,8 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
 
         loadIcons();
         this.loadWebLister();
+
+        DownloaderFilterType.translateKeywords(this.getI18nControlInstance());
     }
 
 
@@ -488,7 +471,8 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
      */
     public void loadWebLister()
     {
-        this.web_lister_cfg = this.getConfiguration("../data/tools/WebLister.properties");
+        this.web_lister_cfg = this.getConfiguration( //
+                userDataDirectory.getParsedUserDataPath("%USER_DATA_DIR%/tools/WebLister.properties"));
     }
 
 
@@ -499,7 +483,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
      */
     public int getWebListerPort()
     {
-        return this.getIntValueFromString(this.web_lister_cfg.get("http.port"), 4444);
+        return getIntValueFromString(this.web_lister_cfg.get("http.port"), 4444);
     }
 
 
@@ -933,7 +917,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
      */
     public DeviceDataHandler getDeviceDataHandler()
     {
-        return this.m_ddh;
+        return this.deviceDataHandler;
     }
 
 
@@ -1133,41 +1117,39 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
     }
 
 
-    /**
-    * Get Current User Id
-    *
-    * @return
-    */
-    @Override
-    public long getCurrentUserId()
-    {
-        return this.current_user_id;
-    }
+    // /**
+    // * Get Current User Id
+    // *
+    // * @return
+    // */
+    // @Override
+    // public int getCurrentUserId()
+    // {
+    // return this.current_user_id;
+    // }
 
-
-    /**
-     * Get Current User Id
-     *
-     * @return
-     */
-
-    public int getCurrentUserIdAsInt()
-    {
-        return (int) this.current_user_id;
-    }
-
-
-    /**
-     * Set Current User Id
-     *
-     * @param user_id
-     */
-    @Override
-    public void setCurrentUserId(long user_id)
-    {
-        this.current_user_id = user_id;
-    }
-
+    // /**
+    // * Get Current User Id
+    // *
+    // * @return
+    // */
+    //
+    // public int getCurrentUserIdAsInt()
+    // {
+    // return (int) this.current_user_id;
+    // }
+    //
+    //
+    // /**
+    // * Set Current User Id
+    // *
+    // * @param user_id
+    // */
+    // @Override
+    // public void setCurrentUserId(long user_id)
+    // {
+    // this.current_user_id = user_id;
+    // }
 
     /**
      * Is Data Download Screen Wide
@@ -1256,8 +1238,8 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
 
                 if (this.selectedDeviceInstanceV2 == null)
                 {
-                    this.selectedDeviceInstanceV1 = this.getManager().getDeviceV1(dce.device_company,
-                        dce.device_device);
+                    this.selectedDeviceInstanceV1 = this.getManager()
+                            .getDeviceV1(dce.device_company, dce.device_device);
                 }
 
                 this.deviceSource = dce.device_company + " " + dce.device_device;
@@ -1428,8 +1410,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
     {
         if (this.i18n_plugin == null)
         {
-            this.i18n_plugin = new I18nControlPlugin(this.languageManager, this.i18nControlRunner,
-                    this.getPluginType());
+            this.i18n_plugin = new I18nControlPlugin(this.languageManager, this.i18nControlRunner, this.getPluginType());
         }
 
         return this.i18n_plugin;
@@ -1730,6 +1711,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
         return this.getPlugInDb();
     }
 
+
     /**
      * Get Graph Context
      *
@@ -1739,7 +1721,6 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
     // {
     // return this.graph_context;
     // }
-
 
     // ********************************************************
     // ****** New Implementations *****

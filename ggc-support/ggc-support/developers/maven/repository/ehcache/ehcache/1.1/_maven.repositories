@@ -1,0 +1,9 @@
+#NOTE: This is an internal implementation file, its format can be changed without prior notice.
+#Thu May 07 09:16:59 CEST 2015
+ehcache-1.1-sources.jar>central=
+ehcache-1.1.jar>=
+ehcache-1.1.jar>nexus-infonova=
+ehcache-1.1-sources.jar>nexus-infonova=
+ehcache-1.1.pom>nexus-infonova=
+ehcache-1.1.jar>central=
+ehcache-1.1.pom>central=

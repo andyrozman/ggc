@@ -1,0 +1,5 @@
+#NOTE: This is an internal implementation file, its format can be changed without prior notice.
+#Sun Sep 14 17:05:21 CEST 2014
+http\://repo.maven.apache.org/maven2/.lastUpdated=1410707121022
+http\://www.atech-software.com\:8090/repository/public/.error=Could not transfer artifact batik\:batik-xml\:pom\:1.6 from/to atechrepositorypublic (http\://www.atech-software.com\:8090/repository/public/)\: Connection to http\://www.atech-software.com\:8090 refused
+default-http\://www.atech-software.com\:8090/repository/public/.lastUpdated=1410707120852

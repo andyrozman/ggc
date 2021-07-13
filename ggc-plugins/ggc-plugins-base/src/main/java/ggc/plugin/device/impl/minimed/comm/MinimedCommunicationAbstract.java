@@ -22,7 +22,7 @@ import ggc.plugin.device.impl.minimed.data.MinimedDataPage;
 import ggc.plugin.device.impl.minimed.enums.MinimedCommandType;
 import ggc.plugin.device.impl.minimed.enums.MinimedTargetType;
 import ggc.plugin.device.impl.minimed.handler.MinimedDataHandler;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
+import ggc.plugin.device.impl.minimed.util.MedtronicUtil;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.plugin.util.LogEntryType;
 
@@ -57,7 +57,7 @@ public abstract class MinimedCommunicationAbstract implements MinimedCommunicati
 
     private static Logger LOG = LoggerFactory.getLogger(MinimedCommunicationAbstract.class);
 
-    protected BitUtils bitUtils = MinimedUtil.getBitUtils();
+    protected BitUtils bitUtils = MedtronicUtil.getBitUtils();
     protected DataAccessPlugInBase dataAccess;
     protected I18nControlAbstract i18nControl;
     protected MinimedDataHandler dataHandler;
@@ -139,7 +139,7 @@ public abstract class MinimedCommunicationAbstract implements MinimedCommunicati
 
         for (MinimedCommandType minimedCommandType : commands)
         {
-            MinimedUtil.getOutputWriter().writeLog(LogEntryType.DEBUG,
+            MedtronicUtil.getOutputWriter().writeLog(LogEntryType.DEBUG,
                 "Downloading Configuration - " + minimedCommandType.name());
 
             if (lowLevelDebug)
@@ -177,7 +177,7 @@ public abstract class MinimedCommunicationAbstract implements MinimedCommunicati
 
     protected void writeToFile(MinimedCommandPacket commandPacket, MinimedDataPage dataPage)
     {
-        String fileName = MinimedUtil.getSerialNumber() + "_" + this.time + "_" + //
+        String fileName = MedtronicUtil.getSerialNumber() + "_" + this.time + "_" + //
                 commandPacket.commandType.name() + "_" + //
                 commandPacket.commandParameters[0] + ".bin";
 
@@ -219,7 +219,7 @@ public abstract class MinimedCommunicationAbstract implements MinimedCommunicati
     {
         if (lowLevelDebug)
             LOG.debug("Sleeping for {} ms.", timeout);
-        MinimedUtil.sleepMs(timeout);
+        MedtronicUtil.sleepMs(timeout);
     }
 
 }

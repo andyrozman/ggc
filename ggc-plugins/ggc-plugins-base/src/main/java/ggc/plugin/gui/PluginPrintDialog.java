@@ -40,6 +40,7 @@ public class PluginPrintDialog extends PrintDialogRange
     private static final long serialVersionUID = 1814657939095170990L;
 
     PluginReportDefinition reportsDefinition;
+    protected boolean debug;
 
 
     /**
@@ -54,7 +55,8 @@ public class PluginPrintDialog extends PrintDialogRange
         super(frame, type, dataAccessPlugInBase, dataAccessPlugInBase.getI18nControlInstance(), true, false);
         this.reportsDefinition = reportsDefinition;
 
-        System.out.println("Reports def 1: " + reportsDefinition);
+        if (debug)
+            System.out.println("Reports def 1: " + reportsDefinition);
 
         this.initDialog();
     }
@@ -90,7 +92,8 @@ public class PluginPrintDialog extends PrintDialogRange
     @Override
     public String[] getReportTypes()
     {
-        System.out.println("Reports def 2: " + reportsDefinition);
+        if (debug)
+            System.out.println("Reports def 2: " + reportsDefinition);
         return reportsDefinition.getReportsNames();
     }
 

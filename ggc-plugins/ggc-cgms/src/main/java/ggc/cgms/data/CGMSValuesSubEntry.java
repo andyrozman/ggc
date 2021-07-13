@@ -9,6 +9,7 @@ import com.atech.utils.data.ATechDateType;
 
 import ggc.cgms.data.defs.CGMSBaseDataType;
 import ggc.cgms.data.defs.CGMSTrendArrow;
+import ggc.cgms.data.defs.CGMSViewerFilter;
 import ggc.cgms.util.DataAccessCGMS;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.output.OutputWriterType;
@@ -60,7 +61,7 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
     /**
      * Value 
      */
-    public int value = 0;
+    public String value;
 
     /**
      * Type 
@@ -105,7 +106,10 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
     {
         // 115329=147
         this.time = Integer.parseInt(entry.substring(0, entry.indexOf("=")));
-        this.value = Integer.parseInt(entry.substring(entry.indexOf("=") + 1));
+
+        //Float val = Float.parseFloat(entry.substring(entry.indexOf("=") + 1));
+
+        this.value = entry.substring(entry.indexOf("=") + 1);
         this.setType(type);
         this.source = DataAccessCGMS.getInstance().getSourceDevice();
 
@@ -138,7 +142,7 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
         date = (int) (dt / 1000000);
         time = (int) (dt - date * 1000000);
 
-        // System.out.println("Date: " + date + ", Time: " + time);
+        //System.out.println("Date: " + date + ", Time: " + time);
     }
 
 
@@ -189,7 +193,7 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
 
             case SensorReadingTrend:
                 // ??
-                return CGMSTrendArrow.getEnum(this.value).name();
+                return CGMSTrendArrow.getEnum(Integer.parseInt(this.value)).name();
 
             default:
                 return "??";
@@ -472,7 +476,7 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
             case CGMSValuesSubEntry.STAT_COUNT_BG1:
                 {
                     if (type == 1)
-                        return this.value;
+                        return Float.parseFloat(this.value);
                     else
                         return 0.0f;
 
@@ -484,7 +488,7 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
             case CGMSValuesSubEntry.STAT_COUNT_BG2:
                 {
                     if (type == 2)
-                        return this.value;
+                        return Float.parseFloat(this.value);
                     else
                         return 0.0f;
 
@@ -550,12 +554,14 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
 
     public int compare(CGMSValuesSubEntry d1, CGMSValuesSubEntry d2)
     {
+        System.out.println("Compare: " + d1.time + ", " + d2.time);
         return d1.time - d2.time;
     }
 
 
     public int compareTo(CGMSValuesSubEntry d2)
     {
+        System.out.println("CompareTo: " + this.time + ", " + d2.time);
         return this.time - d2.time;
     }
 
@@ -597,5 +603,12 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
      * return compare(this, d2);
      * }
      */
+
+
+    public boolean isItemFiltered(CGMSViewerFilter filter)
+    {
+        return (filter == CGMSViewerFilter.All || filter == this.typeObject.getFilterItem());
+    }
+
 
 }
