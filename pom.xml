@@ -18,44 +18,45 @@
         </repository>
 
         <repository>
-            <id>atechrepositorypublic</id>
-            <name>Atech Software Public Repository</name>
-            <!-- <url>http://www.atech-software.com:8081/repository/public/</url> -->
-            <url>http://www.atech-software.com/nexus/content/groups/public/</url>
-        </repository>
-
-        <repository>
             <id>mvnrepository</id>
             <name>Mvn Central Repository</name>
-            <url>http://www.mvnrepository.com</url>
+            <url>https://www.mvnrepository.com</url>
         </repository>
+
         <repository>
             <id>jbossrepository</id>
             <name>jbossrepository</name>
             <url>https://repository.jboss.org/nexus/</url>
         </repository>
 
-        <repository>
-            <id>javanet</id>
-            <name>Download Java Net Repository</name>
-            <url>http://download.java.net/maven/2/</url>
-        </repository>
-        <repository>
-            <id>mavenrepository</id>
-            <name>Maven Repository Repository</name>
-            <!-- <layout>legacy</layout> -->
-            <url>http://maven-repository.com/artifacts/</url>
-        </repository>
+<!--        <repository>-->
+<!--            <id>javanet</id>-->
+<!--            <name>Download Java Net Repository</name>-->
+<!--            <url>http://download.java.net/maven/2/</url>-->
+<!--        </repository>-->
 
+<!--        <repository>-->
+<!--            <id>mavenrepository</id>-->
+<!--            <name>Maven Repository Repository</name>-->
+<!--            &lt;!&ndash; <layout>legacy</layout> &ndash;&gt;-->
+<!--            <url>http://maven-repository.com/artifacts/</url>-->
+<!--        </repository>-->
+
+        <repository>
+            <id>atechrepositorypublic</id>
+            <name>Atech Software Public Repository</name>
+            <!-- <url>http://www.atech-software.com:8081/repository/public/</url> -->
+            <url>http://www.atech-software.com/nexus/content/groups/public/</url>
+        </repository>
 
         <!-- SONAType Maven Central - DO NOT USE -->
-        <repository>
-            <id>sonatype</id>
-            <name>Sonatype OSS Snapshots
-                Repository
-            </name>
-            <url>http://oss.sonatype.org/content/groups/public</url>
-        </repository>
+<!--        <repository>-->
+<!--            <id>sonatype</id>-->
+<!--            <name>Sonatype OSS Snapshots-->
+<!--                Repository-->
+<!--            </name>-->
+<!--            <url>http://oss.sonatype.org/content/groups/public</url>-->
+<!--        </repository>-->
 
     </repositories>
 
