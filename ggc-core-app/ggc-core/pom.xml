@@ -74,10 +74,10 @@
             <artifactId>itextpdf</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>commons-lang</groupId>-->
+<!--            <artifactId>commons-lang</artifactId>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>javax.help</groupId>

@@ -498,6 +498,13 @@
                         <groupId>net.lingala.zip4j</groupId>
                         <artifactId>zip4j</artifactId>
                     </exclusion>
+                    <exclusion>
+                        <groupId>com.itextpdf</groupId>
+                        <artifactId>itextpdf</artifactId>
+                    </exclusion>
+
+
+
                     <!-- <exclusion>
                         <groupId>org.simpleframework</groupId>
                         <artifactId>simple-xml</artifactId>
@@ -584,11 +591,11 @@
 
 
             <!-- Commons -->
-            <dependency>
-                <groupId>commons-lang</groupId>
-                <artifactId>commons-lang</artifactId>
-                <version>${commons-lang.version}</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>commons-lang</groupId>-->
+<!--                <artifactId>commons-lang</artifactId>-->
+<!--                <version>${commons-lang.version}</version>-->
+<!--            </dependency>-->
 
 
             <dependency>
