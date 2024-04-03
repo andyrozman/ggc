@@ -205,9 +205,6 @@ public class GGCExporter extends ExportTool implements Runnable
 
         for (PlugInClient pic : da.getPlugins().values())
         {
-            //String key = en.nextElement();
-            //PlugInClient pic = da.getPlugIn(key);
-
             if (pic.getBackupRestoreHandler().doesContainBackupRestoreObject(bro.getBackupClassName()))
                 return pic.getBackupRestoreHandler().getBackupRestoreObject(obj, bro);
         }

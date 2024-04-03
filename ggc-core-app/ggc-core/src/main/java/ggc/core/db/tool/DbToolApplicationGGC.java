@@ -107,6 +107,7 @@ public class DbToolApplicationGGC extends DbToolApplicationLAF implements DbTool
      */
     public String getApplicationDatabaseConfig()
     {
+// return "../data/GGC_Config.properties"
         return UserDataDirectory.getInstance().getParsedUserDataPath("%USER_DATA_DIR%/GGC_Config.properties");
     }
 

@@ -82,7 +82,7 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
                                     i18nControl.getMessage("LANGUAGE"), //
                                     i18nControl.getMessage("PUMP"), //
                                     i18nControl.getMessage("CGMS"), //
-                                    //i18nControl.getMessage("USERS") //
+                                    //i18nControl.getMessage("USERS") // TODO
     };
 
     /**

@@ -1,0 +1,42 @@
+package com.atech.software.stamps.wsc.core.util;
+
+import com.atech.utils.java.VersionInterface;
+
+public class Version implements VersionInterface
+{
+
+    public static final String VERSION = "@pomversion@";
+    public static final String BUILD_NUMBER = "@buildnumber@";
+    public static final String BUILD_TIME = "@buildtime@";
+
+
+    public String getVersion()
+    {
+        String version = this.VERSION;
+
+        if (version.endsWith("-SNAPSHOT"))
+        {
+            version = version.substring(0, version.indexOf("-SNAPSHOT"));
+        }
+
+        if (version.endsWith("-RELEASE"))
+        {
+            version = version.substring(0, version.indexOf("-RELEASE"));
+        }
+
+        return version;
+    }
+
+
+    public String getBuildTime()
+    {
+        return this.BUILD_TIME;
+    }
+
+
+    public String getBuildNumber()
+    {
+        return this.BUILD_NUMBER;
+    }
+
+}

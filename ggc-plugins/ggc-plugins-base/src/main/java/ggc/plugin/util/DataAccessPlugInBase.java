@@ -232,6 +232,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
     protected DevicePluginDefinitionAbstract pluginDefinition;
     private DeviceConfigurationDialog deviceConfigurationDialog;
     protected UserDataDirectory userDataDirectory;
+    protected OSUtil osUtil = new OSUtil();
 
 
     // protected DevicePluginDefinitionAbstract devicePluginDefinition;
@@ -1028,7 +1029,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
             ret[1] = "Unknown";
         }
 
-        ret[2] = OSUtil.getShortOSName();
+        ret[2] = osUtil.getShortOSName();
 
         return ret;
 

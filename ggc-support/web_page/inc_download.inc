@@ -14,13 +14,15 @@
     <br><br><br>
     In each release there are 4 files:
     <ul>
-        <li><b>GGC_Setup_&lt;Version Number&gt;_jre.exe - This is Windows installer with Java.</b> You should use this install
+        <li><b>GGC_Setup_&lt;Version Number&gt;_jre.exe - This is Windows installer with Java.</b> You should use this
+            install
             file if you have no knowledge about Java. It contains JRE, so the file is much bigger, but you can just
             install it, out-of-the-box, without any special intervention (advised for most end-users).. [This is
             recomended option for Windows Users]
         </li>
 
-        <li><b>GGC_Setup_&lt;Version Number&gt;.exe - This is windows installer without Java.</b> Download this if you have
+        <li><b>GGC_Setup_&lt;Version Number&gt;.exe - This is windows installer without Java.</b> Download this if you
+            have
             Java already
             on computer and your knowledge of computers is above average (you might need to configure java to run with
             application).
@@ -33,14 +35,16 @@
             <platform>" file, platform is either win, linux, mac or freebsd).
         </li>
 
-        <li><b>GGC_Upgrade_&lt;Version Number&gt;.zip - Upgrade Zip file.</b> If you have installed previous version of GGC
+        <li><b>GGC_Upgrade_&lt;Version Number&gt;.zip - Upgrade Zip file.</b> If you have installed previous version of
+            GGC
             (version 0.3.1
             and above) and already have data stored in it, this is the file you need to use. Read document
             'How_To_Upgrade.txt'
             in zip file. (This file should be used only by users who know basic of O.S. they are using. Please make
             backup
             first before you attempt any update. <br><b>NOTE:</b> If you are not sure if you can do upgrade, you can do
-            following: backup all data (Tools -> Database maintenance -> Backup) from previous version, install new version
+            following: backup all data (Tools -> Database maintenance -> Backup) from previous version, install new
+            version
             and then do restore (Tools -> Database maintenance -> Restore) of data.
         </li>
     </ul>
@@ -49,6 +53,14 @@
     <h3>GGC Releases</h3>
 
     <h4>Version 0.7.0 [June 2016 (Windows inst. added on September 2016)]</h4>
+
+    <b>Note: During creation of 0.7.0 release, installers created are not working correctly. If you encounter problem
+        starting application, please do the following: <br>
+        1. Download 0.7.0_Update package<br>
+        2. Extract files into some temporary location<br>
+        3. Copy content of folder lib/hibernate3 to same folder in your GGC installation (there are 3 files missing in 0.7 install)<br>
+        4. On next start application should work correctly<br>
+    </b>
 
     <ul>
         <li>
@@ -170,20 +182,23 @@
     <h4>Version 0.4</h4>
 
     <ul>
-        <li><a href="http://sourceforge.net/projects/ggc/files/GNU%20Gluco%20Control/GGC%200.4/GGC_Setup_0.4_jre.exe/download">
-            GGC 0.4 Windows Installer with Java</a>
+        <li>
+            <a href="http://sourceforge.net/projects/ggc/files/GNU%20Gluco%20Control/GGC%200.4/GGC_Setup_0.4_jre.exe/download">
+                GGC 0.4 Windows Installer with Java</a>
         </li>
 
-        <li><a href="http://sourceforge.net/projects/ggc/files/GNU%20Gluco%20Control/GGC%200.4/GGC_Setup_0.4.exe/download">
-            GGC 0.4 Windows Installer without Java</a>
+        <li>
+            <a href="http://sourceforge.net/projects/ggc/files/GNU%20Gluco%20Control/GGC%200.4/GGC_Setup_0.4.exe/download">
+                GGC 0.4 Windows Installer without Java</a>
         </li>
 
         <li><a href="http://sourceforge.net/projects/ggc/files/GNU%20Gluco%20Control/GGC%200.4/GGC_0.4.zip/download">
-        GGC 0.4 (Full) Zip file</a>
+            GGC 0.4 (Full) Zip file</a>
         </li>
 
-        <li><a href="http://sourceforge.net/projects/ggc/files/GNU%20Gluco%20Control/GGC%200.4/GGC_Update_0.4.zip/download">
-            GGC Update 0.4 Zip file</a>
+        <li>
+            <a href="http://sourceforge.net/projects/ggc/files/GNU%20Gluco%20Control/GGC%200.4/GGC_Update_0.4.zip/download">
+                GGC Update 0.4 Zip file</a>
         </li>
 
     </ul>

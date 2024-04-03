@@ -45,6 +45,7 @@ public class DeviceValuesConfigTable extends JTable
     protected DataAccessPlugInBase m_da;
 
     Color backgroundGroup = new Color(12, 209, 97);
+    Color blueLight = new Color(31,186,240);
     Font normal, bold;
 
 

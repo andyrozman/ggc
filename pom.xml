@@ -11,6 +11,12 @@
     <!-- <modules> <module>project-a</module> <module>project-b</module> </modules> -->
 
     <repositories>
+
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+
         <repository>
             <id>atechrepositorypublic</id>
             <name>Atech Software Public Repository</name>
@@ -336,9 +342,53 @@
                     </executions>
                 </plugin>
 
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>${maven-enforcer-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>enforce-versions</id>
+                            <goals>
+                                <goal>enforce</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>enforce-dependencyConvergence</id>
+                            <configuration>
+                                <rules>
+                                    <DependencyConvergence/>
+                                </rules>
+                                <fail>false</fail>
+                            </configuration>
+                            <goals>
+                                <goal>enforce</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <rules>
+                            <requireJavaVersion>
+                                <message>You are running an incompatible version of Java. JDK 8+ required</message>
+                                <version>1.8</version>
+                            </requireJavaVersion>
+                        </rules>
+                    </configuration>
+                </plugin>
+
+
             </plugins>
 
         </pluginManagement>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+            </plugin>
+
+        </plugins>
     </build>
 
 
@@ -463,7 +513,10 @@
                         <groupId>commons-logging</groupId>
                         <artifactId>commons-logging</artifactId>
                     </exclusion>
-
+                    <exclusion>
+                        <groupId>javax.transaction</groupId>
+                        <artifactId>jta</artifactId>
+                    </exclusion>
                 </exclusions>
             </dependency>
 
@@ -734,14 +787,13 @@
         <!-- NON MAVEN -->
 
         <!-- Dependencies versions -->
-        <ibm-compapi.version>1.3</ibm-compapi.version>
+        <ibm-compapi.version>1.3</ibm-compapi.version>  <!-- Private -->
         <skinlf.version>6.7</skinlf.version>
         <jasperreports.version>3.7.1</jasperreports.version>
         <jfreechart.version>1.0.13</jfreechart.version>
         <hibernate.version>3.1.3</hibernate.version>
         <pygmy-core.version>0.2</pygmy-core.version>
-        <pygmy-handlers.version>0.2</pygmy-handlers.version>
-        <junit.version>4.12</junit.version>
+        <pygmy-handlers.version>0.2</pygmy-handlers.version>  <!-- Private -->
         <servlet-api.version>2.5</servlet-api.version>
         <itextpdf.version>5.1.2</itextpdf.version>
         <commons-lang.version>2.6</commons-lang.version>
@@ -749,25 +801,28 @@
         <icepdf-core.version>5.0.7</icepdf-core.version>
         <icepdf-viewer.version>5.0.7</icepdf-viewer.version>
         <jaxen.version>1.1.6</jaxen.version>
-        <jna-j15.version>4.1.0</jna-j15.version>
+
         <commons-collections.version>3.2.1</commons-collections.version>
         <slf4j.version>1.7.12</slf4j.version>
         <table-layout.version>4.3.0</table-layout.version>
+
+        <!-- 0.9 REMOVED  -->
+        <jna-j15.version>4.1.0</jna-j15.version>
         <hid4java-j15.version>0.4.1-DEV</hid4java-j15.version>
         <nrjavaserial-j15.version>3.13.0-DEV</nrjavaserial-j15.version>
 
-        <!-- 0.8 REMOVED  -->
 
 
         <!-- Changed: CGMS, Core, Meter (for new version)  -->
-        <atech-tools.version>0.8.5-SNAPSHOT</atech-tools.version>
+        <atech-tools.version>0.8.7</atech-tools.version>
         <hid4java.version>0.5.0</hid4java.version>
         <jna.version>4.2.2</jna.version>
         <nrjavaserial.version>3.13.0</nrjavaserial.version>
+        <junit.version>4.13.1</junit.version>
 
         <commons-lang3.version>3.4</commons-lang3.version>
         <log4j.version>1.2.17</log4j.version>
-
+        <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
 
         <!-- 0.8 -->
         <ggc-help.version>0.2.3</ggc-help.version>
@@ -807,6 +862,8 @@
         <maven-eclipse-plugin.version>2.9</maven-eclipse-plugin.version>
         <maven-dependency-plugin.version>2.10</maven-dependency-plugin.version>
 
+        <postgresql.version>9.1-901.jdbc3</postgresql.version>
+
         <!-- Maven Settings -->
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -822,9 +879,9 @@
 
 
     <modules>
-        <module>atech-tools</module>
+<!--        <module>atech-tools</module>-->
         <module>ggc-core-app</module>
-        <!-- <module>ggc-plugins</module> -->
+        <module>ggc-plugins</module>
         <module>ggc-support</module>
         <module>ggc-future</module>
         <module>ggc-desktop-app</module>
