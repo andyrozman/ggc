@@ -124,3 +124,9 @@ hs_err_pid*
 generated/
 
 application-localfull.yml
+
+# GGC Specific
+
+ggc-core-app/data/log/**
+
+
