@@ -1,7 +1,0 @@
-#NOTE: This is an internal implementation file, its format can be changed without prior notice.
-#Tue Feb 19 16:46:39 CET 2013
-bcprov-jdk15-1.45-sources.jar>=
-bcprov-jdk15-1.45.jar>=
-bcprov-jdk15-1.45-sources.jar>nexus-infonova=
-bcprov-jdk15-1.45.pom>nexus-infonova=
-bcprov-jdk15-1.45.jar>nexus-infonova=

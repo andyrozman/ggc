@@ -1,9 +1,0 @@
-#NOTE: This is an internal implementation file, its format can be changed without prior notice.
-#Sun Sep 14 20:01:25 CEST 2014
-http\://repo.maven.apache.org/maven2/.lastUpdated=1410715798926
-http\://www.atech-software.com\:8081/nexus/content/groups/public/.lastUpdated=1410717685247
-http\://www.atech-software.com\:8081/repository/public/.lastUpdated=1410717577495
-http\://www.atech-software.com\:8081/repository/public/.error=
-http\://repo.maven.apache.org/maven2/.error=
-default-http\://www.atech-software.com\:8090/repository/public/.lastUpdated=1410717467285
-http\://www.atech-software.com\:8090/repository/public/.error=Could not transfer artifact javax.transaction\:jta\:jar\:1.0.1B from/to atechrepositorypublic (http\://www.atech-software.com\:8090/repository/public/)\: Connection to http\://www.atech-software.com\:8090 refused

@@ -1,4 +1,0 @@
-#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
-#Sun Sep 14 17:14:37 CEST 2014
-@default-http\://www.atech-software.com\:8090/repository/public/.lastUpdated=1410707677847
-http\://www.atech-software.com\:8090/repository/public/.error=Could not transfer artifact net.sf.ggc\:ggc-pump-tool\:pom\:1.3.5-SNAPSHOT from/to atechrepositorypublic (http\://www.atech-software.com\:8090/repository/public/)\: Connection refused

@@ -1,9 +1,0 @@
-#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
-#Wed Sep 03 15:24:16 CEST 2014
-http\://repo.maven.apache.org/maven2/.lastUpdated=1409750656662
-http\://anonsvn.icesoft.org/repo/maven2/releases/.error=
-http\://www.atech-software.com\:8080/nexus/content/groups/public/.error=Could not transfer artifact jfree\:jcommon\:pom\:1.0.16 from/to atechrepositorypublic (http\://www.atech-software.com\:8080/nexus/content/groups/public/)\: connect timed out
-http\://oss.sonatype.org/content/groups/public/.lastUpdated=1409750645417
-http\://anonsvn.icesoft.org/repo/maven2/releases/.lastUpdated=1409750656109
-http\://oss.sonatype.org/content/groups/public/.error=
-@default-http\://www.atech-software.com\:8080/nexus/content/groups/public/.lastUpdated=1409750655428

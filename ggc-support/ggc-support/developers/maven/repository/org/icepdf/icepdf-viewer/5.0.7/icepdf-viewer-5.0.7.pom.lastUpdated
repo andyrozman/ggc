@@ -1,9 +1,0 @@
-#NOTE: This is an internal implementation file, its format can be changed without prior notice.
-#Mon Sep 28 21:40:19 CEST 2015
-0e91dfb24ddb2d8e472dc608c0076e3f64ce876a@default-http\://grzmvn01.infonova.at\:8082/nexus/content/groups/public/.lastUpdated=1435569558527
-http\://www.atech-software.com\:8081/nexus/content/groups/public/.lastUpdated=1411284466806
-http\://grzmvn01.infonova.at\:8082/nexus/content/groups/public/.error=Could not transfer artifact org.icepdf\:icepdf-viewer\:pom\:5.0.7 from/to nexus-infonova (http\://grzmvn01.infonova.at\:8082/nexus/content/groups/public/)\: grzmvn01.infonova.at
-http\://anonsvn.icesoft.org/repo/maven2/releases/.lastUpdated=1411284467271
-http\://www.atech-software.com\:8081/nexus/content/groups/public/.error=
-92075fdaeb2ab4baa080682b03d908a0ca646f41@default-http\://grzmvn01.infonova.at\:8082/nexus/content/groups/public/.lastUpdated=1442078590190
-659acbe27d94755f1ec65c604f1d153e198635bd@default-http\://grzmvn01.infonova.at\:8082/nexus/content/groups/public/.lastUpdated=1443469219013

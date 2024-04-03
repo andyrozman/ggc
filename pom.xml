@@ -8,8 +8,6 @@
     <version>0.8-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <!-- <modules> <module>project-a</module> <module>project-b</module> </modules> -->
-
     <repositories>
 
         <repository>

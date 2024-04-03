@@ -1,8 +1,0 @@
-#NOTE: This is an internal implementation file, its format can be changed without prior notice.
-#Thu May 07 00:32:48 CEST 2015
-jasperreports-3.7.1.jar>=
-jasperreports-3.7.1.jar>nexus-infonova=
-jasperreports-3.7.1.pom>nexus-infonova=
-jasperreports-3.7.1.jar>central=
-jasperreports-3.7.1-sources.jar>sonatype=
-jasperreports-3.7.1.pom>central=

@@ -1,7 +1,0 @@
-#NOTE: This is an internal implementation file, its format can be changed without prior notice.
-#Thu Aug 21 10:27:21 CEST 2014
-antlr-2.7.6rc1.jar>=
-antlr-2.7.6rc1.jar>nexus-infonova=
-antlr-2.7.6rc1.jar>central=
-antlr-2.7.6rc1.pom>nexus-infonova=
-antlr-2.7.6rc1.pom>central=

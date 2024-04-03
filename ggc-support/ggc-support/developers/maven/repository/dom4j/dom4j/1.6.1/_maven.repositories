@@ -1,8 +1,0 @@
-#NOTE: This is an internal implementation file, its format can be changed without prior notice.
-#Sun Sep 14 17:05:15 CEST 2014
-dom4j-1.6.1.jar>=
-dom4j-1.6.1.pom>central=
-dom4j-1.6.1-sources.jar>=
-dom4j-1.6.1.jar>nexus-infonova=
-dom4j-1.6.1.pom>nexus-infonova=
-dom4j-1.6.1-sources.jar>nexus-infonova=

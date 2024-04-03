@@ -1,7 +1,0 @@
-#NOTE: This is an internal implementation file, its format can be changed without prior notice.
-#Sun Sep 14 20:09:24 CEST 2014
-jdom-1.0.pom>central=
-jdom-1.0.pom>nexus-infonova=
-jdom-1.0.jar>nexus-infonova=
-jdom-1.0.jar>=
-jdom-1.0.jar>central=

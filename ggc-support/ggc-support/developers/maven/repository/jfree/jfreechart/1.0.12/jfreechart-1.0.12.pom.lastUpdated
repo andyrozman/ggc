@@ -1,7 +1,0 @@
-#NOTE: This is an internal implementation file, its format can be changed without prior notice.
-#Sun Sep 14 17:06:26 CEST 2014
-http\://repo.maven.apache.org/maven2/.lastUpdated=1410707186618
-http\://anonsvn.icesoft.org/repo/maven2/releases/.error=
-http\://anonsvn.icesoft.org/repo/maven2/releases/.lastUpdated=1410707186463
-default-http\://www.atech-software.com\:8090/repository/public/.lastUpdated=1410707186258
-http\://www.atech-software.com\:8090/repository/public/.error=Could not transfer artifact jfree\:jfreechart\:pom\:1.0.12 from/to atechrepositorypublic (http\://www.atech-software.com\:8090/repository/public/)\: Connection to http\://www.atech-software.com\:8090 refused

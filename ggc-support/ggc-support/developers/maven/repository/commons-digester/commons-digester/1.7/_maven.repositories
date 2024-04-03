@@ -1,8 +1,0 @@
-#NOTE: This is an internal implementation file, its format can be changed without prior notice.
-#Thu May 07 00:32:15 CEST 2015
-commons-digester-1.7.jar>nexus-infonova=
-commons-digester-1.7.pom>nexus-infonova=
-commons-digester-1.7.jar>=
-commons-digester-1.7-sources.jar>central=
-commons-digester-1.7.jar>central=
-commons-digester-1.7.pom>central=
