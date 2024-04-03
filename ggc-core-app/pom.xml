@@ -15,7 +15,7 @@
 
     <modules>
         <module>ggc-core</module>
-        <module>ggc-doctor-core</module>
+<!--        <module>ggc-doctor-core</module>-->
     </modules>
 
 </project>

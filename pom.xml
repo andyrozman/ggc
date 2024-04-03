@@ -753,14 +753,6 @@
 
             <!-- Table Layout for Desktop -->
 
-            <!--
-            <dependency>
-                <groupId>info.clearthought</groupId>
-                <artifactId>tablelayout-j15</artifactId>
-                <version>${tablelayout-j15.version}</version>
-            </dependency>
-            -->
-
             <dependency>
                 <groupId>info.clearthought</groupId>
                 <artifactId>table-layout</artifactId>
@@ -768,12 +760,33 @@
             </dependency>
 
 
-            <!-- Zanata - Crowdsourcing translation possibility -->
+
             <dependency>
-                <groupId>org.zanata</groupId>
-                <artifactId>zanata-maven-plugin</artifactId>
-                <version>4.2.1</version>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${gson.version}</version>
             </dependency>
+
+
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jdom</groupId>
+                <artifactId>jdom2</artifactId>
+                <version>2.0.6.1</version>
+            </dependency>
+
+
+            <!-- Zanata - Crowdsourcing translation possibility -->
+<!--            <dependency>-->
+<!--                <groupId>org.zanata</groupId>-->
+<!--                <artifactId>zanata-maven-plugin</artifactId>-->
+<!--                <version>4.2.1</version>-->
+<!--            </dependency>-->
 
 
             <!--
@@ -819,11 +832,13 @@
         <commons-collections.version>3.2.1</commons-collections.version>
         <slf4j.version>1.7.12</slf4j.version>
         <table-layout.version>4.3.0</table-layout.version>
+        <gson.version>2.9.1</gson.version>
+        <commons-io.version>2.9.0</commons-io.version>
 
         <!-- 0.9 REMOVED  -->
-        <jna-j15.version>4.1.0</jna-j15.version>
-        <hid4java-j15.version>0.4.1-DEV</hid4java-j15.version>
-        <nrjavaserial-j15.version>3.13.0-DEV</nrjavaserial-j15.version>
+<!--        <jna-j15.version>4.1.0</jna-j15.version>-->
+<!--        <hid4java-j15.version>0.4.1-DEV</hid4java-j15.version>-->
+<!--        <nrjavaserial-j15.version>3.13.0-DEV</nrjavaserial-j15.version>-->
 
 
 
@@ -899,7 +914,7 @@
         <module>ggc-support</module>
         <module>ggc-future</module>
         <module>ggc-desktop-app</module>
-        <module>ggc-doctor-app</module>
+<!--        <module>ggc-doctor-app</module>-->
 
         <!--       Old -->
         <!--       <module>ggc-package</module> -->
