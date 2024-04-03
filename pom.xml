@@ -490,6 +490,14 @@
                         <groupId>net.sf.jasperreports</groupId>
                         <artifactId>jasperreports</artifactId>
                     </exclusion>
+                    <exclusion>
+                        <groupId>com.lowagie</groupId>
+                        <artifactId>itext</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>net.lingala.zip4j</groupId>
+                        <artifactId>zip4j</artifactId>
+                    </exclusion>
                     <!-- <exclusion>
                         <groupId>org.simpleframework</groupId>
                         <artifactId>simple-xml</artifactId>
@@ -794,7 +802,7 @@
         <pygmy-core.version>0.2</pygmy-core.version>
         <pygmy-handlers.version>0.2</pygmy-handlers.version>  <!-- Private -->
         <servlet-api.version>2.5</servlet-api.version>
-        <itextpdf.version>5.1.2</itextpdf.version>
+        <itextpdf.version>5.5.12</itextpdf.version>  <!-- 5.1.2 -->
         <commons-lang.version>2.6</commons-lang.version>
         <javahelp.version>2.0.05</javahelp.version>
         <icepdf-core.version>5.0.7</icepdf-core.version>

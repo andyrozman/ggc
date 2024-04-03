@@ -188,7 +188,7 @@
                                     <exclude>jmock:*</exclude>
                                     <exclude>*:xml-apis</exclude>
                                     <exclude>org.apache.maven:lib:tests</exclude>
-                                    <exclude>log4j:log4j:jar:</exclude>
+<!--                                    <exclude>log4j:log4j:jar:</exclude>-->
                                     <exclude>io.swagger:*</exclude>
                                     <!--<exclude>io.swagger:swagger-core:*</exclude>-->
                                     <!--<exclude>io.swagger:swagger-models:*</exclude>-->
