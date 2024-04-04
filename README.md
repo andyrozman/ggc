@@ -1,3 +1,5 @@
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/andyrozman/ggc/maven.yml)
+
 # GNU Gluco Control - ggc
 This project was hosted on sourceforge for a long time, but since github has much option that can help with release management and 
 user/customer management and support I decided to move project here (project was moved in begining of April)... Everything on sourceforge will stay as it, with all repositories 
