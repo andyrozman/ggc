@@ -36,11 +36,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.atech-software.ggc</groupId>
-            <artifactId>ggc-core</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>com.ibm.old.comapi</groupId>
             <artifactId>ibm-compapi</artifactId>
         </dependency>
@@ -75,10 +70,10 @@
             <artifactId>jssc</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.ibm.old.comapi</groupId>
-            <artifactId>ibm-compapi</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.ibm.old.comapi</groupId>-->
+<!--            <artifactId>ibm-compapi</artifactId>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.apache.commons</groupId>

@@ -502,6 +502,10 @@
                         <groupId>com.itextpdf</groupId>
                         <artifactId>itextpdf</artifactId>
                     </exclusion>
+                    <exclusion>
+                        <groupId>commons-collections</groupId>
+                        <artifactId>commons-collections</artifactId>
+                    </exclusion>
 
 
 
@@ -613,12 +617,17 @@
                 <version>${commons-lang3.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>commons-collections</groupId>
-                <artifactId>commons-collections</artifactId>
-                <version>${commons-collections.version}</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>commons-collections</groupId>-->
+<!--                <artifactId>commons-collections</artifactId>-->
+<!--                <version>${commons-collections.version}</version>-->
+<!--            </dependency>-->
 
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${commons-collections4.version}</version>
+            </dependency>
 
             <!-- Jfree - Graph Framework -->
             <dependency>
@@ -843,6 +852,7 @@
         <table-layout.version>4.3.0</table-layout.version>
         <gson.version>2.9.1</gson.version>
         <commons-io.version>2.9.0</commons-io.version>
+        <commons-collections4.version>4.4</commons-collections4.version>
 
         <!-- 0.9 REMOVED  -->
 <!--        <jna-j15.version>4.1.0</jna-j15.version>-->

@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
 
-import org.apache.commons.collections.MapUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.jfree.chart.JFreeChart;
 import org.slf4j.Logger;

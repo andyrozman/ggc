@@ -3,7 +3,7 @@ package ggc.plugin.db;
 import java.security.InvalidParameterException;
 import java.util.*;
 
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
