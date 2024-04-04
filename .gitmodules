@@ -1,0 +1,3 @@
+[submodule "atech-tools"]
+	path = atech-tools
+	url = git@github.com:andyrozman/atech-tools.git
