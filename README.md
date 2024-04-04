@@ -14,14 +14,16 @@ I enabled discussions here, which should be used, if you have any questions.
 ## Issues
 If you find any issues or have feature requests, please use "Issues" functionality.
 
+## Build
+To build project you need to checkout this repository with --recursive flag, which will also download submodule atech-tools. 
+
 ## How can you help with development?
-Development in GGC is mostly done in this project, but some of base functionalities are implemented also in atech-tools (repository can be 
-found here in github), so you would probably need to download that repo too and link it into this project. 
+Development in GGC is mostly done in this project, but some of base functionalities are implemented also in atech-tools (submodule). If you do changes on submodule, don't forget to check thoose changes in (separately)/
 
 As by default downloading the project and running "mvn clean install" should by default get you running. Required version of Java is 1.8+ (I 
-recomend using latest amazon-correto-8) and recommended Maven 3.5.2.
+recomend using latest amazon-correto-8) and recommended Maven 3.5.2 (you should use version less than 3.8.0 or you might have problem building).
 
 ## How can you use application?
 I am in middle of big architectural change for GGC, so until this problem is solved, you will need one of old packages (available on sourceforge.net) 
 until we get application running new way.
-https://ggc.sourceforge.net/
+
