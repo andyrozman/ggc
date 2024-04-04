@@ -26,6 +26,7 @@ jobs:
           java-version: 8
           java-distribution: temurin
           maven-version: 3.5.2
+          submodules: recursive
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
