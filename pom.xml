@@ -617,11 +617,12 @@
                 <version>${commons-lang3.version}</version>
             </dependency>
 
-<!--            <dependency>-->
-<!--                <groupId>commons-collections</groupId>-->
-<!--                <artifactId>commons-collections</artifactId>-->
-<!--                <version>${commons-collections.version}</version>-->
-<!--            </dependency>-->
+            <!-- Hibernate Dependency -->
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>3.2.2</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.apache.commons</groupId>
