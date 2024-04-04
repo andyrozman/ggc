@@ -852,7 +852,7 @@
 
 
         <!-- Changed: CGMS, Core, Meter (for new version)  -->
-        <atech-tools.version>0.8.7</atech-tools.version>
+        <atech-tools.version>0.8.8-SNAPSHOT</atech-tools.version>
         <hid4java.version>0.5.0</hid4java.version>
         <jna.version>4.2.2</jna.version>
         <nrjavaserial.version>3.13.0</nrjavaserial.version>
@@ -917,7 +917,7 @@
 
 
     <modules>
-<!--        <module>atech-tools</module>-->
+        <module>atech-tools</module>
         <module>ggc-core-app</module>
         <module>ggc-plugins</module>
         <module>ggc-support</module>

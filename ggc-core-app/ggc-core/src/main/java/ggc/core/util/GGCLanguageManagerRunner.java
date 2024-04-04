@@ -47,7 +47,8 @@ public class GGCLanguageManagerRunner extends LanguageManagerRunnerDual
     @Override
     public String getLanguageConfigFile()
     {
-        return "%USER_DATA_DIR%/lang/GGC_Languages.properties";
+        //return "%USER_DATA_DIR%/lang/GGC_Languages.properties";
+        return "GGC_Languages.properties";
     }
 
     @Override
@@ -63,9 +64,8 @@ public class GGCLanguageManagerRunner extends LanguageManagerRunnerDual
     }
 
     @Override
-    public boolean isTranslationToolLanguageSupported()
-    {
-        return true;
+    public boolean isTranslationToolLanguageSupported() {
+        return false;
     }
 
     @Override
@@ -77,6 +77,11 @@ public class GGCLanguageManagerRunner extends LanguageManagerRunnerDual
     @Override
     public boolean findUntranslatedKeysInLanguage()
     {
+        return true;
+    }
+
+    @Override
+    public boolean isLanguageConfigStatic() {
         return true;
     }
 
