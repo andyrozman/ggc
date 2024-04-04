@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <name>GGC Root</name>
 
-    <groupId>net.sf.ggc</groupId>
+    <groupId>com.atech-software.ggc</groupId>
     <artifactId>ggc-root</artifactId>
     <version>0.8-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -401,61 +401,61 @@
 
             <!-- GGC Artifacts -->
             <dependency>
-                <groupId>net.sf.ggc</groupId>
+                <groupId>com.atech-software.ggc</groupId>
                 <artifactId>ggc-help</artifactId>
                 <version>${ggc-help.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>net.sf.ggc</groupId>
+                <groupId>com.atech-software.ggc</groupId>
                 <artifactId>ggc-core</artifactId>
                 <version>${ggc-core.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>net.sf.ggc</groupId>
+                <groupId>com.atech-software.ggc</groupId>
                 <artifactId>ggc-plugins-base</artifactId>
                 <version>${ggc-plugins-base.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>net.sf.ggc</groupId>
+                <groupId>com.atech-software.ggc</groupId>
                 <artifactId>ggc-plugins-meter</artifactId>
                 <version>${ggc-plugins-meter.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>net.sf.ggc</groupId>
+                <groupId>com.atech-software.ggc</groupId>
                 <artifactId>ggc-plugins-pump</artifactId>
                 <version>${ggc-plugins-pump.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>net.sf.ggc</groupId>
+                <groupId>com.atech-software.ggc</groupId>
                 <artifactId>ggc-plugins-cgms</artifactId>
                 <version>${ggc-plugins-cgms.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>net.sf.ggc</groupId>
+                <groupId>com.atech-software.ggc</groupId>
                 <artifactId>ggc-plugins-nutrition</artifactId>
                 <version>${ggc-plugins-nutrition.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>net.sf.ggc</groupId>
+                <groupId>com.atech-software.ggc</groupId>
                 <artifactId>ggc-plugins-connect</artifactId>
                 <version>${ggc-plugins-connect.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>net.sf.ggc</groupId>
+                <groupId>com.atech-software.ggc</groupId>
                 <artifactId>ggc-desktop</artifactId>
                 <version>${ggc-desktop.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>net.sf.ggc</groupId>
+                <groupId>com.atech-software.ggc</groupId>
                 <artifactId>ggc-desktop-little</artifactId>
                 <version>${ggc-desktop-little.version}</version>
             </dependency>
@@ -464,14 +464,14 @@
             <!-- GGC Temporary -->
             <!--
             <dependency>
-                <groupId>net.sf.ggc</groupId>
+                <groupId>com.atech-software.ggc</groupId>
                 <artifactId>ggc-device-menarini</artifactId>
                 <version>${ggc-device-menarini.version}</version>
             </dependency>
             -->
 
             <dependency>
-                <groupId>net.sf.ggc</groupId>
+                <groupId>com.atech-software.ggc</groupId>
                 <artifactId>ggc-sw-diasend</artifactId>
                 <version>0.1-SNAPSHOT</version>
             </dependency>

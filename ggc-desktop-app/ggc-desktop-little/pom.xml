@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>net.sf.ggc</groupId>
+        <groupId>com.atech-software.ggc</groupId>
         <artifactId>ggc-desktop-app</artifactId>
         <version>0.8-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
@@ -46,12 +46,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>net.sf.ggc</groupId>
+            <groupId>com.atech-software.ggc</groupId>
             <artifactId>ggc-core</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>net.sf.ggc</groupId>
+            <groupId>com.atech-software.ggc</groupId>
             <artifactId>ggc-desktop</artifactId>
         </dependency>
 

@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>net.sf.ggc</groupId>
+        <groupId>com.atech-software.ggc</groupId>
         <artifactId>ggc-plugins</artifactId>
         <version>0.8-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
@@ -53,12 +53,12 @@
         </dependency>
 
         <dependency>
-            <groupId>net.sf.ggc</groupId>
+            <groupId>com.atech-software.ggc</groupId>
             <artifactId>ggc-core</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>net.sf.ggc</groupId>
+            <groupId>com.atech-software.ggc</groupId>
             <artifactId>ggc-plugins-base</artifactId>
         </dependency>
 

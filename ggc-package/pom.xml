@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>net.sf.ggc</groupId>
+        <groupId>com.atech-software.ggc</groupId>
         <artifactId>ggc-root</artifactId>
         <version>0.8-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
@@ -94,28 +94,28 @@
 
 
         <dependency>
-            <groupId>net.sf.ggc</groupId>
+            <groupId>com.atech-software.ggc</groupId>
             <artifactId>ggc-desktop</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>net.sf.ggc</groupId>
+            <groupId>com.atech-software.ggc</groupId>
             <artifactId>ggc-desktop-little</artifactId>
         </dependency>
 
         <!--
         <dependency>
-        <groupId>net.sf.ggc</groupId>
+        <groupId>com.atech-software.ggc</groupId>
         <artifactId>ggc-pump-tool</artifactId>
         </dependency>
 
         <dependency>
-        <groupId>net.sf.ggc</groupId>
+        <groupId>com.atech-software.ggc</groupId>
         <artifactId>ggc-cgms-tool</artifactId>
         </dependency>
 
         <dependency>
-        <groupId>net.sf.ggc</groupId>
+        <groupId>com.atech-software.ggc</groupId>
         <artifactId>ggc-meter-tool</artifactId>
         </dependency>
         -->

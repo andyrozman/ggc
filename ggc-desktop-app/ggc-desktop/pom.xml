@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>net.sf.ggc</groupId>
+        <groupId>com.atech-software.ggc</groupId>
         <artifactId>ggc-desktop-app</artifactId>
         <version>0.8-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
@@ -24,43 +24,43 @@
         </dependency>
 
         <dependency>
-            <groupId>net.sf.ggc</groupId>
+            <groupId>com.atech-software.ggc</groupId>
             <artifactId>ggc-help</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>net.sf.ggc</groupId>
+            <groupId>com.atech-software.ggc</groupId>
             <artifactId>ggc-core</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>net.sf.ggc</groupId>
+            <groupId>com.atech-software.ggc</groupId>
             <artifactId>ggc-plugins-base</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>net.sf.ggc</groupId>
+            <groupId>com.atech-software.ggc</groupId>
             <artifactId>ggc-plugins-meter</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>net.sf.ggc</groupId>
+            <groupId>com.atech-software.ggc</groupId>
             <artifactId>ggc-plugins-pump</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>net.sf.ggc</groupId>
+            <groupId>com.atech-software.ggc</groupId>
             <artifactId>ggc-plugins-cgms</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>net.sf.ggc</groupId>
+            <groupId>com.atech-software.ggc</groupId>
             <artifactId>ggc-plugins-nutrition</artifactId>
         </dependency>
 
 
         <dependency>
-            <groupId>net.sf.ggc</groupId>
+            <groupId>com.atech-software.ggc</groupId>
             <artifactId>ggc-plugins-connect</artifactId>
         </dependency>
 
@@ -68,14 +68,14 @@
         <!-- GGC Temporary Dependecies (testing only) -->
         <!--
         <dependency>
-            <groupId>net.sf.ggc</groupId>
+            <groupId>com.atech-software.ggc</groupId>
             <artifactId>ggc-device-menarini</artifactId>
         </dependency>
         -->
 
         <!--
         <dependency>
-            <groupId>net.sf.ggc</groupId>
+            <groupId>com.atech-software.ggc</groupId>
             <artifactId>ggc-sw-diasend</artifactId>
         </dependency>
         -->
