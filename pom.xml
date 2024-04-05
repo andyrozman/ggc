@@ -900,7 +900,7 @@
         <!-- Not really used just for testing -->
         <!-- 0.9 ?? -->
         <simpleframework.version>2.7.1</simpleframework.version>
-        <zip4j.version>1.3.2</zip4j.version>
+        <zip4j.version>2.11.5</zip4j.version>
 
 
         <!-- Maven Plugins -->
