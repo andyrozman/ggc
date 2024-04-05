@@ -706,10 +706,17 @@
             <!-- WIP -->
 
             <!-- Logging utils -->
+<!--            <dependency>-->
+<!--                <groupId>log4j</groupId>-->
+<!--                <artifactId>log4j</artifactId>-->
+<!--                <version>${log4j.version}</version>-->
+<!--            </dependency>-->
+
+            <!-- This is drop-in replacement for outdated log4j -->
             <dependency>
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
-                <version>${log4j.version}</version>
+                <groupId>ch.qos.reload4j</groupId>
+                <artifactId>reload4j</artifactId>
+                <version>${log4j-reload.version}</version>
             </dependency>
 
             <dependency>
@@ -735,8 +742,14 @@
             <!-- slf4j over log4j -->
             <dependency>
                 <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
+                <artifactId>slf4j-reload4j</artifactId>  <!-- slf4j-log4j12   -->
                 <version>${slf4j.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>ch.qos.reload4j</groupId>
+                        <artifactId>reload4j</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <!-- Commons logging over slf4j -->
@@ -836,7 +849,7 @@
         <jaxen.version>1.1.6</jaxen.version>
 
         <commons-collections.version>3.2.2</commons-collections.version>
-        <slf4j.version>1.7.12</slf4j.version>
+        <slf4j.version>1.7.36</slf4j.version>
         <table-layout.version>4.3.0</table-layout.version>
         <gson.version>2.9.1</gson.version>
         <commons-io.version>2.9.0</commons-io.version>
@@ -860,6 +873,7 @@
 
         <commons-lang3.version>3.4</commons-lang3.version>
         <log4j.version>1.2.17</log4j.version>
+        <log4j-reload.version>1.2.25</log4j-reload.version>
         <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
 
         <!-- 0.8 -->
