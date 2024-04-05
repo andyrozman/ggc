@@ -785,6 +785,8 @@
             </dependency>
 
 
+
+
             <!-- Zanata - Crowdsourcing translation possibility -->
 <!--            <dependency>-->
 <!--                <groupId>org.zanata</groupId>-->
@@ -840,6 +842,7 @@
         <commons-io.version>2.9.0</commons-io.version>
         <!-- Maybe we need to remove this in favor of older version since we need that version anyways -->
         <commons-collections4.version>4.4</commons-collections4.version>
+        <bouncy_castle.version>1.77</bouncy_castle.version>
 
         <!-- 0.9 REMOVED  -->
 <!--        <jna-j15.version>4.1.0</jna-j15.version>-->
@@ -853,7 +856,7 @@
         <hid4java.version>0.5.0</hid4java.version>
         <jna.version>4.2.2</jna.version>
         <nrjavaserial.version>3.13.0</nrjavaserial.version>
-        <junit.version>4.13.1</junit.version>
+        <junit.version>4.13.2</junit.version>
 
         <commons-lang3.version>3.4</commons-lang3.version>
         <log4j.version>1.2.17</log4j.version>

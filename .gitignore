@@ -131,3 +131,4 @@ ggc-core-app/data/log/**
 **/ggc_db*
 
 .java-version
+dep**.txt
