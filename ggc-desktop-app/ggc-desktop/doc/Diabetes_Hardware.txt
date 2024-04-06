@@ -99,7 +99,7 @@ mkdir /var/lock
 chmod 777 /var/lock 
 
 Rxtx library uses different locks that are used on Mac, so this steps are necessary. In later version
-of Rxtx this is reported to be fixed (since there was no offical release so far, we will have to 
+of Rxtx this is reported to be fixed (since there was no official release so far, we will have to
 wait and use upper work-around).
 
 If you get your binary file for Rxtx from some other source than from ours, there might be some 

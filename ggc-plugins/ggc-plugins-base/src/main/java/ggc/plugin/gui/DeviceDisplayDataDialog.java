@@ -274,13 +274,15 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         lblComment.setFont(normal);
         panel.add(lblComment);
 
-        ATSwingUtils.getIconButton(355 + wide_add, 295, 40, 40, //
+        btnInfo = ATSwingUtils.getIconButton(355 + wide_add, 295, 40, 40, //
             i18nControl.getMessage("GET_DL_INFO"), "document_info.png", 32, 32, //
             "show_info", this, panel, dataAccess);
+        btnInfo.setEnabled(false);
 
         btnErrors = ATSwingUtils.getIconButton(400 + wide_add, 295, 40, 40, //
             i18nControl.getMessage("GET_DL_ERRORS"), "document_warning.png", 31, 31, //
             "show_errors", this, panel, dataAccess);
+        btnErrors.setEnabled(false);
 
         // reading old data
         label = new JLabel(i18nControl.getMessage("READING_OLD_DATA") + ":");
@@ -893,7 +895,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
 
         if (btnErrors != null)
         {
-            btnErrors.setEnabled(true);
+            // TODO btnErrors.setEnabled(true);
         }
     }
 

@@ -154,6 +154,8 @@ public class GGC
             DataAccess.deleteInstance();
         }
 
+        System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
+
         s_theApp = new GGC();
         s_theApp.init(dev);
     }
@@ -162,7 +164,7 @@ public class GGC
     private static void createDataDirectory()
     {
         UserDataDirectory instance = UserDataDirectory.getInstance();
-
+        // TODO
         instance.migrateAndValidateData(new GGCUserDataDirectoryContext("../ddda"));
 
 

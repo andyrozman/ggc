@@ -1,0 +1,15 @@
+files:
+  - source: /ggc-core-app/ggc-core/src/main/resources/GGC_en.properties
+    translation: /ggc-core-app/ggc-core/src/main/resources/GGC_%two_letters_code%.properties
+  - source: /ggc-plugins/ggc-plugins-base/src/main/resources/GGCPlugin_en.properties
+    translation: /ggc-plugins/ggc-plugins-base/src/main/resources/GGCPlugin_%two_letters_code%.properties
+  - source: /ggc-plugins/ggc-pump/src/main/resources/GGCPumpTool_en.properties
+    translation: /ggc-plugins/ggc-pump/src/main/resources/GGCPumpTool_%two_letters_code%.properties
+  - source: /ggc-plugins/ggc-meter/src/main/resources/GGCMeterTool_en.properties
+    translation: /ggc-plugins/ggc-meter/src/main/resources/GGCMeterTool_%two_letters_code%.properties
+  - source: /ggc-plugins/ggc-cgms/src/main/resources/GGC_CGMSTool_en.properties
+    translation: /ggc-plugins/ggc-cgms/src/main/resources/GGC_CGMSTool_%two_letters_code%.properties
+  - source: /ggc-plugins/ggc-nutrition/src/main/resources/GGC_Nutrition_en.properties
+    translation: /ggc-plugins/ggc-nutrition/src/main/resources/GGC_Nutrition_%two_letters_code%.properties
+  - source: /ggc-plugins/ggc-connect/src/main/resources/GGCConnectTool_en.properties
+    translation: /ggc-plugins/ggc-connect/src/main/resources/GGCConnectTool_%two_letters_code%.properties

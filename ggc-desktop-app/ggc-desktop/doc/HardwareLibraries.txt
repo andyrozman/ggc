@@ -7,33 +7,36 @@ some are official.
 
 
 
-NRJAVASERIAL-J15
+NRJAVASERIAL
 =================
 
 Our Version:       3.10.0
 Latest Version:
+Artifact:
 OS:                Windows 32/64, Linux 32/64 (also legacy support), MacOS 32/64
-Own version:       Yes
+Own version:       No
 Comment:           This is library we use for all serial communication (or Serial/USB bridge communication)
 
 
 
-HID4JAVA-J15
+HID4JAVA
 ============
 
 Our Version:       0.3.1
 Latest Version:    0.4.0 (next release in June 2016)
+Artifact:
 OS:                Windows 32/64, Linux 32/64 (also legacy support), MacOS 32/64
-Own version:       Yes
+Own version:       No
 Comment:           This is library we use for HID USB communication
 
 
 
-JNA-J15
+JNA
 =======
 
 Our Version:       4.1.0
 Latest Version:    Latest of 4.1 branch
+Artifact:
 OS:                -
 Own version:       Yes
 Comment:           Dependency of Hid4Java.
@@ -45,6 +48,7 @@ IBMCOM-1.3
 
 Our version:       1.3
 Latest Version:    1.3
+Artifact:
 OS:                Windows, Linux
 Own version:       Yes
 Comment:           This is old IBM Serial API library used for Bluetooth support for Dana pump. Needs to be replaced,
@@ -52,3 +56,11 @@ Comment:           This is old IBM Serial API library used for Bluetooth support
                    devices. Our current NrJavaSerial is actually just extension of RXTX 2.2, so it might actually
                    support this now, but we can't test it at this time (no hardware).
 
+BLUECOVE
+=========
+
+Our version:       1.3
+Latest Version:    1.3
+OS:                Windows, Linux
+Own version:       Yes
+Comment:           Bluetooth support. Doesn't really work.
