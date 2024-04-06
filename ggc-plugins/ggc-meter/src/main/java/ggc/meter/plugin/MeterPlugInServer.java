@@ -324,7 +324,8 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
         else if (command.equals("meters_read_file"))
         {
             // System.out.println("Meters read file");
-            new DeviceInstructionsDialog(this.parent, DataAccessMeter.getInstance(), this,
+            new DeviceInstructionsDialog(this.parent,
+                    DataAccessMeter.getInstance(), this,
                     DeviceDataHandler.TRANSFER_READ_DATA_FILE);
             // this.client.executeReturnAction(MeterPlugInServer.RETURN_ACTION_READ_DATA);
             this.client.executeReturnAction(ReturnActionType.ReadData);

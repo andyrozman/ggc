@@ -58,6 +58,11 @@
             <artifactId>ggc-plugins-nutrition</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>io.ultreia</groupId>
+            <artifactId>bluecove</artifactId>
+        </dependency>
+
 
         <dependency>
             <groupId>com.atech-software.ggc</groupId>

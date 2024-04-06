@@ -47,6 +47,9 @@ public enum DeviceHandlerType
     AbbottMeterHandler(GGCPluginType.MeterToolPlugin, DownloadSupportType.Download_Data_Config, //
             "ggc.meter.device.abbott.AbbottNeoMeterHandler", true), //
 
+    OneTouchUsbMeterHandler(GGCPluginType.MeterToolPlugin, DownloadSupportType.DownloadData, //
+            "ggc.meter.device.abbott.AbbottNeoMeterHandler", true), //
+
     // Pumps
     AccuChekPumpHandler(GGCPluginType.PumpToolPlugin, DownloadSupportType.Download_Data_DataFile, //
             "ggc.pump.device.accuchek.AccuChekPumpHandler", true), //

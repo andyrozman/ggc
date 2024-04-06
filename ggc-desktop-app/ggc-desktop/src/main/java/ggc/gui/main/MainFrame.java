@@ -10,10 +10,9 @@ import java.util.List;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import ggc.gui.test.TestNewFunctionalities;
+import lombok.extern.slf4j.Slf4j;
 
-import com.atech.data.user_data_dir.UserDataDirectory;
 import com.atech.db.hibernate.hdb_object.UserH;
 import com.atech.graphics.components.DialogSizePersistInterface;
 import com.atech.graphics.dialogs.guilist.GUIListDialog;
@@ -81,14 +80,15 @@ import ggc.gui.pen.DailyStatsDialog;
  *          Andy {andy@atech-software.com}  
  */
 
+@Slf4j
 public class MainFrame extends JFrame implements EventObserverInterface, ActionListener, DialogSizePersistInterface,
         UserManagementCapableInterface
 {
 
     private static final long serialVersionUID = -8971779470148201332L;
-    private static final String skinLFdir = "../data/skinlf_themes/";
+    //private static final String skinLFdir = "../data/skinlf_themes/";
 
-    private static final Logger LOG = LoggerFactory.getLogger(MainFrame.class);
+    //private static final Logger LOG = LoggerFactory.getLogger(MainFrame.class);
 
     /**
      * Skin Look and Feel
@@ -128,16 +128,16 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
     private Map<GGCToolbarType, Map<String, JButton>> toolbarItems = new HashMap<GGCToolbarType, Map<String, JButton>>();
 
     private GGCToolbarType current_toolbar = GGCToolbarType.None;
-    private String nextVersion = "0.9";
+    private String nextVersion = "0.10";
 
-    UserDataDirectory userDataDirectory = UserDataDirectory.getInstance();
+    //UserDataDirectory userDataDirectory = UserDataDirectory.getInstance();
 
     /**
      * Static definitions (Look and Feel)
      */
     static
     {
-        GGCGuiHelper.setLog(LOG);
+        GGCGuiHelper.setLog(log);
         GGCGuiHelper.setLookAndFeel();
         DataAccess.getSkinManager().setSkinLfOverrides(guiHelper.getSkinLfOverrides());
         //
@@ -153,71 +153,71 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
     /**
      * Set Look & Feel
      */
-    public static void setLookAndFeel()
-    {
-        // String skinLFdir = "../data/skinlf_themes/";
-        // SkinLookAndFeel s_skinlf;
+//    public static void setLookAndFeel()
+//    {
+//        // String skinLFdir = "../data/skinlf_themes/";
+//        // SkinLookAndFeel s_skinlf;
+//
+//        try
+//        {
+//
+//            String data[] = DataAccess.getLFData();
+//
+//            if (data == null)
+//                return;
+//            else
+//            {
+//                if (data[0].equals("com.l2fprod.gui.plaf.skin.SkinLookAndFeel"))
+//                {
+//                    // skinLFdir = "../data/skinlf_themes/";
+//
+//                    SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack(skinLFdir + data[1]));
+//
+//                    s_skinlf = new com.l2fprod.gui.plaf.skin.SkinLookAndFeel();
+//                    UIManager.setLookAndFeel(s_skinlf);
+//
+//                    setExceptionsForLookAndFeel(data[1], s_skinlf);
+//                }
+//                else
+//                {
+//                    UIManager.setLookAndFeel(data[0]);
+//                }
+//
+//                JFrame.setDefaultLookAndFeelDecorated(true);
+//                JDialog.setDefaultLookAndFeelDecorated(true);
+//            }
+//        }
+//        catch (Exception ex)
+//        {
+//            System.err.println("Error loading L&F: " + ex);
+//        }
+//
+//    }
 
-        try
-        {
 
-            String data[] = DataAccess.getLFData();
-
-            if (data == null)
-                return;
-            else
-            {
-                if (data[0].equals("com.l2fprod.gui.plaf.skin.SkinLookAndFeel"))
-                {
-                    // skinLFdir = "../data/skinlf_themes/";
-
-                    SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack(skinLFdir + data[1]));
-
-                    s_skinlf = new com.l2fprod.gui.plaf.skin.SkinLookAndFeel();
-                    UIManager.setLookAndFeel(s_skinlf);
-
-                    setExceptionsForLookAndFeel(data[1], s_skinlf);
-                }
-                else
-                {
-                    UIManager.setLookAndFeel(data[0]);
-                }
-
-                JFrame.setDefaultLookAndFeelDecorated(true);
-                JDialog.setDefaultLookAndFeelDecorated(true);
-            }
-        }
-        catch (Exception ex)
-        {
-            System.err.println("Error loading L&F: " + ex);
-        }
-
-    }
-
-
-    public static void setExceptionsForLookAndFeel(String skinName, SkinLookAndFeel skinLookAndFeel)
-    {
-        System.out.println("Skin Name: " + skinName);
-
-        if (skinName.equals("modernthemepack_orig.zip"))
-        {
-            skinLfOverrides = new HashMap<String, Object>();
-
-            skinLfOverrides.put("JTableHeader.backgroundColor", new Color(102, 178, 255));
-            skinLfOverrides.put("JTableHeader.borderColor", Color.gray);
-        }
-
-        // for (Object keyo : skinLookAndFeel.getDefaults().keySet())
-        // {
-        // String key = (String) keyo;
-        //
-        // // if (key.contains("Table"))
-        // {
-        // System.out.println("Key2: " + key);
-        // }
-        // }
-
-    }
+//    public static void setExceptionsForLookAndFeel(String skinName, SkinLookAndFeel skinLookAndFeel)
+//    {
+//        System.out.println("Skin Name: " + skinName);
+//
+//        if (skinName.equals("modernthemepack_orig.zip"))
+//        {
+//            skinLfOverrides = new HashMap<String, Object>();
+//
+//            skinLfOverrides.put("JTableHeader.backgroundColor", new Color(102, 178, 255));
+//            skinLfOverrides.put("JTableHeader.borderColor", Color.gray);
+//        }
+//
+//        // for (Object keyo : skinLookAndFeel.getDefaults().keySet())
+//        // {
+//        // String key = (String) keyo;
+//        //
+//        // // if (key.contains("Table"))
+//        // {
+//        // System.out.println("Key2: " + key);
+//        // }
+//        // }
+//
+//    }
 
 
     /**
@@ -237,13 +237,13 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
         try
         {
-            LOG.info("dataAccess.getI18nControlRunner(): " + dataAccess.getI18nControlRunner());
+            log.info("dataAccess.getI18nControlRunner(): " + dataAccess.getI18nControlRunner());
             // System.out.println("Exported file: " +
             // dataAccess.getI18nControlRunner().exportLanguageFile("en"));
         }
         catch (Exception e)
         {
-            LOG.error("Problem Test: {}", e.getMessage(), e);
+            log.error("Problem Test: {}", e.getMessage(), e);
         }
 
         dataAccess.addComponent(this);
@@ -527,13 +527,18 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         this.menuBar.add(this.menus.get("MENU_PEN"));
 
         // plugins
-        GGCPluginType[] keys = { GGCPluginType.NutritionToolPlugin, //
-                                GGCPluginType.MeterToolPlugin, //
-                                GGCPluginType.PumpToolPlugin, //
-                                GGCPluginType.CGMSToolPlugin, //
-                                GGCPluginType.ConnectToolPlugin };
+        List<GGCPluginType> plugins = new ArrayList<>();
+        plugins.add(GGCPluginType.NutritionToolPlugin);
+        plugins.add(GGCPluginType.MeterToolPlugin);
+        plugins.add(GGCPluginType.PumpToolPlugin);
+        plugins.add(GGCPluginType.CGMSToolPlugin);
 
-        for (GGCPluginType key : keys)
+        if (developer_version) {
+            plugins.add(GGCPluginType.ConnectToolPlugin);
+        }
+
+
+        for (GGCPluginType key : plugins)
         {
             if (dataAccess.isPluginAvailable(key))
             {
@@ -549,8 +554,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
             }
         }
 
-        if (refresh_init)
-        {
+        if (refresh_init) {
             prepareReportsGraphsMenu();
         }
 
@@ -1204,7 +1208,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         else if (command.equals("misc_synchronize")) // ||
         // (command.equals("doc_stocks")))
         {
-            featureNotImplemented(command, "0.7");
+            featureNotImplemented(command, "0.10");
         }
         else if (command.equals("doc_stocks"))
         {
@@ -1220,47 +1224,8 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         }
         else if (command.equals("test"))
         {
-
-            // new DailyRowMealsDialog(null, new JDialog());
-
-            // spread graph
-            // new GraphViewer(new GraphViewSpread(), dataAccess);
-
-            /*
-             * // graph course
-             * new GraphViewer(new GraphViewCourse(), dataAccess);
-             */
-
-            // ratio calculator
-            // @SuppressWarnings("unused")
-            // RatioCalculatorDialog rcd = new
-            // RatioCalculatorDialog(MainFrame.this);
-
-            // BasalRateEstimator bre = new BasalRateEstimator();
-
-            /*
-             * // daily view
-             * GregorianCalendar gc = new GregorianCalendar();
-             * gc.set(GregorianCalendar.DAY_OF_MONTH, 18);
-             * gc.set(GregorianCalendar.MONTH, 10);
-             * gc.set(GregorianCalendar.YEAR, 2008);
-             * new GraphViewer(new GraphViewDaily(gc), dataAccess);
-             */
-
-            // new HbA1cDialog(dataAccess);
-            // ImportDacioDb idb = new
-            // ImportDacioDb("../data/temp/zivila.csv", true); //args[
-            // idb.convertFoods();
-            /*
-             * DayValuesData dvd =
-             * dataAccess.getDb().getDayValuesData(20081001,
-             * 20091007); // .getMonthlyValues(yr,
-             * // mnth);
-             * PrintFoodMenuExt2 psm = new PrintFoodMenuExt2(dvd);
-             * PrintingDialog.displayPDFExternal(psm.getName());
-             */
-            // BolusHelper bh = new BolusHelper(MainFrame.this);
-            // featureNotImplemented(command, "0.6");
+            TestNewFunctionalities test = new TestNewFunctionalities();
+            test.executeTestCode();
         }
         else
         {
@@ -1268,7 +1233,6 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         }
 
     }
-
 
     private void startGraphViewer(GraphViewAbstract graphViewAbstract)
     {
@@ -1469,7 +1433,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         else if (arg instanceof Exception)
         {
             Exception ex = (Exception) arg;
-            LOG.error("Error connecting to Database: " + ex.getMessage(), ex);
+            log.error("Error connecting to Database: " + ex.getMessage(), ex);
 
             dataAccess.createErrorDialog("Main", "Opening Db", ex, guiHelper.getDbSettingsAndCause(false), //
                 guiHelper.getDbSettingsAndCause(true), //
@@ -1480,7 +1444,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         }
         else
         {
-            LOG.error("Unallowed update type ({}).", arg.getClass().getSimpleName());
+            log.warn("Unallowed update type ({}).", arg.getClass().getSimpleName());
         }
     }
 

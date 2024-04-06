@@ -652,6 +652,13 @@
                 <version>${ibm-compapi.version}</version>
             </dependency>
 
+            <!-- BlueCove Bluetooth library  -->
+            <dependency>
+                <groupId>io.ultreia</groupId>
+                <artifactId>bluecove</artifactId>
+                <version>2.1.1</version>
+            </dependency>
+
 
             <!-- Jaxen - Xml -->
             <dependency>
@@ -881,7 +888,7 @@
         <ggc-core.version>0.8.0</ggc-core.version>
 
         <ggc-plugins-base.version>1.2.5</ggc-plugins-base.version>
-        <ggc-plugins-meter.version>2.4.2</ggc-plugins-meter.version>
+        <ggc-plugins-meter.version>2.4.3-SNAPSHOT</ggc-plugins-meter.version>
         <ggc-plugins-pump.version>2.0.4</ggc-plugins-pump.version>
         <ggc-plugins-cgms.version>1.6.0</ggc-plugins-cgms.version>
         <ggc-plugins-connect.version>0.1.0</ggc-plugins-connect.version>
