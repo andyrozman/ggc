@@ -1,0 +1,7 @@
+files:
+  - source: /ggc-core-app/ggc-core/src/main/resources/GGC_en.properties
+    translation: /ggc-core-app/ggc-core/src/main/resources/GGC_%two_letters_code%.properties
+  - source: /ggc-plugins/ggc-plugins-base/src/main/resources/GGCPlugin_en.properties
+    translation: /ggc-plugins/ggc-plugins-base/src/main/resources/GGCPlugin_%two_letters_code%.properties
+  - source: /ggc-plugins/ggc-pump/src/main/resources/GGCPumpTool_en.properties
+    translation: /ggc-plugins/ggc-pump/src/main/resources/GGCPumpTool_%two_letters_code%.properties
