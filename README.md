@@ -1,5 +1,7 @@
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/andyrozman/ggc/maven.yml)
 [![Crowdin](https://badges.crowdin.net/gnu-gluco-control-core/localized.svg)](https://crowdin.com/project/gnu-gluco-control-core)
+[![License: GPL v2](https://img.shields.io/badge/License-GPL_v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
+![Known Vulnerabilities](https://snyk.io/test/github/andyrozman/ggc/badge.svg)
 
 # GNU Gluco Control - ggc
 This project was hosted on sourceforge for a long time, but since github has much option that can help with release management and 
