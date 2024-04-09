@@ -5,7 +5,7 @@
 
     <groupId>com.atech-software.ggc</groupId>
     <artifactId>ggc-root</artifactId>
-    <version>0.8-SNAPSHOT</version>
+    <version>0.8.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <repositories>
@@ -143,6 +143,12 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>${maven-resources-plugin.version}</version>
+                    <configuration>
+                        <encoding>UTF-8</encoding>
+                        <nonFilteredFileExtensions>
+                            <nonFilteredFileExtension>zip</nonFilteredFileExtension>
+                        </nonFilteredFileExtensions>
+                    </configuration>
                 </plugin>
 
                 <plugin>
@@ -177,62 +183,63 @@
                     <version>${plexus.version}</version>
                 </plugin>
 
-
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
                     <version>${build-helper-maven-plugin.version}</version>
                 </plugin>
 
-                <plugin>
-                    <groupId>org.eclipse.m2e</groupId>
-                    <artifactId>lifecycle-mapping</artifactId>
-                    <version>${lifecycle-mapping.version}</version>
-                    <configuration>
-                        <lifecycleMappingMetadata>
-                            <pluginExecutions>
-                                <pluginExecution>
-                                    <pluginExecutionFilter>
-                                        <groupId>org.codehaus.mojo</groupId>
-                                        <artifactId>build-helper-maven-plugin</artifactId>
-                                        <!-- <versionRange>[1.0,)</versionRange> -->
-                                        <version>${build-helper-maven-plugin.version}</version>
-                                        <goals>
-                                            <goal>parse-version</goal>
-                                            <goal>add-source</goal>
-                                            <goal>maven-version</goal>
-                                            <goal>add-resource</goal>
-                                            <goal>add-test-resource</goal>
-                                            <goal>add-test-source</goal>
-                                        </goals>
-                                    </pluginExecutionFilter>
-                                    <action>
-                                        <execute>
-                                            <runOnConfiguration>true</runOnConfiguration>
-                                            <runOnIncremental>true</runOnIncremental>
-                                        </execute>
-                                    </action>
-                                </pluginExecution>
-                                <pluginExecution>
-                                    <pluginExecutionFilter>
-                                        <groupId>org.apache.maven.plugins</groupId>
-                                        <artifactId>maven-resources-plugin</artifactId>
-                                        <versionRange>[1.0.0,)</versionRange>
-                                        <goals>
-                                            <goal>resources</goal>
-                                        </goals>
-                                    </pluginExecutionFilter>
-                                    <action>
-                                        <execute>
-                                            <runOnConfiguration>true</runOnConfiguration>
-                                            <runOnIncremental>false</runOnIncremental>
-                                        </execute>
-                                    </action>
-                                </pluginExecution>
-                            </pluginExecutions>
-                        </lifecycleMappingMetadata>
-                    </configuration>
-                </plugin>
+
+
+<!--                <plugin>-->
+<!--                    <groupId>org.eclipse.m2e</groupId>-->
+<!--                    <artifactId>lifecycle-mapping</artifactId>-->
+<!--                    <version>${lifecycle-mapping.version}</version>-->
+<!--                    <configuration>-->
+<!--                        <lifecycleMappingMetadata>-->
+<!--                            <pluginExecutions>-->
+<!--                                <pluginExecution>-->
+<!--                                    <pluginExecutionFilter>-->
+<!--                                        <groupId>org.codehaus.mojo</groupId>-->
+<!--                                        <artifactId>build-helper-maven-plugin</artifactId>-->
+<!--                                        &lt;!&ndash; <versionRange>[1.0,)</versionRange> &ndash;&gt;-->
+<!--                                        <version>${build-helper-maven-plugin.version}</version>-->
+<!--                                        <goals>-->
+<!--                                            <goal>parse-version</goal>-->
+<!--                                            <goal>add-source</goal>-->
+<!--                                            <goal>maven-version</goal>-->
+<!--                                            <goal>add-resource</goal>-->
+<!--                                            <goal>add-test-resource</goal>-->
+<!--                                            <goal>add-test-source</goal>-->
+<!--                                        </goals>-->
+<!--                                    </pluginExecutionFilter>-->
+<!--                                    <action>-->
+<!--                                        <execute>-->
+<!--                                            <runOnConfiguration>true</runOnConfiguration>-->
+<!--                                            <runOnIncremental>true</runOnIncremental>-->
+<!--                                        </execute>-->
+<!--                                    </action>-->
+<!--                                </pluginExecution>-->
+<!--                                <pluginExecution>-->
+<!--                                    <pluginExecutionFilter>-->
+<!--                                        <groupId>org.apache.maven.plugins</groupId>-->
+<!--                                        <artifactId>maven-resources-plugin</artifactId>-->
+<!--                                        <versionRange>[1.0.0,)</versionRange>-->
+<!--                                        <goals>-->
+<!--                                            <goal>resources</goal>-->
+<!--                                        </goals>-->
+<!--                                    </pluginExecutionFilter>-->
+<!--                                    <action>-->
+<!--                                        <execute>-->
+<!--                                            <runOnConfiguration>true</runOnConfiguration>-->
+<!--                                            <runOnIncremental>false</runOnIncremental>-->
+<!--                                        </execute>-->
+<!--                                    </action>-->
+<!--                                </pluginExecution>-->
+<!--                            </pluginExecutions>-->
+<!--                        </lifecycleMappingMetadata>-->
+<!--                    </configuration>-->
+<!--                </plugin>-->
 
                 <!--
                 <plugin>
@@ -275,14 +282,14 @@
                 </plugin>
 
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-eclipse-plugin</artifactId>
-                    <version>${maven-eclipse-plugin.version}</version>
-                    <configuration>
-                        <useProjectReferences>false</useProjectReferences>
-                    </configuration>
-                </plugin>
+<!--                <plugin>-->
+<!--                    <groupId>org.apache.maven.plugins</groupId>-->
+<!--                    <artifactId>maven-eclipse-plugin</artifactId>-->
+<!--                    <version>${maven-eclipse-plugin.version}</version>-->
+<!--                    <configuration>-->
+<!--                        <useProjectReferences>false</useProjectReferences>-->
+<!--                    </configuration>-->
+<!--                </plugin>-->
 
 
                 <plugin>
@@ -497,10 +504,10 @@
                         <groupId>com.lowagie</groupId>
                         <artifactId>itext</artifactId>
                     </exclusion>
-                    <exclusion>
-                        <groupId>net.lingala.zip4j</groupId>
-                        <artifactId>zip4j</artifactId>
-                    </exclusion>
+<!--                    <exclusion>-->
+<!--                        <groupId>net.lingala.zip4j</groupId>-->
+<!--                        <artifactId>zip4j</artifactId>-->
+<!--                    </exclusion>-->
                     <exclusion>
                         <groupId>com.itextpdf</groupId>
                         <artifactId>itextpdf</artifactId>
@@ -539,7 +546,7 @@
                         <artifactId>jta</artifactId>
                     </exclusion>
                     <exclusion>
-                        <groupId>org.dom4j</groupId>
+                        <groupId>dom4j</groupId>
                         <artifactId>dom4j</artifactId>
                     </exclusion>
                 </exclusions>
@@ -570,6 +577,12 @@
                 <groupId>javax.help</groupId>
                 <artifactId>javahelp</artifactId>
                 <version>${javahelp.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${h2.version}</version>
             </dependency>
 
 
@@ -632,6 +645,12 @@
                 <artifactId>commons-collections4</artifactId>
                 <version>${commons-collections4.version}</version>
             </dependency>
+
+<!--            <dependency>-->
+<!--                <groupId>commons-io</groupId>-->
+<!--                <artifactId>commons-io</artifactId>-->
+<!--                <version>2.16.0</version>-->
+<!--            </dependency>-->
 
             <!-- Jfree - Graph Framework -->
             <dependency>
@@ -859,10 +878,11 @@
         <slf4j.version>1.7.36</slf4j.version>
         <table-layout.version>4.3.0</table-layout.version>
         <gson.version>2.9.1</gson.version>
-        <commons-io.version>2.9.0</commons-io.version>
+        <commons-io.version>2.16.0</commons-io.version>
         <!-- Maybe we need to remove this in favor of older version since we need that version anyways -->
         <commons-collections4.version>4.4</commons-collections4.version>
         <bouncy_castle.version>1.77</bouncy_castle.version>
+        <h2.version>2.2.224</h2.version>
 
         <!-- 0.9 REMOVED  -->
 <!--        <jna-j15.version>4.1.0</jna-j15.version>-->
@@ -873,7 +893,7 @@
 
         <!-- Changed: CGMS, Core, Meter (for new version)  -->
         <atech-tools.version>0.8.8-SNAPSHOT</atech-tools.version>
-        <hid4java.version>0.5.0</hid4java.version>
+        <hid4java.version>0.7.0</hid4java.version>
         <jna.version>4.2.2</jna.version>
         <nrjavaserial.version>3.13.0</nrjavaserial.version>
         <junit.version>4.13.2</junit.version>
@@ -885,16 +905,16 @@
 
         <!-- 0.8 -->
         <ggc-help.version>0.2.3</ggc-help.version>
-        <ggc-core.version>0.8.0</ggc-core.version>
+        <ggc-core.version>${project.parent.version}</ggc-core.version>
 
-        <ggc-plugins-base.version>1.2.5</ggc-plugins-base.version>
+        <ggc-plugins-base.version>1.2.6-SNAPSHOT</ggc-plugins-base.version>
         <ggc-plugins-meter.version>2.4.3-SNAPSHOT</ggc-plugins-meter.version>
         <ggc-plugins-pump.version>2.0.4</ggc-plugins-pump.version>
         <ggc-plugins-cgms.version>1.6.0</ggc-plugins-cgms.version>
         <ggc-plugins-connect.version>0.1.0</ggc-plugins-connect.version>
         <ggc-plugins-nutrition.version>1.4.2</ggc-plugins-nutrition.version>
 
-        <ggc-desktop.version>0.8.0</ggc-desktop.version>
+        <ggc-desktop.version>${project.parent.version}</ggc-desktop.version>
         <ggc-desktop-little.version>0.3.1</ggc-desktop-little.version>
 
 
@@ -942,13 +962,10 @@
         <module>ggc-core-app</module>
         <module>ggc-plugins</module>
         <module>ggc-support</module>
-        <module>ggc-future</module>
         <module>ggc-desktop-app</module>
-<!--        <module>ggc-doctor-app</module>-->
 
-        <!--       Old -->
-        <!--       <module>ggc-package</module> -->
-        <!--        <module>ggc-support/ggc-assembly</module> -->
+<!--        <module>ggc-future</module>-->
+<!--        <module>ggc-doctor-app</module>-->
     </modules>
 
 

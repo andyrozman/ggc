@@ -10,6 +10,10 @@ import java.util.Properties;
 
 import javax.swing.*;
 
+import com.atech.utils.file.PropertiesFile;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,6 +88,7 @@ import ggc.gui.dialogs.selector.GGCSelectorConfiguration;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
+@Slf4j
 public class DataAccess extends ATDataAccessLMAbstract
 {
 
@@ -113,6 +118,9 @@ public class DataAccess extends ATDataAccessLMAbstract
     protected GGCProperties m_settings = null;
     protected DbToolApplicationGGC m_configFile = null;
     protected ConfigurationManager m_cfgMgr = null;
+
+    protected Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    protected static Server web_server;
 
     // /**
     // * Decimal with zero decimals
@@ -206,8 +214,7 @@ public class DataAccess extends ATDataAccessLMAbstract
      * <br>
      * 
      */
-    protected DataAccess()
-    {
+    protected DataAccess() {
         super(new LanguageManager(new GGCLanguageManagerRunner()), new GGCCoreICRunner());
         initSpecial();
     }
@@ -433,6 +440,11 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public static void deleteInstance()
     {
+        if (web_server!=null) {
+            web_server.shutdown();
+            web_server = null;
+        }
+
         // m_i18n = null;
         DataAccess.s_da = null;
     }
@@ -1491,17 +1503,33 @@ public class DataAccess extends ATDataAccessLMAbstract
     /**
      * Start Internal Web Server
      */
-    public void startWebServer()
-    {
+    public void startWebServer() {
         try
         {
-            LOG.info("Start internal Web Server");
+            log.info("Start internal Web Server");
 
-            String[] cnf = { "-config", //
-                            userDataDirectory.getParsedUserDataPath("%USER_DATA_DIR%/tools/WebLister.properties") };
+            if (web_server!=null) {
+                log.info(" ... Web Server is already running !");
+                return;
+            }
 
-            Server web_server = new Server(cnf);
-            web_server.start();
+            PropertiesFile propertiesFile = new PropertiesFile("WebLister.properties", true, true);
+            propertiesFile.readFile();
+
+            // TODO use internal configuration
+
+//            String[] cnf = { "-config", //
+//                            userDataDirectory.getParsedUserDataPath("%USER_DATA_DIR%/tools/WebLister.properties") };
+
+            if (propertiesFile.wasFileRead()) {
+                //log.debug("Loaded properies: {}", gson.toJson(propertiesFile.getProperties()));
+                web_server = new Server(propertiesFile.getProperties());
+                web_server.start();
+            } else {
+                log.warn("Configuration not found. WebServer not started.");
+            }
+
+            // pygmy.core.Server
 
         }
         catch (Exception ex)

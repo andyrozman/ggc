@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.atech-software.ggc</groupId>
         <artifactId>ggc-root</artifactId>
-        <version>0.8-SNAPSHOT</version>
+        <version>0.8.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -13,16 +13,9 @@
     <artifactId>ggc-desktop-app</artifactId>
     <packaging>pom</packaging>
 
-    <!--
-    <modules>
-        <module>ggc-help</module>
-    </modules>
-    -->
-
     <modules>
         <module>ggc-desktop</module>
         <module>ggc-desktop-little</module>
     </modules>
-
 
 </project>

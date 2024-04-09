@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.atech-software.ggc</groupId>
         <artifactId>ggc-desktop-app</artifactId>
-        <version>0.8-SNAPSHOT</version>
+        <version>0.8.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -45,34 +45,11 @@
 
 
     <dependencies>
-        <dependency>
-            <groupId>com.atech-software.ggc</groupId>
-            <artifactId>ggc-core</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>com.atech-software.ggc</groupId>
             <artifactId>ggc-desktop</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>com.atech-software</groupId>
-            <artifactId>atech-tools</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${postgresql.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <!-- <version>4.11</version> -->
-            <!-- <scope>test</scope> -->
-        </dependency>
-
 
     </dependencies>
 

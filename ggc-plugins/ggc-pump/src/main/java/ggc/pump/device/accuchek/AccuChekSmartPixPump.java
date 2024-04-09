@@ -297,7 +297,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
             Profile profile = new Profile();
             profile.profile_id = n.attributeValue("Name");
 
-            List<Node> nlist2 = n.elements();
+            List<Element> nlist2 = n.elements(); // was Node in 1.6.1
 
             for (int j = 0; j < nlist2.size(); j++)
             {

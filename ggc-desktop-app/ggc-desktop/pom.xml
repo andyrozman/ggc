@@ -5,13 +5,12 @@
     <parent>
         <groupId>com.atech-software.ggc</groupId>
         <artifactId>ggc-desktop-app</artifactId>
-        <version>0.8-SNAPSHOT</version>
+        <version>0.8.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <name>GGC Desktop - Desktop</name>
     <artifactId>ggc-desktop</artifactId>
-    <version>${ggc-desktop.version}</version>
 
 
     <dependencies>
@@ -130,7 +129,18 @@
             <artifactId>table-layout</artifactId>
         </dependency>
 
-<!--        <dependency>-->
+        <dependency>
+            <groupId>net.lingala.zip4j</groupId>
+            <artifactId>zip4j</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+
+
+        <!--        <dependency>-->
 <!--            <groupId>javax.jmdns</groupId>-->
 <!--            <artifactId>jmdns</artifactId>-->
 <!--        </dependency>-->
