@@ -2,6 +2,9 @@
 Changes file for GGC Plug-In Base
 ==================================
 
+1.2.6
+- device downloader: added icons, disable buttons
+
 1.2.5 [17.9.2017]
 - Bug Fix: Configuration
 - Hid4JavaCommunicationHandler

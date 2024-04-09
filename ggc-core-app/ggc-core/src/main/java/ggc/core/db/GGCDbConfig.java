@@ -201,16 +201,14 @@ public class GGCDbConfig extends HibernateConfiguration
 
 
     @Override
-    public boolean canShemaBeAutomaticallyChanged()
-    {
-        return false;
+    public boolean canShemaBeAutomaticallyChanged() {
+        return true;
     }
 
 
     @Override
-    public String getShemaChangeType()
-    {
-        return null;
+    public String getShemaChangeType() {
+        return "update";
     }
 
 

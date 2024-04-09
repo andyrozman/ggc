@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.Arrays;
 import java.util.Collection;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -17,11 +18,11 @@ import ggc.core.data.defs.HbA1cType;
  * Created by andy on 22/11/17.
  */
 
-
+@Slf4j
 @RunWith(Parameterized.class)
 public class Converter_HbA1c_DCCT_IFCCTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(Converter_HbA1c_DCCT_IFCCTest.class);
+    //private static final Logger LOG = LoggerFactory.getLogger(Converter_HbA1c_DCCT_IFCCTest.class);
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
@@ -102,7 +103,7 @@ public class Converter_HbA1c_DCCT_IFCCTest {
     @Test
     public void test() {
         float result = converter.getValueByType(inputType, outputType, value);
-        LOG.info("{}: Converting {} {} to {}. Expected: {}, Got: {}", expected==result  ? "Success" : "FAIL  " , value, inputType.name(), outputType.name(), expected, result);
+        log.info("{}: Converting {} {} to {}. Expected: {}, Got: {}", expected==result  ? "Success" : "FAIL  " , value, inputType.name(), outputType.name(), expected, result);
         assertEquals(expected, converter.getValueByType(inputType, outputType, value), 0.0f);
     }
 }

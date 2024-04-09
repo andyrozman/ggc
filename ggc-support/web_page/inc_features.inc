@@ -74,6 +74,8 @@ user-friendlier. <br><br>
 		<li>Customization of application</li>
         <li>Help framework integrated (Some help pages written)</li>
         <li>USB Image of GGC</li>
+        <li>USB devices integration (via HID interface)</li>
+        <li>Restore data (partial/update)</li>
     </ul>
 </ul>
 
@@ -85,26 +87,31 @@ marked with [1.0] will be finished, then first release, with them, will be 1.0.<
 
 <b>Planned Features:</b>
 <ul>
+<li><i>Version 0.8 [2Q/2024]:</i></li>
+<ul>
+    <li>Refresh most of stale dependencies</li>
+    <li>Create fat-jar artifact for whole application</li>
+    <li>Move configuration from application folder to "User Application Data" folder</li>
+    <li>Update H2 database version (major update, will require manual actions)</li>
+</ul>
 
 
-<li><i>Version 0.7 [4Q/2015]:</i></li>
+<li><i>Version 0.9 [4Q/2024]:</i></li>
 <ul>
     <li>Stocks</li>
     <li>Update system [1.0]</li>
     <li>Write help pages for English (full help) [1.0] </li>
     <li>Db Tool [1.0]</li>
     <li>Support for multiple persons</li>
-    <li>USB devices integration (via HID interface)</li>
 </ul>
 
 
 
-<li><i>Version 0.8 or later:</i></li>
+<li><i>Version 0.10 or later:</i></li>
 <ul>
     <li>Extend nutrition databases functionality</li>
     <li>Add Remote Food database</li>
 	<li>Editor for Graph (v3)</li>
-	<li>Restore data (partitial/update)</li>
 	<li>Appointment and Doctors handling</li>
     <li>Activity manager</li>
     <li>Support for multiple instances of GGC and their communication</li>

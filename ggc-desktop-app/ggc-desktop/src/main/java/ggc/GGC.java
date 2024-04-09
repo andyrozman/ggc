@@ -2,6 +2,9 @@ package ggc;
 
 import java.awt.*;
 
+import com.atech.utils.java.VersionInterface;
+import ggc.core.util.Version;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -13,6 +16,7 @@ import ggc.core.db.GGCDbConfig;
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCUserDataDirectoryContext;
 import ggc.gui.main.MainFrame;
+import org.hibernate.tool.hbm2ddl.SchemaUpdate;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -39,38 +43,21 @@ import ggc.gui.main.MainFrame;
  *  Author: schultd
  *          Andy {andy@atech-software.com}  
  */
+@Slf4j
+public class GGC {
 
-public class GGC
-{
-
-    // fields
     private static GGC s_theApp;
     private static MainFrame s_mainWindow;
+    static UserDataDirectory userDataDirectory;
 
-
-    // Version information
-    /**
-     * Version of application
-     */
-    // public static String s_version = "0.4.6.4"; //3.16";
-
-    /**
-     * Full Version
-     */
-    // public static String full_version = "v" + DataAccess.CORE_VERSION;
-
-    /**
-     * Version Date 
-     */
-    // public static String version_date = "15th March 2009";
 
     /**
      * Checks if Db is correct version
      * 
      * @return
      */
-    public static boolean isDbOk()
-    {
+    public static boolean isDbOk() {
+
         GGCDbConfig conf = new GGCDbConfig(true);
 
         DbCheckReport dcr = new DbCheckReport(conf.getDbInfoReportFilename(), DataAccess.getInstance()
@@ -87,16 +74,13 @@ public class GGC
     }
 
 
-    public static void initLogging()
-    {
+    public static void initLogging() {
+        //String PATTERN = "%d{HH:mm:ss,SSS} %5p [%c{1}:%L] - %m%n";
         String PATTERN = "%d{HH:mm:ss,SSS} %5p [%c{1}:%L] - %m%n";
 
         Log4jUtil.initLogger("GGC");
 
         Logger.getRootLogger().addAppender(Log4jUtil.createConsoleAppender(Level.DEBUG, PATTERN));
-
-        // Logger.getRootLogger().addAppender(Log4jUtil.createDailyRollingFileAppender(Level.DEBUG,
-        // PATTERN, "yyyy-MM-dd"));
 
         Logger.getRootLogger().addAppender(
             Log4jUtil.createDailyZippedRollingFileAppender(Level.DEBUG, PATTERN, "yyyy-MM-dd"));
@@ -104,11 +88,18 @@ public class GGC
         filterLogging();
     }
 
+    private static void logApplicationStart() {
+        Version versionInterface = new ggc.core.util.Version();
+        log.info("=============== Starting GGC ({} - {}) ===============", versionInterface.getVersion(), versionInterface.getBuildTime());
+    }
 
-    private static void filterLogging()
-    {
+    private static void filterLogging() {
         // GGC
+        Logger.getLogger("ggc.core").setLevel(Level.INFO);
         Logger.getLogger("ggc.core.db.GGCDb").setLevel(Level.INFO);
+
+        // Atech-Tools
+        Logger.getLogger("com.atech.data.user_data_dir").setLevel(Level.INFO);
 
         // Hibernate
         Logger.getLogger("org.hibernate").setLevel(Level.INFO);
@@ -116,8 +107,9 @@ public class GGC
         Logger.getLogger("org.hibernate.type").setLevel(Level.INFO);
 
         // log schema export/update
-        Logger.getLogger("net.sf.hibernate.tool.hbm2ddl").setLevel(Level.INFO);
-        Logger.getLogger("net.sf.hibernate.tool.hbm2java").setLevel(Level.INFO);
+        Logger.getLogger("org.hibernate.tool.hbm2ddl").setLevel(Level.INFO);
+        Logger.getLogger("org.hibernate.tool.hbm2ddl.TableMetadata").setLevel(Level.WARN);
+        Logger.getLogger("org.hibernate.tool.hbm2java").setLevel(Level.INFO);
 
         // Limit display of logging for Hibernate
         Logger.getLogger("net.sf.ehcache").setLevel(Level.ERROR);
@@ -133,11 +125,15 @@ public class GGC
      * Main startup method
      * @param args
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
+
+        initUserDataDirectory();
+
         initLogging();
 
-        createDataDirectory();
+        logApplicationStart();
+
+        checkAndMigrateOrInstallDataDirectory();
 
         boolean dev = false;
 
@@ -148,10 +144,10 @@ public class GGC
 
         if (!dev)
         {
-            if (!GGC.isDbOk())
+            if (!GGC.isDbOk()) {
+                DataAccess.deleteInstance();
                 return;
-
-            DataAccess.deleteInstance();
+            }
         }
 
         System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
@@ -160,14 +156,13 @@ public class GGC
         s_theApp.init(dev);
     }
 
-
-    private static void createDataDirectory()
-    {
-        UserDataDirectory instance = UserDataDirectory.getInstance();
-        // TODO
-        instance.migrateAndValidateData(new GGCUserDataDirectoryContext("../ddda"));
+    private static void initUserDataDirectory() {
+        userDataDirectory = UserDataDirectory.createInstance(new GGCUserDataDirectoryContext());
+    }
 
 
+    private static void checkAndMigrateOrInstallDataDirectory() {
+        userDataDirectory.migrateAndValidateData();
     }
 
 

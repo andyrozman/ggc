@@ -1,6 +1,0 @@
-11:28:21,679  INFO [HibernateConfiguration:180] - Your DB version identified by HBM.xml resource files (sha1=17f84910f226c9d9bf6c8218fc824c6d2a01d05b, db_version=7).
-11:28:21,682 ERROR [HibernateConfiguration:423] - Configuration file is missing. Make sure path to file is correct (../data/GGC_Config.properties).
-11:28:21,684  INFO [GGCDbConfig:156] - GGCDb: Database configuration not found. Using default database.
-11:28:21,685  INFO [GGCDbConfig:158] - GGCDb: Loading Db Configuration #0: Internal Db (H2)
-11:28:21,693 ERROR [PropertiesFile:134] - PropertiesFile: Error reading file: ../data/lang/GGC_Languages.properties
-11:28:21,693 ERROR [LanguageManager:99] - LanguageManager: Configuration file ../data/lang/GGC_Languages.properties was NOT read !

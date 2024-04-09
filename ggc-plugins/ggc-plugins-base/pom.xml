@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.atech-software.ggc</groupId>
         <artifactId>ggc-plugins</artifactId>
-        <version>0.8-SNAPSHOT</version>
+        <version>0.8.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -28,6 +28,7 @@
         <dependency>
             <groupId>com.atech-software.ggc</groupId>
             <artifactId>ggc-core</artifactId>
+<!--            <version>${project.parent.version}</version>   &lt;!&ndash; DONT KNOW WHY THIS IS NEEDED &ndash;&gt;-->
         </dependency>
 
         <dependency>
@@ -84,6 +85,12 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+        </dependency>
+
 
     </dependencies>
 
