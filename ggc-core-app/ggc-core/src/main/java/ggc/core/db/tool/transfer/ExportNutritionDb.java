@@ -1,6 +1,5 @@
 package ggc.core.db.tool.transfer;
 
-import java.io.File;
 import java.util.Iterator;
 
 import org.hibernate.Query;
@@ -80,51 +79,14 @@ public class ExportNutritionDb extends ExportTool
     }
 
 
-    private void checkPrerequisites()
-    {
-        File f = new File("../data");
-
-        if (!f.exists())
-        {
-            f.mkdir();
-        }
-
-        f = new File("../data/export");
-
-        if (!f.exists())
-        {
-            f.mkdir();
-        }
-
-        this.setRootPath("../data/export/");
+    private void checkPrerequisites() {
+        this.setRootPath(ImpExpUtil.getExportPath());
         this.setFileLastPart("_" + getCurrentDateForFile());
     }
 
 
-    private void checkPrerequisitesForAutoBackup()
-    {
-        File f = new File("../data");
-
-        if (!f.exists())
-        {
-            f.mkdir();
-        }
-
-        f = new File("../data/export");
-
-        if (!f.exists())
-        {
-            f.mkdir();
-        }
-
-        f = new File("../data/export/tmp");
-
-        if (!f.exists())
-        {
-            f.mkdir();
-        }
-
-        this.setRootPath("../data/export/tmp/");
+    private void checkPrerequisitesForAutoBackup() {
+        this.setRootPath(ImpExpUtil.getExportPathTemp());
         this.setFileLastPart("");
     }
 

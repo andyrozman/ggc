@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
 
+import com.atech.app.data.about.ModuleInfoEntry;
 import ggc.core.data.defs.ClockModeType;
 import ggc.core.data.defs.GlucoseUnitType;
 import ggc.plugin.cfg.DeviceConfiguration;
@@ -504,22 +505,6 @@ public class DataAccessPump extends DataAccessPlugInBase
     }
 
 
-    /**
-     * Sleep MS
-     *
-     * @param ms
-     */
-    public void sleepMs(long ms)
-    {
-        try
-        {
-            Thread.sleep(ms);
-        }
-        catch (Exception ex)
-        {}
-    }
-
-
     @Override
     public void loadSorters()
     {
@@ -559,5 +544,16 @@ public class DataAccessPump extends DataAccessPlugInBase
     {
         return pumpBasalManager;
     }
+
+
+    @Override
+    public ModuleInfoEntry getPluginModule() {
+        return ModuleInfoEntry.builder()
+                .name(i18n.getMessage("PUMP_PLUGIN_NAME"))
+                .version(new ggc.pump.defs.Version().getVersion())
+                .description(i18n.getMessage("PUMP_PLUGIN_DESCRIPTION"))
+                .build();
+    }
+
 
 }

@@ -275,7 +275,7 @@
                             </replacement>
                             <replacement>
                                 <token>@pomversion@</token>
-                                <value>${project.version}</value>
+                                <value>${module.version}</value>
                             </replacement>
                         </replacements>
                     </configuration>
@@ -413,61 +413,71 @@
             <dependency>
                 <groupId>com.atech-software.ggc</groupId>
                 <artifactId>ggc-help</artifactId>
-                <version>${ggc-help.version}</version>
+                <version>${project.parent.version}</version>
+<!--                <version>${ggc-help.version}</version>-->
             </dependency>
 
             <dependency>
                 <groupId>com.atech-software.ggc</groupId>
                 <artifactId>ggc-core</artifactId>
-                <version>${ggc-core.version}</version>
+                <version>${project.parent.version}</version>
+<!--                <version>${ggc-core.version}</version>-->
             </dependency>
 
             <dependency>
                 <groupId>com.atech-software.ggc</groupId>
                 <artifactId>ggc-plugins-base</artifactId>
-                <version>${ggc-plugins-base.version}</version>
+                <version>${project.parent.version}</version>
+<!--                <version>${ggc-plugins-base.version}</version>-->
             </dependency>
 
             <dependency>
                 <groupId>com.atech-software.ggc</groupId>
                 <artifactId>ggc-plugins-meter</artifactId>
-                <version>${ggc-plugins-meter.version}</version>
+                <version>${project.parent.version}</version>
+<!--                <version>${ggc-plugins-meter.version}</version>-->
             </dependency>
 
             <dependency>
                 <groupId>com.atech-software.ggc</groupId>
                 <artifactId>ggc-plugins-pump</artifactId>
-                <version>${ggc-plugins-pump.version}</version>
+                <version>${project.parent.version}</version>
+<!--                <version>${ggc-plugins-pump.version}</version>-->
             </dependency>
 
             <dependency>
                 <groupId>com.atech-software.ggc</groupId>
                 <artifactId>ggc-plugins-cgms</artifactId>
-                <version>${ggc-plugins-cgms.version}</version>
+                <version>${project.parent.version}</version>
+<!--                <version>${ggc-plugins-cgms.version}</version>-->
             </dependency>
 
             <dependency>
                 <groupId>com.atech-software.ggc</groupId>
                 <artifactId>ggc-plugins-nutrition</artifactId>
-                <version>${ggc-plugins-nutrition.version}</version>
+                <version>${project.parent.version}</version>
+<!--                <version>${ggc-plugins-nutrition.version}</version>-->
             </dependency>
 
             <dependency>
                 <groupId>com.atech-software.ggc</groupId>
                 <artifactId>ggc-plugins-connect</artifactId>
-                <version>${ggc-plugins-connect.version}</version>
+                <version>${project.parent.version}</version>
+<!--                <version>${ggc-plugins-connect.version}</version>-->
             </dependency>
 
             <dependency>
                 <groupId>com.atech-software.ggc</groupId>
                 <artifactId>ggc-desktop</artifactId>
-                <version>${ggc-desktop.version}</version>
+                <version>${project.parent.version}</version>
+<!--                <version>${ggc-desktop.version}</version>-->
             </dependency>
 
             <dependency>
                 <groupId>com.atech-software.ggc</groupId>
                 <artifactId>ggc-desktop-little</artifactId>
-                <version>${ggc-desktop-little.version}</version>
+                <version>${project.parent.version}</version>
+<!--                <version>${ggc-desktop-little.version}</version>-->
             </dependency>
 
 
@@ -480,11 +490,11 @@
             </dependency>
             -->
 
-            <dependency>
-                <groupId>com.atech-software.ggc</groupId>
-                <artifactId>ggc-sw-diasend</artifactId>
-                <version>0.1-SNAPSHOT</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>com.atech-software.ggc</groupId>-->
+<!--                <artifactId>ggc-sw-diasend</artifactId>-->
+<!--                <version>0.1-SNAPSHOT</version>-->
+<!--            </dependency>-->
 
             <!-- Atech Tools - Main Helper Library -->
             <dependency>
@@ -560,17 +570,16 @@
 
             <!-- Internal Web Service -->
             <dependency>
-                <groupId>net.sf.ggc.pygmy-httpd</groupId>
+                <groupId>com.atech-software.pygmy-httpd</groupId>
                 <artifactId>pygmy-core</artifactId>
-                <version>${pygmy-core.version}</version>
+                <version>${pygmy-httpd.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>net.sf.ggc.pygmy-httpd</groupId>
+                <groupId>com.atech-software.pygmy-httpd</groupId>
                 <artifactId>pygmy-handlers</artifactId>
-                <version>${pygmy-handlers.version}</version>
+                <version>${pygmy-httpd.version}</version>
             </dependency>
-
 
             <!-- Java Help -->
             <dependency>
@@ -671,12 +680,12 @@
                 <version>${ibm-compapi.version}</version>
             </dependency>
 
-            <!-- BlueCove Bluetooth library  -->
-            <dependency>
-                <groupId>io.ultreia</groupId>
-                <artifactId>bluecove</artifactId>
-                <version>2.1.1</version>
-            </dependency>
+            <!-- BlueCove Bluetooth library - Experimental -->
+<!--            <dependency>-->
+<!--                <groupId>io.ultreia</groupId>-->
+<!--                <artifactId>bluecove</artifactId>-->
+<!--                <version>2.1.1</version>-->
+<!--            </dependency>-->
 
 
             <!-- Jaxen - Xml -->
@@ -692,22 +701,10 @@
                 <groupId>com.neuronrobotics</groupId>
                 <artifactId>nrjavaserial</artifactId>
                 <version>${nrjavaserial.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>commons-net</groupId>
-                        <artifactId>commons-net</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
 
 
             <!-- USB Hid Support -->
-            <dependency>
-                <groupId>net.java.dev.jna</groupId>
-                <artifactId>jna</artifactId>
-                <version>${jna.version}</version>
-            </dependency>
-
             <dependency>
                 <groupId>org.hid4java</groupId>
                 <artifactId>hid4java</artifactId>
@@ -715,6 +712,12 @@
             </dependency>
 
 
+            <!-- USB SCSI -->
+            <dependency>
+                <groupId>com.atech-software</groupId>
+                <artifactId>libaums-usb4java</artifactId>
+                <version>${libaums-usb4java.version}</version>
+            </dependency>
 
 
             <!-- Upgrade feature dependencies - WIP !!! -->
@@ -732,11 +735,6 @@
             <!-- WIP -->
 
             <!-- Logging utils -->
-<!--            <dependency>-->
-<!--                <groupId>log4j</groupId>-->
-<!--                <artifactId>log4j</artifactId>-->
-<!--                <version>${log4j.version}</version>-->
-<!--            </dependency>-->
 
             <!-- This is drop-in replacement for outdated log4j -->
             <dependency>
@@ -823,15 +821,13 @@
                 <version>2.0.6.1</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgresql.version}</version>
+            </dependency>
 
 
-
-            <!-- Zanata - Crowdsourcing translation possibility -->
-<!--            <dependency>-->
-<!--                <groupId>org.zanata</groupId>-->
-<!--                <artifactId>zanata-maven-plugin</artifactId>-->
-<!--                <version>4.2.1</version>-->
-<!--            </dependency>-->
 
 
             <!--
@@ -848,89 +844,72 @@
     <properties>
 
         <!-- GGC Modules versions -->
+        <ggc-core.version>${project.parent.version}</ggc-core.version>
+        <ggc-desktop.version>${project.parent.version}</ggc-desktop.version>
 
+        <!-- GGC Internal Versions -->
+        <ggc-plugins-base.version>1.2.6-S</ggc-plugins-base.version>
+        <ggc-plugins-meter.version>2.4.3-S</ggc-plugins-meter.version>
+        <ggc-plugins-pump.version>2.0.5-S</ggc-plugins-pump.version>
+        <ggc-plugins-cgms.version>1.6.1-S</ggc-plugins-cgms.version>
+        <ggc-plugins-connect.version>0.1.1-S</ggc-plugins-connect.version>
+        <ggc-plugins-nutrition.version>1.4.3-S</ggc-plugins-nutrition.version>
+        <ggc-desktop-little.version>0.3.1</ggc-desktop-little.version>
+        <ggc-help.version>0.2.3</ggc-help.version>
 
         <!-- GGC Doctors  (not used yet)  -->
         <ggc-doctor-core.version>0.1-SNAPSHOT</ggc-doctor-core.version>
         <ggc-doctor-server.version>0.1-SNAPSHOT</ggc-doctor-server.version>
         <ggc-doctor-desktop.version>0.1-SNAPSHOT</ggc-doctor-desktop.version>
 
-
-        <!-- NON MAVEN -->
-
-        <!-- Dependencies versions -->
+        <!-- Hardware Dependencies -->
         <ibm-compapi.version>1.3</ibm-compapi.version>  <!-- Private -->
+        <hid4java.version>0.7.0</hid4java.version> <!-- 0.5.0 -->
+        <nrjavaserial.version>5.2.1</nrjavaserial.version> <!-- 3.13.0 -->
+        <libaums-usb4java.version>0.4.1</libaums-usb4java.version>
+
+
+        <!-- Libraries used -->
+        <atech-tools.version>0.8.8-SNAPSHOT</atech-tools.version>
+        <pygmy-httpd.version>0.4.3</pygmy-httpd.version>  <!-- 0.2 -->
+
         <skinlf.version>6.7</skinlf.version>
-        <jasperreports.version>3.7.1</jasperreports.version>
         <jfreechart.version>1.0.13</jfreechart.version>
         <hibernate.version>3.1.3</hibernate.version>
-        <pygmy-core.version>0.2</pygmy-core.version>
-        <pygmy-handlers.version>0.2</pygmy-handlers.version>  <!-- Private -->
-        <servlet-api.version>2.5</servlet-api.version>
         <itextpdf.version>5.5.13.3</itextpdf.version>  <!-- 5.1.2 -->
         <commons-lang.version>2.6</commons-lang.version>
         <javahelp.version>2.0.05</javahelp.version>
         <icepdf-core.version>5.0.7</icepdf-core.version>
         <icepdf-viewer.version>5.0.7</icepdf-viewer.version>
         <jaxen.version>1.1.6</jaxen.version>
-
-        <commons-collections.version>3.2.2</commons-collections.version>
-        <slf4j.version>1.7.36</slf4j.version>
-        <table-layout.version>4.3.0</table-layout.version>
-        <gson.version>2.9.1</gson.version>
-        <commons-io.version>2.16.0</commons-io.version>
-        <!-- Maybe we need to remove this in favor of older version since we need that version anyways -->
-        <commons-collections4.version>4.4</commons-collections4.version>
         <bouncy_castle.version>1.77</bouncy_castle.version>
         <h2.version>2.2.224</h2.version>
+        <table-layout.version>4.3.0</table-layout.version>
+        <gson.version>2.9.1</gson.version>
+        <commons-collections4.version>4.4</commons-collections4.version>
+        <commons-collections.version>3.2.2</commons-collections.version>
+        <commons-io.version>2.16.0</commons-io.version>
+        <commons-lang3.version>3.4</commons-lang3.version>
+        <slf4j.version>1.7.36</slf4j.version>
+        <log4j.version>1.2.17</log4j.version> <!-- Used for some extras only -->
+        <log4j-reload.version>1.2.25</log4j-reload.version>
 
-        <!-- 0.9 REMOVED  -->
-<!--        <jna-j15.version>4.1.0</jna-j15.version>-->
-<!--        <hid4java-j15.version>0.4.1-DEV</hid4java-j15.version>-->
-<!--        <nrjavaserial-j15.version>3.13.0-DEV</nrjavaserial-j15.version>-->
+        <!-- External JDBC Library -->
+        <postgresql.version>42.7.3</postgresql.version>
 
-
-
-        <!-- Changed: CGMS, Core, Meter (for new version)  -->
-        <atech-tools.version>0.8.8-SNAPSHOT</atech-tools.version>
-        <hid4java.version>0.7.0</hid4java.version>
-        <jna.version>4.2.2</jna.version>
-        <nrjavaserial.version>3.13.0</nrjavaserial.version>
+        <!-- Test -->
         <junit.version>4.13.2</junit.version>
 
-        <commons-lang3.version>3.4</commons-lang3.version>
-        <log4j.version>1.2.17</log4j.version>
-        <log4j-reload.version>1.2.25</log4j-reload.version>
-        <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
-
-        <!-- 0.8 -->
-        <ggc-help.version>0.2.3</ggc-help.version>
-        <ggc-core.version>${project.parent.version}</ggc-core.version>
-
-        <ggc-plugins-base.version>1.2.6-SNAPSHOT</ggc-plugins-base.version>
-        <ggc-plugins-meter.version>2.4.3-SNAPSHOT</ggc-plugins-meter.version>
-        <ggc-plugins-pump.version>2.0.4</ggc-plugins-pump.version>
-        <ggc-plugins-cgms.version>1.6.0</ggc-plugins-cgms.version>
-        <ggc-plugins-connect.version>0.1.0</ggc-plugins-connect.version>
-        <ggc-plugins-nutrition.version>1.4.2</ggc-plugins-nutrition.version>
-
-        <ggc-desktop.version>${project.parent.version}</ggc-desktop.version>
-        <ggc-desktop-little.version>0.3.1</ggc-desktop-little.version>
-
-
-        <build-helper-maven-plugin.version>1.9.1</build-helper-maven-plugin.version>
-        <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
-        <maven-replacer-plugin.version>1.4.0</maven-replacer-plugin.version>
-
-        <!-- 0.6.2 -->
+        <!-- Experimental dependencies -->
         <jssc.version>2.8.0</jssc.version>
-        <!-- Not really used just for testing -->
-        <!-- 0.9 ?? -->
         <simpleframework.version>2.7.1</simpleframework.version>
         <zip4j.version>2.11.5</zip4j.version>
 
-
         <!-- Maven Plugins -->
+        <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
+        <build-helper-maven-plugin.version>1.9.1</build-helper-maven-plugin.version>
+        <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
+        <maven-replacer-plugin.version>1.4.0</maven-replacer-plugin.version>
         <plexus.version>2.5</plexus.version>
         <maven-resources-plugin.version>2.6</maven-resources-plugin.version>
         <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
@@ -941,14 +920,11 @@
         <maven-eclipse-plugin.version>2.9</maven-eclipse-plugin.version>
         <maven-dependency-plugin.version>2.10</maven-dependency-plugin.version>
 
-        <postgresql.version>9.1-901.jdbc3</postgresql.version>
-
         <!-- Maven Settings -->
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
 
         <!-- Replacer Plugin -->
         <timestamp>${maven.build.timestamp}</timestamp>

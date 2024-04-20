@@ -6,6 +6,7 @@ import java.util.*;
 
 import javax.swing.*;
 
+import com.atech.app.data.about.ModuleInfoEntry;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -428,7 +429,11 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
      */
     public List<LibraryInfoEntry> getPlugInLibraries()
     {
-        List<LibraryInfoEntry> libraries = getBaseLibraries();
+        List<LibraryInfoEntry> libraries = new ArrayList<>();
+
+        if (includeBasePluginLibraries()) {
+            libraries.addAll(getBaseLibraries());
+        }
 
         List<LibraryInfoEntry> pluginLibraries = pluginDefinition.getPluginLibraries();
 
@@ -438,6 +443,10 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
         }
 
         return libraries;
+    }
+
+    public boolean includeBasePluginLibraries() {
+        return true;
     }
 
 
@@ -1569,38 +1578,36 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
      * Get Name of Plugin (for internal use)
      * @return
      */
-    public String getPluginName()
-    {
+    public String getPluginName() {
         return pluginDefinition.getPluginName();
     }
 
 
     public List<LibraryInfoEntry> getBaseLibraries()
     {
+        int currentYear = (new GregorianCalendar()).get(Calendar.YEAR);
+
         // libraries
         ArrayList<LibraryInfoEntry> lst_libs = new ArrayList<LibraryInfoEntry>();
 
-        lst_libs.add(new LibraryInfoEntry("Atech-Tools", //
-                "0.7.x", //
-                "www.atech-software.com", //
-                "LGPL", //
-                "Helper Library for Swing/Hibernate/SQL...", //
-                "Copyright (c) 2006-2015 Atech Software Ltd. All rights reserved."));
+        lst_libs.add(new LibraryInfoEntry("Atech Tools",
+                "0.8.8",
+                "https://github.com/andyrozman/atech-tools",
+                "LGPL (v2.1)",
+                "Java Helper Library for Swing/Hibernate/SQL...",
+                "Copyright (c) 2006-" + currentYear + " Atech Software Ltd. All rights reserved."));
 
-        if (!pluginDefinition.isUseBaseLibraries())
-            return lst_libs;
-
-        lst_libs.add(new LibraryInfoEntry("dom4j", //
-                "1.6.1", //
-                "http://www.dom4j.org/", //
-                "BSD", //
+        lst_libs.add(new LibraryInfoEntry("dom4j",
+                "1.6.1",
+                "http://www.dom4j.org/",
+                "BSD",
                 "Framework for Xml manipulation"));
 
-        lst_libs.add(new LibraryInfoEntry("Neuron Robotics Java Serial (for Java 1.5)", //
-                "3.9.3.1", //
-                "https://github.com/andyrozman/nrjavaserial-j15", //
-                "LGPL", //
-                "Comm API"));
+        lst_libs.add(new LibraryInfoEntry("Neuron Robotics Java Serial",
+                "5.2.1",
+                "https://github.com/NeuronRobotics/nrjavaserial",
+                "LGPL (v2.1) / RXTX 2.1",
+                "Serial Communication API"));
 
         lst_libs.add(new LibraryInfoEntry("IBM Com Api", //
                 "1.3", //
@@ -1614,37 +1621,41 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
                 "Custom", //
                 "Jaxen is a universal Java XPath engine."));
 
-        lst_libs.add(new LibraryInfoEntry("HID for Java (for Java 1.5)", //
-                "0.3.1", //
-                "https://github.com/andyrozman/hid4java-j15", //
-                "MIT", //
-                "Library for connection to HID USB devices."));
+        lst_libs.add(new LibraryInfoEntry("HID for Java",
+                "0.3.1",
+                "https://github.com/gary-rowe/hid4java",
+                "MIT",
+                "Library for connection to USB HID devices."));
 
-        lst_libs.add(new LibraryInfoEntry("Java Native Access (for Java 1.5)", //
-                "4.1.0", //
-                "https://github.com/andyrozman/jna-j15", //
-                "LGPL (2.1)", //
+        lst_libs.add(new LibraryInfoEntry("LibAums for Usb4java",
+                "0.4.1",
+                "https://github.com/andyrozman/libaums-usb4java",
+                "Apache (v2)",
+                "Library for USB SCSI intrface linked with Usb4Java."));
+
+        lst_libs.add(new LibraryInfoEntry("Java Native Access",
+                "5.5.6",
+                "https://github.com/java-native-access",
+                "LGPL (2.1)",
                 "Access to Native libraries."));
 
-        lst_libs.add(new LibraryInfoEntry("Pygmy Http Server", //
-                "0.2", //
-                "http://pygmy-httpd.sourceforge.net/", //
-                "Artistic", //
-                "Small Http library to see list of all devices."));
+        lst_libs.add(new LibraryInfoEntry("Pygmy Http Server",
+                "0.4.3",
+                "https://github.com/andyrozman/pygmy-httpd/",
+                "Artistic",
+                "Small Web Server"));
 
-        lst_libs.add(new LibraryInfoEntry("iText Pdf", //
-                "5.1.2", //
-                "http://itextpdf.com/", //
-                "LGPL", //
-                "Library for creating and manipulate PDF files"));
+        lst_libs.add(new LibraryInfoEntry("iTextPdf",
+                "5.5.13.3",
+                "http://itextpdf.com/",
+                "Affero GPL v3",
+                "Library for PDF creation (printing)"));
 
-        lst_libs.add(new LibraryInfoEntry("JFree Chart", //
-                "1.0.13", //
-                "http://www.jfree.org/jfreechart/", //
-                "LGPL", //
-                "Library for creating Graphs"));
-
-        // CORE
+        lst_libs.add(new LibraryInfoEntry("JFreeChart",
+                "1.0.13",
+                "http://https://www.jfree.org/jfreechart/",
+                "LGPL (v3)",
+                "Library for Graphs"));
 
         return lst_libs;
 
@@ -1843,4 +1854,17 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
 
         }
     }
+
+
+    public ModuleInfoEntry getBaseModule() {
+        return ModuleInfoEntry.builder()
+                .name(i18n.getMessage("BASE_PLUGIN_NAME"))
+                .version(new ggc.plugin.defs.Version().getVersion())
+                .description(i18n.getMessage("BASE_PLUGIN_DESCRIPTION"))
+                .build();
+    }
+
+    public abstract ModuleInfoEntry getPluginModule();
+
+
 }

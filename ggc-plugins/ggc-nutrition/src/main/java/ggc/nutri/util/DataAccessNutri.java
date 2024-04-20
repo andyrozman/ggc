@@ -2,6 +2,7 @@ package ggc.nutri.util;
 
 import javax.swing.*;
 
+import com.atech.app.data.about.ModuleInfoEntry;
 import ggc.core.db.GGCDb;
 import ggc.nutri.db.GGCDbCache;
 import ggc.nutri.db.GGCDbNutri;
@@ -282,6 +283,21 @@ public class DataAccessNutri extends DataAccessPlugInBase
     public void prepareGraphContext()
     {
 
+    }
+
+    @Override
+    public boolean includeBasePluginLibraries() {
+        return false;
+    }
+
+
+    @Override
+    public ModuleInfoEntry getPluginModule() {
+        return ModuleInfoEntry.builder()
+                .name(i18n.getMessage("NUTRI_PLUGIN_NAME"))
+                .version(new ggc.nutri.defs.Version().getVersion())
+                .description(i18n.getMessage("NUTRI_PLUGIN_DESCRIPTION"))
+                .build();
     }
 
 }

@@ -14,6 +14,7 @@ import ggc.pump.db.PumpData;
 import ggc.pump.db.PumpDataExtended;
 import ggc.pump.db.PumpProfile;
 import ggc.pump.util.DataAccessPump;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -43,6 +44,7 @@ import ggc.pump.util.DataAccessPump;
  *  Author: Andy {andy@atech-software.com}
  */
 
+@Slf4j
 public class BackupRestorePumpHandler extends BackupRestorePlugin
 {
 
@@ -51,7 +53,7 @@ public class BackupRestorePumpHandler extends BackupRestorePlugin
     private String[] object_desc = { //
             ic.getMessage("PUMP_DATA"), //
             ic.getMessage("PUMP_DATA_EXTENDED"), //
-                                     ic.getMessage("PUMP_PROFILE") };
+            ic.getMessage("PUMP_PROFILE") };
 
     private String[] object_name = { "ggc.core.db.hibernate.pump.PumpDataH",
                                      "ggc.core.db.hibernate.pump.PumpDataExtendedH",
@@ -71,26 +73,16 @@ public class BackupRestorePumpHandler extends BackupRestorePlugin
      * Do Backup
      */
     @Override
-    public void doBackup(BackupRestoreRunner brr)
-    {
-
-        for (int i = 0; i < this.object_desc.length; i++)
-        {
-            if (brr.isBackupObjectSelected(this.object_desc[i]))
-            {
-                // System.out.println("Selected: " + this.object_desc[i]);
+    public void doBackup(BackupRestoreRunner brr) {
+        for (int i = 0; i < this.object_desc.length; i++) {
+            if (brr.isBackupObjectSelected(this.object_desc[i])) {
+                log.debug("Backup - {}", this.object_desc[i]);
                 brr.setTask(this.object_desc[i]);
                 GGCExporter ge = new GGCExporter(brr);
                 ge.exportData(this.object_name[i]);
                 brr.setStatus(100);
             }
-            else
-            {
-                // System.out.println("NOT Selected: " + this.object_desc[i]);
-            }
-
         }
-
     }
 
 
@@ -98,20 +90,16 @@ public class BackupRestorePumpHandler extends BackupRestorePlugin
      * Do Restore
      */
     @Override
-    public void doRestore(BackupRestoreRunner brr)
-    {
-
-        for (int i = 0; i < this.object_desc.length; i++)
-        {
-            if (brr.isRestoreObjectSelected(this.object_name[i]))
-            {
+    public void doRestore(BackupRestoreRunner brr) {
+        for (int i = 0; i < this.object_desc.length; i++) {
+            if (brr.isRestoreObjectSelected(this.object_name[i])) {
+                log.debug("Restore - {}", this.object_desc[i]);
                 brr.setTask(this.object_desc[i]);
                 GGCImporter ge = new GGCImporter(brr, brr.getRestoreObject(this.object_name[i]));
                 ge.importData(this.object_name[i]);
                 brr.setStatus(100);
             }
         }
-
     }
 
 
@@ -138,22 +126,16 @@ public class BackupRestorePumpHandler extends BackupRestorePlugin
     @Override
     public BackupRestoreObject getBackupRestoreObject(Object obj, BackupRestoreObject bro)
     {
-        if (bro.getBackupClassName().equals("ggc.core.db.hibernate.pump.PumpDataH"))
-        {
+        if (bro.getBackupClassName().equals("ggc.core.db.hibernate.pump.PumpDataH")) {
             PumpDataH eh = (PumpDataH) obj;
             return new PumpData(eh);
-        }
-        else if (bro.getBackupClassName().equals("ggc.core.db.hibernate.pump.PumpDataExtendedH"))
-        {
+        } else if (bro.getBackupClassName().equals("ggc.core.db.hibernate.pump.PumpDataExtendedH")) {
             PumpDataExtendedH eh = (PumpDataExtendedH) obj;
             return new PumpDataExtended(eh);
-        }
-        else if (bro.getBackupClassName().equals("ggc.core.db.hibernate.pump.PumpProfileH"))
-        {
+        } else if (bro.getBackupClassName().equals("ggc.core.db.hibernate.pump.PumpProfileH")) {
             PumpProfileH eh = (PumpProfileH) obj;
             return new PumpProfile(eh);
-        }
-        else
+        } else
             return null;
 
     }
@@ -163,11 +145,9 @@ public class BackupRestorePumpHandler extends BackupRestorePlugin
      * Does Contain Backup Restore Object
      */
     @Override
-    public boolean doesContainBackupRestoreObject(String bro_name)
-    {
-        // System.out.println()
-        for (String element : this.object_name)
-        {
+    public boolean doesContainBackupRestoreObject(String bro_name) {
+
+        for (String element : this.object_name) {
             if (element.equals(bro_name))
                 return true;
         }

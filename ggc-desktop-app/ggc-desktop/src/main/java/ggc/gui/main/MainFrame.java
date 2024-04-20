@@ -128,7 +128,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
     private Map<GGCToolbarType, Map<String, JButton>> toolbarItems = new HashMap<GGCToolbarType, Map<String, JButton>>();
 
     private GGCToolbarType current_toolbar = GGCToolbarType.None;
-    private String nextVersion = "0.10";
+    private String nextVersion = "0.9.0";
 
     //UserDataDirectory userDataDirectory = UserDataDirectory.getInstance();
 
@@ -474,7 +474,8 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         menux = this.createMenu("MN_HELP", null);
         menux.add(dataAccess.getHelpContext().getHelpItem());
         menux.addSeparator();
-        this.createMenuItem(menux, "MN_CHECK_FOR_UPDATE", "MN_CHECK_FOR_UPDATE_DESC", "hlp_check_update", null);
+        JMenuItem item =this.createMenuItem(menux, "MN_CHECK_FOR_UPDATE", "MN_CHECK_FOR_UPDATE_DESC", "hlp_check_update", null);
+        item.setEnabled(false); // TODO fix update integration
         menux.addSeparator();
         this.createMenuItem(menux, "MN_ABOUT", "MN_ABOUT_DESC", "hlp_about", null);
 
@@ -925,7 +926,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
     }
 
 
-    private void createMenuItem(JMenu menu, String name, String toolTip, String actionCommand, String iconSmall)
+    private JMenuItem createMenuItem(JMenu menu, String name, String toolTip, String actionCommand, String iconSmall)
     {
         JMenuItem item = new JMenuItem(i18nControl.getMessageWithoutMnemonic(name));
         // item.setName(i18nControl.getMessageWithoutMnemonic(name));
@@ -961,6 +962,8 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         {
             this.actions.put(actionCommand, item);
         }
+
+        return item;
     }
 
 
@@ -1021,7 +1024,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
             this.actions.get("tools_pref").setEnabled(true);
 
             // help menu
-            this.actions.get("hlp_check_update").setEnabled(true);
+            //this.actions.get("hlp_check_update").setEnabled(true);
 
         }
         else if (status == StatusBar.DB_BASE_DONE)

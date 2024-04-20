@@ -3,10 +3,9 @@ package ggc.cgms.plugin;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.swing.*;
 
@@ -346,6 +345,18 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
         {
             LOG.warn("We cannot retrieve data for empty request (no parameters): " + parameters);
             return null;
+        }
+
+        // just getting the libraries
+        if (parameters.containsKey("pluginLibraries")) {
+            return getPlugInDataAccess().getPlugInLibraries()
+                    .stream()
+                    .map(a -> (Object) a)
+                    .collect(Collectors.toList());
+        } else if (parameters.containsKey("pluginBaseModule")) {
+            return Arrays.asList(getPlugInDataAccess().getBaseModule());
+        } else if (parameters.containsKey("pluginModule")) {
+            return Arrays.asList(getPlugInDataAccess().getPluginModule());
         }
 
         if (!parameters.containsKey("dataType"))

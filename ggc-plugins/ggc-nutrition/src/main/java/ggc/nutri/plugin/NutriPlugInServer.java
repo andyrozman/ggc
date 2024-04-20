@@ -2,6 +2,9 @@ package ggc.nutri.plugin;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.*;
 

@@ -142,13 +142,13 @@ public class ConnectPluginDefinition extends DevicePluginDefinitionAbstract
     {
         List<FeaturesEntry> outList = new ArrayList<FeaturesEntry>();
 
-        outList.add(new FeaturesEntry("DiaSend (2017-18)"));
-        outList.add(new FeaturesEntry("SiDiary (2018)"));
-        outList.add(new FeaturesEntry("MS Health (2018-19)"));
-        outList.add(new FeaturesEntry("Libra (2018-19)"));
+        outList.add(new FeaturesEntry("DiaSend (?)"));
+        outList.add(new FeaturesEntry("SiDiary (?)"));
+        outList.add(new FeaturesEntry("MS Health (?)"));
+        outList.add(new FeaturesEntry("Libra (?)"));
         outList.add(new FeaturesEntry("Open Platform for Clinical Nutrition (2018-19)"));
-        outList.add(new FeaturesEntry("Tidepool (2018)"));
-        outList.add(new FeaturesEntry("NightScout (2018)"));
+        outList.add(new FeaturesEntry("Tidepool (2025)"));
+        outList.add(new FeaturesEntry("NightScout (2024)"));
 
         return outList;
     }

@@ -448,13 +448,13 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
 
     public int compareTo(SelectableInterface o)
     {
-        return this.dataAccess.getPluginDeviceUtil().compareTo(this, o);
+        return this.dataAccess.getPluginDeviceUtil().compareToSelectableInterface(this, o);
     }
 
 
     public int compareTo(SelectableInterfaceV2 o)
     {
-        return this.dataAccess.getPluginDeviceUtil().compareTo(this, o);
+        return this.dataAccess.getPluginDeviceUtil().compareToSelectableInterface(this, o);
     }
 
 

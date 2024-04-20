@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Vector;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
+import com.atech.graphics.dialogs.selector.SelectableInterfaceV2;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -69,7 +70,7 @@ public interface DeviceConfigurationDefinition
      * 
      * @return
      */
-    public List<SelectableInterface> getSupportedDevices();
+    public List<SelectableInterfaceV2> getSupportedDevices();
 
     /**
      * Returns prefix for help context

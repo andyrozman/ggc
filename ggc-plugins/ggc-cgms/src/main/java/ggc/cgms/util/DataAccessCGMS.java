@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 
+import com.atech.app.data.about.ModuleInfoEntry;
 import ggc.cgms.data.CGMSDataHandler;
 import ggc.cgms.data.CGMSDataReader;
 import ggc.cgms.data.CGMSValuesEntry;
@@ -186,12 +187,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     // ****** Dates and Times Handling *****
     // ********************************************************
 
-    @Override
-    public String getCurrentDateString()
-    {
-        GregorianCalendar gc = new GregorianCalendar();
-        return gc.get(Calendar.DAY_OF_MONTH) + "." + (gc.get(Calendar.MONTH) + 1) + "." + gc.get(Calendar.YEAR);
-    }
+
 
     // ********************************************************
     // ****** Database *****
@@ -446,6 +442,15 @@ public class DataAccessCGMS extends DataAccessPlugInBase
         graphContext = new CGMSGraphContext();
 
         DataAccess.getInstance().getGraphContext().addContext(graphContext);
+    }
+
+    @Override
+    public ModuleInfoEntry getPluginModule() {
+        return ModuleInfoEntry.builder()
+                .name(i18n.getMessage("CGMS_PLUGIN_NAME"))
+                .version(new ggc.cgms.defs.Version().getVersion())
+                .description(i18n.getMessage("CGMS_PLUGIN_DESCRIPTION"))
+                .build();
     }
 
 }

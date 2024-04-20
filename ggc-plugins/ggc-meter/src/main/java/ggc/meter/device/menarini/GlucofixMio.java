@@ -3,6 +3,7 @@ package ggc.meter.device.menarini;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,13 +54,11 @@ import gnu.io.SerialPort;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class GlucofixMio extends AbstractSerialMeter
-{
-
-    // protected I18nControl i18nControlAbstract = I18nControl.getInstance();
+@Slf4j
+public class GlucofixMio extends AbstractSerialMeter {
 
     protected TimeZoneUtil tzu = TimeZoneUtil.getInstance();
-    private static final Logger LOG = LoggerFactory.getLogger(GlucofixMio.class);
+    //private static final Logger LOG = LoggerFactory.getLogger(GlucofixMio.class);
     private int entries_max = 0;
     private int entries_current = 0;
     boolean device_disconnected = false;
@@ -141,7 +140,7 @@ public class GlucofixMio extends AbstractSerialMeter
         }
         catch (Exception ex)
         {
-            LOG.error("Exception on create:" + ex, ex);
+            log.error("Exception on create:" + ex, ex);
             // System.out.println("AscensiaMeter -> Exception on create: " +
             // ex);
             // ex.printStackTrace();
@@ -279,7 +278,7 @@ public class GlucofixMio extends AbstractSerialMeter
         }
         catch (Exception ex)
         {
-            System.out.println("GlucofixMio. Exception: " + ex);
+            log.error("GlucofixMio. Exception: " + ex.getMessage(), ex);
             // ex.printStackTrace();
         }
 
@@ -351,7 +350,7 @@ public class GlucofixMio extends AbstractSerialMeter
                 }
                 else if (start)
                 {
-                    if (line.trim().length() != 0)
+                    if (!line.trim().isEmpty())
                     {
                         if (line.startsWith("Glu"))
                         {
@@ -368,7 +367,7 @@ public class GlucofixMio extends AbstractSerialMeter
                     readingEntryStatus();
 
                 }
-                else if (line.trim().length() == 0 && !start)
+                else if (line.trim().isEmpty() && !start)
                 {
                     if (checkBreak())
                         return;
@@ -385,10 +384,8 @@ public class GlucofixMio extends AbstractSerialMeter
             this.outputWriter.endOutput();
 
         }
-        catch (Exception ex)
-        {
-            System.out.println("GlucofixMio. Exception: " + ex);
-            ex.printStackTrace();
+        catch (Exception ex) {
+            log.error("GlucofixMio. Exception: {}", ex.getMessage(), ex);
         }
 
     }
@@ -526,7 +523,7 @@ public class GlucofixMio extends AbstractSerialMeter
         this.outputWriter.setSubStatus(null);
         this.outputWriter.endOutput();
         this.outputWriter.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
-        System.out.println("Reading finished prematurely !");
+        log.warn("Reading finished prematurely !");
     }
 
 

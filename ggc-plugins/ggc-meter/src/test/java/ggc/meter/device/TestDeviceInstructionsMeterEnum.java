@@ -198,7 +198,7 @@ public class TestDeviceInstructionsMeterEnum extends JDialog implements ActionLi
 
         // dataAccess.enableHelp(this);
 
-        ComboBoxModel model = new ComboBoxModel()
+        ComboBoxModel<DeviceDefinition> model = new ComboBoxModel<DeviceDefinition>()
         {
 
             java.util.List<DeviceDefinition> listElements = MeterDeviceDefinition.getAllDevices();
@@ -228,7 +228,7 @@ public class TestDeviceInstructionsMeterEnum extends JDialog implements ActionLi
             }
 
 
-            public Object getElementAt(int index)
+            public DeviceDefinition getElementAt(int index)
             {
                 return listElements.get(index);
             }
@@ -246,7 +246,7 @@ public class TestDeviceInstructionsMeterEnum extends JDialog implements ActionLi
             }
         };
 
-        JComboBox comboBox = new JComboBox(model);
+        JComboBox<DeviceDefinition> comboBox = new JComboBox<>(model);
         comboBox.setBounds(40, 430, 250, 30);
         panel.add(comboBox);
 
@@ -289,15 +289,13 @@ public class TestDeviceInstructionsMeterEnum extends JDialog implements ActionLi
     }
 
 
-    private ImageIcon getDeviceIcon()
-    {
+    private ImageIcon getDeviceIcon() {
 
         String root = m_da.getDeviceImagesRoot();
 
         if (this.deviceDefinition == null)
             return m_da.getImageIcon(root, "no_device.gif");
-        else
-        {
+        else {
             return m_da.getImageIcon(root, getDeviceInterfaceParameter(DEVICE_INTERFACE_PARAM_ICON_NAME));
         }
     }

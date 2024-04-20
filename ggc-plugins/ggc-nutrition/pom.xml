@@ -10,7 +10,7 @@
 
     <name>GGC Plugins - Nutrition</name>
     <artifactId>ggc-plugins-nutrition</artifactId>
-    <version>${ggc-plugins-nutrition.version}</version>
+<!--    <version>${ggc-plugins-nutrition.version}</version>-->
 
     <build>
         <plugins>
@@ -61,6 +61,7 @@
         <version.file>
             ${project.build.directory}/generated-sources/ggc/nutri/defs/Version.java
         </version.file>
+        <module.version>${ggc-plugins-nutrition.version}</module.version>
     </properties>
 
 </project>

@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 
+import com.atech.app.data.about.ModuleInfoEntry;
 import ggc.connect.data.ConnectDataHandler;
 import ggc.connect.db.GGCConnectDb;
 import ggc.connect.defs.ConnectPluginDefinition;
@@ -145,34 +146,11 @@ public class DataAccessConnect extends DataAccessPlugInBase
     // ********************************************************
 
 
-    // ********************************************************
-    // ****** Manager *****
-    // ********************************************************
-
-    /**
-     * Get Device Manager
-     * 
-     * @return
-     */
-    // public CGMSManager getCGMManager()
-    // {
-    // return this.m_cgms_manager;
-    // }
 
     // ********************************************************
     // ****** Parent handling (for UIs) *****
     // ********************************************************
 
-    // ********************************************************
-    // ****** Dates and Times Handling *****
-    // ********************************************************
-
-    @Override
-    public String getCurrentDateString()
-    {
-        GregorianCalendar gc = new GregorianCalendar();
-        return gc.get(Calendar.DAY_OF_MONTH) + "." + (gc.get(Calendar.MONTH) + 1) + "." + gc.get(Calendar.YEAR);
-    }
 
     // ********************************************************
     // ****** Database *****
@@ -215,7 +193,6 @@ public class DataAccessConnect extends DataAccessPlugInBase
     @Override
     public void createConfigurationContext()
     {
-        // this.device_config_def = new CGMSConfigurationDefinition();
     }
 
 
@@ -225,7 +202,6 @@ public class DataAccessConnect extends DataAccessPlugInBase
     @Override
     public void createDeviceConfiguration()
     {
-        // this.device_config = new DeviceConfiguration(this);
     }
 
     // ********************************************************
@@ -253,8 +229,6 @@ public class DataAccessConnect extends DataAccessPlugInBase
     @Override
     public void loadManager()
     {
-        // this.m_cgms_manager = CGMSManager.getInstance(this);
-        // this.m_manager = this.m_cgms_manager;
     }
 
 
@@ -268,10 +242,10 @@ public class DataAccessConnect extends DataAccessPlugInBase
     }
 
 
-    @Override
-    public void loadExtendedHandlers()
-    {
-    }
+//    @Override
+//    public void loadExtendedHandlers()
+//    {
+//    }
 
 
     /**
@@ -287,13 +261,13 @@ public class DataAccessConnect extends DataAccessPlugInBase
     }
 
 
-    /**
-     * Create Old Data Reader
-     */
-    @Override
-    public void createOldDataReader()
-    {
-    }
+//    /**
+//     * Create Old Data Reader
+//     */
+//    @Override
+//    public void createOldDataReader()
+//    {
+//    }
 
 
     /**
@@ -314,4 +288,18 @@ public class DataAccessConnect extends DataAccessPlugInBase
     {
     }
 
+    @Override
+    public boolean includeBasePluginLibraries() {
+        return false;
+    }
+
+
+    @Override
+    public ModuleInfoEntry getPluginModule() {
+        return ModuleInfoEntry.builder()
+                .name(i18n.getMessage("CONNECT_PLUGIN_NAME"))
+                .version(new ggc.connect.defs.Version().getVersion())
+                .description(i18n.getMessage("CONNECT_PLUGIN_DESCRIPTION"))
+                .build();
+    }
 }

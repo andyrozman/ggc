@@ -10,6 +10,7 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.graphics.dialogs.selector.SelectorAbstractDialog;
 import com.atech.utils.ATDataAccessAbstract;
 import ggc.plugin.util.DataAccessPlugInBase;
+import org.apache.commons.collections4.CollectionUtils;
 
 /**
  * Selector component for Meters (Simple Configuration)...
@@ -109,6 +110,8 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
         this.full.addAll(this.getDeviceConfigurationDefinition().getSupportedDevices());
 
         Collections.sort(this.full);
+
+
 
         // System.out.println("Counter: " + this.full.size());
 

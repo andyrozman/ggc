@@ -11,7 +11,7 @@
     <name>GGC Plugins - Base</name>
 
     <artifactId>ggc-plugins-base</artifactId>
-    <version>${ggc-plugins-base.version}</version>
+<!--    <version>${ggc-plugins-base.version}</version>-->
 
 
     <build>
@@ -20,6 +20,25 @@
                 <groupId>com.google.code.maven-replacer-plugin</groupId>
                 <artifactId>maven-replacer-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/ggc/plugin/defs/</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 
@@ -56,10 +75,10 @@
             <artifactId>nrjavaserial</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>net.java.dev.jna</groupId>
-            <artifactId>jna</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>net.java.dev.jna</groupId>-->
+<!--            <artifactId>jna</artifactId>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.hid4java</groupId>
@@ -71,10 +90,10 @@
             <artifactId>jssc</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>io.ultreia</groupId>
-            <artifactId>bluecove</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.ultreia</groupId>-->
+<!--            <artifactId>bluecove</artifactId>-->
+<!--        </dependency>-->
 
 <!--        <dependency>-->
 <!--            <groupId>com.ibm.old.comapi</groupId>-->
@@ -99,6 +118,7 @@
         <version.file>
             ${project.build.directory}/generated-sources/ggc/plugin/defs/Version.java
         </version.file>
+        <module.version>${ggc-plugins-base.version}</module.version>
     </properties>
 
 </project>

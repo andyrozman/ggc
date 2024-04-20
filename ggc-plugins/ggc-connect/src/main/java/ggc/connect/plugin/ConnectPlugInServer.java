@@ -3,6 +3,7 @@ package ggc.connect.plugin;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -442,47 +443,6 @@ public class ConnectPlugInServer extends DevicePlugInServer implements ActionLis
     public BackupRestorePlugin getBackupRestoreHandler()
     {
         // return new BackupRestoreCGMSHandler();
-        return null;
-    }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<Object> getDataFromPlugin(Map<String, Object> parameters)
-    {
-        // if (MapUtils.isEmpty(parameters))
-        // {
-        // LOG.warn("We cannot retrieve data for empty request (no parameters):
-        // " + parameters);
-        // return null;
-        // }
-        //
-        // if (!parameters.containsKey("dataType"))
-        // {
-        // LOG.warn("DataType of return data must be specified, along with other
-        // required parameters.");
-        // return null;
-        // }
-        //
-        // if (parameters.get("dataType").equals("CGMSReadingsDaily4Graph"))
-        // {
-        // CGMSGraphDataHandler graphData = new CGMSGraphDataHandler();
-        // XYSeries series = graphData.getCGMSDailyReadings(dataAccessConnect,
-        // (GregorianCalendar) parameters.get("calendarDate"));
-        //
-        // List<Object> data = new ArrayList<Object>();
-        // data.add(series);
-        //
-        // return data;
-        // }
-        // else
-        // {
-        // LOG.warn("Unknown dataType requested: " +
-        // parameters.get("dataType"));
-        // }
-
         return null;
     }
 

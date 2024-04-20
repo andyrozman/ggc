@@ -13,10 +13,8 @@
     <artifactId>ggc-future</artifactId>
     <packaging>pom</packaging>
 
-    <!--
     <modules>
-        <module>ggc-help</module>
+        <module>ggc-meter-ot-verio-flex</module>
     </modules>
-    -->
 
 </project>

@@ -17,7 +17,8 @@ Menarini:  Mio Plus (1)
 
 One Touch:  - Verio [old one?] (1)
 
-
+Beurer:
+    https://www.beurer.com/web/de/produkte/medical/blutzuckermessgeraete/
 
 
 
@@ -26,6 +27,7 @@ Documentation:
 - How-To for Sniffing data for Meters (just add entry into forum)
 - JavaHelp for GUI
 - How-To-Add-Meter
+
 
 
 ===========================================================================
@@ -161,6 +163,8 @@ U.S. Diagnostics:   - Control AST
 
 ------
 
+Wellion Calla           - Not viewable
+OneTouch Verio Flex     - Not viewable         Seen as DISK device
 
 
 

@@ -12,6 +12,7 @@ import ggc.core.db.hibernate.cgms.CGMSDataExtendedH;
 import ggc.core.db.hibernate.cgms.CGMSDataH;
 import ggc.core.db.tool.transfer.GGCExporter;
 import ggc.core.db.tool.transfer.GGCImporter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -40,7 +41,7 @@ import ggc.core.db.tool.transfer.GGCImporter;
  * 
  *  Author: Andy {andy@atech-software.com}
  */
-
+@Slf4j
 public class BackupRestoreCGMSHandler extends BackupRestorePlugin
 {
 
@@ -72,7 +73,7 @@ public class BackupRestoreCGMSHandler extends BackupRestorePlugin
         {
             if (brr.isBackupObjectSelected(this.object_desc[i]))
             {
-                System.out.println("Selected: " + this.object_desc[i]);
+                log.debug("Backup - {}", this.object_desc[i]);
                 brr.setTask(this.object_desc[i]);
                 GGCExporter ge = new GGCExporter(brr);
                 ge.exportData(this.object_name[i]);
@@ -80,7 +81,7 @@ public class BackupRestoreCGMSHandler extends BackupRestorePlugin
             }
             else
             {
-                System.out.println("NOT Selected: " + this.object_desc[i]);
+                //System.out.println("NOT Selected: " + this.object_desc[i]);
             }
 
         }
@@ -99,6 +100,7 @@ public class BackupRestoreCGMSHandler extends BackupRestorePlugin
         {
             if (brr.isRestoreObjectSelected(this.object_name[i]))
             {
+                log.debug("Restore - {}", this.object_desc[i]);
                 brr.setTask(this.object_desc[i]);
                 GGCImporter ge = new GGCImporter(brr, brr.getRestoreObject(this.object_name[i]));
                 ge.importData(this.object_name[i]);

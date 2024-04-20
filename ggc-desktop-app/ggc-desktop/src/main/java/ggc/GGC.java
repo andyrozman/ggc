@@ -101,6 +101,9 @@ public class GGC {
         // Atech-Tools
         Logger.getLogger("com.atech.data.user_data_dir").setLevel(Level.INFO);
 
+        // Pygmy
+        Logger.getLogger("pygmy").setLevel(Level.INFO);
+
         // Hibernate
         Logger.getLogger("org.hibernate").setLevel(Level.INFO);
         Logger.getLogger("org.hibernate.SQL").setLevel(Level.INFO);
@@ -150,7 +153,7 @@ public class GGC {
             }
         }
 
-        System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
+        //System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
 
         s_theApp = new GGC();
         s_theApp.init(dev);

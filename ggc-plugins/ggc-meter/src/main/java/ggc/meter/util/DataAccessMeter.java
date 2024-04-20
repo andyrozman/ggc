@@ -1,5 +1,6 @@
 package ggc.meter.util;
 
+import com.atech.app.data.about.ModuleInfoEntry;
 import ggc.core.data.ExtendedDailyValueHandler;
 import ggc.meter.data.MeterDataHandler;
 import ggc.meter.data.MeterDataReader;
@@ -348,4 +349,13 @@ public class DataAccessMeter extends DataAccessPlugInBase
         this.addExtendedHandler(EXTENDED_HANDLER_DAILY_VALUE, new ExtendedDailyValueHandler());
     }
 
+
+    @Override
+    public ModuleInfoEntry getPluginModule() {
+        return ModuleInfoEntry.builder()
+                .name(i18n.getMessage("METER_PLUGIN_NAME"))
+                .version(new ggc.meter.defs.Version().getVersion())
+                .description(i18n.getMessage("METER_PLUGIN_DESCRIPTION"))
+                .build();
+    }
 }

@@ -4,10 +4,10 @@ import com.google.gson.Gson;
 import ggc.meter.defs.device.MeterDeviceDefinition;
 import ggc.meter.device.onetouch.OneTouchUsbMeterHandler;
 import ggc.plugin.output.ConsoleOutputWriter;
-import ggc.plugin.protocol.bluetooth.BluetoothListener;
-
-import javax.bluetooth.DiscoveryAgent;
-import javax.bluetooth.LocalDevice;
+//import ggc.plugin.protocol.bluetooth.BluetoothListener;
+//
+//import javax.bluetooth.DiscoveryAgent;
+//import javax.bluetooth.LocalDevice;
 
 /**
  * Created by andy on 06.04.2024.
@@ -74,37 +74,37 @@ public class TestNewFunctionalities {
     }
 
     private void testBlueCoveReadingOfOneTouchVerioasBT() {
-        BluetoothListener bluetoothListener = new BluetoothListener(lock);
-        Gson gson = bluetoothListener.getGson();
-
-        try{
-            // 1
-            LocalDevice localDevice = LocalDevice.getLocalDevice();
-            //log.info("LocalDevice: {}", gson.toJson(localDevice));
-
-
-            // 2
-            DiscoveryAgent agent = localDevice.getDiscoveryAgent();
-            //log.info("DiscoveryAgent: {}", gson.toJson(agent));
-            //agent.
-
-            // 3
-            agent.startInquiry(DiscoveryAgent.GIAC, bluetoothListener);
-
-            try {
-                synchronized(lock){
-                    lock.wait();
-                }
-            }
-            catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            System.out.println("Device Inquiry Completed. ");
-
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+//        BluetoothListener bluetoothListener = new BluetoothListener(lock);
+//        Gson gson = bluetoothListener.getGson();
+//
+//        try{
+//            // 1
+//            LocalDevice localDevice = LocalDevice.getLocalDevice();
+//            //log.info("LocalDevice: {}", gson.toJson(localDevice));
+//
+//
+//            // 2
+//            DiscoveryAgent agent = localDevice.getDiscoveryAgent();
+//            //log.info("DiscoveryAgent: {}", gson.toJson(agent));
+//            //agent.
+//
+//            // 3
+//            agent.startInquiry(DiscoveryAgent.GIAC, bluetoothListener);
+//
+//            try {
+//                synchronized(lock){
+//                    lock.wait();
+//                }
+//            }
+//            catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            System.out.println("Device Inquiry Completed. ");
+//
+//        }
+//        catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
     }
 

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,6 +54,7 @@ import ggc.core.util.DataAccess;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
+@Slf4j
 public class GGCImporter extends ImportTool implements Runnable
 {
 
@@ -76,7 +78,7 @@ public class GGCImporter extends ImportTool implements Runnable
 
         this.setStatusReceiver(giver);
         this.setTypeOfStatus(ImportExportStatusType.Special);
-        this.setRootPath("../data/import/");
+        this.setRootPath(ImpExpUtil.getImportPath());
 
         // exportAll();
     }
@@ -92,7 +94,7 @@ public class GGCImporter extends ImportTool implements Runnable
         super(cfg);
 
         this.setTypeOfStatus(ImportExportStatusType.Dot);
-        this.setRootPath("../data/import/");
+        this.setRootPath(ImpExpUtil.getImportPath());
 
         // checkPrerequisites();
         // exportAll();
@@ -105,13 +107,12 @@ public class GGCImporter extends ImportTool implements Runnable
      * @param giver
      * @param res
      */
-    public GGCImporter(BackupRestoreWorkGiver giver, RestoreFileInfo res)
-    {
+    public GGCImporter(BackupRestoreWorkGiver giver, RestoreFileInfo res) {
         super(DataAccess.getInstance().getDb().getHibernateConfiguration(), res);
 
         this.setStatusReceiver(giver);
         this.setTypeOfStatus(ImportExportStatusType.Special);
-        this.setRootPath("../data/import/");
+        this.setRootPath(ImpExpUtil.getImportPath());
     }
 
 
@@ -210,7 +211,7 @@ public class GGCImporter extends ImportTool implements Runnable
         }
         catch (Exception ex)
         {
-
+            log.error("checkFileTarget problem. Ex.: {}", ex.getMessage(), ex);
         }
     }
 

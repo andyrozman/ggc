@@ -10,6 +10,7 @@ import ggc.core.db.hibernate.pen.DayValueH;
 import ggc.core.db.tool.transfer.ExportNutritionDb;
 import ggc.core.db.tool.transfer.ImportNutrition;
 import ggc.nutri.util.DataAccessNutri;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -38,7 +39,7 @@ import ggc.nutri.util.DataAccessNutri;
  * 
  *  Author: Andy {andy@atech-software.com}
  */
-
+@Slf4j
 public class BackupRestoreNutriHandler extends BackupRestorePlugin
 {
 
@@ -73,6 +74,8 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
 
             if (brr.isBackupObjectSelected(ic.getMessage("USER_FOOD_GROUPS")))
             {
+                log.debug("Backup - UserFoodGroups");
+
                 brr.setStatus(0);
                 brr.setTask(ic.getMessage("USER_FOOD_GROUPS"));
                 end.export_UserFoodGroups();
@@ -82,6 +85,8 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
 
             if (brr.isBackupObjectSelected(ic.getMessage("FOODS")))
             {
+                log.debug("Backup - UserFoods");
+
                 brr.setStatus(0);
                 brr.setTask(ic.getMessage("FOODS"));
                 end.export_UserFoods();
@@ -91,6 +96,7 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
 
             if (brr.isBackupObjectSelected(ic.getMessage("MEAL_GROUPS")))
             {
+                log.debug("Backup - MealGroups");
                 brr.setStatus(0);
                 brr.setTask(ic.getMessage("MEAL_GROUPS"));
                 end.export_MealGroups();
@@ -100,6 +106,7 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
 
             if (brr.isBackupObjectSelected(ic.getMessage("MEALS")))
             {
+                log.debug("Backup - Meals");
                 brr.setStatus(0);
                 brr.setTask(ic.getMessage("MEALS"));
                 end.export_Meals();
@@ -133,6 +140,7 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
 
         if (brr.isRestoreObjectSelected("ggc.core.db.hibernate.food.FoodUserGroupH"))
         {
+            log.debug("Restore - UserFoodGroups");
             brr.setStatus(0);
             brr.setTask(ic.getMessage("USER_FOOD_GROUPS"));
             ImportNutrition edv = new ImportNutrition(brr,
@@ -145,6 +153,7 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
 
         if (brr.isRestoreObjectSelected("ggc.core.db.hibernate.food.FoodUserDescriptionH"))
         {
+            log.debug("Restore - UserFoods");
             brr.setStatus(0);
             brr.setTask(ic.getMessage("FOODS"));
             ImportNutrition edv = new ImportNutrition(brr,
@@ -157,6 +166,7 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
 
         if (brr.isRestoreObjectSelected("ggc.core.db.hibernate.food.MealGroupH"))
         {
+            log.debug("Restore - MealGroups");
             brr.setStatus(0);
             brr.setTask(ic.getMessage("MEAL_GROUPS"));
             ImportNutrition edv = new ImportNutrition(brr,
@@ -169,6 +179,7 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
 
         if (brr.isRestoreObjectSelected("ggc.core.db.hibernate.food.MealH"))
         {
+            log.debug("Restore - Meals");
             brr.setStatus(0);
             brr.setTask(ic.getMessage("MEALS"));
             ImportNutrition edv = new ImportNutrition(brr, brr.getRestoreObject("ggc.core.db.hibernate.food.MealH"));

@@ -4,6 +4,7 @@ import java.util.*;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 
+import com.atech.graphics.dialogs.selector.SelectableInterfaceV2;
 import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.device.v2.DeviceInstanceWithHandler;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
@@ -41,7 +42,7 @@ public abstract class DeviceManager
     protected DataAccessPlugInBase dataAccessPlugInBase;
     protected Hashtable<String, AbstractDeviceCompany> companies_ht = new Hashtable<String, AbstractDeviceCompany>();
     protected Vector<AbstractDeviceCompany> companies = new Vector<AbstractDeviceCompany>();
-    protected List<SelectableInterface> supportedDevicesForSelector = new ArrayList<SelectableInterface>();
+    protected List<SelectableInterfaceV2> supportedDevicesForSelector = new ArrayList<>();
 
     protected HashMap<String, DeviceInterface> supportedDevicesV1 = new HashMap<String, DeviceInterface>();
     protected HashMap<String, DeviceInstanceWithHandler> supportedDevicesV2 = new HashMap<String, DeviceInstanceWithHandler>();
@@ -111,7 +112,7 @@ public abstract class DeviceManager
      * Get Supported Devices
      * @return
      */
-    public List<SelectableInterface> getSupportedDevicesForSelector()
+    public List<SelectableInterfaceV2> getSupportedDevicesForSelector()
     {
         return this.supportedDevicesForSelector;
     }

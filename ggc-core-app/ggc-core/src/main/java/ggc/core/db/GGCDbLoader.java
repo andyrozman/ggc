@@ -291,7 +291,7 @@ public class GGCDbLoader extends Thread
 
             // System.out.println("We needed " + (dif/1000) +
             // " seconds to startup.");
-            LOG.debug("We needed " + dif / 1000 + " seconds to startup.");
+            LOG.info("We needed {} ms ({} s) to startup.", dif, dif/1000);
 
         }
         catch (Exception ex)

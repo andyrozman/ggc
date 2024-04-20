@@ -60,17 +60,14 @@
         </dependency>
 
         <dependency>
-            <groupId>net.sf.ggc.pygmy-httpd</groupId>
+            <groupId>com.atech-software.pygmy-httpd</groupId>
             <artifactId>pygmy-core</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>net.sf.ggc.pygmy-httpd</groupId>
+            <groupId>com.atech-software.pygmy-httpd</groupId>
             <artifactId>pygmy-handlers</artifactId>
         </dependency>
-
-        <!-- <dependency> <groupId>junit</groupId> <artifactId>junit</artifactId>
-            <version>3.8.1</version> <scope>test</scope> </dependency> -->
 
         <dependency>
             <groupId>com.itextpdf</groupId>
@@ -129,6 +126,11 @@
             <artifactId>junit</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
+
 <!--        <dependency>-->
 <!--            <groupId>postgresql</groupId>-->
 <!--            <artifactId>postgresql</artifactId>-->
@@ -141,6 +143,7 @@
         <version.file>
             ${project.build.directory}/generated-sources/ggc/core/util/Version.java
         </version.file>
+        <module.version>${ggc-core.version}</module.version>
     </properties>
 
 </project>

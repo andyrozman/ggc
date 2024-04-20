@@ -1,21 +1,21 @@
 package ggc.gui.dialogs;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.swing.*;
 
-import com.atech.app.data.about.CreditsEntry;
-import com.atech.app.data.about.CreditsGroup;
-import com.atech.app.data.about.LibraryInfoEntry;
-import com.atech.app.data.about.LicenceInfo;
+import com.atech.app.data.about.*;
 import com.atech.app.gui.about.AboutCustomPanel;
 import com.atech.app.gui.about.AboutDialog;
+import com.atech.plugin.PlugInClient;
 import com.atech.utils.ATSwingUtils;
 
+import ggc.core.plugins.GGCPluginType;
 import ggc.core.util.DataAccess;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -42,13 +42,16 @@ import ggc.core.util.DataAccess;
  *  Author: Andy {andy@atech-software.com}  
  */
 
+@Slf4j
 public class AboutGGCDialog extends AboutDialog
 {
 
     private static final long serialVersionUID = -5655078691807335660L;
 
     private int currentYear;
-    private String titleI18nKey;
+    private String titleI18nKey = "GGC_TITLE";
+
+    DataAccess dataAccess = DataAccess.getInstance();
 
 
     public AboutGGCDialog(JFrame parent)
@@ -89,7 +92,7 @@ public class AboutGGCDialog extends AboutDialog
         this.setDisplayProperties(true);
 
         // libraries
-        ArrayList<LibraryInfoEntry> lst_libs = new ArrayList<LibraryInfoEntry>();
+        List<LibraryInfoEntry> lst_libs = new ArrayList<>();
 
         lst_libs.add(new LibraryInfoEntry("Hibernate", //
                 "3.1", //
@@ -98,19 +101,19 @@ public class AboutGGCDialog extends AboutDialog
                 "Library for object-oriented access to DBs"));
 
         lst_libs.add(new LibraryInfoEntry("H2 Database", //
-                "1.0.69", //
+                "2.2.224", //
                 "www.h2database.com", //
                 "MPL 1.1 & EPL 1.0", //
                 "Internal Java DB", //
-                "Copyright (c) 2004-2008 by the H2 Group. All rights reserved."));
+                "Copyright (c) 2004-2024 by the H2 Group. All rights reserved."));
 
         // lst_libs.add(li);
 
-        lst_libs.add(new LibraryInfoEntry("Atech-Tools", //
-                "0.7.x", //
-                "www.atech-software.com", //
-                "LGPL", //
-                "Helper Library for Swing/Hibernate/...", //
+        lst_libs.add(new LibraryInfoEntry("Atech Tools", //
+                "0.8.8", //
+                "https://github.com/andyrozman/atech-tools", //
+                "LGPL (v2.1)", //
+                "Java Helper Library for Swing/Hibernate/SQL...", //
                 "Copyright (c) 2006-" + currentYear + " Atech Software Ltd. All rights reserved."));
 
         lst_libs.add(new LibraryInfoEntry("SkinLF", //
@@ -120,10 +123,10 @@ public class AboutGGCDialog extends AboutDialog
                 "Skins Library", //
                 "Copyright (c) 2000-2006 L2FProd.com.  All rights reserved."));
 
-        lst_libs.add(new LibraryInfoEntry("iText", //
-                "2.0.7", //
-                "www.lowagie.com/iText/", //
-                "MPL", //
+        lst_libs.add(new LibraryInfoEntry("iTextPdf", //
+                "5.5.13.3", //
+                "http://itextpdf.com/", //
+                "Affero GPL v3", //
                 "Library for PDF creation (printing)"));
 
         lst_libs.add(new LibraryInfoEntry("Java Help", //
@@ -132,26 +135,32 @@ public class AboutGGCDialog extends AboutDialog
                 "GPL (v2)", //
                 "Java Help Framework"));
 
-        lst_libs.add(new LibraryInfoEntry("Apache Commons Lang", //
+        lst_libs.add(new LibraryInfoEntry("Apache Commons Lang3", //
                 "2.6", //
                 "commons.apache.org/lang/", //
                 "Apache", //
                 "Helper methods for java.lang library"));
 
         lst_libs.add(new LibraryInfoEntry("Apache Commons Collections", //
-                "2.6", //
+                "3.2.2", //
                 "https://commons.apache.org/proper/commons-collections/", //
                 "Apache", //
                 "Helper methods for Collections"));
 
+        lst_libs.add(new LibraryInfoEntry("Apache Commons IO", //
+                "2.16.0", //
+                "https://commons.apache.org/proper/commons-io/", //
+                "Apache", //
+                "Helper methods for IO operations"));
+
         lst_libs.add(new LibraryInfoEntry("Simple Logging Facade for Java (slf4j)", //
-                "1.7.12", //
+                "1.7.36", //
                 "http://www.slf4j.org/", //
                 "MIT", //
                 "Logging facade (works together with log4j)"));
 
-        lst_libs.add(new LibraryInfoEntry("Log 4 Java (log4j)", //
-                "1.2.16", //
+        lst_libs.add(new LibraryInfoEntry("Log 4 Java (log4j_reloaded)", //
+                "1.2.25", //
                 "http://logging.apache.org/log4j/2.x/log4j-1.2-api/index.html", //
                 "Apache", //
                 "Logger and all around wrapper for logging utilities"));
@@ -162,9 +171,74 @@ public class AboutGGCDialog extends AboutDialog
                 "", //
                 "Internal PDF Viewer"));
 
-        this.setLibraries(lst_libs);
+        lst_libs.add(new LibraryInfoEntry("JFreeChart", //
+                "1.0.13", //
+                "http://https://www.jfree.org/jfreechart/", //
+                "LGPL (v3)", //
+                "Library for Graphs"));
 
-        // custom page
+        lst_libs.add(new LibraryInfoEntry("Pygmy Http Server", //
+                "0.4.3", //
+                "https://github.com/andyrozman/pygmy-httpd/", //
+                "Artistic", //
+                "Small Web Server"));
+
+        lst_libs.add(new LibraryInfoEntry("Gson", //
+                "2.9.1", //
+                "https://github.com/google/gson", //
+                "Apache 2.0", //
+                "Serialization/Deserialization library for Json"));
+
+        lst_libs.add(new LibraryInfoEntry("Table Layout", //
+                "4.3.0", //
+                "https://www.clearthought.info/sun/products/jfc/tsc/articles/tablelayout/", //
+                "", //
+                "Table Layout for Java"));
+
+        List<LibraryInfoEntry> allLibraries = new ArrayList<>();
+
+        addUniqueLibraries(allLibraries, lst_libs);
+
+        GGCPluginType[] keys = {
+                GGCPluginType.MeterToolPlugin,
+                GGCPluginType.NutritionToolPlugin,
+                GGCPluginType.PumpToolPlugin,
+                GGCPluginType.CGMSToolPlugin,
+                GGCPluginType.ConnectToolPlugin
+        };
+
+        List<ModuleInfoEntry> modules = new ArrayList<>();
+        modules.add(dataAccess.getCoreModule());
+        modules.add(getDesktopModule());
+
+        boolean isBasePluginDone = false;
+
+        for (GGCPluginType pluginType : keys) {
+            PlugInClient pic = dataAccess.getPlugIn(pluginType);
+
+            List<LibraryInfoEntry> typedList = pic.getDataFromPlugin(Collections.singletonMap("pluginLibraries", ""))
+                    .stream()
+                    .map(a -> (LibraryInfoEntry) a)
+                    .collect(Collectors.toList());
+
+            addUniqueLibraries(allLibraries, typedList);
+
+            if (!isBasePluginDone) {
+                ModuleInfoEntry moduleInfo = (ModuleInfoEntry)pic.getDataFromPlugin(Collections.singletonMap("pluginBaseModule", "")).get(0);
+                isBasePluginDone = true;
+                modules.add(moduleInfo);
+            }
+
+            ModuleInfoEntry moduleInfo = (ModuleInfoEntry)pic.getDataFromPlugin(Collections.singletonMap("pluginModule", "")).get(0);
+            modules.add(moduleInfo);
+        }
+
+        modules.add(getHelpModule());
+
+        this.setModules(modules);
+        this.setLibraries(allLibraries);
+
+        // Main About Tab
         createCustomTab();
 
         // title
@@ -175,6 +249,18 @@ public class AboutGGCDialog extends AboutDialog
         this.setSize(500, 400);
 
         this.showAbout();
+    }
+
+    Set<String> libraryIndex = new HashSet<>();
+
+    private void addUniqueLibraries(List<LibraryInfoEntry> targetList, List<LibraryInfoEntry> sourceList) {
+        for (LibraryInfoEntry libraryInfoEntry : sourceList) {
+            String name = libraryInfoEntry.getName();
+            if (!libraryIndex.contains(name)) {
+                libraryIndex.add(name);
+                targetList.add(libraryInfoEntry);
+            }
+        }
     }
 
 
@@ -215,6 +301,34 @@ public class AboutGGCDialog extends AboutDialog
 
         this.addCustomPanel(AboutDialog.PLACEMENT_BEFORE_STATIC_TABS, acp);
 
+    }
+
+
+    private void createModulesTab() {
+
+        AboutCustomPanel acp = new AboutCustomPanel(m_ic);
+        acp.setTabName(m_ic.getMessage("MODULES"));
+        acp.setLayout(new BoxLayout(acp, BoxLayout.PAGE_AXIS));
+
+        this.addCustomPanel(AboutDialog.PLACEMENT_BEFORE_STATIC_TABS, acp);
+
+    }
+
+    public ModuleInfoEntry getDesktopModule() {
+        return ModuleInfoEntry.builder()
+                .name(m_ic.getMessage("DESKTOP_MODULE_NAME"))
+                .version(DataAccess.CORE_VERSION)
+                .description(m_ic.getMessage("DESKTOP_MODULE_DESCRIPTION"))
+                .build();
+    }
+
+
+    public ModuleInfoEntry getHelpModule() {
+        return ModuleInfoEntry.builder()
+                .name(m_ic.getMessage("HELP_MODULE_NAME"))
+                .version(DataAccess.HELP_VERSION)
+                .description(m_ic.getMessage("HELP_MODULE_DESCRIPTION"))
+                .build();
     }
 
 }

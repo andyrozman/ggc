@@ -26,11 +26,11 @@
             <artifactId>atech-tools</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${postgresql.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>postgresql</groupId>-->
+<!--            <artifactId>postgresql</artifactId>-->
+<!--            <version>${postgresql.version}</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>junit</groupId>

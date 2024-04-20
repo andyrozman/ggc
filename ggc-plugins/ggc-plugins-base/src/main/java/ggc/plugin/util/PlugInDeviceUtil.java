@@ -1,6 +1,7 @@
 package ggc.plugin.util;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
+import com.atech.graphics.dialogs.selector.SelectableInterfaceV2;
 import com.atech.i18n.I18nControlAbstract;
 
 import ggc.plugin.device.DeviceAbstract;
@@ -277,6 +278,31 @@ public class PlugInDeviceUtil
             di.device_selected = deviceInterfaceV1.getName();
         }
     }
+
+
+    public int compareToSelectableInterface(SelectableInterface firstElement, SelectableInterface secondElement)
+    {
+        if (firstElement.getColumnCount()==2) {
+            if (firstElement.getColumnValue(0).equals(secondElement.getColumnValue(0))) {
+                return firstElement.getColumnValue(1).compareTo(secondElement.getColumnValue(1));
+            } else {
+                return firstElement.getColumnValue(0).compareTo(secondElement.getColumnValue(0));
+            }
+        } else if (firstElement.getColumnCount()==1)
+        {
+            return firstElement.getColumnValue(0).compareTo(secondElement.getColumnValue(0));
+        } else {
+            return firstElement.getColumnValue(0).compareTo(secondElement.getColumnValue(0));
+        }
+
+
+//        if (firstElement.getCompanyName().equals(secondElement.getCompanyName())) {
+//            return firstElement.getDeviceName().compareTo(secondElement.getDeviceName());
+//        } else {
+//            return firstElement.getCompanyName().compareTo(secondElement.getCompanyName());
+//        }
+    }
+
 
 
     public int compareTo(DeviceInterface firstElement, SelectableInterface secondElement)

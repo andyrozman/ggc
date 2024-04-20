@@ -263,11 +263,11 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
 
     private void zipAndRemoveBackupFiles()
     {
-        String file_out = "../data/export/GGC_backup_" + getCurrentDate() + ".zip";
+        String file_out = ImpExpUtil.getExportPath() + "GGC_backup_" + getCurrentDate() + ".zip";
 
         this.lastBackupFile = file_out;
 
-        File directory = new File("../data/export/tmp/");
+        File directory = new File(ImpExpUtil.getExportPathTemp());
 
         PackFiles.zipFilesInDirectory(directory, file_out);
 

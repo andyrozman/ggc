@@ -11,7 +11,7 @@
     <name>GGC Plugins - CGMS</name>
 
     <artifactId>ggc-plugins-cgms</artifactId>
-    <version>${ggc-plugins-cgms.version}</version>
+<!--    <version>${ggc-plugins-cgms.version}</version>-->
 
     <build>
         <plugins>
@@ -79,6 +79,7 @@
         <version.file>
             ${project.build.directory}/generated-sources/ggc/cgms/defs/Version.java
         </version.file>
+        <module.version>${ggc-plugins-cgms.version}</module.version>
     </properties>
 
 </project>

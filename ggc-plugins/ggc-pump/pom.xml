@@ -10,7 +10,7 @@
 
     <name>GGC Plugins - Pump</name>
     <artifactId>ggc-plugins-pump</artifactId>
-    <version>${ggc-plugins-pump.version}</version>
+<!--    <version>${ggc-plugins-pump.version}</version>-->
 
 
     <build>
@@ -43,20 +43,20 @@
 
 
     <dependencies>
-        <dependency>
-            <groupId>com.atech-software.ggc</groupId>
-            <artifactId>ggc-core</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.atech-software.ggc</groupId>-->
+<!--            <artifactId>ggc-core</artifactId>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>com.atech-software.ggc</groupId>
             <artifactId>ggc-plugins-base</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.atech-software</groupId>
-            <artifactId>atech-tools</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.atech-software</groupId>-->
+<!--            <artifactId>atech-tools</artifactId>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>com.ibm.old.comapi</groupId>
@@ -91,6 +91,7 @@
         <version.file>
             ${project.build.directory}/generated-sources/ggc/pump/defs/Version.java
         </version.file>
+        <module.version>${ggc-plugins-pump.version}</module.version>
     </properties>
 
 

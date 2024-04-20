@@ -1,9 +1,9 @@
 package ggc.core.db.tool.transfer;
 
-import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -50,7 +50,7 @@ import ggc.core.util.DataAccess;
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */
-
+@Slf4j
 public class GGCExporter extends ExportTool implements Runnable
 {
 
@@ -91,51 +91,14 @@ public class GGCExporter extends ExportTool implements Runnable
     }
 
 
-    private void checkPrerequisites()
-    {
-        File f = new File("../data");
-
-        if (!f.exists())
-        {
-            f.mkdir();
-        }
-
-        f = new File("../data/export");
-
-        if (!f.exists())
-        {
-            f.mkdir();
-        }
-
-        this.setRootPath("../data/export/");
+    private void checkPrerequisites() {
+        this.setRootPath(ImpExpUtil.getExportPath());
         this.setFileLastPart("_" + getCurrentDateForFile());
     }
 
 
-    private void checkPrerequisitesForAutoBackup()
-    {
-        File f = new File("../data");
-
-        if (!f.exists())
-        {
-            f.mkdir();
-        }
-
-        f = new File("../data/export");
-
-        if (!f.exists())
-        {
-            f.mkdir();
-        }
-
-        f = new File("../data/export/tmp");
-
-        if (!f.exists())
-        {
-            f.mkdir();
-        }
-
-        this.setRootPath("../data/export/tmp/");
+    private void checkPrerequisitesForAutoBackup() {
+        this.setRootPath(ImpExpUtil.getExportPathTemp());
         this.setFileLastPart("");
     }
 
@@ -181,8 +144,9 @@ public class GGCExporter extends ExportTool implements Runnable
         {
             //String key = en.nextElement();
             //PlugInClient pic = da.getPlugIn(key);
+            //log.warn("PlugInClient: " + pic.getName());
 
-            if (pic.getBackupRestoreHandler().doesContainBackupRestoreObject(class_name))
+            if (pic.isBackupRestoreEnabled() && pic.getBackupRestoreHandler().doesContainBackupRestoreObject(class_name))
                 return pic.getBackupRestoreHandler().getBackupRestoreObject(class_name);
         }
 
@@ -192,7 +156,8 @@ public class GGCExporter extends ExportTool implements Runnable
 
     private BackupRestoreObject getBackupRestoreObject(Object obj, BackupRestoreObject bro)
     {
-        if (bro.getBackupClassName().equals("ggc.core.db.hibernate.pen.DayValueH"))
+        if (bro.getBackupClassName().equals("ggc.core.db.hibernate.pen.DayValueH") ||
+                bro.getBackupClassName().equals("ggc.core.db.hibernate.DayValueH"))
         {
             DayValueH eh = (DayValueH) obj;
             return new DailyValue(eh);
@@ -205,7 +170,7 @@ public class GGCExporter extends ExportTool implements Runnable
 
         for (PlugInClient pic : da.getPlugins().values())
         {
-            if (pic.getBackupRestoreHandler().doesContainBackupRestoreObject(bro.getBackupClassName()))
+            if (pic.isBackupRestoreEnabled() && pic.getBackupRestoreHandler().doesContainBackupRestoreObject(bro.getBackupClassName()))
                 return pic.getBackupRestoreHandler().getBackupRestoreObject(obj, bro);
         }
 

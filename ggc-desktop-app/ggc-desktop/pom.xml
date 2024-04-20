@@ -57,10 +57,10 @@
             <artifactId>ggc-plugins-nutrition</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>io.ultreia</groupId>
-            <artifactId>bluecove</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.ultreia</groupId>-->
+<!--            <artifactId>bluecove</artifactId>-->
+<!--        </dependency>-->
 
 
         <dependency>
@@ -118,9 +118,8 @@
 -->
 
         <dependency>
-            <groupId>postgresql</groupId>
+            <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>${postgresql.version}</version>
         </dependency>
 
 
@@ -182,6 +181,10 @@
                                         <exclude>META-INF/*.DSA</exclude>
                                         <exclude>META-INF/*.RSA</exclude>
                                         <exclude>META-INF/MANIFEST.MF</exclude>
+                                        <exclude>META-INF/LICENSE*</exclude>
+                                        <exclude>META-INF/NOTICE*</exclude>
+                                        <exclude>LICENSE*</exclude>
+                                        <exclude>META-INF.versions.9.module-info</exclude>
                                     </excludes>
                                 </filter>
                             </filters>

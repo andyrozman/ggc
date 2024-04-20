@@ -5,6 +5,7 @@ import java.util.List;
 import com.atech.data.user_data_dir.UserDataDirectory;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 
+import com.atech.graphics.dialogs.selector.SelectableInterfaceV2;
 import ggc.plugin.manager.DeviceManager;
 
 /**
@@ -119,7 +120,7 @@ public abstract class DeviceConfigurationDefinitionAbstract implements DeviceCon
      *
      * @return
      */
-    public List<SelectableInterface> getSupportedDevices()
+    public List<SelectableInterfaceV2> getSupportedDevices()
     {
         checkAndResetDeviceManager();
 

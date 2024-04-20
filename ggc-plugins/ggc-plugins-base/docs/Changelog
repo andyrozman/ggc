@@ -2,7 +2,12 @@
 Changes file for GGC Plug-In Base
 ==================================
 
-1.2.6
+1.2.7 [WIP]
+- USB SCSI library added
+- Fixing device downloader, disabling some buttons (for now)
+- update libraries versions, add functionality to return library info to main app WIP
+
+1.2.6 [?.2018]
 - device downloader: added icons, disable buttons
 
 1.2.5 [17.9.2017]

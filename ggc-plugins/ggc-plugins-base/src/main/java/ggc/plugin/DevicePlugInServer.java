@@ -2,6 +2,11 @@ package ggc.plugin;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.swing.*;
 
@@ -252,5 +257,22 @@ public abstract class DevicePlugInServer extends PlugInServer implements ActionL
 
         return null;
     }
+
+
+    @Override
+    public List<Object> getDataFromPlugin(Map<String, Object> parameters) {
+        if (parameters.containsKey("pluginLibraries")) {
+            return getPlugInDataAccess().getPlugInLibraries()
+                    .stream()
+                    .map(a -> (Object) a)
+                    .collect(Collectors.toList());
+        } else if (parameters.containsKey("pluginBaseModule")) {
+            return Arrays.asList(getPlugInDataAccess().getBaseModule());
+        } else if (parameters.containsKey("pluginModule")) {
+            return Arrays.asList(getPlugInDataAccess().getPluginModule());
+        }
+        return null;
+    }
+
 
 }

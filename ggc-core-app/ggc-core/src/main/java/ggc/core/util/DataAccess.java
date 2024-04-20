@@ -10,6 +10,7 @@ import java.util.Properties;
 
 import javax.swing.*;
 
+import com.atech.app.data.about.ModuleInfoEntry;
 import com.atech.utils.file.PropertiesFile;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -92,6 +93,7 @@ import ggc.gui.dialogs.selector.GGCSelectorConfiguration;
 public class DataAccess extends ATDataAccessLMAbstract
 {
 
+    public static String HELP_VERSION = "0.0.0";
     /**
      * Core Version
      */
@@ -291,6 +293,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         CORE_VERSION = VersionResolver.getVersion("ggc.core.util.Version", this.getClass().getSimpleName());
         // System.out.println("Core Version: " + CORE_VERSION);
+        HELP_VERSION = VersionResolver.getVersion("ggc.core.help.Version", this.getClass().getSimpleName());
     }
 
 
@@ -679,7 +682,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         BackupRestoreCollection brc_full = new BackupRestoreCollection("GGC_BACKUP", this.m_i18n);
         brc_full.addNodeChild(new DailyValue(this.m_i18n));
-        brc_full.addNodeChild(new DailyValueOld(this.m_i18n));
+        //brc_full.addNodeChild(new DailyValueOld(this.m_i18n));
 
         BackupRestoreCollection brc1 = new BackupRestoreCollection("DOC_APPOINTMENT_BACKUP", this.m_i18n, true);
         brc1.addNodeChild(new DoctorTypeH(this.m_i18n));
@@ -1534,7 +1537,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         }
         catch (Exception ex)
         {
-            System.out.println("Error starting WebServer on 4444. Ex: " + ex);
+            log.error("Error starting WebServer on port 4444. Ex: " + ex);
         }
 
     }
@@ -1923,13 +1926,11 @@ public class DataAccess extends ATDataAccessLMAbstract
         double height = newDimension.getHeight();
         double width = newDimension.getWidth();
 
-        if (height < minimalDimemsion.getHeight())
-        {
+        if (height < minimalDimemsion.getHeight()) {
             height = minimalDimemsion.getHeight();
         }
 
-        if (width < minimalDimemsion.getWidth())
-        {
+        if (width < minimalDimemsion.getWidth()) {
             width = minimalDimemsion.getWidth();
         }
 
@@ -1975,7 +1976,13 @@ public class DataAccess extends ATDataAccessLMAbstract
     }
 
 
-
+    public ModuleInfoEntry getCoreModule() {
+        return ModuleInfoEntry.builder()
+                .name(m_i18n.getMessage("CORE_MODULE_NAME"))
+                .version(CORE_VERSION)
+                .description(m_i18n.getMessage("CORE_MODULE_DESCRIPTION"))
+                .build();
+    }
 
 
 }
